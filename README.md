@@ -1,4 +1,4 @@
-# LibMaterialDesign
+# MaterialLibDesign
 
 ![Preview](https://github.com/ComandPromt/Pack-Material-Design/raw/main/previews/preview.png)
 
