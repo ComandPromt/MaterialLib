@@ -1,7 +1,10 @@
 package com.buttons.round;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.Icon;
@@ -22,22 +25,51 @@ public class RoundedButton extends JButton {
 
 	private RoundedBorder borde;
 
+	public void setBorderColor(Color color) {
+
+		borde.setExternal(color);
+
+	}
+
+	public void setInnerColor(Color color) {
+
+		borde.setInner(color);
+
+	}
+
 	public RoundedBorder getBorde() {
 
 		return borde;
 
 	}
 
-	public Icon getImageIcon() {
+	private void alinear(int alignment) {
 
-		return imageIcon;
+		this.getBorde().setFuente(getFont());
+
+		this.getBorde().setHorizontalAlignment(alignment);
+
+		repaint();
 
 	}
 
 	@Override
-	public void setHorizontalAlignment(int align) {
+	public void setHorizontalTextPosition(int alignment) {
 
-		this.getBorde().setHorizontalAlignment(align);
+		alinear(alignment);
+
+	}
+
+	@Override
+	public void setHorizontalAlignment(int alignment) {
+
+		alinear(alignment);
+
+	}
+
+	public Icon getImageIcon() {
+
+		return imageIcon;
 
 	}
 
@@ -79,7 +111,72 @@ public class RoundedButton extends JButton {
 
 	}
 
+	@Override
+	public void setText(String text) {
+
+		try {
+
+			borde.setText(text);
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public RoundedButton() {
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+
+				setHorizontalAlignment(SwingConstants.CENTER);
+
+				repaint();
+
+			}
+
+		});
+
+		output = new BufferedImage(2000, 2000, BufferedImage.TYPE_INT_ARGB);
+
+		setContentAreaFilled(false);
+
+		setFocusPainted(false);
+
+		setText("");
+
+		borde = new RoundedBorder(getText(), 15, null, null, null);
+
+		borde.setRounded(true);
+
+		borde.setFuente(new Font("Tahoma", Font.PLAIN, 16));
+
+		this.setBorder(borde);
+
+		setHorizontalAlignment(SwingConstants.LEFT);
+
+		setBackground(new Color(240, 240, 240));
+
+	}
+
 	public RoundedButton(String text) {
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+
+				setHorizontalAlignment(SwingConstants.CENTER);
+
+				repaint();
+
+			}
+
+		});
 
 		output = new BufferedImage(2000, 2000, BufferedImage.TYPE_INT_ARGB);
 
@@ -96,6 +193,8 @@ public class RoundedButton extends JButton {
 		this.setBorder(borde);
 
 		setHorizontalAlignment(SwingConstants.LEFT);
+
+		setBackground(new Color(240, 240, 240));
 
 	}
 
@@ -114,6 +213,8 @@ public class RoundedButton extends JButton {
 	public void setRounded(boolean rounded) {
 
 		borde.setRounded(rounded);
+
+		repaint();
 
 	}
 

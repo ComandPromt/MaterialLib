@@ -6,8 +6,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+
+import util.Mthos;
 
 public class RoundedBorder implements Border {
 
@@ -33,8 +34,18 @@ public class RoundedBorder implements Border {
 
 	private boolean rounded;
 
+	private int alineacion;
+
+	public void setText(String text) {
+
+		this.text = text;
+
+	}
+
 	public void setFuente(Font fuente) {
+
 		this.fuente = fuente;
+
 	}
 
 	public void setExternal(Color external) {
@@ -61,20 +72,29 @@ public class RoundedBorder implements Border {
 
 	}
 
-	public void setWidth(int width) {
-
-		this.width = width;
-	}
-
-	public void setHeight(int height) {
-
-		this.height = height;
-
-	}
-
 	public void setInner(Color inner) {
 
 		this.inner = inner;
+
+	}
+
+	@Override
+	public Insets getBorderInsets(Component c) {
+
+		return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+
+	}
+
+	@Override
+	public boolean isBorderOpaque() {
+
+		return true;
+
+	}
+
+	public void setRounded(boolean rounded) {
+
+		this.rounded = rounded;
 
 	}
 
@@ -111,34 +131,18 @@ public class RoundedBorder implements Border {
 
 	}
 
-	@Override
-	public Insets getBorderInsets(Component c) {
+	public void setHorizontalAlignment(int alignment) {
 
-		return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-
-	}
-
-	@Override
-	public boolean isBorderOpaque() {
-
-		return true;
+		alineacion = alignment;
 
 	}
 
 	@Override
 	public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
 
-		if (this.width == 0) {
+		this.width = c.getWidth();
 
-			this.width = c.getWidth();
-
-		}
-
-		if (this.height == 0) {
-
-			this.height = c.getHeight();
-
-		}
+		this.height = c.getHeight();
 
 		g.setColor(backgroundColor);
 
@@ -146,7 +150,17 @@ public class RoundedBorder implements Border {
 
 		g.setColor(inner);
 
-		g.fillRoundRect(x, y, this.width, this.height, radius, radius);
+		if (rounded) {
+
+			g.fillRoundRect(x, y, this.width, this.height, radius, radius);
+
+		}
+
+		else {
+
+			g.fillRect(x, y, this.width, this.height);
+
+		}
 
 		g.setColor(external);
 
@@ -166,116 +180,7 @@ public class RoundedBorder implements Border {
 
 		g.setFont(fuente);
 
-		g.drawString(text, padding, (int) (this.height * 0.60));
-
-	}
-
-	public void setHorizontalAlignment(int alignment) {
-
-		switch (alignment) {
-
-		case SwingConstants.LEFT:
-
-			padding = 3;
-
-			break;
-
-		case SwingConstants.RIGHT:
-
-			padding = (calcularCentro(text) / 2) - (text.length() / 2);
-
-			padding += calcularCentro(text) / 2;
-
-			if (text.length() > 4) {
-
-				padding -= text.length();
-
-				padding -= 2;
-
-			}
-
-			else {
-
-				switch (text.length()) {
-
-				case 4:
-
-					padding += text.length();
-
-					padding -= 2;
-
-					break;
-
-				case 2:
-
-					padding *= 1.5;
-
-					break;
-
-				case 1:
-
-					padding *= 3;
-
-					padding--;
-
-					break;
-				}
-
-			}
-
-			break;
-
-		default:
-
-			padding = calcularCentro(text) - calcularCentro(text) / 2;
-
-			padding += (-10 + (text.length() - 1) * 5) * -1;
-
-		}
-
-	}
-
-	private int calcularCentro(String text) {
-
-		int resultado = 0;
-
-		boolean sumar = text.length() != 3;
-
-		for (int i = 0; i < text.length(); i++) {
-
-			if (Character.toString(text.charAt(i)).equals(Character.toString(text.charAt(i)).toUpperCase())) {
-
-				resultado += (fuente.getSize() * 13) / 20;
-
-			}
-
-			else {
-
-				resultado += (fuente.getSize() * 9) / 20;
-
-			}
-
-			if (sumar || Character.toString(text.charAt(0)).equals(text.substring(0, 1).toLowerCase())) {
-
-				resultado += 3;
-
-			}
-
-		}
-
-		if (text.length() == 2 && Character.toString(text.charAt(0)).equals(text.substring(0, 1).toUpperCase())) {
-
-			resultado -= 3;
-
-		}
-
-		return resultado;
-
-	}
-
-	public void setRounded(boolean rounded) {
-
-		this.rounded = rounded;
+		g.drawString(text, Mthos.alinear(alineacion, text, fuente, width), (int) (this.height * 0.60));
 
 	}
 

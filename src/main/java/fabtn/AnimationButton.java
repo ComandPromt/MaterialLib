@@ -1,18 +1,19 @@
-package com.buttons.circle;
+package fabtn;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JButton;
@@ -21,11 +22,8 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-import util.Mthos;
-
 @SuppressWarnings("serial")
-
-public class NButton extends JButton {
+public class AnimationButton extends JButton {
 
 	private Animator animator;
 
@@ -37,35 +35,43 @@ public class NButton extends JButton {
 
 	private float alpha;
 
-	private Color effectColor = new Color(173, 173, 173);
+	private Color effectColor = new Color(220, 220, 220);
 
-	private boolean borderPaint;
+	private int buttonAngle;
 
-	public Color borderColor;
+	private boolean showButton;
 
-	public Color borderColor() {
+	private int index;
 
-		return borderColor;
+	public int getButtonAngle() {
 
-	}
-
-	public void borderColor(Color borderColor) {
-
-		this.borderColor = borderColor;
+		return buttonAngle;
 
 	}
 
-	public boolean isBorderPaint() {
+	public void setButtonAngle(int buttonAngle) {
 
-		return borderPaint;
-
-	}
-
-	public void setBorderPaint(boolean borderPaint) {
-
-		this.borderPaint = borderPaint;
+		this.buttonAngle = buttonAngle;
 
 		repaint();
+
+	}
+
+	public boolean isShowButton() {
+
+		return showButton;
+
+	}
+
+	public void setShowButton(boolean showButton) {
+
+		this.showButton = showButton;
+
+	}
+
+	public int getIndex() {
+
+		return index;
 
 	}
 
@@ -81,29 +87,19 @@ public class NButton extends JButton {
 
 	}
 
-	public NButton() {
+	public AnimationButton(int index) {
 
-		addComponentListener(new ComponentAdapter() {
-
-			@Override
-
-			public void componentResized(ComponentEvent e) {
-
-				repaint();
-
-			}
-
-		});
+		this.index = index;
 
 		setBorder(null);
 
+		setContentAreaFilled(false);
+
 		setFocusPainted(false);
 
-		setContentAreaFilled(false);
+		setForeground(new Color(242, 242, 242));
 
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-		setContentAreaFilled(false);
 
 		addMouseListener(new MouseAdapter() {
 
@@ -122,7 +118,6 @@ public class NButton extends JButton {
 				if (animator.isRunning()) {
 
 					animator.stop();
-
 				}
 
 				animator.start();
@@ -151,8 +146,6 @@ public class NButton extends JButton {
 
 		};
 
-		borderPaint = true;
-
 		animator = new Animator(400, target);
 
 		animator.setResolution(0);
@@ -161,27 +154,19 @@ public class NButton extends JButton {
 
 	@Override
 
-	public void paint(Graphics grphcs) {
-
-		super.paint(grphcs);
-
-		int width = getWidth();
-
-		int height = getHeight();
+	protected void paintComponent(Graphics grphcs) {
 
 		Graphics2D g2 = (Graphics2D) grphcs.create();
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+		int width = getWidth();
+
+		int height = getHeight();
+
 		g2.setColor(getBackground());
 
-		g2.fillRoundRect(0, 0, width - 1, height - 1, height, height);
-
-		g2.setColor(getForeground());
-
-		g2.setFont(getFont());
-
-		g2.drawString(getText(), Mthos.centrarTexto(getText(), getFont(), getWidth()), (int) (getHeight() * 0.60));
+		g2.fillRoundRect(0, 0, width, height, height, height);
 
 		if (pressedPoint != null) {
 
@@ -198,15 +183,34 @@ public class NButton extends JButton {
 
 		}
 
-		g2.setComposite(AlphaComposite.SrcOver);
+		if (showButton) {
 
-		if (borderPaint) {
+			g2.setComposite(AlphaComposite.SrcOver);
 
-			g2.setColor(borderColor);
+			g2.setColor(getForeground());
 
-			g2.drawRoundRect(0, 0, width - 1, height - 1, height, height);
+			int x = width / 2;
+
+			int y = height / 2;
+
+			Line2D line1 = new Line2D.Double(x, y - 6, x, y + 6);
+
+			Line2D line2 = new Line2D.Double(x - 6, y, x + 6, y);
+
+			AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(buttonAngle), line1.getX1(),
+					line2.getY1());
+
+			g2.setStroke(new BasicStroke(3f));
+
+			g2.draw(at.createTransformedShape(line1));
+
+			g2.draw(at.createTransformedShape(line2));
 
 		}
+
+		g2.dispose();
+
+		super.paintComponent(grphcs);
 
 	}
 

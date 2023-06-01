@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -60,7 +61,7 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 	}
 
-	public void setHorizontalAlignment(int alginment) {
+	public void setHorizontalTextPosition(int alginment) {
 
 		for (RoundedButton boton : buttons) {
 
@@ -245,9 +246,174 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 	}
 
+	public RoundButtonPanelWithIndicator(String text) {
+
+		try {
+
+			String[] items = text.split(",");
+
+			addComponentListener(new ComponentAdapter() {
+
+				@Override
+				public void componentResized(ComponentEvent e) {
+
+					panel2.setAncho(buttons.get(0).getWidth());
+
+					panel2.setSize(getWidth(), panel1.getHeight() / 2);
+
+					iluminar(0);
+
+				}
+
+			});
+
+			iluminacion = 0;
+
+			foregroundColor = Color.BLACK;
+
+			backgroundButtonColor = Color.WHITE;
+
+			buttons = new ArrayList<>();
+
+			add(panel1);
+
+			add(panel2);
+
+			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+			panel1.setBounds(0, 0, 400, 50);
+
+			panel2.setBounds(0, 49, 400, 15);
+
+			panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+
+			panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+
+			indicador = Color.GREEN;
+
+			panel2.setColor(indicador);
+
+			panel2.setBackground(Color.WHITE);
+
+			RoundedButton boton;
+
+			for (int indice = 0; indice < items.length; indice++) {
+
+				boton = new RoundedButton(items[indice]);
+
+				boton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+				boton.setFocusable(false);
+
+				boton.setBackground(backgroundButtonColor);
+
+				boton.setForeground(foregroundColor);
+
+				boton.getBorde().setFuente(getFont());
+
+				buttons.add(boton);
+
+				panel1.add(boton);
+
+				ponerIndice(buttons.get(indice), indice);
+
+			}
+
+			panel2.setBackground(Color.WHITE);
+
+			setHorizontalTextPosition(SwingConstants.LEFT);
+
+			panel2.repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public RoundButtonPanelWithIndicator(List<String> items) {
+
+		addComponentListener(new ComponentAdapter() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+
+				panel2.setAncho(buttons.get(0).getWidth());
+
+				panel2.setSize(getWidth(), panel1.getHeight() / 2);
+
+				iluminar(0);
+
+			}
+
+		});
+
+		iluminacion = 0;
+
+		foregroundColor = Color.BLACK;
+
+		backgroundButtonColor = Color.WHITE;
+
+		buttons = new ArrayList<>();
+
+		add(panel1);
+
+		add(panel2);
+
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+		panel1.setBounds(0, 0, 400, 50);
+
+		panel2.setBounds(0, 49, 400, 15);
+
+		panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+
+		panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+
+		indicador = Color.GREEN;
+
+		panel2.setColor(indicador);
+
+		panel2.setBackground(Color.WHITE);
+
+		RoundedButton boton;
+
+		for (int indice = 0; indice < items.size(); indice++) {
+
+			boton = new RoundedButton(items.get(indice));
+
+			boton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+			boton.setFocusable(false);
+
+			boton.setBackground(backgroundButtonColor);
+
+			boton.setForeground(foregroundColor);
+
+			boton.getBorde().setFuente(getFont());
+
+			buttons.add(boton);
+
+			panel1.add(boton);
+
+			ponerIndice(buttons.get(indice), indice);
+
+		}
+
+		panel2.setBackground(Color.WHITE);
+
+		setHorizontalTextPosition(SwingConstants.LEFT);
+
+		panel2.repaint();
+
+	}
+
 	public RoundButtonPanelWithIndicator(String[] items) {
 
 		addComponentListener(new ComponentAdapter() {
+
 			@Override
 			public void componentResized(ComponentEvent e) {
 
@@ -315,16 +481,18 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 		panel2.setBackground(Color.WHITE);
 
-		panel2.repaint();
+		setHorizontalTextPosition(SwingConstants.LEFT);
 
-		setHorizontalAlignment(SwingConstants.LEFT);
+		panel2.repaint();
 
 	}
 
 	private void ponerIndice(RoundedButton boton, int index) {
 
 		boton.addActionListener(new ActionListener() {
+
 			@Override
+
 			public void actionPerformed(ActionEvent e) {
 
 				iluminacion = index;

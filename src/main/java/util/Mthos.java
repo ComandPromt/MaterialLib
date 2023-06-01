@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -21,6 +22,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -29,12 +32,223 @@ import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 import exceptions.customexceptions.MyOwnRuntimeException;
 
 public abstract class Mthos {
 
 	private static String os = System.getProperty("os.name");
+
+	public static String saberFechaYHoraActual(String pattern) {
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
+
+		return dtf.format(LocalDateTime.now());
+
+	}
+
+	public static String saberFechaYHoraActual(boolean englishFormat) {
+
+		String patron = "yyyy/MM/dd HH:mm:ss";
+
+		if (!englishFormat) {
+
+			patron = "dd/MM/yyyy HH:mm:ss";
+
+		}
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern(patron);
+
+		return dtf.format(LocalDateTime.now());
+
+	}
+
+	public static boolean esVideo(String name) {
+
+		boolean resultado = false;
+
+		try {
+
+			name = name.toLowerCase();
+
+			if (name.endsWith(".mp4") || name.endsWith(".avi") || name.endsWith(".mpg") || name.endsWith(".mkv")
+					|| name.endsWith(".webm")) {
+
+				resultado = true;
+
+			}
+
+		}
+
+		catch (Exception e) {
+		}
+
+		return resultado;
+
+	}
+
+	public static int calcularCentro(String text, Font font) {
+
+		int resultado = 0;
+
+		boolean sumar = text.length() != 3;
+
+		for (int i = 0; i < text.length(); i++) {
+
+			if (Character.toString(text.charAt(i)).equals(Character.toString(text.charAt(i)).toUpperCase())) {
+
+				resultado += (font.getSize() * 13) / 20;
+
+			}
+
+			else {
+
+				resultado += (font.getSize() * 9) / 20;
+
+			}
+
+			if (sumar || Character.toString(text.charAt(0)).equals(text.substring(0, 1).toLowerCase())) {
+
+				resultado += 3;
+
+			}
+
+		}
+
+		if (text.length() == 2 && Character.toString(text.charAt(0)).equals(text.substring(0, 1).toUpperCase())) {
+
+			resultado -= 3;
+
+		}
+
+		return resultado;
+
+	}
+
+	public static int alinear(int alineacion, String text, Font fuente, int width) {
+
+		int padding = 0;
+
+		switch (alineacion) {
+
+		case SwingConstants.LEFT:
+
+			padding = 3;
+
+			break;
+
+		case SwingConstants.RIGHT:
+
+			padding = (Mthos.calcularCentro(text, fuente) / 2) - (text.length() / 2);
+
+			padding += Mthos.calcularCentro(text, fuente) / 2;
+
+			if (text.length() > 4) {
+
+				padding -= text.length();
+
+				padding -= 2;
+
+			}
+
+			else {
+
+				switch (text.length()) {
+
+				case 1:
+
+					padding *= 3;
+
+					padding--;
+
+					break;
+
+				case 2:
+
+					padding *= 1.5;
+
+					break;
+
+				case 4:
+
+					padding += text.length();
+
+					padding -= 2;
+
+					break;
+
+				}
+
+			}
+
+			break;
+
+		default:
+
+			padding = centrarTexto(text, fuente, width);
+
+		}
+
+		return padding;
+
+	}
+
+	public static int centrarTexto(String text, Font font, int width) {
+
+		int resultado = 0;
+
+		boolean sumar = text.length() != 3;
+
+		for (int i = 0; i < text.length(); i++) {
+
+			if (Character.toString(text.charAt(i)).equals(Character.toString(text.charAt(i)).toUpperCase())) {
+
+				resultado += (font.getSize() * 14.5) / 20;
+
+			}
+
+			else {
+
+				resultado += (font.getSize() * 9.5) / 20;
+
+			}
+
+			if (sumar || Character.toString(text.charAt(0)).equals(text.substring(0, 1).toLowerCase())) {
+
+				resultado += 3;
+
+			}
+
+		}
+
+		if (text.length() == 2 && Character.toString(text.charAt(0)).equals(text.substring(0, 1).toUpperCase())) {
+
+			resultado -= 3;
+
+		}
+
+		resultado -= resultado / 2;
+
+		resultado += (-10 + (text.length() - 1) * 5) * -1;
+
+		if (width - resultado > (int) (width / 1.28f)) {
+
+			resultado += (width / 3.9) - (width / (text.length() + 2));
+		}
+
+		if ((((int) (width / 1.28f)) - (width - resultado)) > 0
+				&& (((int) (width / 1.28f)) - (width - resultado)) < 5) {
+
+			resultado -= width / (text.length() + 2);
+
+			resultado -= resultado / text.length() + 2;
+
+		}
+
+		return resultado;
+
+	}
 
 	public static int contarMinusculas(String text) {
 
@@ -258,12 +472,19 @@ public abstract class Mthos {
 	}
 
 	public static void copy(String text) {
+
 		try {
+
 			Clipboard clipboard = getSystemClipboard();
 
 			clipboard.setContents(new StringSelection(text), null);
-		} catch (Exception e) {
+
 		}
+
+		catch (Exception e) {
+
+		}
+
 	}
 
 	public static String[] getFonts() {

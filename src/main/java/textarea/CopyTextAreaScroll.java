@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import com.buttons.simple.VerySimpleButton;
+import com.buttons.simple.SimpleButton;
 import com.spinner.simple.Spinner;
 
 import util.Mthos;
@@ -214,7 +214,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		this.panel.setLayout(gbl_panel);
 
-		VerySimpleButton disminuir = new VerySimpleButton("");
+		SimpleButton disminuir = new SimpleButton("");
 
 		disminuir.addMouseWheelListener(new MouseWheelListener() {
 
@@ -272,7 +272,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		this.panel.add(disminuir, gbc_disminuir);
 
-		VerySimpleButton aumentar = new VerySimpleButton("");
+		SimpleButton aumentar = new SimpleButton("");
 
 		aumentar.addMouseWheelListener(new MouseWheelListener() {
 
@@ -309,7 +309,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		this.panel.add(aumentar, gbc_aumentar);
 
-		VerySimpleButton restaurar = new VerySimpleButton("");
+		SimpleButton restaurar = new SimpleButton("");
 
 		restaurar.addActionListener(new ActionListener() {
 
@@ -335,7 +335,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		this.panel.add(restaurar, gbc_restaurar);
 
-		VerySimpleButton copiar = new VerySimpleButton("");
+		SimpleButton copiar = new SimpleButton("");
 
 		copiar.addMouseWheelListener(new MouseWheelListener() {
 
@@ -372,7 +372,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		panel.add(copiar, gbc_copiar);
 
-		VerySimpleButton limpiar = new VerySimpleButton("");
+		SimpleButton limpiar = new SimpleButton("");
 
 		limpiar.addMouseWheelListener(new MouseWheelListener() {
 
