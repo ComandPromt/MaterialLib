@@ -4,6 +4,8 @@ package com.dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.title.bar.TitleBar;
+
 import util.WindowDragger;
 import util.WindowsUtil;
 
@@ -17,7 +19,7 @@ public class Dialogo extends javax.swing.JDialog {
 
 	private org.edisoncor.gui.panel.PanelNice panel1;
 
-	private org.edisoncor.gui.varios.TitleBar titleBar1;
+	private TitleBar titleBar1;
 
 	public void setMessage(String text) {
 
@@ -65,7 +67,7 @@ public class Dialogo extends javax.swing.JDialog {
 
 		panel1 = new org.edisoncor.gui.panel.PanelNice();
 
-		titleBar1 = new org.edisoncor.gui.varios.TitleBar();
+		titleBar1 = new TitleBar();
 
 		message = new org.edisoncor.gui.label.LabelMetric();
 

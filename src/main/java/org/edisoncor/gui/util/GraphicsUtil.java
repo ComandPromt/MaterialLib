@@ -187,8 +187,6 @@ public class GraphicsUtil {
     public static ColorModel coerceData(WritableRaster wr, ColorModel cm,
                                         boolean newAlphaPreMult) {
 
-        // System.out.println("CoerceData: " + cm.isAlphaPremultiplied() +
-        // " Out: " + newAlphaPreMult);
         if (!cm.hasAlpha())
             // Nothing to do no alpha channel
             return cm;
@@ -196,8 +194,6 @@ public class GraphicsUtil {
         if (cm.isAlphaPremultiplied() == newAlphaPreMult)
             // nothing to do alpha state matches...
             return cm;
-
-        // System.out.println("CoerceData: " + wr.getSampleModel());
 
         if (newAlphaPreMult) {
             multiplyAlpha(wr);
@@ -306,7 +302,6 @@ public class GraphicsUtil {
     }
 
     protected static void divide_INT_PACK_Data(WritableRaster wr) {
-        // System.out.println("Divide Int");
 
         SinglePixelPackedSampleModel sppsm;
         sppsm = (SinglePixelPackedSampleModel) wr.getSampleModel();
@@ -346,7 +341,6 @@ public class GraphicsUtil {
     }
 
     protected static void mult_INT_PACK_Data(WritableRaster wr) {
-        // System.out.println("Multiply Int: " + wr);
 
         SinglePixelPackedSampleModel sppsm;
         sppsm = (SinglePixelPackedSampleModel) wr.getSampleModel();
@@ -382,7 +376,6 @@ public class GraphicsUtil {
     }
 
     protected static void divide_BYTE_COMP_Data(WritableRaster wr) {
-        // System.out.println("Multiply Int: " + wr);
 
         ComponentSampleModel csm;
         csm = (ComponentSampleModel) wr.getSampleModel();
@@ -430,7 +423,6 @@ public class GraphicsUtil {
     }
 
     protected static void mult_BYTE_COMP_Data(WritableRaster wr) {
-        // System.out.println("Multiply Int: " + wr);
 
         ComponentSampleModel csm;
         csm = (ComponentSampleModel) wr.getSampleModel();

@@ -11,8 +11,6 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
 @SuppressWarnings("serial")
 public class ProgressBarCustom extends JProgressBar {
 
-	private boolean pintarPorcentaje;
-
 	public Color getColorString() {
 
 		return colorString;
@@ -36,8 +34,6 @@ public class ProgressBarCustom extends JProgressBar {
 		setBackground(new Color(255, 255, 255));
 
 		setForeground(new Color(69, 124, 235));
-
-		this.pintarPorcentaje = pintarPorcentaje;
 
 		setUI(new BasicProgressBarUI() {
 

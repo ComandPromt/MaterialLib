@@ -68,27 +68,24 @@ public class UtilDragAndDrop {
 						evt.getDropTargetContext().dropComplete(true);
 
 					}
+
 				}
 
 				catch (Exception io) {
-
 				}
 
 			}
 
 			@Override
 			public void dragExit(DropTargetEvent dte) {
-				//
 			}
 
 			@Override
 			public void dragOver(DropTargetDragEvent dtde) {
-				//
 			}
 
 			@Override
 			public void dropActionChanged(DropTargetDragEvent dtde) {
-				//
 			}
 
 		};

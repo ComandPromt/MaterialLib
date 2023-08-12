@@ -18,173 +18,167 @@ import java.awt.event.FocusListener;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JToolTip;
+
 import org.edisoncor.gui.toolTip.ToolTipRound;
 
 /**
  *
  * @author Edison
  */
-public class ButtonRect extends JButton{
+public class ButtonRect extends JButton {
 
-    private Image buttonHighlight;
-    private float shadowOffsetX;
-    private float shadowOffsetY;
-    private Color colorDeSombra=new Color(0,0,0);
-    private int direccionDeSombra=60;
-    private int distanciaDeSombra=1;
-    private boolean vertical=true;
-    private boolean foco=false;
+	private Image buttonHighlight;
+	private float shadowOffsetX;
+	private float shadowOffsetY;
+	private Color colorDeSombra = new Color(0, 0, 0);
+	private int direccionDeSombra = 60;
+	private int distanciaDeSombra = 1;
+	private boolean vertical = true;
+	private boolean foco = false;
 
-    public ButtonRect(Icon icon) {
-        super(icon);
-    }
+	public ButtonRect(Icon icon) {
+		super(icon);
+	}
 
-    public ButtonRect() {
-        setOpaque(false);
-        setContentAreaFilled(false);
-        setFocusPainted(false);
-        setBorderPainted(false);
-        setFont(new Font("Arial", Font.BOLD, 14));
-        setForeground(new Color(255,255,255));
-        buttonHighlight = loadImage("/resources/header-halo.png");
-        addFocusListener(new FocusListener() {
+	public ButtonRect(String text) {
+		setText(text);
+		setOpaque(false);
+		setContentAreaFilled(false);
+		setFocusPainted(false);
+		setBorderPainted(false);
+		setFont(new Font("Arial", Font.BOLD, 14));
+		setForeground(new Color(255, 255, 255));
+		buttonHighlight = loadImage("/resources/header-halo.png");
+		addFocusListener(new FocusListener() {
 
-            public void focusGained(FocusEvent e) {
-                foco=true;
-            }
+			@Override
+			public void focusGained(FocusEvent e) {
+				foco = true;
+			}
 
-            public void focusLost(FocusEvent e) {
-                foco=false;
-            }
-        });
-    }
+			@Override
+			public void focusLost(FocusEvent e) {
+				foco = false;
+			}
+		});
+	}
 
-    @Override
-    public JToolTip createToolTip() {
-        ToolTipRound tip = new ToolTipRound();
-        tip.setComponent(this);
-        return tip;
-    }
+	@Override
+	public JToolTip createToolTip() {
+		ToolTipRound tip = new ToolTipRound();
+		tip.setComponent(this);
+		return tip;
+	}
 
-    private static Image loadImage(String fileName) {
-        try {
-            return ImageIO.read(ButtonRect.class.getResource(fileName));
-        } catch (IOException ex) {
-            return null;
-        }
-    }
+	private static Image loadImage(String fileName) {
+		try {
+			return ImageIO.read(ButtonRect.class.getResource(fileName));
+		} catch (IOException ex) {
+			return null;
+		}
+	}
 
-    private void computeShadow() {
-        double rads = Math.toRadians(direccionDeSombra);
-        shadowOffsetX = (float) Math.cos(rads) * distanciaDeSombra;
-        shadowOffsetY = (float) Math.sin(rads) * distanciaDeSombra;
-    }
+	private void computeShadow() {
+		double rads = Math.toRadians(direccionDeSombra);
+		shadowOffsetX = (float) Math.cos(rads) * distanciaDeSombra;
+		shadowOffsetY = (float) Math.sin(rads) * distanciaDeSombra;
+	}
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        computeShadow();
-        float x1=0,x2=0,y1=0,y2=getHeight();
-        if(!vertical){
-            x1=0;
-            y1=0;
-            x2=getWidth();
-            y2=0;
-        }
-        Graphics2D g2 = (Graphics2D) g;
-        Paint oldPaint = g2.getPaint();
+	@Override
+	protected void paintComponent(Graphics g) {
+		computeShadow();
+		float x1 = 0, x2 = 0, y1 = 0, y2 = getHeight();
+		if (!vertical) {
+			x1 = 0;
+			y1 = 0;
+			x2 = getWidth();
+			y2 = 0;
+		}
+		Graphics2D g2 = (Graphics2D) g;
+		Paint oldPaint = g2.getPaint();
 
-        Rectangle2D rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
-        g2.clip(rect);
+		Rectangle2D rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
+		g2.clip(rect);
 
-        ButtonModel modelo = getModel();
+		ButtonModel modelo = getModel();
 
-        if(modelo.isArmed()|modelo.isPressed())
-            g2.setPaint(new GradientPaint(x1,y1,getBackground().darker(), x2, y2, getBackground()));
-        else
-            g2.setPaint(new GradientPaint(x1,y1,getBackground(), x2, y2, getBackground().darker()));
-       
-        g2.fill(rect);
+		if (modelo.isArmed() | modelo.isPressed())
+			g2.setPaint(new GradientPaint(x1, y1, getBackground().darker(), x2, y2, getBackground()));
+		else
+			g2.setPaint(new GradientPaint(x1, y1, getBackground(), x2, y2, getBackground().darker()));
 
-        if(modelo.isRollover() | foco){
-            g2.drawRect(0, 0, getWidth(), getHeight());
-            g2.drawImage(buttonHighlight,
-                    0,0,
-                    getWidth(), getHeight(), null);
-        }
+		g2.fill(rect);
 
-        FontMetrics fm = getFontMetrics(getFont());
-        TextLayout layout = new TextLayout(getText(),
-                getFont(),
-                g2.getFontRenderContext());
-        Rectangle2D bounds = layout.getBounds();
+		if (modelo.isRollover() | foco) {
+			g2.drawRect(0, 0, getWidth(), getHeight());
+			g2.drawImage(buttonHighlight, 0, 0, getWidth(), getHeight(), null);
+		}
 
-        int x = (int) (getWidth() - bounds.getWidth()) / 2;
-        int y = (getHeight() -  fm.getMaxAscent() - fm.getMaxDescent()) / 2;
-        y += fm.getAscent() - 1;
+		FontMetrics fm = getFontMetrics(getFont());
+		TextLayout layout = new TextLayout(getText(), getFont(), g2.getFontRenderContext());
+		Rectangle2D bounds = layout.getBounds();
 
-        if (modelo.isArmed()) {
-            x += 1;
-            y += 1;
-        }
+		int x = (int) (getWidth() - bounds.getWidth()) / 2;
+		int y = (getHeight() - fm.getMaxAscent() - fm.getMaxDescent()) / 2;
+		y += fm.getAscent() - 1;
 
-        g2.setColor(colorDeSombra);
-        layout.draw(g2,
-                x + (int) Math.ceil(shadowOffsetX),
-                y + (int) Math.ceil(shadowOffsetY));
-        if(isEnabled())
-            g2.setColor(getForeground());
-        else
-            g2.setColor(getForeground().darker());
-        layout.draw(g2, x, y);
+		if (modelo.isArmed()) {
+			x += 1;
+			y += 1;
+		}
 
+		g2.setColor(colorDeSombra);
+		layout.draw(g2, x + (int) Math.ceil(shadowOffsetX), y + (int) Math.ceil(shadowOffsetY));
+		if (isEnabled())
+			g2.setColor(getForeground());
+		else
+			g2.setColor(getForeground().darker());
+		layout.draw(g2, x, y);
 
-        g2.setPaint(oldPaint);
+		g2.setPaint(oldPaint);
 
-    }
+	}
 
-   public Color getColorDeSombra() {
-        return colorDeSombra;
-    }
+	public Color getColorDeSombra() {
+		return colorDeSombra;
+	}
 
-    public void setColorDeSombra(Color colorDeSombra) {
-        this.colorDeSombra = colorDeSombra;
-        repaint();
-    }
+	public void setColorDeSombra(Color colorDeSombra) {
+		this.colorDeSombra = colorDeSombra;
+		repaint();
+	}
 
-    public int getDireccionDeSombra() {
-        return direccionDeSombra;
-    }
+	public int getDireccionDeSombra() {
+		return direccionDeSombra;
+	}
 
-    public void setDireccionDeSombra(int direccionDeSombra) {
-        this.direccionDeSombra = direccionDeSombra;
-        repaint();
-    }
+	public void setDireccionDeSombra(int direccionDeSombra) {
+		this.direccionDeSombra = direccionDeSombra;
+		repaint();
+	}
 
-    public int getDistanciaDeSombra() {
-        return distanciaDeSombra;
-    }
+	public int getDistanciaDeSombra() {
+		return distanciaDeSombra;
+	}
 
-    public void setDistanciaDeSombra(int distanciaDeSombra) {
-        this.distanciaDeSombra = distanciaDeSombra;
-        repaint();
-    }
+	public void setDistanciaDeSombra(int distanciaDeSombra) {
+		this.distanciaDeSombra = distanciaDeSombra;
+		repaint();
+	}
 
-    
+	public boolean isVertical() {
+		return vertical;
+	}
 
-    public boolean isVertical() {
-        return vertical;
-    }
-
-    public void setVertical(boolean vertical) {
-        this.vertical = vertical;
-        repaint();
-    }
-
-
+	public void setVertical(boolean vertical) {
+		this.vertical = vertical;
+		repaint();
+	}
 
 }

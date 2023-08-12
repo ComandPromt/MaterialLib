@@ -40,36 +40,57 @@ public class PnlHeader extends JPanel {
 
 	public void setThickness(int thickness) {
 
-		btnMinimize.setGrosor(thickness);
+		try {
 
-		btnMaximize.setGrosor(thickness);
+			btnMinimize.setGrosor(thickness);
 
-		btnExit.setGrosor(thickness);
+			btnExit.setGrosor(thickness);
+
+			btnMaximize.setGrosor(thickness);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
 	public void setBackgroundEnteredColor(Color backgroundEnteredColor) {
 
-		this.backgroundEnteredColor = backgroundEnteredColor;
+		try {
 
-		btnMinimize.setBackGroundMouseEnteredColor(backgroundEnteredColor);
+			this.backgroundEnteredColor = backgroundEnteredColor;
 
-		btnMaximize.setBackGroundMouseEnteredColor(backgroundEnteredColor);
+			btnMinimize.setBackGroundMouseEnteredColor(backgroundEnteredColor);
 
-		btnExit.setBackGroundMouseEnteredColor(backgroundEnteredColor);
+			btnExit.setBackGroundMouseEnteredColor(backgroundEnteredColor);
+
+			btnMaximize.setBackGroundMouseEnteredColor(backgroundEnteredColor);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
 	public void setBackgroundExitedColor(Color backgroundExitedColor) {
 
-		this.backgroundExitedColor = backgroundExitedColor;
+		try {
 
-		btnMinimize.setBackGroundMouseExitedColor(backgroundExitedColor);
+			this.backgroundExitedColor = backgroundExitedColor;
 
-		btnMaximize.setBackGroundMouseExitedColor(backgroundExitedColor);
+			btnMinimize.setBackGroundMouseExitedColor(backgroundExitedColor);
 
-		btnExit.setBackGroundMouseExitedColor(backgroundExitedColor);
+			btnExit.setBackGroundMouseExitedColor(backgroundExitedColor);
 
+			btnMaximize.setBackGroundMouseExitedColor(backgroundExitedColor);
+
+		} catch (Exception e) {
+
+		}
 	}
 
 	public void setBackgroundColor(Color backgroundColor) {
@@ -116,6 +137,7 @@ public class PnlHeader extends JPanel {
 		this.closeEnteredColor = closeEnteredColor;
 
 		btnExit.setEnteredColor(closeEnteredColor);
+
 	}
 
 	public void setCloseExitedColor(Color closeExitedColor) {
@@ -126,7 +148,7 @@ public class PnlHeader extends JPanel {
 
 	}
 
-	public PnlHeader(Frame frame) {
+	public PnlHeader(Frame frame, boolean resize) {
 
 		this.frame = frame;
 
@@ -177,45 +199,49 @@ public class PnlHeader extends JPanel {
 
 		add(btnMinimize);
 
-		btnMaximize = new JavaLabel(2, maximizeEnteredColor, maximizeExitedColor);
+		if (resize) {
 
-		btnMaximize.setBackGroundMouseEnteredColor(backgroundEnteredColor);
+			btnMaximize = new JavaLabel(2, maximizeEnteredColor, maximizeExitedColor);
 
-		btnMaximize.setBackGroundMouseExitedColor(backgroundExitedColor);
+			btnMaximize.setBackGroundMouseEnteredColor(backgroundEnteredColor);
 
-		btnMaximize.addMouseListener(new MouseAdapter() {
+			btnMaximize.setBackGroundMouseExitedColor(backgroundExitedColor);
 
-			@Override
-			public void mousePressed(MouseEvent e) {
+			btnMaximize.addMouseListener(new MouseAdapter() {
 
-				btnMaximize.click();
+				@Override
+				public void mousePressed(MouseEvent e) {
 
-				btnMaximize.repaint();
+					btnMaximize.click();
 
-				if (btnMaximize.isMaximizar()) {
+					btnMaximize.repaint();
 
-					frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+					if (btnMaximize.isMaximizar()) {
+
+						frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+					}
+
+					else {
+
+						frame.setExtendedState(Frame.NORMAL);
+
+					}
+
 				}
 
-				else {
+			});
 
-					frame.setExtendedState(Frame.NORMAL);
+			btnMaximize.setIcon(new ImageIcon(PnlHeader.class.getResource("/imgs/imagenes/closePanel.png")));
 
-				}
+			btnMaximize.setOpaque(true);
 
-			}
+			btnMaximize.setFocusable(false);
 
-		});
+			btnMaximize.setBackground(backgroundColor);
 
-		btnMaximize.setIcon(new ImageIcon(PnlHeader.class.getResource("/imgs/imagenes/closePanel.png")));
+			add(btnMaximize);
 
-		btnMaximize.setOpaque(true);
-
-		btnMaximize.setFocusable(false);
-
-		btnMaximize.setBackground(backgroundColor);
-
-		add(btnMaximize);
+		}
 
 		btnExit = new JavaLabel(3, closeEnteredColor, closeExitedColor);
 

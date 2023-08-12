@@ -20,6 +20,13 @@ public class CheckBoxCustom extends JCheckBox {
 	String text;
 
 	@Override
+	public void setHorizontalAlignment(int alignment) {
+
+		super.setHorizontalAlignment(SwingConstants.LEFT);
+
+	}
+
+	@Override
 	public void setText(String text) {
 
 		this.text = text;
@@ -132,45 +139,43 @@ public class CheckBoxCustom extends JCheckBox {
 
 		int ly = ((getHeight() - fontSize) / 2) + 1;
 
-		if (isSelected()) {
+		if (isEnabled()) {
 
-			if (isEnabled()) {
+			g2.setColor(getBackground());
 
-				g2.setColor(getBackground());
+			if (isSelected()) {
+
+				g2.fillRoundRect(x, ly, fontSize, fontSize, border, border);
+
+				g2.setColor(checkColor);
+
+				int[] px = { x + (Math.round((float) (fontSize * 0.375))), x,
+						x + (Math.round((float) (fontSize * 0.1875))), x + (Math.round((float) (fontSize * 0.375))),
+						x + (Math.round((float) (fontSize * 0.875))), x + fontSize };
+
+				int[] py = { ly + fontSize, ly + (Math.round((float) (fontSize * 0.333))),
+						ly + (Math.round((float) (fontSize * 0.166))), ly + (Math.round((float) (fontSize * 0.5833))),
+						ly, ly + (Math.round((float) (fontSize * 0.25))) };
+
+				g2.fillPolygon(px, py, px.length);
 
 			}
 
 			else {
 
-				g2.setColor(Color.GRAY);
+				g2.setColor(getBackground());
+
+				g2.fillRoundRect(x, ly, fontSize, fontSize, border, border);
 
 			}
-
-			g2.fillRoundRect(x, ly, fontSize, fontSize, border, border);
-
-			g2.setColor(checkColor);
-
-			int[] px = { x + (Math.round((float) (fontSize * 0.375))), x, x + (Math.round((float) (fontSize * 0.1875))),
-					x + (Math.round((float) (fontSize * 0.375))), x + (Math.round((float) (fontSize * 0.875))),
-					x + fontSize };
-
-			int[] py = { ly + fontSize, ly + (Math.round((float) (fontSize * 0.333))),
-					ly + (Math.round((float) (fontSize * 0.166))), ly + (Math.round((float) (fontSize * 0.5833))), ly,
-					ly + (Math.round((float) (fontSize * 0.25))) };
-
-			g2.fillPolygon(px, py, px.length);
 
 		}
 
 		else {
 
-			g2.setColor(Color.GRAY);
-
-			g2.fillRoundRect(x, ly, fontSize, fontSize, border, border);
-
 			g2.setColor(getBackground());
 
-			g2.fillRoundRect(++x, ++ly, fontSize, fontSize, border, border);
+			g2.fillRoundRect(x, ly, fontSize, fontSize, border, border);
 
 		}
 

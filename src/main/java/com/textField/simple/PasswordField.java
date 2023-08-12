@@ -41,8 +41,6 @@ public class PasswordField extends JPasswordField {
 
 	private Color lineColor = new Color(3, 155, 216);
 
-	private final Image eye;
-
 	private final Image eye_hide;
 
 	private boolean hide = true;
@@ -76,7 +74,9 @@ public class PasswordField extends JPasswordField {
 	}
 
 	public Color getLineColor() {
+
 		return lineColor;
+
 	}
 
 	public void setLineColor(Color lineColor) {
@@ -216,8 +216,6 @@ public class PasswordField extends JPasswordField {
 
 		};
 
-		eye = new ImageIcon(getClass().getResource("/com/textField/simple/eye.png")).getImage();
-
 		eye_hide = new ImageIcon(getClass().getResource("/com/textField/simple/eye_hide.png")).getImage();
 
 		animator = new Animator(300, target);
@@ -304,7 +302,23 @@ public class PasswordField extends JPasswordField {
 
 		int y = (getHeight() - 20) / 2;
 
-		g2.drawImage(hide ? eye_hide : eye, x, y, null);
+		if (hide) {
+
+			g2.setColor(Color.RED);
+
+			g2.fillRect(0, 0, 40, 40);
+
+		}
+
+		else {
+
+			g2.setColor(Color.BLUE);
+
+			g2.fillRect(0, 0, 40, 40);
+
+		}
+
+		// g2.drawImage(hide ? eye_hide : eye, x, y, null);
 
 	}
 

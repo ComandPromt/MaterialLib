@@ -1,5 +1,6 @@
 package com.spinner.simple;
 
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
@@ -25,6 +26,15 @@ public class Spinner extends JSpinner {
 	protected int incremento;
 
 	SpinnerUI.Editor editor;
+
+	@Override
+	public void setFont(Font font) {
+		try {
+			editor.setFont(font);
+		} catch (Exception e) {
+
+		}
+	}
 
 	public int getValor() {
 

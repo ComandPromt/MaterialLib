@@ -11,4 +11,5 @@ abstract class BlankPlotChartRender2 {
 	public abstract void renderGraphics(BlankPlotChart2 chart, Graphics2D g2, Rectangle2D rectangle);
 
 	public abstract void mouseMove(Rectangle2D rectangle, MouseEvent mouse);
+
 }

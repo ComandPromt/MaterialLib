@@ -4,30 +4,43 @@ import java.awt.Color;
 
 public class SimpleBarModelLegend {
 
-    public String getName() {
-        return name;
-    }
+	private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private Color color;
 
-    public Color getColor() {
-        return color;
-    }
+	public String getName() {
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+		return name;
 
-    public SimpleBarModelLegend(String name, Color color) {
-        this.name = name;
-        this.color = color;
-    }
+	}
 
-    public SimpleBarModelLegend() {
-    }
+	public void setName(String name) {
 
-    private String name;
-    private Color color;
+		this.name = name;
+
+	}
+
+	public Color getColor() {
+
+		return color;
+
+	}
+
+	public void setColor(Color color) {
+
+		this.color = color;
+
+	}
+
+	public SimpleBarModelLegend(String name, Color color) {
+
+		this.name = name;
+
+		this.color = color;
+
+	}
+
+	public SimpleBarModelLegend() {
+	}
+
 }

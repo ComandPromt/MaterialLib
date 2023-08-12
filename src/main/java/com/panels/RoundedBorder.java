@@ -26,8 +26,6 @@ public class RoundedBorder implements Border {
 
 	private int height;
 
-	private int padding;
-
 	private Color textColor;
 
 	private Font fuente;
@@ -63,12 +61,6 @@ public class RoundedBorder implements Border {
 	public void setTextColor(Color textColor) {
 
 		this.textColor = textColor;
-
-	}
-
-	public void setPadding(int padding) {
-
-		this.padding = padding;
 
 	}
 

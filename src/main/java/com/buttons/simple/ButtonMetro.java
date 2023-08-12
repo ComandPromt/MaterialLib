@@ -10,8 +10,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
+import javax.swing.JToolTip;
 import javax.swing.border.Border;
 
+import org.edisoncor.gui.toolTip.ToolTipLlamada;
+
+@SuppressWarnings("serial")
 public class ButtonMetro extends JButton implements MouseListener, MouseMotionListener {
 
 	private Color colorNormal = new Color(0, 139, 139);
@@ -32,7 +36,76 @@ public class ButtonMetro extends JButton implements MouseListener, MouseMotionLi
 
 	private Font f = new Font("Tahoma", Font.BOLD, 14);
 
-	@SuppressWarnings("LeakingThisInConstructor")
+	private String text;
+
+	private Color background;
+
+	private Color foreground;
+
+	private Color border;
+
+	private Font fuente;
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			font = getFont().deriveFont(14f);
+
+		}
+
+		this.text = text;
+
+		this.background = background;
+
+		this.foreground = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || background == null || foreground == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
 
 	public ButtonMetro(String text) {
 
@@ -209,20 +282,14 @@ public class ButtonMetro extends JButton implements MouseListener, MouseMotionLi
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

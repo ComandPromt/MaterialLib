@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.edisoncor.gui.toolTip;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -21,144 +15,183 @@ import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+
 import javax.swing.JComponent;
 import javax.swing.JToolTip;
 import javax.swing.plaf.basic.BasicToolTipUI;
 
-/**
- *
- * @author edison
- */
-public class ToolTipLlamada extends JToolTip{
+@SuppressWarnings("serial")
+public class ToolTipLlamada extends JToolTip {
 
-   protected Color colorDeBorde = new Color(173,173,173);
-   private Dimension buttonDimension= new Dimension(116, 30);
+	protected Color colorDeBorde;
 
-    public ToolTipLlamada() {
-        this(Color.white, new Color(32,39,55));
-        setForeground(Color.white);
-        setBackground(new Color(32,39,55));
-        setOpaque(false);
-    }
+	private Dimension buttonDimension = new Dimension(116, 30);
 
-    public ToolTipLlamada(Color background, Color foreground) {
-        setForeground(foreground);
-        setBackground(background);
-        setOpaque(false);
-         setForeground(Color.white);
-        setBackground(new Color(32,39,55));
-        setOpaque(false);
-        setFont(new Font("Arial", Font.BOLD, 12));
-        setUI(new BasicToolTipUI() {
-            @Override
-            public Dimension getMinimumSize(JComponent c) {
-                return getPreferredSize(c);
-            }
+	private String text;
 
-            @Override
-            public Dimension getMaximumSize(JComponent c) {
-                return getPreferredSize(c);
-            }
+	public ToolTipLlamada(String text, Color background, Color foreground, Color border, Font font) {
 
-            @Override
-            public Dimension getPreferredSize(JComponent c) {
-                Insets insets = c.getInsets();
-                Dimension d = new Dimension(buttonDimension);
-                d.width += insets.left + insets.right;
-                d.height += insets.top + insets.bottom;
-                return d;
-            }
-        });
-    }
+		if (background == null) {
 
+			background = new Color(32, 39, 55);
 
-     @Override
-     protected void paintBorder(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+		}
 
-        g2.setColor(colorDeBorde);
-        g2.draw(getShape());
+		if (foreground == null) {
 
+			foreground = Color.WHITE;
 
-        g2.dispose();
-    }
+		}
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        int x = 0, y = 0;
-        int w = getWidth() - 1, h = getHeight() -1 ;
+		if (border == null) {
 
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+			border = new Color(173, 173, 173);
 
+		}
 
+		if (font == null) {
 
-        Paint gp = getGradientePaint();
-        g2.setPaint(gp);
+			font = getFont().deriveFont(14f);
 
-        
-         g2.fill(getShape());
+		}
 
-//        g2.fillRoundRect(x, y, w , h , getHeight() / 3, h / 3);
-         paintText(g2);
-         g2.setColor(getBackground());
-         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                 RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-         g2.dispose();
-//        super.paintComponent(g);
-    }
+		this.colorDeBorde = border;
 
-    private void paintText(Graphics2D g2){
-        Insets insets = getInsets();
-        FontMetrics fm = getFontMetrics(getFont());
-        TextLayout layout = new TextLayout(getTipText(),
-                getFont(),
-                g2.getFontRenderContext());
-        Rectangle2D bounds = layout.getBounds();
+		this.text = text;
 
-        int x = (int) (getWidth() - bounds.getWidth()) / 2;
-        //x -= 2;
-        int y = getHeight() / 2;
+		setFont(font);
 
+		setForeground(foreground);
 
-        g2.setColor(Color.BLACK);
-        layout.draw(g2,
-                x + (int) Math.ceil(1),
-                y + (int) Math.ceil(1));
+		setBackground(background);
 
-        g2.setColor(getForeground());
-        layout.draw(g2, x, y);
-    }
+		setOpaque(false);
 
+		setUI(new BasicToolTipUI() {
 
-    public Color getColorDeBorde() {
-        return colorDeBorde;
-    }
+			@Override
 
-    public void setColorDeBorde(Color colorDeBorde) {
-        this.colorDeBorde = colorDeBorde;
-    }
+			public Dimension getMinimumSize(JComponent c) {
 
-    
+				return getPreferredSize(c);
 
-    public Paint getGradientePaint(){
-        return new GradientPaint(0,0,getBackground(), 0, getHeight(),getBackground().darker());
-    }
+			}
 
-    public Shape getShape(){
-        Shape shape = new RoundRectangle2D.Float(10, 0, getWidth()-11, getHeight()-1,
-                                                 getHeight()/3, getHeight()/3);
-        Area area = new Area(shape);
-        GeneralPath path = new GeneralPath();
-        path.moveTo(0, getHeight()/2);
-        path.lineTo(10, (getHeight()/2)-5);
-        path.lineTo(10, (getHeight()/2)+5);
-        path.closePath();
-        area.add(new Area(path));
-        return area;
-    }
+			@Override
+
+			public Dimension getMaximumSize(JComponent c) {
+
+				return getPreferredSize(c);
+
+			}
+
+			@Override
+
+			public Dimension getPreferredSize(JComponent c) {
+
+				Insets insets = c.getInsets();
+
+				Dimension d = new Dimension(buttonDimension);
+
+				d.width += insets.left + insets.right;
+
+				d.height += insets.top + insets.bottom;
+
+				return d;
+
+			}
+
+		});
+
+	}
+
+	@Override
+	protected void paintBorder(Graphics g) {
+
+		Graphics2D g2 = (Graphics2D) g.create();
+
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		g2.setColor(colorDeBorde);
+
+		g2.draw(getShape());
+
+		g2.dispose();
+
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+
+		Graphics2D g2 = (Graphics2D) g.create();
+
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		TextLayout layout = new TextLayout(getTipText(), getFont(), g2.getFontRenderContext());
+
+		Rectangle2D bounds = layout.getBounds();
+
+		Paint gp = getGradientePaint();
+
+		g2.setPaint(gp);
+
+		g2.fill(getShape());
+
+		g2.setColor(getBackground());
+
+		int x = (int) (getWidth() - bounds.getWidth()) / 2;
+
+		int y = (getHeight() / 2) + ((getHeight() / 2) / 3);
+
+		g2.setColor(getForeground());
+
+		g2.setFont(getFont());
+
+		g2.drawString(text, x, y);
+
+		g2.dispose();
+
+	}
+
+	public Color getColorDeBorde() {
+
+		return colorDeBorde;
+
+	}
+
+	public void setColorDeBorde(Color colorDeBorde) {
+
+		this.colorDeBorde = colorDeBorde;
+
+	}
+
+	public Paint getGradientePaint() {
+
+		return new GradientPaint(0, 0, getBackground(), 0, getHeight(), getBackground().darker());
+
+	}
+
+	public Shape getShape() {
+
+		Shape shape = new RoundRectangle2D.Float(10, 0, getWidth() - 11, getHeight() - 1, getHeight() / 3,
+				getHeight() / 3);
+
+		Area area = new Area(shape);
+
+		GeneralPath path = new GeneralPath();
+
+		path.moveTo(0, getHeight() / 2);
+
+		path.lineTo(10, (getHeight() / 2) - 5);
+
+		path.lineTo(10, (getHeight() / 2) + 5);
+
+		path.closePath();
+
+		area.add(new Area(path));
+
+		return area;
+
+	}
 
 }

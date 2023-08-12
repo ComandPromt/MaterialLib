@@ -329,6 +329,7 @@ public class SliderButtonPanel extends JPanel {
 	private void ponerIndice(RoundedButton boton, int index) {
 
 		boton.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 

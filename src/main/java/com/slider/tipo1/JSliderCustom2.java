@@ -8,9 +8,15 @@ import javax.swing.JSlider;
 public class JSliderCustom2 extends JSlider {
 
 	public JSliderCustom2() {
+
 		setOpaque(false);
+
 		setBackground(new Color(180, 180, 180));
+
 		setForeground(new Color(69, 124, 235));
+
 		setUI(new JSliderUI2(this));
+
 	}
+
 }

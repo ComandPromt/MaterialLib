@@ -2,6 +2,7 @@ package com.buttons.custom;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -14,10 +15,14 @@ import java.awt.geom.Area;
 import java.awt.geom.Point2D;
 
 import javax.swing.JButton;
+import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
 
+import org.edisoncor.gui.toolTip.ToolTipLlamada;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+
+@SuppressWarnings("serial")
 
 public class UWPButton extends JButton {
 
@@ -41,7 +46,80 @@ public class UWPButton extends JButton {
 
 	private Color effectColor = new Color(255, 255, 255);
 
-	public UWPButton() {
+	private String text;
+
+	private Color background;
+
+	private Color foreground;
+
+	private Color border;
+
+	private Font fuente;
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			font = getFont().deriveFont(14f);
+
+		}
+
+		this.text = text;
+
+		this.background = background;
+
+		this.foreground = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || background == null || foreground == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
+
+	public UWPButton(String text) {
+
+		setText(text);
 
 		init();
 

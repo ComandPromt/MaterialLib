@@ -293,20 +293,14 @@ public class BarChart extends JComponent {
 
 			@Override
 			public void renderGraphics(BlankPlotChart1 chart, Graphics2D g2, Rectangle2D rectangle) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mouseMove(Rectangle2D rectangle, MouseEvent mouse) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void renderGraphics(BlankPlotChart2 chart, Graphics2D g2, Rectangle2D rectangle) {
-				// TODO Auto-generated method stub
-
 			}
 
 		});

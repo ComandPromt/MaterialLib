@@ -9,6 +9,14 @@ import javax.swing.JComboBox;
 
 public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
+	private int index;
+
+	public int getIndex() {
+
+		return index;
+
+	}
+
 	public ComboBoxSuggestion() {
 
 		setUI(new ComboSuggestionUI());
@@ -45,6 +53,8 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 					valorIndice--;
 
 				}
+
+				index = valorIndice;
 
 				setSelectedIndex(valorIndice);
 

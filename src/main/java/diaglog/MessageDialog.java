@@ -1,6 +1,7 @@
 package diaglog;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -12,6 +13,8 @@ import javax.swing.text.StyledDocument;
 
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+
+import com.buttons.custom.ButtonCustom;
 
 @SuppressWarnings("serial")
 public class MessageDialog extends javax.swing.JDialog {
@@ -180,9 +183,9 @@ public class MessageDialog extends javax.swing.JDialog {
 
 		background1 = new diaglog.Background();
 
-		cmdCancel = new com.buttons.custom.ButtonCustom();
+		cmdCancel = new ButtonCustom("");
 
-		cmdOK = new com.buttons.custom.ButtonCustom();
+		cmdOK = new ButtonCustom("");
 
 		lbIcon = new javax.swing.JLabel();
 
@@ -222,7 +225,7 @@ public class MessageDialog extends javax.swing.JDialog {
 
 		cmdOK.setFont(new java.awt.Font("sansserif", 0, 14));
 
-		cmdOK.addActionListener(new java.awt.event.ActionListener() {
+		cmdOK.addActionListener(new ActionListener() {
 
 			@Override
 
@@ -320,7 +323,7 @@ public class MessageDialog extends javax.swing.JDialog {
 
 	}
 
-	public static enum MessageType {
+	public enum MessageType {
 
 		CANCEL, OK
 

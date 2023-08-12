@@ -21,6 +21,18 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class SwitchButton extends Component {
 
+	private Timer timer;
+
+	private float location;
+
+	private boolean selected;
+
+	private boolean mouseOver;
+
+	private float speed = 4f;
+
+	private List<EventSwitchSelected> events;
+
 	public boolean isSelected() {
 
 		return selected;
@@ -37,23 +49,11 @@ public class SwitchButton extends Component {
 
 	}
 
-	private Timer timer;
-
-	private float location;
-
-	private boolean selected;
-
-	private boolean mouseOver;
-
-	private float speed = 4f;
-
 	public void setSpeed(float speed) {
 
 		this.speed = speed;
 
 	}
-
-	private List<EventSwitchSelected> events;
 
 	public SwitchButton() {
 
@@ -147,17 +147,13 @@ public class SwitchButton extends Component {
 			@Override
 			public void mouseReleased(MouseEvent me) {
 
-				if (SwingUtilities.isLeftMouseButton(me)) {
+				if (SwingUtilities.isLeftMouseButton(me) && (mouseOver)) {
 
-					if (mouseOver) {
+					selected = !selected;
 
-						selected = !selected;
+					timer.start();
 
-						timer.start();
-
-						runEvent();
-
-					}
+					runEvent();
 
 				}
 

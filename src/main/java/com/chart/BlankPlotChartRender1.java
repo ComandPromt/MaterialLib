@@ -27,4 +27,5 @@ abstract class BlankPlotChartRender1 {
 	public abstract void renderGraphics(Graphics2D g2, List<Path2D.Double> gra);
 
 	public abstract int getMaxLegend();
+
 }

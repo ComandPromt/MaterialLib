@@ -376,7 +376,7 @@ class BlankPlotChart1 extends JComponent {
 
 				if (stop) {
 
-					break;
+					i = labelCount;
 
 				}
 

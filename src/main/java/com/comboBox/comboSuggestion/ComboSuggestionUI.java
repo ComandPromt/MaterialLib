@@ -255,6 +255,10 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 	@SuppressWarnings("serial")
 	private class Border extends EmptyBorder {
 
+		private Color focusColor = new Color(128, 189, 255);
+
+		private Color color = new Color(206, 212, 218);
+
 		@SuppressWarnings("unused")
 		public Color getFocusColor() {
 
@@ -281,10 +285,6 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 			this.color = color;
 
 		}
-
-		private Color focusColor = new Color(128, 189, 255);
-
-		private Color color = new Color(206, 212, 218);
 
 		public Border(int border) {
 
