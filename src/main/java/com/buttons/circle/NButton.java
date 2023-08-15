@@ -1,8 +1,8 @@
 package com.buttons.circle;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,8 +23,6 @@ import org.edisoncor.gui.toolTip.ToolTipLlamada;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
-
-import util.Mthos;
 
 @SuppressWarnings("serial")
 
@@ -55,6 +53,18 @@ public class NButton extends JButton {
 	private Color border;
 
 	private Font fuente;
+
+	private int grosor;
+
+	private int round;
+
+	public void setThickness(int thickness) {
+
+		this.grosor = thickness;
+
+		repaint();
+
+	}
 
 	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
 
@@ -117,46 +127,6 @@ public class NButton extends JButton {
 
 	}
 
-	@Override
-	public void setFont(Font font) {
-
-		super.setFont(new Font(font.getFamily(), font.getStyle(), calculateTextSize(getText())));
-
-		repaint();
-
-	}
-
-	public int calculateTextSize(String text) {
-
-		int calculo = 0;
-
-		try {
-
-			int size = (getHeight() * 150) / (140);
-
-			int ancho = (size * 100) / 150;
-
-			calculo = (getWidth() * 90) / 380;
-
-			int max = Math.round((float) getWidth() / (float) ancho);
-
-			if (text.length() > max) {
-
-				calculo = (getWidth() * 5 * 35) / (110 * text.length());
-
-				calculo -= 7;
-
-			}
-
-		}
-
-		catch (Exception e) {
-		}
-
-		return calculo;
-
-	}
-
 	public Color borderColor() {
 
 		return borderColor;
@@ -195,6 +165,24 @@ public class NButton extends JButton {
 
 	}
 
+	public void setRound(int round) {
+
+		if (round > 365) {
+
+			round = 365;
+
+		}
+
+		if (round < 0) {
+
+			round = 0;
+
+		}
+
+		this.round = round;
+
+	}
+
 	public NButton(String text) {
 
 		addComponentListener(new ComponentAdapter() {
@@ -214,8 +202,6 @@ public class NButton extends JButton {
 		setFocusPainted(false);
 
 		setContentAreaFilled(false);
-
-		setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		setText(text);
 
@@ -277,8 +263,6 @@ public class NButton extends JButton {
 
 	public void paint(Graphics grphcs) {
 
-		super.paint(grphcs);
-
 		int width = getWidth();
 
 		int height = getHeight();
@@ -289,17 +273,19 @@ public class NButton extends JButton {
 
 		g2.setColor(getBackground());
 
-		g2.fillRoundRect(0, 0, width - 1, height - 1, height, height);
+		if (round < 1) {
+
+			round = height;
+
+		}
+
+		g2.fillRoundRect(0, 0, width - 1, height - 1, round, round);
 
 		g2.setColor(getForeground());
 
-		g2.setFont(getFont());
-
-		g2.drawString(getText(), Mthos.centrarTexto(getText(), getFont(), getWidth()), (int) ((getHeight() / 2) * 1.8));
-
 		if (pressedPoint != null) {
 
-			Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, height, height));
+			Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, round, round));
 
 			g2.setColor(effectColor);
 
@@ -318,9 +304,17 @@ public class NButton extends JButton {
 
 			g2.setColor(borderColor);
 
-			g2.drawRoundRect(0, 0, width - 1, height - 1, height, height);
+			if (grosor > 0) {
+
+				g2.setStroke(new BasicStroke(grosor));
+
+			}
+
+			g2.drawRoundRect(0, 0, width - 1, height - 1, round, round);
 
 		}
+
+		super.paint(grphcs);
 
 	}
 

@@ -35,16 +35,6 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 	private Color indicador;
 
-	public void setRoundedButtons(boolean rounded) {
-
-		for (RoundedButton boton : buttons) {
-
-			boton.setRounded(rounded);
-
-		}
-
-	}
-
 	public void setBackgroundLabel(Color color) {
 
 		panel2.setBackground(color);
@@ -65,7 +55,7 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 		for (RoundedButton boton : buttons) {
 
-			boton.getBorde().setHorizontalAlignment(alginment);
+			boton.setHorizontalAlignment(alginment);
 
 		}
 
@@ -82,7 +72,7 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 		for (RoundedButton boton : buttons) {
 
-			boton.getBorde().setExternal(color);
+			boton.setBorderColor(color);
 
 		}
 
@@ -98,8 +88,6 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 			for (RoundedButton boton : buttons) {
 
 				boton.setFont(font);
-
-				boton.getBorde().setFuente(font);
 
 			}
 
@@ -191,7 +179,7 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 			for (RoundedButton boton : buttons) {
 
-				boton.getBorde().setInner(color);
+				boton.setBackground(color);
 
 			}
 
@@ -309,8 +297,6 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 				boton.setForeground(foregroundColor);
 
-				boton.getBorde().setFuente(getFont());
-
 				buttons.add(boton);
 
 				panel1.add(boton);
@@ -392,8 +378,6 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 
 			boton.setForeground(foregroundColor);
 
-			boton.getBorde().setFuente(getFont());
-
 			buttons.add(boton);
 
 			panel1.add(boton);
@@ -468,8 +452,6 @@ public class RoundButtonPanelWithIndicator extends JPanel {
 			boton.setBackground(backgroundButtonColor);
 
 			boton.setForeground(foregroundColor);
-
-			boton.getBorde().setFuente(getFont());
 
 			buttons.add(boton);
 

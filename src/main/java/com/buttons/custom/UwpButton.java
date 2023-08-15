@@ -24,7 +24,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 @SuppressWarnings("serial")
 
-public class UWPButton extends JButton {
+public class UwpButton extends JButton {
 
 	private Animator animatorOver;
 
@@ -117,7 +117,7 @@ public class UWPButton extends JButton {
 
 	}
 
-	public UWPButton(String text) {
+	public UwpButton(String text) {
 
 		setText(text);
 

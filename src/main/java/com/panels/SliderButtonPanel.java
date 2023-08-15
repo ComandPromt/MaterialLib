@@ -43,7 +43,7 @@ public class SliderButtonPanel extends JPanel {
 
 		for (int i = 0; i < buttons.size(); i++) {
 
-			buttons.get(i).getBorde().setHorizontalAlignment(alginment);
+			buttons.get(i).setHorizontalAlignment(alginment);
 
 		}
 	}
@@ -81,7 +81,7 @@ public class SliderButtonPanel extends JPanel {
 
 		for (int i = 0; i < buttons.size(); i++) {
 
-			buttons.get(i).getBorde().setExternal(color);
+			buttons.get(i).setBorderColor(color);
 
 		}
 
@@ -205,7 +205,7 @@ public class SliderButtonPanel extends JPanel {
 
 			for (RoundedButton boton : buttons) {
 
-				boton.getBorde().setInner(color);
+				boton.setBackground(color);
 
 			}
 

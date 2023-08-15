@@ -7,7 +7,7 @@ import java.awt.Point;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class JPanel2 extends JPanel {
+class JPanel2 extends JPanel {
 
 	JavaLabel3 fondo;
 

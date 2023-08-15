@@ -1,9 +1,8 @@
-package com.buttons.round;
+package com.label.round;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -12,14 +11,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JToolTip;
-
-import org.edisoncor.gui.toolTip.ToolTipLlamada;
+import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 
-public class RoundedButton extends JButton {
+public class RoundedLabel extends JLabel {
 
 	private BufferedImage originalImage;
 
@@ -30,77 +26,6 @@ public class RoundedButton extends JButton {
 	private Color borderColor;
 
 	private Color fondo;
-
-	private String text;
-
-	private Color background;
-
-	private Color foreground;
-
-	private Color border;
-
-	private Font fuente;
-
-	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
-
-		if (background == null) {
-
-			background = new Color(32, 39, 55);
-
-		}
-
-		if (foreground == null) {
-
-			foreground = Color.WHITE;
-
-		}
-
-		if (border == null) {
-
-			border = new Color(173, 173, 173);
-
-		}
-
-		if (font == null) {
-
-			font = getFont().deriveFont(14f);
-
-		}
-
-		this.text = text;
-
-		this.background = background;
-
-		this.foreground = foreground;
-
-		this.border = border;
-
-		this.fuente = font;
-
-		setToolTipText(text);
-
-	}
-
-	@Override
-	public JToolTip createToolTip() {
-
-		if (text == null || background == null || foreground == null || border == null) {
-
-			return super.createToolTip();
-
-		}
-
-		else {
-
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
-
-			tip.setComponent(this);
-
-			return tip;
-
-		}
-
-	}
 
 	public void setBorderColor(Color borderColor) {
 
@@ -138,7 +63,7 @@ public class RoundedButton extends JButton {
 
 	}
 
-	public RoundedButton(String text) {
+	public RoundedLabel(String text) {
 
 		fondo = null;
 
@@ -149,10 +74,6 @@ public class RoundedButton extends JButton {
 		radius = 20;
 
 		setText(text);
-
-		setContentAreaFilled(false);
-
-		setFocusPainted(false);
 
 	}
 

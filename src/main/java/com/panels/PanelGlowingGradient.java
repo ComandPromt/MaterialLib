@@ -1,4 +1,4 @@
-package com.panels.utils;
+package com.panels;
 
 import java.awt.Color;
 import java.awt.GradientPaint;

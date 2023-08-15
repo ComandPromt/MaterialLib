@@ -40,7 +40,7 @@ import scrollbar.ScrollBarCustom;
 
 @SuppressWarnings({ "rawtypes", "serial" })
 
-public class SimpleComboBox<E> extends JComboBox {
+public class SimpleComboBox extends JComboBox {
 
 	private String labeText = "Label";
 

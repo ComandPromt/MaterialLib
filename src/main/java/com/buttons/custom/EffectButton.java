@@ -18,6 +18,7 @@ import org.edisoncor.gui.toolTip.ToolTipLlamada;
 import org.edisoncor.gui.util.ShadowRenderer;
 
 @SuppressWarnings("serial")
+
 public class EffectButton extends JButton {
 
 	private int round = 10;

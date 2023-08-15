@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 @SuppressWarnings("serial")
+
 public class ImageAvatar extends JComponent {
 
 	private Icon image;

@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Label;
 
 @SuppressWarnings("serial")
-public class JavaLabel3 extends Label {
+class JavaLabel3 extends Label {
 
 	private Color color;
 
@@ -18,33 +18,33 @@ public class JavaLabel3 extends Label {
 	private Color backgroundColor;
 
 	public void setBackgroundColor(Color backgroundColor) {
-		
+
 		this.backgroundColor = backgroundColor;
-	
+
 	}
 
 	public void setEquis(int equis) {
-	
+
 		this.equis = equis;
-	
+
 	}
 
 	public void setAlto(int alto) {
-	
+
 		this.alto = alto;
-	
+
 	}
 
 	public void setColor(Color color) {
-	
+
 		this.color = color;
-	
+
 	}
 
 	public void setAncho(int ancho) {
-	
+
 		this.ancho = ancho;
-	
+
 	}
 
 	@Override
