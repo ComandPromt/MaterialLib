@@ -1,24 +1,65 @@
 package util;
 
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import java.awt.RenderingHints;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 import com.message.alerts.PopupAlerts;
 
 public abstract class Mthos {
 
 	private Mthos() {
+
+	}
+
+	public static Point getSizeOfImage(BufferedImage originalImage, int newWidth, int newHeight, boolean resize) {
+
+		Point punto;
+
+		int originalWidth = originalImage.getWidth();
+
+		int originalHeight = originalImage.getHeight();
+
+		if (resize) {
+
+			double widthRatio = (double) newWidth / originalWidth;
+
+			double heightRatio = (double) newHeight / originalHeight;
+
+			double scaleFactor = Math.min(widthRatio, heightRatio);
+
+			punto = new Point((int) (originalWidth * scaleFactor), (int) (originalHeight * scaleFactor));
+
+		}
+
+		else {
+
+			punto = new Point(originalWidth, originalHeight);
+
+		}
+
+		return punto;
+
+	}
+
+	public static BufferedImage loadFileImage(String image) {
+
+		try {
+
+			return javax.imageio.ImageIO.read(new File(image));
+
+		}
+
+		catch (Exception e) {
+
+			return null;
+
+		}
 
 	}
 
@@ -75,19 +116,34 @@ public abstract class Mthos {
 
 	}
 
-	public static Image getScaledImage(Image srcImg, int w, int h) {
+	public static BufferedImage resizeImage(String path, int newWidth, int newHeight) {
 
-		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage originalImage;
 
-		Graphics2D g2 = resizedImg.createGraphics();
+		try {
 
-		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			originalImage = ImageIO.read(new File(path));
 
-		g2.drawImage(srcImg, 0, 0, w, h, null);
+			int originalWidth = originalImage.getWidth();
 
-		g2.dispose();
+			int originalHeight = originalImage.getHeight();
 
-		return resizedImg;
+			double widthRatio = (double) newWidth / originalWidth;
+
+			double heightRatio = (double) newHeight / originalHeight;
+
+			double scaleFactor = Math.min(widthRatio, heightRatio);
+
+			return new BufferedImage((int) (originalWidth * scaleFactor), (int) (originalHeight * scaleFactor),
+					originalImage.getType());
+
+		}
+
+		catch (Exception e) {
+
+			return null;
+
+		}
 
 	}
 
@@ -102,40 +158,6 @@ public abstract class Mthos {
 		Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
 
 		return defaultToolkit.getSystemClipboard();
-
-	}
-
-	public static Image iconToImage(Icon icon) {
-
-		if (icon instanceof ImageIcon) {
-
-			return ((ImageIcon) icon).getImage();
-
-		}
-
-		else {
-
-			int w = icon.getIconWidth();
-
-			int h = icon.getIconHeight();
-
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-
-			GraphicsDevice gd = ge.getDefaultScreenDevice();
-
-			GraphicsConfiguration gc = gd.getDefaultConfiguration();
-
-			BufferedImage image = gc.createCompatibleImage(w, h);
-
-			Graphics2D g = image.createGraphics();
-
-			icon.paintIcon(null, g, 0, 0);
-
-			g.dispose();
-
-			return image;
-
-		}
 
 	}
 

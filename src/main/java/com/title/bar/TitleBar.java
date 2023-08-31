@@ -13,8 +13,6 @@ import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,16 +32,7 @@ public class TitleBar extends JPanel {
 
 	private static final Color UNFOCUSED_BACKGROUND = new Color(0, 0, 0, 10);
 
-	private static final Icon CLOSE_ICON = new ImageIcon(
-			TitleBar.class.getResource("/imgs/imagenes/button-close-16.png"));
-
-	private static final Icon CLOSE_HOVER_ICON = new ImageIcon(
-			TitleBar.class.getResource("/imgs/imagenes/button-close-over-16.png"));
-
-	private static final Icon CLOSE_PRESSED_ICON = new ImageIcon(
-			TitleBar.class.getResource("/imgs/imagenes/button-close-pressed-16.png"));
-
-	private final JButton fCloseButton = new JButton(CLOSE_ICON);
+	private final JButton fCloseButton = new JButton("");
 
 	private JLabel fLabel;
 
@@ -98,10 +87,6 @@ public class TitleBar extends JPanel {
 		fCloseButton.setBorderPainted(false);
 
 		fCloseButton.setContentAreaFilled(false);
-
-		fCloseButton.setRolloverIcon(CLOSE_HOVER_ICON);
-
-		fCloseButton.setPressedIcon(CLOSE_PRESSED_ICON);
 
 		setLayout(new BorderLayout());
 

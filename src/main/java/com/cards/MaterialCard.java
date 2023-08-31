@@ -36,7 +36,7 @@ public class MaterialCard extends JPanel {
 
 		try {
 
-			panel2.setText(text);
+			// panel2.setText(text);
 
 		}
 

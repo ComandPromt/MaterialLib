@@ -2,7 +2,7 @@ package com.chart;
 
 import java.awt.Graphics2D;
 
-public abstract class SimpleBarBlankPlotChatRender {
+abstract class SimpleBarBlankPlotChatRender {
 
 	public abstract String getLabelText(int index);
 

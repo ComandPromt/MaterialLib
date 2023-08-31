@@ -1,148 +1,103 @@
 package textarea;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JTextArea;
-import javax.swing.JViewport;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import org.jdesktop.animation.timing.Animator;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 
-public class NTextArea extends JTextArea {
+public class NTextArea extends TextAreaScroll {
 
-	private TextAreaScroll scroll;
+	private TextArea textArea;
 
-	public NTextArea() {
+	public void setWrapStyleWord(boolean active) {
 
-		setWrapStyleWord(true);
-
-		setLineWrap(true);
-
-		setBorder(new EmptyBorder(0, 0, 0, 0));
-
-		setSelectionColor(new Color(76, 204, 255));
-
-		getDocument().addDocumentListener(new DocumentListener() {
-
-			@Override
-
-			public void insertUpdate(DocumentEvent e) {
-
-				getScroll().setAnimateHinText(getText().equals(""));
-
-			}
-
-			@Override
-
-			public void removeUpdate(DocumentEvent e) {
-
-				getScroll().setAnimateHinText(getText().equals(""));
-
-			}
-
-			@Override
-
-			public void changedUpdate(DocumentEvent e) {
-
-			}
-
-		});
-
-		addMouseListener(new MouseAdapter() {
-
-			@Override
-
-			public void mouseEntered(MouseEvent me) {
-
-				getScroll().setMouseOver(true);
-
-			}
-
-			@Override
-
-			public void mouseExited(MouseEvent me) {
-
-				getScroll().setMouseOver(false);
-			}
-
-		});
-
-		addFocusListener(new FocusAdapter() {
-
-			@Override
-
-			public void focusGained(FocusEvent fe) {
-
-				showing(false);
-
-			}
-
-			@Override
-
-			public void focusLost(FocusEvent fe) {
-
-				showing(true);
-
-			}
-
-		});
+		textArea.setWrapStyleWord(active);
 
 	}
 
-	private void showing(boolean action) {
+	public void setText(String text) {
 
-		TextAreaScroll s = getScroll();
-
-		Animator animator = s.getAnimator();
-
-		float location = s.getAnimateLocation();
-
-		if (animator.isRunning()) {
-
-			animator.stop();
-
-		}
-
-		else {
-
-			location = 1;
-
-		}
-
-		animator.setStartFraction(1f - location);
-
-		s.setShow(action);
-
-		location = 1f - location;
-
-		s.setAnimateLocation(location);
-
-		animator.start();
+		textArea.setText(text);
 
 	}
 
-	private TextAreaScroll getScroll() {
+	public void setFontHeader(Font font) {
 
-		if (scroll == null) {
+		super.setFont(font);
 
-			Component com = getParent();
+	}
 
-			JViewport view = (JViewport) com;
+	public void setFont(Font font) {
 
-			scroll = (TextAreaScroll) view.getParent();
+		try {
+
+			textArea.setFont(font);
+
+		} catch (Exception e) {
 
 		}
 
-		return scroll;
+	}
+
+	public void setHeaderBackground(Color bg) {
+
+		try {
+
+			super.setBackground(bg);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setBackgroundText(Color bg) {
+
+		try {
+
+			textArea.setBackground(bg);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setTextColor(Color fg) {
+
+		try {
+
+			textArea.setForeground(fg);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSelectionColor(Color selectionColor) {
+
+		textArea.setSelectionColor(selectionColor);
+
+	}
+
+	public NTextArea(String text) {
+
+		textArea = new TextArea(null, null, null, null);
+
+		setLabelText(text);
+
+		textArea.setColumns(20);
+
+		textArea.setRows(5);
+
+		setViewportView(textArea);
 
 	}
 

@@ -2,7 +2,7 @@ package com.chart;
 
 import java.awt.Color;
 
-public class ModelPieChart {
+class ModelPieChart {
 
 	private String name;
 

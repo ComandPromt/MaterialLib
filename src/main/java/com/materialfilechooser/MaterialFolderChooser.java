@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -16,6 +20,7 @@ import java.util.LinkedList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import com.buttons.round.RoundedButton;
@@ -30,7 +35,7 @@ import scrollbar.MaterialPanelDeslizante;
 
 @SuppressWarnings("serial")
 
-class MaterialFileChooser extends JPanel {
+class MaterialFolderChooser extends JPanel {
 
 	private static ButtonScrollablePanel buttonScrollablePanel;
 
@@ -41,6 +46,30 @@ class MaterialFileChooser extends JPanel {
 	public static TextField path;
 
 	private JLabel labelTipo;
+
+	private void reset() {
+
+		try {
+
+			path.setText(path.getText().trim());
+
+			path.setText(path.getText().replace("   ", "  "));
+
+			path.setText(path.getText().replace("  ", " "));
+
+			if (path.getText().equals("")) {
+
+				path.setText(System.getProperty("user.home") + buttonScrollablePanel.saberSeparador());
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 
 	static void irAPath() {
 
@@ -70,19 +99,47 @@ class MaterialFileChooser extends JPanel {
 
 			buttonScrollablePanel.repaint();
 
-			buttonScrollablePanel.listarItems(path.getText(), ext, false);
+			buttonScrollablePanel.listarItems(path.getText(), ext, true);
 
 		}
 
 	}
 
-	public MaterialFileChooser(ThreadDialog dialogo, String[] filter, boolean all) {
+	public MaterialFolderChooser(ThreadDialog dialogo, String[] filter, boolean all) {
 
 		setBackground(Color.WHITE);
 
 		setLayout(null);
 
 		path = new TextField();
+		path.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(final FocusEvent evt) {
+
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						System.out.println("bbb");
+						reset();
+					}
+				});
+			}
+		});
+
+		path.addInputMethodListener(new InputMethodListener() {
+
+			public void inputMethodTextChanged(InputMethodEvent event) {
+				System.out.println("aaaaa");
+				reset();
+
+			}
+
+			@Override
+			public void caretPositionChanged(InputMethodEvent event) {
+
+			}
+
+		});
 
 		path.addKeyListener(new KeyAdapter() {
 
@@ -95,6 +152,17 @@ class MaterialFileChooser extends JPanel {
 					buttonScrollablePanel.setRutaParaVer(path.getText());
 
 					irAPath();
+
+				}
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+				if (e.getKeyCode() == 8) {
+
+					reset();
 
 				}
 
@@ -152,37 +220,7 @@ class MaterialFileChooser extends JPanel {
 
 		tipo.setBounds(65, 54, 543, 40);
 
-		if (filter != null && filter.length > 0) {
-
-			String extension = "";
-
-			for (int i = 0; i < filter.length; i++) {
-
-				extension = filter[i];
-
-				extension = extension.replace("*", "");
-
-				extension = extension.replace(".", "");
-
-				extension = extension.trim();
-
-				extension = extension.replace("   ", "  ");
-
-				extension = extension.replace("  ", " ");
-
-				extension = extension.replace(" ", "");
-
-				tipo.addItem(extension);
-
-			}
-
-		}
-
-		if ((filter == null || filter.length == 0) || all) {
-
-			tipo.addItem("All (*.*)");
-
-		}
+		tipo.addItem("All (*.*)");
 
 		panel_1.add(tipo);
 
@@ -302,7 +340,12 @@ class MaterialFileChooser extends JPanel {
 						pth = pth.substring(0, pth.lastIndexOf(buttonScrollablePanel.saberSeparador()));
 
 					}
+					if (!pth.equals(buttonScrollablePanel.saberSeparador())
+							&& !pth.endsWith(buttonScrollablePanel.saberSeparador())) {
 
+						pth += buttonScrollablePanel.saberSeparador();
+
+					}
 					buttonScrollablePanel.setRutaParaVer(pth);
 
 					path.setText(pth);
@@ -382,9 +425,9 @@ class MaterialFileChooser extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				switch (e.getClickCount()) {
+				System.out.println("Test " + e.getClickCount());
 
-				case 1:
+				if (e.getClickCount() % 2 != 0) {
 
 					if (new File(path.getText()).exists() && !((path.getText() + buttonScrollablePanel.saberSeparador())
 							.equals(buttonScrollablePanel.getRutaParaVer()))) {
@@ -397,12 +440,10 @@ class MaterialFileChooser extends JPanel {
 									buttonScrollablePanel.getRutaParaVer() + buttonScrollablePanel.saberSeparador());
 
 						}
-
+						System.out.println(path.getText());
 						irAPath();
 
 					}
-
-					break;
 
 				}
 

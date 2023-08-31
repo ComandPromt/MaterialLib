@@ -1,6 +1,6 @@
 package com.chart;
 
-public class ModelChart {
+class ModelChart {
 
 	private String label;
 

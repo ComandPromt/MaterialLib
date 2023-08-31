@@ -2,7 +2,6 @@ package com.materialfilechooser;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -11,22 +10,17 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 
-import com.materialfilechooser.buttons.Home;
-import com.panels.PanelGlowingGradient;
-import com.panels.PanelShadow;
+import textarea.CopyTextAreaScroll;
 
 @SuppressWarnings("all")
 
 public class Test extends javax.swing.JFrame {
 
 	public Test() throws IOException {
-		getContentPane().setFont(new Font("Dialog", Font.PLAIN, 31));
-		setForeground(Color.GREEN);
-		setBackground(Color.WHITE);
 
-		getContentPane().setBackground(Color.PINK);
+		getContentPane().setBackground(Color.LIGHT_GRAY);
 
-		setTitle("Test");
+		setTitle("");
 
 		initComponents();
 
@@ -43,49 +37,65 @@ public class Test extends javax.swing.JFrame {
 		}
 
 		catch (Exception e) {
-			e.printStackTrace();
+
 		}
 
 	}
 
 	public void initComponents() throws IOException {
 
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		try {
 
-		setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		setResizable(false);
+			setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-		PanelShadow panel = new PanelShadow();
+			setResizable(false);
 
-		PanelGlowingGradient btnNewButton = new PanelGlowingGradient();
+			String[] filtro = new String[3];
 
-		Home btnNewButton_1 = new Home(null, null);
+			filtro[0] = "jpg,png";
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addGap(54)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(111, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, layout.createSequentialGroup().addGroup(layout
-						.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING,
-								layout.createSequentialGroup().addGap(38).addComponent(btnNewButton,
-										GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
-						.addGroup(layout.createSequentialGroup().addContainerGap(309, Short.MAX_VALUE).addComponent(
-								btnNewButton_1, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)))
-						.addGap(96)));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup()
-				.addGap(63).addComponent(panel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE).addGap(46)
-				.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE).addGap(40)
-				.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
-				.addContainerGap(30, Short.MAX_VALUE)));
+			filtro[1] = "mp3";
 
-		getContentPane().setLayout(layout);
+			filtro[2] = "avi";
 
-		setSize(new Dimension(532, 552));
+			JFileChooserPanel panel = new JFileChooserPanel(this, "aaa", "Explorar", false, filtro, true);
 
-		setLocationRelativeTo(null);
+			panel.setTitle("Seleccione un archivo");
+
+			panel.setText("Explorar");
+
+			CopyTextAreaScroll panel_1 = new CopyTextAreaScroll();
+
+			javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+			layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
+					.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+									.addGroup(layout.createSequentialGroup().addGap(52).addComponent(panel,
+											GroupLayout.PREFERRED_SIZE, 655, GroupLayout.PREFERRED_SIZE))
+									.addGroup(layout.createSequentialGroup().addGap(63).addComponent(panel_1,
+											GroupLayout.PREFERRED_SIZE, 454, GroupLayout.PREFERRED_SIZE)))
+							.addContainerGap(100, Short.MAX_VALUE)));
+			layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
+					.addGroup(layout.createSequentialGroup().addContainerGap()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE).addGap(18)
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 263, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(190, Short.MAX_VALUE)));
+
+			getContentPane().setLayout(layout);
+
+			setSize(new Dimension(811, 654));
+
+			setLocationRelativeTo(null);
+
+		}
+
+		catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
 
 	}
 

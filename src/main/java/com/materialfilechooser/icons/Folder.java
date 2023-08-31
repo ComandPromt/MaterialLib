@@ -1,8 +1,11 @@
 package com.materialfilechooser.icons;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 
@@ -10,54 +13,122 @@ import javax.swing.JLabel;
 
 public class Folder extends JLabel {
 
-	private Color color;
-
 	private Color background;
 
-	public Folder(Color color, Color background) {
+	private String texto;
 
-		if (color == null) {
+	public String getTexto() {
 
-			color = Color.decode("#8b8b8b");
+		return texto;
+
+	}
+
+	public static String saberEspacios(String text, String textoMayor, int size) {
+
+		int diferencia = textoMayor.length() - text.length();
+
+		String espacios = "";
+
+		if (size > 30) {
+
+			for (int i = 0; i < diferencia; i++) {
+
+				espacios += "   ";
+
+			}
 
 		}
 
-		if (background == null) {
+		else {
 
-			background = Color.WHITE;
+			if (textoMayor.length() == 1) {
+
+				espacios += "     ";
+
+			}
+
+			else {
+
+				for (int i = 0; i < Math.round(textoMayor.length() / 2.75); i++) {
+
+					espacios += "      ";
+
+				}
+
+			}
 
 		}
 
-		this.color = color;
+		return espacios;
 
-		this.background = background;
+	}
 
-		// setSize(getWidth() / 3, getHeight());
+	public Folder(String text, String textoMayor, int size) {
+
+		super(text + saberEspacios(text, textoMayor, size));
+
+		texto = text;
+
+		background = Color.WHITE;
+
+		addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+				if (background.equals(Color.WHITE)) {
+
+					background = Color.decode("#EFEFEF");
+				}
+
+				else {
+
+					background = Color.WHITE;
+
+				}
+
+				repaint();
+
+			}
+
+		});
 
 	}
 
 	@Override
 	public void paint(Graphics g) {
 
-		setSize(48, 48);
-
 		g.setColor(background);
 
 		g.fillRect(0, 0, getWidth(), getHeight());
 
-		g.setColor(color);
+		g.setColor(Color.WHITE);
 
-		int calculo = (int) Math.round(getHeight() * 0.1666);
+		int ancho = 15;
 
-		int mitadX = getWidth() / 2;
+		int alto = 15;
 
-		int[] xPoints = { 0, 0, getWidth(), getWidth(), mitadX, Math.round(getWidth() * 0.3333f) };
+		g.setColor(Color.BLACK);
 
-		int[] yPoints = { 0, getHeight(), getHeight(), calculo, calculo, 0 };
+		int calculo = (int) Math.round(alto * 0.1666);
+
+		int mitadX = ancho / 2;
+
+		int[] xPoints = { 0, 0, ancho, ancho, mitadX, Math.round(ancho * 0.3333f) };
+
+		int[] yPoints = { 0, alto, alto, calculo, calculo, 0 };
 
 		Polygon polygon = new Polygon(xPoints, yPoints, xPoints.length);
 
+		g.translate(0, 5);
+
 		g.fillPolygon(polygon);
+
+		g.setColor(Color.decode("#474747"));
+
+		g.setFont(getFont().deriveFont(Font.PLAIN, 16f));
+
+		g.drawString(texto, 18, (getHeight() / 2));
 
 	}
 

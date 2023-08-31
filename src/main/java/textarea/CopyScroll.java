@@ -1,6 +1,7 @@
 package textarea;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -19,9 +20,10 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 import scrollbar.ScrollBarCustom;
 
 @SuppressWarnings("serial")
-public class TextAreaScroll extends JScrollPane {
 
-	private final Animator animator;
+class CopyScroll extends JScrollPane {
+
+	private Animator animator = null;
 
 	private boolean animateHinText = true;
 
@@ -31,67 +33,65 @@ public class TextAreaScroll extends JScrollPane {
 
 	private boolean mouseOver = false;
 
-	private String labelText = "Label";
+	private String labelText = "";
 
-	private Color lineColor;
+	private Color lineColor = new Color(3, 155, 216);
 
-	private Color scrollForeground;
+	CopyNTextArea textArea;
 
-	private Color scrollBackground;
+	public void setEditable(boolean editable) {
 
-	private Color hintText;
-
-	private ScrollBarCustom scrol;
-
-	public Color getLineColor() {
-
-		return lineColor;
+		this.textArea.setEditable(editable);
 
 	}
 
-	public void setHintText(Color hintText) {
+	public String getText() {
 
-		this.hintText = hintText;
-
-	}
-
-	public void setScroll(Color color) {
-
-		this.scrollForeground = color;
+		return textArea.getText();
 
 	}
 
-	public void setScrollBackground(Color scrollBackground) {
+	public void clean() {
 
-		this.scrollBackground = scrollBackground;
-
-	}
-
-	public Color getScrollForeground() {
-
-		return scrollForeground;
+		textArea.setText("");
 
 	}
 
-	public Color getScrollBackground() {
+	protected Font getTextFont() {
 
-		return scrollBackground;
+		return textArea.getFont();
 
 	}
 
-	public TextAreaScroll() {
+	public void setTextFont(Font font) {
 
-		lineColor = new Color(3, 155, 216);
+		textArea.setFont(font);
+
+	}
+
+	public void setText(String text) {
+
+		textArea.setText(text);
+
+	}
+
+	public CopyScroll() {
 
 		setVerticalScrollBar(new ScrollBarCustom(null, null));
 
-		scrol = new ScrollBarCustom(null, null);
+		ScrollBarCustom scrol = new ScrollBarCustom(null, null);
 
 		scrol.setOrientation(JScrollBar.HORIZONTAL);
 
 		setHorizontalScrollBar(scrol);
 
 		setBorder(new EmptyBorder(20, 3, 3, 3));
+
+		textArea = new CopyNTextArea();
+
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+
+		setViewportView(textArea);
 
 		TimingTarget target = new TimingTargetAdapter() {
 
@@ -117,23 +117,8 @@ public class TextAreaScroll extends JScrollPane {
 
 	}
 
-	void setColors(Color foreground, Color background) {
-
-		this.scrollForeground = foreground;
-
-		this.scrollBackground = background;
-
-		setVerticalScrollBar(new ScrollBarCustom(foreground, background));
-
-		scrol = new ScrollBarCustom(foreground, background);
-
-		scrol.setOrientation(JScrollBar.HORIZONTAL);
-
-		setHorizontalScrollBar(scrol);
-
-	}
-
 	@Override
+
 	public void paint(Graphics grphcs) {
 
 		super.paint(grphcs);
@@ -174,7 +159,7 @@ public class TextAreaScroll extends JScrollPane {
 
 		Insets in = getInsets();
 
-		g2.setColor(hintText);
+		g2.setColor(new Color(150, 150, 150));
 
 		FontMetrics ft = g2.getFontMetrics();
 
@@ -264,6 +249,22 @@ public class TextAreaScroll extends JScrollPane {
 
 	}
 
+	public void setMouseOver(boolean mouseOver) {
+
+		try {
+
+			this.mouseOver = mouseOver;
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public boolean isAnimateHinText() {
 
 		return animateHinText;
@@ -285,6 +286,12 @@ public class TextAreaScroll extends JScrollPane {
 	public void setLabelText(String labelText) {
 
 		this.labelText = labelText;
+
+	}
+
+	public Color getLineColor() {
+
+		return lineColor;
 
 	}
 

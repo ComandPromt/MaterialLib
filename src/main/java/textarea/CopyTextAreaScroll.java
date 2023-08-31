@@ -28,7 +28,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 	private JPanel panel;
 
-	private TextAreaScroll texto;
+	private CopyScroll texto;
 
 	Spinner spinner;
 
@@ -98,11 +98,11 @@ public class CopyTextAreaScroll extends JPanel {
 
 	private void aumentar() {
 
-		if (this.maximumSize == 0 || this.texto.getTextFont().getSize() < this.maximumSize) {
+		if (this.maximumSize == 0 || this.texto.getFont().getSize() < this.maximumSize) {
 
-			this.texto.setTextFont(this.texto.getTextFont().deriveFont((float) this.texto.getTextFont().getSize() + 1));
+			this.texto.setFont(this.texto.getFont().deriveFont((float) this.texto.getFont().getSize() + 1));
 
-			spinner.setValor(this.texto.getTextFont().getSize() + 1);
+			spinner.setValor(this.texto.getFont().getSize() + 1);
 
 		}
 
@@ -126,7 +126,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 	private void disminuir() {
 
-		int fuente = this.texto.getTextFont().getSize();
+		int fuente = this.texto.getFont().getSize();
 
 		if (fuente > this.minimumSize) {
 
@@ -134,7 +134,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		}
 
-		this.texto.setTextFont(this.texto.getTextFont().deriveFont((float) fuente));
+		this.texto.setFont(this.texto.getFont().deriveFont((float) fuente));
 
 		spinner.setValor(fuente);
 
@@ -150,7 +150,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		this.fontSize = size;
 
-		this.texto.setTextFont(this.texto.getTextFont().deriveFont((float) size));
+		this.texto.setFont(this.texto.getFont().deriveFont((float) size));
 
 	}
 
@@ -158,7 +158,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		spinner.setValor(fontSize);
 
-		texto.setTextFont(texto.getTextFont().deriveFont((float) fontSize));
+		texto.setFont(texto.getFont().deriveFont((float) fontSize));
 
 	}
 
@@ -170,7 +170,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 		this.maximumSize = 100;
 
-		this.texto = new TextAreaScroll();
+		this.texto = new CopyScroll();
 
 		this.fontSize = this.texto.getFont().getSize();
 
@@ -215,6 +215,7 @@ public class CopyTextAreaScroll extends JPanel {
 		this.panel.setLayout(gbl_panel);
 
 		SimpleButton disminuir = new SimpleButton("");
+		disminuir.setBorderColor(Color.WHITE);
 
 		disminuir.addMouseWheelListener(new MouseWheelListener() {
 
@@ -244,7 +245,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 			public void keyReleased(KeyEvent e) {
 
-				texto.setTextFont(texto.getTextFont().deriveFont((float) spinner.getValor()));
+				texto.setFont(texto.getFont().deriveFont((float) spinner.getValor()));
 
 			}
 
@@ -273,6 +274,7 @@ public class CopyTextAreaScroll extends JPanel {
 		this.panel.add(disminuir, gbc_disminuir);
 
 		SimpleButton aumentar = new SimpleButton("");
+		aumentar.setBorderColor(Color.WHITE);
 
 		aumentar.addMouseWheelListener(new MouseWheelListener() {
 
@@ -310,6 +312,7 @@ public class CopyTextAreaScroll extends JPanel {
 		this.panel.add(aumentar, gbc_aumentar);
 
 		SimpleButton restaurar = new SimpleButton("");
+		restaurar.setBorderColor(Color.WHITE);
 
 		restaurar.addActionListener(new ActionListener() {
 
@@ -336,6 +339,7 @@ public class CopyTextAreaScroll extends JPanel {
 		this.panel.add(restaurar, gbc_restaurar);
 
 		SimpleButton copiar = new SimpleButton("");
+		copiar.setBorderColor(Color.WHITE);
 
 		copiar.addMouseWheelListener(new MouseWheelListener() {
 
@@ -373,6 +377,7 @@ public class CopyTextAreaScroll extends JPanel {
 		panel.add(copiar, gbc_copiar);
 
 		SimpleButton limpiar = new SimpleButton("");
+		limpiar.setBorderColor(Color.WHITE);
 
 		limpiar.addMouseWheelListener(new MouseWheelListener() {
 

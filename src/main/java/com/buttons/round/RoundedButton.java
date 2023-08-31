@@ -9,13 +9,14 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JToolTip;
 
 import org.edisoncor.gui.toolTip.ToolTipLlamada;
+
+import util.Mthos;
 
 @SuppressWarnings("serial")
 
@@ -184,7 +185,7 @@ public class RoundedButton extends JButton {
 
 			}
 
-			originalImage = loadFileImage(ruta);
+			originalImage = Mthos.loadFileImage(ruta);
 
 			setPreferredSize(new Dimension(originalImage.getWidth(), originalImage.getHeight()));
 
@@ -241,22 +242,6 @@ public class RoundedButton extends JButton {
 		g2d.dispose();
 
 		super.paintComponent(g);
-
-	}
-
-	private BufferedImage loadFileImage(String image) {
-
-		try {
-
-			return javax.imageio.ImageIO.read(new File(image));
-
-		}
-
-		catch (Exception e) {
-
-			return null;
-
-		}
 
 	}
 

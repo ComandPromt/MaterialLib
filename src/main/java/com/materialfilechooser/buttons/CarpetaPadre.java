@@ -6,11 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
 
-import javax.swing.JLabel;
+import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 
-public class CarpetaPadre extends JLabel {
+public class CarpetaPadre extends JButton {
 
 	private Color color;
 

@@ -95,16 +95,6 @@ public class ButtonAction extends JButton {
 
 		setFocusable(true);
 
-		normalButton = loadImage("/resources/button-normal.png");
-
-		normalButtonPressed = loadImage("/resources/button-normal-pressed.png");
-
-		buttonHighlight = loadImage("/resources/header-halo.png");
-
-		mainButton = loadImage("/resources/button-main.png");
-
-		mainButtonPressed = loadImage("/resources/button-main-pressed.png");
-
 		setUI(new BasicButtonUI() {
 			@Override
 			public Dimension getMinimumSize(JComponent c) {
@@ -218,67 +208,75 @@ public class ButtonAction extends JButton {
 	@Override
 	protected void paintComponent(Graphics g) {
 
-		computeShadow();
+		try {
 
-		Graphics2D g2 = (Graphics2D) g;
+			computeShadow();
 
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			Graphics2D g2 = (Graphics2D) g;
 
-		ButtonModel modelo = getModel();
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		Insets insets = getInsets();
+			ButtonModel modelo = getModel();
 
-		int width = getWidth() - insets.left - insets.right;
+			Insets insets = getInsets();
 
-		int height = getHeight() - insets.top - insets.bottom;
+			int width = getWidth() - insets.left - insets.right;
 
-		GraphicsUtil.tileStretchPaint(g2, this, (BufferedImage) getImage(modelo.isArmed()), sourceInsets);
+			int height = getHeight() - insets.top - insets.bottom;
 
-		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			GraphicsUtil.tileStretchPaint(g2, this, (BufferedImage) getImage(modelo.isArmed()), sourceInsets);
 
-		Composite composite = g2.getComposite();
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
+			Composite composite = g2.getComposite();
 
-		if (modelo.isRollover() | foco) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 
-			g2.drawImage(buttonHighlight, insets.left + 2, insets.top + 2, width - 4, height - 4, null);
+			if (modelo.isRollover() | foco) {
+
+				g2.drawImage(buttonHighlight, insets.left + 2, insets.top + 2, width - 4, height - 4, null);
+
+			}
+
+			g2.setComposite(composite);
+
+			FontMetrics fm = getFontMetrics(getFont());
+
+			TextLayout layout = new TextLayout(getText(), getFont(), g2.getFontRenderContext());
+
+			Rectangle2D bounds = layout.getBounds();
+
+			int x = (int) (getWidth() - insets.left - insets.right - bounds.getWidth()) / 2;
+
+			int y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2;
+
+			y += fm.getAscent() - 1;
+
+			if (modelo.isArmed()) {
+
+				x += 1;
+
+				y += 1;
+
+			}
+
+			g2.setColor(colorDeSombra);
+
+			layout.draw(g2, x + (int) Math.ceil(shadowOffsetX), y + (int) Math.ceil(shadowOffsetY));
+
+			if (isEnabled())
+				g2.setColor(getForeground());
+
+			else
+				g2.setColor(getForeground().darker());
+
+			layout.draw(g2, x, y);
 
 		}
 
-		g2.setComposite(composite);
-
-		FontMetrics fm = getFontMetrics(getFont());
-
-		TextLayout layout = new TextLayout(getText(), getFont(), g2.getFontRenderContext());
-
-		Rectangle2D bounds = layout.getBounds();
-
-		int x = (int) (getWidth() - insets.left - insets.right - bounds.getWidth()) / 2;
-
-		int y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2;
-
-		y += fm.getAscent() - 1;
-
-		if (modelo.isArmed()) {
-
-			x += 1;
-
-			y += 1;
+		catch (Exception e) {
 
 		}
-
-		g2.setColor(colorDeSombra);
-
-		layout.draw(g2, x + (int) Math.ceil(shadowOffsetX), y + (int) Math.ceil(shadowOffsetY));
-
-		if (isEnabled())
-			g2.setColor(getForeground());
-
-		else
-			g2.setColor(getForeground().darker());
-
-		layout.draw(g2, x, y);
 
 	}
 

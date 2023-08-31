@@ -2,7 +2,7 @@ package com.chart;
 
 import java.awt.Color;
 
-public class SimpleBarModelLegend {
+class SimpleBarModelLegend {
 
 	private String name;
 
@@ -41,6 +41,7 @@ public class SimpleBarModelLegend {
 	}
 
 	public SimpleBarModelLegend() {
+
 	}
 
 }

@@ -66,7 +66,20 @@ public class NButton extends JButton {
 
 	}
 
+	@Override
+	public void setToolTipText(String text) {
+
+		setToolTip(text, null, null, null, null);
+
+	}
+
 	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
 
 		if (background == null) {
 
@@ -102,7 +115,7 @@ public class NButton extends JButton {
 
 		this.fuente = font;
 
-		setToolTipText(text);
+		super.setToolTipText(text);
 
 	}
 
