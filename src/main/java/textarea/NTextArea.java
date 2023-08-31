@@ -21,12 +21,6 @@ public class NTextArea extends TextAreaScroll {
 
 	}
 
-	public void setFontHeader(Font font) {
-
-		super.setFont(font);
-
-	}
-
 	public void setFont(Font font) {
 
 		try {
@@ -91,13 +85,21 @@ public class NTextArea extends TextAreaScroll {
 
 		textArea = new TextArea(null, null, null, null);
 
-		setLabelText(text);
+		setHeader(text);
 
 		textArea.setColumns(20);
 
 		textArea.setRows(5);
 
+		setSelectionColor(Color.WHITE);
+
 		setViewportView(textArea);
+
+	}
+
+	public TextArea getTextArea() {
+
+		return textArea;
 
 	}
 

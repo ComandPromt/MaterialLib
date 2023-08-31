@@ -29,11 +29,17 @@ public class Spinner extends JSpinner {
 
 	@Override
 	public void setFont(Font font) {
+
 		try {
+
 			editor.setFont(font);
-		} catch (Exception e) {
 
 		}
+
+		catch (Exception e) {
+
+		}
+
 	}
 
 	public int getValor() {
@@ -64,7 +70,18 @@ public class Spinner extends JSpinner {
 
 	public void setValor(int numeroValor) {
 
-		editor.setText(Integer.toString(numeroValor));
+		if ((this.minValor != this.maxValor) && this.minValor < this.maxValor
+				&& (numeroValor >= this.minValor && numeroValor <= this.maxValor)) {
+
+			editor.setText(Integer.toString(numeroValor));
+
+		}
+
+		else {
+
+			editor.setText(Integer.toString(this.minValor));
+
+		}
 
 	}
 
@@ -124,7 +141,7 @@ public class Spinner extends JSpinner {
 
 		this.minValor = 0;
 
-		this.maxValor = 0;
+		this.maxValor = 100;
 
 		setOpaque(false);
 

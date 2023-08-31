@@ -1,6 +1,7 @@
 package textarea;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -33,6 +34,10 @@ public class TextAreaScroll extends JScrollPane {
 
 	private String labelText = "Label";
 
+	private Font headerFont;
+
+	private Color headerColor;
+
 	private Color lineColor;
 
 	private Color scrollForeground;
@@ -42,6 +47,12 @@ public class TextAreaScroll extends JScrollPane {
 	private Color hintText;
 
 	private ScrollBarCustom scrol;
+
+	public void setHeaderFont(Font headerFont) {
+
+		this.headerFont = headerFont;
+
+	}
 
 	public Color getLineColor() {
 
@@ -81,6 +92,8 @@ public class TextAreaScroll extends JScrollPane {
 
 	public TextAreaScroll() {
 
+		headerColor = Color.BLACK;
+
 		lineColor = new Color(3, 155, 216);
 
 		setVerticalScrollBar(new ScrollBarCustom(null, null));
@@ -114,6 +127,8 @@ public class TextAreaScroll extends JScrollPane {
 		animator.setAcceleration(0.5f);
 
 		animator.setDeceleration(0.5f);
+
+		this.headerFont = new Font("Dialog", Font.PLAIN, 20);
 
 	}
 
@@ -208,6 +223,24 @@ public class TextAreaScroll extends JScrollPane {
 
 		}
 
+		if (labelText == null) {
+
+			labelText = "";
+
+		}
+
+		try {
+
+			g2.setFont(headerFont);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+		g2.setColor(headerColor);
+
 		g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
 
 	}
@@ -282,9 +315,15 @@ public class TextAreaScroll extends JScrollPane {
 
 	}
 
-	public void setLabelText(String labelText) {
+	public void setHeader(String labelText) {
 
 		this.labelText = labelText;
+
+	}
+
+	public void setHeader(Color color) {
+
+		this.headerColor = color;
 
 	}
 

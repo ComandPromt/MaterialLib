@@ -24,6 +24,49 @@ public class JFileChooserPanel extends JPanel {
 
 	private LinkedList<String> lista;
 
+	@Override
+	public void setToolTipText(String text) {
+
+		try {
+
+			btnNewButton.setToolTipText(text);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setThickness(int thickness) {
+
+		try {
+
+			btnNewButton.setThickness(thickness);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setBorderColor(Color color) {
+
+		try {
+
+			btnNewButton.setBorderColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setLista(LinkedList<String> lista) {
 
 		this.lista = lista;
@@ -122,26 +165,7 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
-	public JFileChooserPanel(final JFrame mainFrame, String title, String text, boolean folder, String[] filtro,
-			boolean all) {
-
-		if (title == null) {
-
-			title = "";
-
-		}
-
-		if (text == null) {
-
-			text = "";
-
-		}
-
-		if (filtro == null) {
-
-			filtro = new String[0];
-
-		}
+	public JFileChooserPanel() {
 
 		setBackground(Color.WHITE);
 
@@ -151,13 +175,13 @@ public class JFileChooserPanel extends JPanel {
 
 		btnNewButton.setEffectColor(Color.LIGHT_GRAY);
 
-		btnNewButton.setText(text);
+		btnNewButton.setText("");
 
 		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 24));
 
 		btnNewButton.setBackground(Color.PINK);
 
-		threadDialog = new ThreadDialog(mainFrame, this, title, folder, filtro, all);
+		threadDialog = new ThreadDialog(new Frame(), this, "", false, new String[] { "aa" }, false);
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -172,6 +196,63 @@ public class JFileChooserPanel extends JPanel {
 		setLayout(new GridLayout(0, 1, 0, 0));
 
 		add(btnNewButton);
+
+	}
+
+	public JFileChooserPanel(final JFrame mainFrame, String title, String text, boolean folder, String[] filtro,
+			boolean all) {
+
+		if (mainFrame != null) {
+
+			if (title == null) {
+
+				title = "";
+
+			}
+
+			if (text == null) {
+
+				text = "";
+
+			}
+
+			if (filtro == null) {
+
+				filtro = new String[0];
+
+			}
+
+			setBackground(Color.WHITE);
+
+			lista = new LinkedList<>();
+
+			btnNewButton = new NButton("New button");
+
+			btnNewButton.setEffectColor(Color.LIGHT_GRAY);
+
+			btnNewButton.setText(text);
+
+			btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 24));
+
+			btnNewButton.setBackground(Color.PINK);
+
+			threadDialog = new ThreadDialog(mainFrame, this, title, folder, filtro, all);
+
+			btnNewButton.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+
+					threadDialog.setVisible(true);
+
+				}
+
+			});
+
+			setLayout(new GridLayout(0, 1, 0, 0));
+
+			add(btnNewButton);
+
+		}
 
 	}
 

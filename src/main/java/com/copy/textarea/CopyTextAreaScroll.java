@@ -1,15 +1,13 @@
-package textarea;
+package com.copy.textarea;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
@@ -20,6 +18,7 @@ import javax.swing.border.LineBorder;
 import com.buttons.simple.SimpleButton;
 import com.spinner.simple.Spinner;
 
+import textarea.NTextArea;
 import util.Mthos;
 
 @SuppressWarnings("serial")
@@ -28,35 +27,46 @@ public class CopyTextAreaScroll extends JPanel {
 
 	private JPanel panel;
 
-	private CopyScroll texto;
+	private NTextArea textarea;
 
-	Spinner spinner;
+	private Spinner spinner;
 
-	int fontSize;
+	public NTextArea getTextarea() {
 
-	private int minimumSize;
+		return textarea;
 
-	private int maximumSize;
+	}
+
+	@Override
+	public void setForeground(Color fg) {
+
+		try {
+
+			textarea.getTextArea().setForeground(fg);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 
 	public void setEditable(boolean editable) {
 
-		this.texto.setEditable(editable);
+		textarea.getTextArea().setEditable(editable);
 
 	}
 
 	public void setMaximumSize(int maximumSize) {
 
-		this.spinner.setMaxValor(this.minimumSize);
-
-		this.maximumSize = maximumSize;
+		this.spinner.setMaxValor(maximumSize);
 
 	}
 
 	public void setMinimumSize(int minimumSize) {
 
-		this.spinner.setMinValor(this.minimumSize);
-
-		this.minimumSize = minimumSize;
+		this.spinner.setMinValor(minimumSize);
 
 	}
 
@@ -68,43 +78,42 @@ public class CopyTextAreaScroll extends JPanel {
 
 	public String getText() {
 
-		return this.texto.getText();
+		return textarea.getTextArea().getText();
 
 	}
 
 	public void setText(String text) {
 
-		this.texto.setText(text);
+		try {
 
-	}
+			textarea.setText(text);
+		}
 
-	public void setTextFont(Font font) {
+		catch (Exception e) {
 
-		this.texto.setFont(font);
-
-	}
-
-	public void setLabelFontText(Font font) {
-
-		this.texto.setFont(font);
+		}
 
 	}
 
 	public void setLabelText(String text) {
 
-		this.texto.setLabelText(text);
+		try {
+
+			textarea.setHeader(text);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
 	private void aumentar() {
 
-		if (this.maximumSize == 0 || this.texto.getFont().getSize() < this.maximumSize) {
+		spinner.setValor(spinner.getValor() + 1);
 
-			this.texto.setFont(this.texto.getFont().deriveFont((float) this.texto.getFont().getSize() + 1));
-
-			spinner.setValor(this.texto.getFont().getSize() + 1);
-
-		}
+		textarea.getTextArea().setFont(getFont().deriveFont((float) spinner.getValor()));
 
 	}
 
@@ -126,17 +135,9 @@ public class CopyTextAreaScroll extends JPanel {
 
 	private void disminuir() {
 
-		int fuente = this.texto.getFont().getSize();
+		spinner.setValor(spinner.getValor() - 1);
 
-		if (fuente > this.minimumSize) {
-
-			fuente--;
-
-		}
-
-		this.texto.setFont(this.texto.getFont().deriveFont((float) fuente));
-
-		spinner.setValor(fuente);
+		textarea.getTextArea().setFont(getFont().deriveFont((float) spinner.getValor()));
 
 	}
 
@@ -146,43 +147,70 @@ public class CopyTextAreaScroll extends JPanel {
 
 	}
 
-	public void setFontSize(int size) {
+	public void setFont(Font font) {
 
-		this.fontSize = size;
+		try {
 
-		this.texto.setFont(this.texto.getFont().deriveFont((float) size));
+			spinner.setValor(font.getSize());
+
+			textarea.getTextArea().setFont(font);
+
+		} catch (Exception e) {
+
+		}
 
 	}
 
 	private void resetear() {
 
-		spinner.setValor(fontSize);
+		spinner.setValor(16);
 
-		texto.setFont(texto.getFont().deriveFont((float) fontSize));
+		textarea.getTextArea().setFont(textarea.getTextArea().getFont().deriveFont(16f));
+
+	}
+
+	private void cambiarLetra() {
+
+		try {
+
+			textarea.getTextArea().setFont(getFont().deriveFont((float) spinner.getValor()));
+
+		}
+
+		catch (Exception e1) {
+
+		}
 
 	}
 
 	public CopyTextAreaScroll() {
 
-		setLayout(new BorderLayout(0, 0));
-
-		this.minimumSize = 12;
-
-		this.maximumSize = 100;
-
-		this.texto = new CopyScroll();
-
-		this.fontSize = this.texto.getFont().getSize();
-
 		spinner = new Spinner();
 
-		spinner.setMinValor(this.minimumSize);
+		spinner.getEditor().addMouseListener(new MouseAdapter() {
+			@Override
 
-		spinner.setMaxValor(this.maximumSize);
+			public void mousePressed(MouseEvent e) {
 
-		spinner.setValor(this.minimumSize);
+				cambiarLetra();
+
+			}
+
+		});
+
+		spinner.setBounds(1, 0, 53, 50);
+
+		spinner.setMinValor(16);
+
+		spinner.setMaxValor(200);
+
+		spinner.setNegativo(false);
+
+		spinner.setValor(12);
 
 		this.panel = new JPanel();
+
+		panel.setBounds(0, 0, 56, 300);
 
 		this.panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 
@@ -198,23 +226,16 @@ public class CopyTextAreaScroll extends JPanel {
 
 		});
 
+		setLayout(null);
+
 		this.panel.setBackground(Color.WHITE);
 
-		add(this.panel, BorderLayout.WEST);
-
-		GridBagLayout gbl_panel = new GridBagLayout();
-
-		gbl_panel.columnWidths = new int[] { 0, 0 };
-
-		gbl_panel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-
-		gbl_panel.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-
-		this.panel.setLayout(gbl_panel);
+		add(this.panel);
 
 		SimpleButton disminuir = new SimpleButton("");
+
+		disminuir.setBounds(1, 62, 53, 36);
+
 		disminuir.setBorderColor(Color.WHITE);
 
 		disminuir.addMouseWheelListener(new MouseWheelListener() {
@@ -245,35 +266,24 @@ public class CopyTextAreaScroll extends JPanel {
 
 			public void keyReleased(KeyEvent e) {
 
-				texto.setFont(texto.getFont().deriveFont((float) spinner.getValor()));
+				cambiarLetra();
 
 			}
 
 		});
 
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
+		panel.setLayout(null);
 
-		gbc_spinner.insets = new Insets(0, 0, 5, 0);
-
-		gbc_spinner.gridx = 0;
-
-		gbc_spinner.gridy = 0;
-
-		panel.add(spinner, gbc_spinner);
+		panel.add(spinner);
 
 		disminuir.setIcon(new ImageIcon(CopyTextAreaScroll.class.getResource("/imgs/imagenes/zoom-out.png")));
 
-		GridBagConstraints gbc_disminuir = new GridBagConstraints();
-
-		gbc_disminuir.insets = new Insets(0, 0, 5, 0);
-
-		gbc_disminuir.gridx = 0;
-
-		gbc_disminuir.gridy = 1;
-
-		this.panel.add(disminuir, gbc_disminuir);
+		this.panel.add(disminuir);
 
 		SimpleButton aumentar = new SimpleButton("");
+
+		aumentar.setBounds(1, 108, 53, 36);
+
 		aumentar.setBorderColor(Color.WHITE);
 
 		aumentar.addMouseWheelListener(new MouseWheelListener() {
@@ -301,17 +311,12 @@ public class CopyTextAreaScroll extends JPanel {
 
 		aumentar.setIcon(new ImageIcon(CopyTextAreaScroll.class.getResource("/imgs/imagenes/zoom-in.png")));
 
-		GridBagConstraints gbc_aumentar = new GridBagConstraints();
-
-		gbc_aumentar.insets = new Insets(0, 0, 5, 0);
-
-		gbc_aumentar.gridx = 0;
-
-		gbc_aumentar.gridy = 2;
-
-		this.panel.add(aumentar, gbc_aumentar);
+		this.panel.add(aumentar);
 
 		SimpleButton restaurar = new SimpleButton("");
+
+		restaurar.setBounds(1, 156, 53, 36);
+
 		restaurar.setBorderColor(Color.WHITE);
 
 		restaurar.addActionListener(new ActionListener() {
@@ -328,17 +333,12 @@ public class CopyTextAreaScroll extends JPanel {
 
 		restaurar.setIcon(new ImageIcon(CopyTextAreaScroll.class.getResource("/imgs/imagenes/actualizar.png")));
 
-		GridBagConstraints gbc_restaurar = new GridBagConstraints();
-
-		gbc_restaurar.insets = new Insets(0, 0, 5, 0);
-
-		gbc_restaurar.gridx = 0;
-
-		gbc_restaurar.gridy = 3;
-
-		this.panel.add(restaurar, gbc_restaurar);
+		this.panel.add(restaurar);
 
 		SimpleButton copiar = new SimpleButton("");
+
+		copiar.setBounds(1, 204, 53, 36);
+
 		copiar.setBorderColor(Color.WHITE);
 
 		copiar.addMouseWheelListener(new MouseWheelListener() {
@@ -347,7 +347,7 @@ public class CopyTextAreaScroll extends JPanel {
 
 			public void mouseWheelMoved(MouseWheelEvent e) {
 
-				Mthos.copy(texto.getText());
+				Mthos.copy(textarea.getTextArea().getText());
 
 			}
 
@@ -358,7 +358,7 @@ public class CopyTextAreaScroll extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Mthos.copy(texto.getText());
+				Mthos.copy(textarea.getTextArea().getText());
 
 			}
 
@@ -366,17 +366,12 @@ public class CopyTextAreaScroll extends JPanel {
 
 		copiar.setIcon(new ImageIcon(CopyTextAreaScroll.class.getResource("/imgs/imagenes/copy.png")));
 
-		GridBagConstraints gbc_copiar = new GridBagConstraints();
-
-		gbc_copiar.insets = new Insets(0, 0, 5, 0);
-
-		gbc_copiar.gridx = 0;
-
-		gbc_copiar.gridy = 4;
-
-		panel.add(copiar, gbc_copiar);
+		panel.add(copiar);
 
 		SimpleButton limpiar = new SimpleButton("");
+
+		limpiar.setBounds(1, 252, 53, 36);
+
 		limpiar.setBorderColor(Color.WHITE);
 
 		limpiar.addMouseWheelListener(new MouseWheelListener() {
@@ -384,7 +379,7 @@ public class CopyTextAreaScroll extends JPanel {
 			@Override
 			public void mouseWheelMoved(MouseWheelEvent e) {
 
-				texto.clean();
+				textarea.setText("");
 
 			}
 
@@ -395,7 +390,7 @@ public class CopyTextAreaScroll extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				texto.clean();
+				textarea.setText("");
 
 			}
 
@@ -403,17 +398,73 @@ public class CopyTextAreaScroll extends JPanel {
 
 		limpiar.setIcon(new ImageIcon(CopyTextAreaScroll.class.getResource("/imgs/imagenes/clean.png")));
 
-		GridBagConstraints gbc_limpiar = new GridBagConstraints();
+		panel.add(limpiar);
 
-		gbc_limpiar.insets = new Insets(0, 0, 5, 0);
+		textarea = new NTextArea("");
 
-		gbc_limpiar.gridx = 0;
+		textarea.addMouseListener(new MouseAdapter() {
 
-		gbc_limpiar.gridy = 5;
+			@Override
 
-		panel.add(limpiar, gbc_limpiar);
+			public void mouseEntered(MouseEvent e) {
 
-		add(this.texto, BorderLayout.CENTER);
+				cambiarLetra();
+
+			}
+
+		});
+
+		textarea.getTextArea().addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mouseEntered(MouseEvent e) {
+
+				cambiarLetra();
+
+			}
+
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				cambiarLetra();
+
+			}
+
+		});
+
+		textarea.setBounds(56, 0, 394, 300);
+
+		add(textarea);
+
+	}
+
+	public void setHeader(Color color) {
+
+		try {
+
+			textarea.setHeader(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setHeaderFont(Font font) {
+
+		try {
+
+			textarea.setHeaderFont(font);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 

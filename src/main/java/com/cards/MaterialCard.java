@@ -137,7 +137,7 @@ public class MaterialCard extends JPanel {
 
 		try {
 
-			panel2.setLabelText(text);
+			panel2.setHeader(text);
 
 		}
 

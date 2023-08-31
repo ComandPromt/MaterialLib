@@ -42,7 +42,7 @@ public class NButton extends JButton {
 
 	private boolean borderPaint;
 
-	public Color borderColor;
+	private Color borderColor;
 
 	private String text;
 
@@ -57,6 +57,14 @@ public class NButton extends JButton {
 	private int grosor;
 
 	private int round;
+
+	public void setBorderColor(Color borderColor) {
+
+		this.borderColor = borderColor;
+
+		repaint();
+
+	}
 
 	public void setThickness(int thickness) {
 
