@@ -6,13 +6,25 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
 
-import util.Mthos;
+import mthos.JMthos;
 
 public class PopupAlerts {
 
-	static float opacidad = 0.5f;
+	static float opacidad;
 
 	private static Font fuente;
+
+	public PopupAlerts() {
+
+		opacidad = 0.5f;
+
+	}
+
+	public enum AlertType {
+
+		INFO, WARNING, ERROR, SUCCESS
+
+	}
 
 	public static void setFuente(Font fuente) {
 
@@ -20,9 +32,15 @@ public class PopupAlerts {
 
 	}
 
-	public static void mensaje(String mensaje, int type, int size, String path) {
+	public static void mensaje(String mensaje, AlertType type, int size, String path) {
 
 		boolean nulo = true;
+
+		if (size <= 0) {
+
+			size = 18;
+
+		}
 
 		if (fuente == null) {
 
@@ -34,19 +52,13 @@ public class PopupAlerts {
 
 			nulo = false;
 
-			path = Mthos.cleanURL(path);
-
-		}
-
-		if (size <= 0) {
-
-			size = 18;
+			path = JMthos.cleanURL(path);
 
 		}
 
 		switch (type) {
 
-		case 1:
+		case ERROR:
 
 			AlertError error;
 
@@ -72,11 +84,13 @@ public class PopupAlerts {
 
 			error.setOpacity(opacidad);
 
+			error.setLocationRelativeTo(null);
+
 			error.setVisible(true);
 
 			break;
 
-		case 2:
+		case INFO:
 
 			AlertInformation informacion;
 
@@ -102,11 +116,13 @@ public class PopupAlerts {
 
 			informacion.setOpacity(opacidad);
 
+			informacion.setLocationRelativeTo(null);
+
 			informacion.setVisible(true);
 
 			break;
 
-		case 3:
+		case WARNING:
 
 			AlertWarningSalir salir;
 
@@ -132,11 +148,13 @@ public class PopupAlerts {
 
 			salir.setOpacity(opacidad);
 
+			salir.setLocationRelativeTo(null);
+
 			salir.setVisible(true);
 
 			break;
 
-		case 4:
+		default:
 
 			AlertSuccess exito;
 
@@ -162,6 +180,8 @@ public class PopupAlerts {
 
 			exito.setOpacity(opacidad);
 
+			exito.setLocationRelativeTo(null);
+
 			exito.setVisible(true);
 
 			break;
@@ -179,6 +199,8 @@ public class PopupAlerts {
 			if (awtUtilsClass != null) {
 
 				Method method = awtUtilsClass.getMethod("setWindowOpacity", Window.class, float.class);
+
+				window.setLocationRelativeTo(null);
 
 				method.invoke(null, window, opacidad);
 

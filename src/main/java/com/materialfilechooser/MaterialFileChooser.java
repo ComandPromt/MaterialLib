@@ -11,8 +11,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Collections;
 import java.util.LinkedList;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -24,9 +26,11 @@ import com.materialfilechooser.buttons.CarpetaPadre;
 import com.materialfilechooser.buttons.Go;
 import com.materialfilechooser.buttons.Home;
 import com.materialfilechooser.buttons.NewFolder;
-import com.textField.simple.TextField;
+import com.scrollbar.MaterialPanelDeslizante;
+import com.search.SearchInput;
+import com.textField.text.MaterialTextField;
 
-import scrollbar.MaterialPanelDeslizante;
+import mthos.JMthos;
 
 @SuppressWarnings("serial")
 
@@ -36,15 +40,21 @@ class MaterialFileChooser extends JPanel {
 
 	private MaterialPanelDeslizante panel_5;
 
+	public static MaterialTextField path;
+
+	public static LinkedList<String> test;
+
 	private static ComboBoxSuggestion<String> tipo;
 
-	public static TextField path;
+	private String folder;
 
-	private JLabel labelTipo;
+	private static SearchInput search;
 
 	static void irAPath() {
 
 		if (buttonScrollablePanel != null) {
+
+			buttonScrollablePanel.setRutaParaVer(path.getText());
 
 			String ext = "all";
 
@@ -70,19 +80,26 @@ class MaterialFileChooser extends JPanel {
 
 			buttonScrollablePanel.repaint();
 
+			saberBuscador(tipo.getSelectedItem().toString());
+
 			buttonScrollablePanel.listarItems(path.getText(), ext, false);
 
 		}
 
 	}
 
-	public MaterialFileChooser(ThreadDialog dialogo, String[] filter, boolean all) {
+	public MaterialFileChooser(JFrame frame, final ThreadDialog dialogo, String[] filter, boolean all, String title) {
 
 		setBackground(Color.WHITE);
 
 		setLayout(null);
 
-		path = new TextField();
+		test = new LinkedList<String>();
+
+		final VentanaNuevoFile menu = new VentanaNuevoFile(frame, "New Folder", System.getProperty("user.home"), 470,
+				120);
+
+		path = new MaterialTextField();
 
 		path.addKeyListener(new KeyAdapter() {
 
@@ -91,8 +108,6 @@ class MaterialFileChooser extends JPanel {
 			public void keyPressed(KeyEvent e) {
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-
-					buttonScrollablePanel.setRutaParaVer(path.getText());
 
 					irAPath();
 
@@ -106,39 +121,74 @@ class MaterialFileChooser extends JPanel {
 
 		panel_1.setBackground(Color.WHITE);
 
-		panel_1.setBounds(0, 356, 620, 157);
+		panel_1.setBounds(0, 356, 735, 157);
 
 		add(panel_1);
 
 		panel_1.setLayout(null);
 
-		TextField panel_4 = new TextField();
+		search = new SearchInput(JMthos.listar(System.getProperty("user.home"), "all", true, true));
 
-		panel_4.setShadowColor(Color.LIGHT_GRAY);
+		search.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
 
-		panel_4.setBackground(new Color(231, 231, 231));
+				if (!search.getText().isEmpty() && e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-		panel_4.setFont(new Font("Dialog", Font.PLAIN, 16));
+					folder = JMthos.ponerSeparador(path.getText());
 
-		panel_4.setBounds(65, 0, 543, 48);
+					path.setText(folder + search.getText());
 
-		panel_1.add(panel_4);
+				}
 
-		tipo = new ComboBoxSuggestion<>();
+			}
+		});
+
+		search.setBackground(Color.WHITE);
+
+		search.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		search.setBounds(65, 0, 670, 48);
+
+		panel_1.add(search);
+
+		JLabel labelTipo = new JLabel("Type");
+		labelTipo.setHorizontalAlignment(SwingConstants.CENTER);
+		labelTipo.setFont(new Font("Dialog", Font.PLAIN, 16));
+		labelTipo.setBounds(0, 46, 60, 62);
+		panel_1.add(labelTipo);
+
+		JLabel lblNewLabel_1 = new JLabel("Name");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(0, 0, 60, 48);
+		panel_1.add(lblNewLabel_1);
+
+		tipo = new ComboBoxSuggestion<String>();
 
 		tipo.addItemListener(new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {
 
-				if (path != null) {
+				try {
 
-					if (buttonScrollablePanel != null) {
+					if (path != null) {
 
-						buttonScrollablePanel.setRutaParaVer(path.getText());
+						if (buttonScrollablePanel != null) {
+
+							buttonScrollablePanel.setRutaParaVer(path.getText());
+
+						}
+
+						irAPath();
+
+						test.clear();
 
 					}
 
-					irAPath();
+				}
+
+				catch (Exception e1) {
 
 				}
 
@@ -146,11 +196,55 @@ class MaterialFileChooser extends JPanel {
 
 		});
 
-		tipo.setBackground(Color.WHITE);
-
 		tipo.setFont(new Font("Dialog", Font.BOLD, 16));
 
-		tipo.setBounds(65, 54, 543, 40);
+		tipo.setBackground(Color.WHITE);
+
+		tipo.setBounds(65, 58, 670, 40);
+
+		panel_1.add(tipo);
+
+		RoundedButton btnNewButton_3 = new RoundedButton("Select");
+
+		btnNewButton_3.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				dialogo.setLista(test);
+
+				dialogo.dispose();
+
+			}
+
+		});
+
+		btnNewButton_3.setText("Open");
+
+		btnNewButton_3.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		btnNewButton_3.setBounds(410, 106, 109, 40);
+
+		panel_1.add(btnNewButton_3);
+
+		RoundedButton btnNewButton_4 = new RoundedButton("Cancel");
+
+		btnNewButton_4.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				test.clear();
+
+				dialogo.dispose();
+
+			}
+
+		});
+
+		btnNewButton_4.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		btnNewButton_4.setBounds(549, 106, 117, 40);
+
+		panel_1.add(btnNewButton_4);
 
 		if (filter != null && filter.length > 0) {
 
@@ -184,79 +278,11 @@ class MaterialFileChooser extends JPanel {
 
 		}
 
-		panel_1.add(tipo);
-
-		RoundedButton btnNewButton_3 = new RoundedButton("Select");
-
-		btnNewButton_3.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-
-				LinkedList<String> test = new LinkedList<String>();
-
-				test.add("archivo seleccionado");
-
-				dialogo.setLista(test);
-
-				dialogo.dispose();
-
-			}
-
-		});
-
-		btnNewButton_3.setFont(new Font("Dialog", Font.PLAIN, 16));
-
-		btnNewButton_3.setText("Open");
-
-		btnNewButton_3.setIcon(null);
-
-		btnNewButton_3.setBounds(374, 106, 109, 40);
-
-		panel_1.add(btnNewButton_3);
-
-		RoundedButton btnNewButton_4 = new RoundedButton("Cancel");
-
-		btnNewButton_4.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-
-				dialogo.dispose();
-
-			}
-
-		});
-
-		btnNewButton_4.setFont(new Font("Dialog", Font.PLAIN, 16));
-
-		btnNewButton_4.setBounds(491, 106, 117, 40);
-
-		panel_1.add(btnNewButton_4);
-
-		JLabel lblNewLabel_1 = new JLabel("Name");
-
-		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 16));
-
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-
-		lblNewLabel_1.setBounds(0, 0, 60, 48);
-
-		panel_1.add(lblNewLabel_1);
-
-		labelTipo = new JLabel("Type");
-
-		labelTipo.setHorizontalAlignment(SwingConstants.CENTER);
-
-		labelTipo.setFont(new Font("Dialog", Font.PLAIN, 16));
-
-		labelTipo.setBounds(0, 46, 60, 62);
-
-		panel_1.add(labelTipo);
-
 		JPanel panel_3 = new JPanel();
 
 		panel_3.setBackground(Color.WHITE);
 
-		panel_3.setBounds(0, 0, 620, 59);
+		panel_3.setBounds(0, 0, 735, 59);
 
 		add(panel_3);
 
@@ -270,22 +296,15 @@ class MaterialFileChooser extends JPanel {
 
 				try {
 
-					String pth = path.getText();
+					String pth = JMthos.ponerSeparador(path.getText());
 
-					if (!pth.endsWith(buttonScrollablePanel.saberSeparador())) {
-
-						pth += buttonScrollablePanel.saberSeparador();
-
-					}
-
-					pth = path.getText().substring(0,
-							path.getText().lastIndexOf(buttonScrollablePanel.saberSeparador()));
+					pth = path.getText().substring(0, path.getText().lastIndexOf(JMthos.saberSeparador()));
 
 					if (!buttonScrollablePanel.isClick3veces()) {
 
-						if (pth.equals("") && !pth.equals(buttonScrollablePanel.saberSeparador())) {
+						if (pth.equals("") && !pth.equals(JMthos.saberSeparador())) {
 
-							pth = buttonScrollablePanel.saberSeparador();
+							pth = JMthos.saberSeparador();
 
 						}
 
@@ -293,13 +312,13 @@ class MaterialFileChooser extends JPanel {
 
 					else if (pth.equals("")) {
 
-						pth = buttonScrollablePanel.saberSeparador();
+						pth = JMthos.saberSeparador();
 
 					}
 
-					if (path.getText().equals(pth + buttonScrollablePanel.saberSeparador())) {
+					if (path.getText().equals(pth + JMthos.saberSeparador())) {
 
-						pth = pth.substring(0, pth.lastIndexOf(buttonScrollablePanel.saberSeparador()));
+						pth = pth.substring(0, pth.lastIndexOf(JMthos.saberSeparador()));
 
 					}
 
@@ -319,7 +338,7 @@ class MaterialFileChooser extends JPanel {
 
 		});
 
-		carpetaPadre.setBounds(436, 8, 39, 39);
+		carpetaPadre.setBounds(396, 8, 39, 39);
 
 		panel_3.add(carpetaPadre);
 
@@ -329,7 +348,7 @@ class MaterialFileChooser extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 
-				path.setText(System.getProperty("user.home") + buttonScrollablePanel.saberSeparador());
+				path.setText(System.getProperty("user.home"));
 
 				buttonScrollablePanel.setRutaParaVer(path.getText());
 
@@ -339,13 +358,35 @@ class MaterialFileChooser extends JPanel {
 
 		});
 
-		btnNewButton_1.setBounds(499, 8, 39, 39);
+		btnNewButton_1.setBounds(447, 8, 39, 39);
 
 		panel_3.add(btnNewButton_1);
 
 		NewFolder btnNewButton_2 = new NewFolder(Color.decode("#AAAAAA"), null, null);
 
-		btnNewButton_2.setBounds(558, 8, 39, 39);
+		btnNewButton_2.setBounds(498, 8, 39, 39);
+
+		btnNewButton_2.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				String carpeta = path.getText();
+
+				if (!carpeta.endsWith(JMthos.saberSeparador())) {
+
+					carpeta += JMthos.saberSeparador();
+
+				}
+
+				menu.setPath(carpeta);
+
+				menu.createAndShowDialog();
+
+				irAPath();
+
+			}
+
+		});
 
 		panel_3.add(btnNewButton_2);
 
@@ -359,9 +400,9 @@ class MaterialFileChooser extends JPanel {
 
 		panel_3.add(path);
 
-		Go btnNewButton_6 = new Go(new Color(170, 170, 170), null);
+		Go ir = new Go(new Color(170, 170, 170), null);
 
-		btnNewButton_6.addActionListener(new ActionListener() {
+		ir.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
@@ -371,38 +412,112 @@ class MaterialFileChooser extends JPanel {
 
 		});
 
-		btnNewButton_6.setBounds(357, 8, 27, 39);
+		ir.setBounds(357, 8, 27, 39);
 
-		panel_3.add(btnNewButton_6);
+		panel_3.add(ir);
 
-		buttonScrollablePanel = new ButtonScrollablePanel(path.getText(), tipo.getSelectedItem().toString(), false);
+		RoundedButton btnNewButton_3_1 = new RoundedButton("Select");
+
+		btnNewButton_3_1.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				String filtro = tipo.getSelectedItem().toString();
+
+				if (filtro.contains(",")) {
+
+					String[] filtros = filtro.split(",");
+
+					LinkedList<String> lista2 = new LinkedList<>();
+
+					for (int i = 0; i < filtros.length; i++) {
+
+						if (i == 0) {
+
+							test = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, true);
+
+						}
+
+						else {
+
+							lista2 = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, true);
+
+							for (int y = 0; y < lista2.size(); y++) {
+
+								test.add(lista2.get(y));
+
+							}
+
+						}
+
+					}
+
+				}
+
+				else {
+
+					test = (LinkedList<String>) JMthos.listar(path.getText(), filtro, false, true);
+
+				}
+
+				for (int i = 0; i < test.size(); i++) {
+
+					test.set(i, path.getText() + test.get(i));
+
+				}
+
+			}
+
+		});
+
+		btnNewButton_3_1.setText("All");
+
+		btnNewButton_3_1.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		btnNewButton_3_1.setBounds(556, 7, 69, 40);
+
+		panel_3.add(btnNewButton_3_1);
+
+		RoundedButton btnNewButton_3_1_1 = new RoundedButton("Clear");
+
+		btnNewButton_3_1_1.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				test.clear();
+
+			}
+
+		});
+
+		btnNewButton_3_1_1.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		btnNewButton_3_1_1.setBounds(637, 7, 86, 40);
+
+		panel_3.add(btnNewButton_3_1_1);
+
+		buttonScrollablePanel = new ButtonScrollablePanel(search, path.getText(), tipo.getSelectedItem().toString(),
+				false);
 
 		buttonScrollablePanel.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				switch (e.getClickCount()) {
+				if (e.getClickCount() == 1
+						&& ((new File(path.getText()).exists() && !((path.getText() + JMthos.saberSeparador())
+								.equals(buttonScrollablePanel.getRutaParaVer()))))) {
 
-				case 1:
+					buttonScrollablePanel.setRutaParaVer(path.getText());
 
-					if (new File(path.getText()).exists() && !((path.getText() + buttonScrollablePanel.saberSeparador())
-							.equals(buttonScrollablePanel.getRutaParaVer()))) {
+					if (!buttonScrollablePanel.getRutaParaVer().endsWith(JMthos.saberSeparador())) {
 
-						buttonScrollablePanel.setRutaParaVer(path.getText());
-
-						if (!buttonScrollablePanel.getRutaParaVer().endsWith(buttonScrollablePanel.saberSeparador())) {
-
-							buttonScrollablePanel.setRutaParaVer(
-									buttonScrollablePanel.getRutaParaVer() + buttonScrollablePanel.saberSeparador());
-
-						}
-
-						irAPath();
+						buttonScrollablePanel
+								.setRutaParaVer(buttonScrollablePanel.getRutaParaVer() + JMthos.saberSeparador());
 
 					}
 
-					break;
+					irAPath();
 
 				}
 
@@ -418,7 +533,7 @@ class MaterialFileChooser extends JPanel {
 
 		panel_5 = new MaterialPanelDeslizante(buttonScrollablePanel, null, null);
 
-		panel_5.setBounds(0, 64, 620, 280);
+		panel_5.setBounds(0, 64, 735, 280);
 
 		add(panel_5);
 
@@ -426,11 +541,69 @@ class MaterialFileChooser extends JPanel {
 
 		panel.setBackground(Color.WHITE);
 
-		panel.setBounds(0, 58, 620, 10);
+		panel.setBounds(0, 58, 735, 10);
 
 		add(panel);
 
 		irAPath();
+
+	}
+
+	private static void saberBuscador(String filtro) {
+
+		try {
+
+			LinkedList<String> lista = (LinkedList<String>) JMthos.listar(path.getText(), "all", true, true);
+
+			String busqueda = filtro;
+
+			LinkedList<String> test2;
+
+			if (filtro.contains(",")) {
+
+				String[] filtros = filtro.split(",");
+
+				for (int i = 0; i < filtros.length; i++) {
+
+					test2 = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, true);
+
+					for (int y = 0; y < test2.size(); y++) {
+
+						lista.add(test2.get(y));
+
+					}
+
+				}
+
+			}
+
+			else {
+
+				if (filtro.contains("All")) {
+
+					busqueda = "all";
+
+				}
+
+				test2 = (LinkedList<String>) JMthos.listar(path.getText(), busqueda, false, true);
+
+				for (int i = 0; i < test2.size(); i++) {
+
+					lista.add(test2.get(i));
+
+				}
+
+			}
+
+			Collections.sort(lista);
+
+			search.setDataTesting(lista);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 

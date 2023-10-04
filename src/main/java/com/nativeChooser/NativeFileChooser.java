@@ -13,7 +13,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import util.Mthos;
+import mthos.JMthos;
 
 @SuppressWarnings("serial")
 
@@ -26,8 +26,8 @@ public class NativeFileChooser extends JFrame {
 
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(NativeFileChooser.class.getResource("/simple/chooser/folder.png")));
+		setIconImage(
+				Toolkit.getDefaultToolkit().getImage(NativeFileChooser.class.getResource("/imgs/imagenes/folder.png")));
 
 		this.setVisible(false);
 
@@ -105,7 +105,7 @@ public class NativeFileChooser extends JFrame {
 				if (m.find()) {
 
 					this.folder = fileChooser.getSelectedFile().toString().substring(0,
-							fileChooser.getSelectedFile().toString().lastIndexOf(Mthos.saberSeparador()));
+							fileChooser.getSelectedFile().toString().lastIndexOf(JMthos.saberSeparador()));
 
 				}
 
@@ -177,7 +177,7 @@ public class NativeFileChooser extends JFrame {
 
 					case "images":
 
-						extension = Mthos.extraerExtension(x.getAbsolutePath());
+						extension = JMthos.extraerExtension(x.getAbsolutePath());
 
 						if (extension.equals("jpeg") || extension.equals("bmp") || extension.equals("jpg")
 								|| extension.equals("png") || extension.equals("gif")) {
@@ -190,7 +190,7 @@ public class NativeFileChooser extends JFrame {
 
 					default:
 
-						extension = Mthos.extraerExtension(x.getAbsolutePath());
+						extension = JMthos.extraerExtension(x.getAbsolutePath());
 
 						if (extension.equals(filtro)) {
 

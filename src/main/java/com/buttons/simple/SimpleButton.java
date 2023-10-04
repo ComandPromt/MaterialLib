@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JToolTip;
 
-import org.edisoncor.gui.toolTip.ToolTipLlamada;
+import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 
@@ -27,13 +27,13 @@ public class SimpleButton extends JButton {
 
 	private Color borderColor;
 
-	private int radius = 0;
+	private int radius;
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -67,9 +67,9 @@ public class SimpleButton extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -82,7 +82,7 @@ public class SimpleButton extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -90,7 +90,7 @@ public class SimpleButton extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -232,6 +232,8 @@ public class SimpleButton extends JButton {
 
 		setColor(Color.WHITE);
 
+		radius = 20;
+
 		colorOver = Color.WHITE;
 
 		colorClick = Color.WHITE;
@@ -243,6 +245,8 @@ public class SimpleButton extends JButton {
 		setText(text);
 
 		setBorder(null);
+
+		setOpaque(true);
 
 		setFocusPainted(false);
 

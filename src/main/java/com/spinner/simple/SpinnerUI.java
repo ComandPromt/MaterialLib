@@ -2,6 +2,7 @@ package com.spinner.simple;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -20,25 +21,74 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSpinnerUI;
 
-import com.textField.simple.NTextField;
+import com.textField.text.NTextField;
 
 class SpinnerUI extends BasicSpinnerUI {
 
-	Editor editor;
+	private Editor editor;
 
-	int min;
+	private int min;
 
-	int max;
+	private int max;
 
-	int incremento;
+	private int incremento;
 
-	boolean negativo;
+	private boolean negativo;
 
-	boolean mostrarUi;
+	private boolean mostrarUi;
 
-	int numeroValor;
+	private int numeroValor;
 
-	public SpinnerUI(boolean mostrarUi, boolean negativo, int incremento, int minValor, int maxValor) {
+	private Font fuente;
+
+	private Color background;
+
+	private Color buttonBackground;
+
+	private Color selectedColor;
+
+	private Color buttonColor;
+
+	private Color foreground;
+
+	public SpinnerUI(boolean mostrarUi, Font fuente, Color foreground, Color background, Color buttonBackground,
+			Color selectedColor, Color buttonColor, boolean negativo, int incremento, int minValor, int maxValor) {
+
+		if (fuente == null) {
+
+			fuente = new Font("Dialog", Font.PLAIN, 20);
+
+		}
+
+		this.fuente = fuente;
+
+		if (foreground == null) {
+
+			foreground = Color.BLACK;
+
+		}
+
+		this.foreground = foreground;
+
+		this.buttonColor = buttonColor;
+
+		this.selectedColor = selectedColor;
+
+		if (buttonBackground == null) {
+
+			buttonBackground = Color.WHITE;
+
+		}
+
+		this.buttonBackground = buttonBackground;
+
+		if (background == null) {
+
+			background = Color.WHITE;
+
+		}
+
+		this.background = background;
 
 		this.mostrarUi = mostrarUi;
 
@@ -60,7 +110,8 @@ class SpinnerUI extends BasicSpinnerUI {
 
 		try {
 
-			spinner.setEditor(new Editor(spinner, min, max, negativo, incremento, mostrarUi));
+			spinner.setEditor(
+					new Editor(spinner, fuente, foreground, background, min, max, negativo, incremento, mostrarUi));
 
 		}
 
@@ -178,11 +229,24 @@ class SpinnerUI extends BasicSpinnerUI {
 
 		boolean mostrarUi;
 
-		public Editor(JSpinner spinner, int min, int max, boolean negativo, int sumar, boolean mostrarUi) {
+		public Editor(JSpinner spinner, Font font, Color foreground, Color background, int min, int max,
+				boolean negativo, int sumar, boolean mostrarUi) {
 
 			spinner.addChangeListener(this);
 
+			setForeground(foreground);
+
+			setBackground(background);
+
 			setEditable(false);
+
+			if (font == null) {
+
+				font = new Font("Dialog", Font.PLAIN, 20);
+
+			}
+
+			setFont(font);
 
 			this.mostrarUi = mostrarUi;
 
@@ -289,9 +353,15 @@ class SpinnerUI extends BasicSpinnerUI {
 
 			Graphics2D g2 = (Graphics2D) grphcs;
 
+			if (buttonColor == null) {
+
+				buttonColor = getForeground();
+
+			}
+
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-			g2.setColor(getBackground());
+			g2.setColor(buttonBackground);
 
 			g2.fillRoundRect(0, 1, getWidth(), getHeight() - 2, 5, 5);
 
@@ -313,13 +383,13 @@ class SpinnerUI extends BasicSpinnerUI {
 
 				if (isSelected()) {
 
-					g2.setColor(new Color(181, 181, 181));
+					g2.setColor(selectedColor);
 
 				}
 
 				else {
 
-					g2.setColor(getForeground());
+					g2.setColor(buttonColor);
 
 				}
 
@@ -344,13 +414,13 @@ class SpinnerUI extends BasicSpinnerUI {
 
 				if (isSelected()) {
 
-					g2.setColor(new Color(181, 181, 181));
+					g2.setColor(selectedColor);
 
 				}
 
 				else {
 
-					g2.setColor(getForeground());
+					g2.setColor(buttonColor);
 
 				}
 

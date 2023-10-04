@@ -2,7 +2,6 @@ package com.materialfilechooser;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.buttons.circle.NButton;
+import com.buttons.round.NButton;
 
 public class JFileChooserPanel extends JPanel {
 
@@ -165,23 +164,22 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
-	public JFileChooserPanel() {
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public JFileChooserPanel(String text) {
 
 		setBackground(Color.WHITE);
 
 		lista = new LinkedList<>();
 
-		btnNewButton = new NButton("New button");
+		btnNewButton = new NButton(text);
 
 		btnNewButton.setEffectColor(Color.LIGHT_GRAY);
 
-		btnNewButton.setText("");
-
-		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 24));
-
 		btnNewButton.setBackground(Color.PINK);
 
-		threadDialog = new ThreadDialog(new Frame(), this, "", false, new String[] { "aa" }, false);
+		threadDialog = new ThreadDialog(new JFrame(), this, "", true, null, true);
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -199,8 +197,56 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
+	public JFileChooserPanel(JFrame mainFrame, String text) {
+
+		if (mainFrame != null) {
+
+			setBackground(Color.WHITE);
+
+			lista = new LinkedList<>();
+
+			btnNewButton = new NButton("");
+
+			btnNewButton.setEffectColor(Color.LIGHT_GRAY);
+
+			btnNewButton.setText(text);
+
+			btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 24));
+
+			btnNewButton.setBackground(Color.PINK);
+
+			threadDialog = new ThreadDialog(mainFrame, this, "", true, null, true);
+
+			btnNewButton.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+
+					threadDialog.setVisible(true);
+
+				}
+
+			});
+
+			setLayout(new GridLayout(0, 1, 0, 0));
+
+			add(btnNewButton);
+
+		}
+
+	}
+
 	public JFileChooserPanel(final JFrame mainFrame, String title, String text, boolean folder, String[] filtro,
 			boolean all) {
+
+		if (filtro == null || (filtro.length == 1 && filtro[0].toString().toLowerCase().equals("all"))) {
+
+			filtro = null;
+
+			folder = false;
+
+			all = false;
+
+		}
 
 		if (mainFrame != null) {
 
@@ -213,12 +259,6 @@ public class JFileChooserPanel extends JPanel {
 			if (text == null) {
 
 				text = "";
-
-			}
-
-			if (filtro == null) {
-
-				filtro = new String[0];
 
 			}
 
@@ -264,34 +304,38 @@ class ThreadDialog extends JDialog {
 
 	private JFileChooserPanel superior;
 
+	private JFrame mainFrame;
+
 	public void setLista(LinkedList<String> lista) {
 
 		superior.setLista(lista);
 
 	}
 
-	public ThreadDialog(Frame parent, JFileChooserPanel superior, String title, boolean folder, String[] filtro,
+	public ThreadDialog(JFrame parent, JFileChooserPanel superior, String title, boolean folder, String[] filtro,
 			boolean all) {
 
 		super(parent, title, false);
 
+		mainFrame = parent;
+
 		this.superior = superior;
 
-		Object panel;
+		JPanel panel;
 
 		if (folder) {
 
-			panel = new MaterialFolderChooser(this, new String[] { "all" }, true);
+			panel = new MaterialFolderChooser(mainFrame, this, title);
 
 		}
 
 		else {
 
-			panel = new MaterialFileChooser(this, filtro, all);
+			panel = new MaterialFileChooser(mainFrame, this, filtro, all, title);
 
 		}
 
-		setSize(640, 550);
+		setSize(750, 550);
 
 		add((JPanel) panel);
 

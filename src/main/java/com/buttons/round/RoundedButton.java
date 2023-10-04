@@ -14,9 +14,9 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JToolTip;
 
-import org.edisoncor.gui.toolTip.ToolTipLlamada;
+import com.toolTip.ToolTipLlamada;
 
-import util.Mthos;
+import mthos.JMthos;
 
 @SuppressWarnings("serial")
 
@@ -34,9 +34,9 @@ public class RoundedButton extends JButton {
 
 	private String text;
 
-	private Color background;
+	private Color back;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -70,9 +70,9 @@ public class RoundedButton extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.back = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -85,7 +85,7 @@ public class RoundedButton extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || back == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -93,7 +93,7 @@ public class RoundedButton extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, back, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -151,6 +151,8 @@ public class RoundedButton extends JButton {
 
 		setText(text);
 
+		setOpaque(true);
+
 		setContentAreaFilled(false);
 
 		setFocusPainted(false);
@@ -185,7 +187,7 @@ public class RoundedButton extends JButton {
 
 			}
 
-			originalImage = Mthos.loadFileImage(ruta);
+			originalImage = JMthos.loadFileImage(ruta);
 
 			setPreferredSize(new Dimension(originalImage.getWidth(), originalImage.getHeight()));
 

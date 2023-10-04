@@ -2,6 +2,7 @@ package com.search;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -15,6 +16,10 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.JToolTip;
+
+import com.scrollbar.MaterialPanelDeslizante;
+import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 
@@ -29,6 +34,106 @@ public class SearchInput extends JTextField {
 	private JPopupMenu menu;
 
 	private PanelSearch search;
+
+	private String text;
+
+	private Color fondo;
+
+	private Color colorTexto;
+
+	private Color border;
+
+	private Font fuente;
+
+	private LinkedList<String> dataTesting;
+
+	private int index;
+
+	private String[] resultadosBusqueda;
+
+	private boolean seleccionado;
+
+	public void setDataTesting(LinkedList<String> dataTesting) {
+
+		this.dataTesting = dataTesting;
+
+		repaint();
+
+	}
+
+	@Override
+	public void setToolTipText(String text) {
+
+		setToolTip(text, null, null, null, null);
+
+	}
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			font = getFont().deriveFont(14f);
+
+		}
+
+		this.text = text;
+
+		this.fondo = background;
+
+		this.colorTexto = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		super.setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || fondo == null || colorTexto == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
 
 	public Icon getPrefixIcon() {
 
@@ -58,7 +163,7 @@ public class SearchInput extends JTextField {
 
 	}
 
-	private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_txtSearchMouseClicked
+	private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {
 
 		if (search.getItemSize() > 0) {
 
@@ -70,32 +175,37 @@ public class SearchInput extends JTextField {
 
 	private List<DataSearch> search(String search) {
 
-		int limitData = 7;
-
 		List<DataSearch> list = new ArrayList<>();
 
-		String dataTesting[] = { "300 - Rise of an Empire", "Cosmic Sin", "Deadlock", "Deliver Us from Eva",
-				"Empire of the Ants", "Empire of the Ants", "Empire of the Ants", "Empire of the Ants",
-				"Empire of the Ants", "Empire of the Ants",
+		if (dataTesting != null && !dataTesting.isEmpty() && search != null && !search.isEmpty()) {
 
-				"Empire of the Sun", "Empire Records", "Empire State", "Four Good Days", "Frozen Fever", "Frozen",
-				"The Courier", "The First Purge", "To Olivia", "Underworld" };
+			int limitData = 8;
 
-		for (String d : dataTesting) {
+			boolean story;
 
-			if (list.size() != limitData && d.toLowerCase().contains(search)) {
+			int contador = -1;
 
-				boolean story = isStory(d);
+			for (String d : dataTesting) {
 
-				if (story) {
+				if (list.size() != limitData && d.toLowerCase().contains(search)) {
 
-					list.add(0, new DataSearch(d, story));
+					contador++;
 
-				}
+					resultadosBusqueda[contador] = d;
 
-				else {
+					story = isStory(d);
 
-					list.add(new DataSearch(d, story));
+					if (story) {
+
+						list.add(0, new DataSearch(d, story));
+
+					}
+
+					else {
+
+						list.add(new DataSearch(d, story));
+
+					}
 
 				}
 
@@ -109,27 +219,94 @@ public class SearchInput extends JTextField {
 
 	private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {
 
-		String text = getText().trim().toLowerCase();
+		try {
 
-		search.setData(search(text));
+			String text = getText().trim().toLowerCase();
 
-		if (evt.getKeyCode() == KeyEvent.VK_ENTER && !text.isEmpty() && !dataStory.contains(text)) {
+			search.setData(search(text));
 
-			dataStory.add(text);
+			if (evt.getKeyCode() == KeyEvent.VK_ENTER && !text.isEmpty() && !dataStory.contains(text)) {
+
+				dataStory.add(text);
+
+			}
+
+			if (seleccionado && evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+				setText(resultadosBusqueda[index]);
+
+			}
+
+			else {
+
+				if ((evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN)
+						&& (!seleccionado && search.getComponentCount() > 0)) {
+
+					seleccionado = true;
+
+				}
+
+				if (evt.getKeyCode() == KeyEvent.VK_DOWN) {
+
+					index++;
+
+					if (index == search.getComponentCount()) {
+
+						index = 0;
+
+					}
+
+					else if (search.getComponentCount() == 0) {
+
+						index = -1;
+
+					}
+
+					if (index > -1) {
+
+						search.getComponent(index).setBackground(Color.decode("#d6d8d5"));
+
+					}
+
+				}
+
+				else if (evt.getKeyCode() == KeyEvent.VK_UP) {
+
+					index--;
+
+					if (index <= -1) {
+
+						index = search.getComponentCount() - 1;
+
+					}
+
+					if (index > -1) {
+
+						search.getComponent(index).setBackground(Color.decode("#d6d8d5"));
+
+					}
+
+				}
+
+			}
+
+			if (search.getItemSize() > 0) {
+
+				menu.show(this, 0, getHeight());
+
+				menu.setPopupSize(menu.getWidth(), (search.getItemSize() * 35) + 2);
+
+			}
+
+			else {
+
+				menu.setVisible(false);
+
+			}
 
 		}
 
-		if (search.getItemSize() > 0) {
-
-			menu.show(this, 0, getHeight());
-
-			menu.setPopupSize(menu.getWidth(), (search.getItemSize() * 35) + 2);
-
-		}
-
-		else {
-
-			menu.setVisible(false);
+		catch (Exception e) {
 
 		}
 
@@ -177,7 +354,13 @@ public class SearchInput extends JTextField {
 
 	}
 
-	public SearchInput() {
+	public SearchInput(List<String> lista) {
+
+		index = -1;
+
+		resultadosBusqueda = new String[8];
+
+		dataTesting = (LinkedList<String>) lista;
 
 		dataStory = new LinkedList<>();
 
@@ -209,7 +392,7 @@ public class SearchInput extends JTextField {
 
 		menu.setBorder(BorderFactory.createLineBorder(new Color(164, 164, 164)));
 
-		menu.add(search);
+		menu.add(new MaterialPanelDeslizante(search, null, null));
 
 		menu.setFocusable(false);
 

@@ -6,21 +6,19 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.materialfilechooser.icons.Archivo;
-import com.materialfilechooser.icons.Folder;
+import com.search.SearchInput;
+
+import mthos.JMthos;
 
 @SuppressWarnings("serial")
 
-public class ButtonScrollablePanel extends JPanel {
+class ButtonScrollablePanel extends JPanel {
 
 	private String rutaParaVer;
 
@@ -28,7 +26,13 @@ public class ButtonScrollablePanel extends JPanel {
 
 	private boolean click3veces;
 
-	private void addArchivo(boolean carpeta, GridBagConstraints constraints, Archivo labelTest) {
+	private LinkedList<String> listaCarpeta;
+
+	private File archivoParaMirar;
+
+	private String ruta;
+
+	private void addArchivo(GridBagConstraints constraints, Archivo labelTest) {
 
 		(labelTest).addMouseListener(new MouseAdapter() {
 
@@ -39,89 +43,37 @@ public class ButtonScrollablePanel extends JPanel {
 
 				seleccionadoParaVer = labelTest.getTexto();
 
-				if (e.getClickCount() % 2 != 0) {
+				archivoParaMirar = new File(rutaParaVer + labelTest.getTexto());
 
-					if (carpeta) {
+				if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
 
-						MaterialFolderChooser.path.setText(rutaParaVer + labelTest.getTexto());
+					rutaParaVer += JMthos.saberSeparador();
 
-						if (new File(rutaParaVer + labelTest.getTexto()).exists()) {
+				}
 
-							MaterialFolderChooser.path.setText(rutaParaVer + labelTest.getTexto());
+				if (e.getClickCount() % 2 != 0 && archivoParaMirar.exists() && archivoParaMirar.isDirectory()) {
 
-							if (!rutaParaVer.endsWith(saberSeparador())) {
-
-								rutaParaVer += saberSeparador();
-
-							}
-
-						}
-					}
-
-					else {
-
-						MaterialFileChooser.path.setText(rutaParaVer + labelTest.getTexto());
-
-						if (new File(rutaParaVer + labelTest.getTexto()).exists()) {
-
-							MaterialFileChooser.path.setText(rutaParaVer + labelTest.getTexto());
-
-							if (!rutaParaVer.endsWith(saberSeparador())) {
-
-								rutaParaVer += saberSeparador();
-
-							}
-
-						}
-					}
+					MaterialFolderChooser.path.setText(rutaParaVer + labelTest.getTexto());
 
 				}
 
 				else {
 
+					hacerBusqueda();
+
 					click3veces = true;
 
-					if (carpeta) {
+					if (archivoParaMirar.exists() && archivoParaMirar.isDirectory()) {
 
-						if (new File(MaterialFolderChooser.path.getText()).exists()) {
+						rutaParaVer = MaterialFolderChooser.path.getText();
 
-							rutaParaVer = MaterialFolderChooser.path.getText();
+						if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
 
-							if (!rutaParaVer.endsWith(saberSeparador())) {
-
-								rutaParaVer += saberSeparador();
-
-							}
-
-							MaterialFolderChooser.irAPath();
+							rutaParaVer += JMthos.saberSeparador();
 
 						}
 
-					}
-
-					else {
-
-						try {
-
-							if (new File(MaterialFolderChooser.path.getText()).exists()) {
-
-								rutaParaVer = MaterialFolderChooser.path.getText();
-
-								if (!rutaParaVer.endsWith(saberSeparador())) {
-
-									rutaParaVer += saberSeparador();
-
-								}
-
-								MaterialFolderChooser.irAPath();
-
-							}
-
-						}
-
-						catch (Exception e1) {
-
-						}
+						MaterialFolderChooser.irAPath();
 
 					}
 
@@ -146,6 +98,12 @@ public class ButtonScrollablePanel extends JPanel {
 
 				seleccionadoParaVer = labelTest.getTexto();
 
+				if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
+
+					rutaParaVer += JMthos.saberSeparador();
+
+				}
+
 				if (e.getClickCount() % 2 != 0) {
 
 					if (carpeta) {
@@ -156,9 +114,9 @@ public class ButtonScrollablePanel extends JPanel {
 
 							MaterialFolderChooser.path.setText(rutaParaVer + labelTest.getTexto());
 
-							if (!rutaParaVer.endsWith(saberSeparador())) {
+							if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
 
-								rutaParaVer += saberSeparador();
+								rutaParaVer += JMthos.saberSeparador();
 
 							}
 
@@ -173,9 +131,9 @@ public class ButtonScrollablePanel extends JPanel {
 
 							MaterialFileChooser.path.setText(rutaParaVer + labelTest.getTexto());
 
-							if (!rutaParaVer.endsWith(saberSeparador())) {
+							if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
 
-								rutaParaVer += saberSeparador();
+								rutaParaVer += JMthos.saberSeparador();
 
 							}
 
@@ -194,9 +152,9 @@ public class ButtonScrollablePanel extends JPanel {
 
 							rutaParaVer = MaterialFolderChooser.path.getText();
 
-							if (!rutaParaVer.endsWith(saberSeparador())) {
+							if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
 
-								rutaParaVer += saberSeparador();
+								rutaParaVer += JMthos.saberSeparador();
 
 							}
 
@@ -207,14 +165,16 @@ public class ButtonScrollablePanel extends JPanel {
 					}
 
 					else {
+
 						try {
+
 							if (new File(MaterialFolderChooser.path.getText()).exists()) {
 
 								rutaParaVer = MaterialFolderChooser.path.getText();
 
-								if (!rutaParaVer.endsWith(saberSeparador())) {
+								if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
 
-									rutaParaVer += saberSeparador();
+									rutaParaVer += JMthos.saberSeparador();
 
 								}
 
@@ -229,9 +189,9 @@ public class ButtonScrollablePanel extends JPanel {
 
 								rutaParaVer = MaterialFileChooser.path.getText();
 
-								if (!rutaParaVer.endsWith(saberSeparador())) {
+								if (!rutaParaVer.endsWith(JMthos.saberSeparador())) {
 
-									rutaParaVer += saberSeparador();
+									rutaParaVer += JMthos.saberSeparador();
 
 								}
 
@@ -277,7 +237,7 @@ public class ButtonScrollablePanel extends JPanel {
 
 	}
 
-	String extraerExtension(String nombreArchivo) {
+	static String extraerExtension(String nombreArchivo) {
 
 		String extension = "";
 
@@ -292,211 +252,9 @@ public class ButtonScrollablePanel extends JPanel {
 
 	}
 
-	LinkedList<String> listar(String ruta, String extension, boolean carpeta) {
-
-		if (extension == null) {
-
-			extension = "all";
-
-		}
-
-		LinkedList<String> lista = new LinkedList<>();
-
-		File f = new File(ruta);
-
-		ArrayList<String> videosPermitidos = new ArrayList<>();
-
-		videosPermitidos.add("mp4");
-
-		videosPermitidos.add("mpg");
-
-		videosPermitidos.add("avi");
-
-		videosPermitidos.add("mkv");
-
-		ArrayList<String> imagenesPermitidas = new ArrayList<>();
-
-		imagenesPermitidas.add("jpg");
-
-		imagenesPermitidas.add("png");
-
-		imagenesPermitidas.add("jpeg");
-
-		imagenesPermitidas.add("gif");
-
-		if (f.exists()) {
-
-			File[] ficheros = f.listFiles();
-
-			String fichero = "";
-
-			String extensionArchivo;
-
-			File folder;
-
-			for (int x = 0; x < ficheros.length; x++) {
-
-				fichero = ficheros[x].getName();
-
-				folder = new File(ruta + fichero);
-
-				extensionArchivo = extraerExtension(fichero);
-
-				if (carpeta && folder.isDirectory()) {
-
-					lista.add(fichero);
-
-				}
-
-				else if (!carpeta && folder.isFile()) {
-
-					switch (extension) {
-
-					case "all":
-
-						lista.add(fichero);
-
-						break;
-
-					case "videos":
-
-						if (videosPermitidos.contains(extensionArchivo)) {
-
-							lista.add(fichero);
-
-						}
-
-						break;
-
-					case "images":
-
-						if (imagenesPermitidas.contains(extensionArchivo)) {
-
-							lista.add(fichero);
-
-						}
-
-						break;
-
-					default:
-
-						if (extension.equals(extensionArchivo)) {
-
-							lista.add(fichero);
-
-						}
-
-						break;
-
-					}
-
-				}
-
-			}
-
-		}
-
-		Collections.sort(lista);
-
-		return lista;
-
-	}
-
-	List<String> listarConArray(String ruta, String[] lista, boolean carpeta) {
-
-		LinkedList<String> list = new LinkedList<>();
-
-		File f = new File(ruta);
-
-		if (!ruta.endsWith(saberSeparador())) {
-
-			ruta += saberSeparador();
-
-		}
-
-		if (f.exists()) {
-
-			File[] ficheros = f.listFiles();
-
-			String fichero = "";
-
-			String extensionArchivo;
-
-			File folder;
-
-			for (int x = 0; x < ficheros.length; x++) {
-
-				fichero = ficheros[x].getName();
-
-				folder = new File(ruta + fichero);
-
-				extensionArchivo = extraerExtension(fichero);
-
-				if (carpeta && folder.isDirectory()) {
-
-					list.add(fichero);
-
-				}
-
-				else if (!carpeta && folder.isFile() &&
-
-						Arrays.asList(lista).contains(extensionArchivo)) {
-
-					list.add(fichero);
-
-				}
-
-			}
-
-		}
-
-		Collections.sort(list);
-
-		return list;
-
-	}
-
-	String saberSeparador() {
-
-		if (System.getProperty("os.name").contains("indows")) {
-
-			return "\\";
-
-		}
-
-		else {
-
-			return "/";
-
-		}
-
-	}
-
-	String findLongestString(LinkedList<String> list) {
-
-		String longestString = null;
-
-		int maxLength = -1;
-
-		for (String str : list) {
-
-			if (str.length() > maxLength) {
-
-				maxLength = str.length();
-
-				longestString = str;
-
-			}
-
-		}
-
-		return longestString;
-
-	}
-
 	void listarItems(String path, String extension, boolean carpeta) {
 
-		LinkedList<String> lista;
+		LinkedList<String> lista = new LinkedList<>();
 
 		LinkedList<String> lista2 = null;
 
@@ -506,9 +264,9 @@ public class ButtonScrollablePanel extends JPanel {
 
 				GridBagConstraints constraints = new GridBagConstraints();
 
-				if (!path.endsWith(saberSeparador())) {
+				if (!path.endsWith(JMthos.saberSeparador())) {
 
-					path += saberSeparador();
+					path += JMthos.saberSeparador();
 
 				}
 
@@ -520,13 +278,24 @@ public class ButtonScrollablePanel extends JPanel {
 
 					}
 
-					if (extension != null && extension.contains(",")) {
+					if (extension != null) {
 
-						lista = (LinkedList<String>) listarConArray(path, extension.split(","), carpeta);
+						if (extension.contains(",")) {
+
+							lista = (LinkedList<String>) JMthos.listarConArray(path, extension.split(","), carpeta,
+									true);
+
+						}
+
+						else {
+
+							lista = (LinkedList<String>) JMthos.listar(path, extension, false, true);
+
+						}
 
 						if (!carpeta) {
 
-							lista2 = listar(path, "all", true);
+							lista2 = (LinkedList<String>) JMthos.listar(path, "all", true, true);
 
 						}
 
@@ -543,15 +312,9 @@ public class ButtonScrollablePanel extends JPanel {
 						}
 					}
 
-					else {
-
-						lista = listar(path, extension, carpeta);
-
-					}
-
 					int indice = 0;
 
-					String mayorSize = findLongestString(lista);
+					String mayorSize = JMthos.findLongestString(lista);
 
 					for (int row = 0; row < lista.size(); row++) {
 
@@ -570,7 +333,7 @@ public class ButtonScrollablePanel extends JPanel {
 								if (carpeta) {
 
 									addCarpeta(carpeta, constraints,
-											new Folder(lista.get(indice), mayorSize, lista.size()));
+											new Folder(lista.get(indice), mayorSize, lista.size(), carpeta));
 
 								}
 
@@ -578,15 +341,15 @@ public class ButtonScrollablePanel extends JPanel {
 
 									if (new File(path + lista.get(indice)).isFile()) {
 
-										addArchivo(carpeta, constraints,
-												new Archivo(lista.get(indice), mayorSize, lista.size()));
+										addArchivo(constraints,
+												new Archivo(lista.get(indice), mayorSize, lista.size(), carpeta));
 
 									}
 
 									else {
 
 										addCarpeta(carpeta, constraints,
-												new Folder(lista.get(indice), mayorSize, lista.size()));
+												new Folder(lista.get(indice), mayorSize, lista.size(), carpeta));
 
 									}
 
@@ -618,13 +381,41 @@ public class ButtonScrollablePanel extends JPanel {
 
 	}
 
-	public ButtonScrollablePanel(String path, String extension, boolean carpeta) {
+	public ButtonScrollablePanel(SearchInput search, String path, String extension, boolean carpeta) {
 
-		rutaParaVer = System.getProperty("user.home") + saberSeparador();
+		this.ruta = path;
+
+		hacerBusqueda();
+
+		listaCarpeta = new LinkedList<String>();
+
+		rutaParaVer = System.getProperty("user.home") + JMthos.saberSeparador();
 
 		setLayout(new GridBagLayout());
 
 		listarItems(path, extension, carpeta);
+
+	}
+
+	private void hacerBusqueda() {
+
+		LinkedList<String> lista = (LinkedList<String>) JMthos.listar(ruta, "all", true, true);
+
+		LinkedList<String> test2 = (LinkedList<String>) JMthos.listar(ruta, "all", false, true);
+
+		for (int i = 0; i < test2.size(); i++) {
+
+			lista.add(test2.get(i));
+
+		}
+
+		Collections.sort(lista);
+
+	}
+
+	public LinkedList<String> getLista() {
+
+		return listaCarpeta;
 
 	}
 

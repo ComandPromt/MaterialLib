@@ -24,7 +24,7 @@ public class AlertError extends javax.swing.JFrame {
 
 	TimerTask task;
 
-	int i = 32;
+	int i;
 
 	private JLabel image;
 
@@ -43,15 +43,15 @@ public class AlertError extends javax.swing.JFrame {
 
 	public AlertError(boolean modal) {
 
+		i = 32;
+
 		background = Color.WHITE;
 
 		setAlwaysOnTop(true);
 
 		initComponents();
 
-		this.setLocationRelativeTo(null);
-
-		Ubicar(0);
+		setLocationRelativeTo(null);
 
 		Fade.JFrameFadeOut(1f, 0f, 0.1f, 480, this, Fade.DISPOSE);
 
@@ -192,8 +192,6 @@ public class AlertError extends javax.swing.JFrame {
 
 				else {
 
-					Ubicar(i);
-
 					i += 32;
 
 					trasparencia((float) i / 352);
@@ -221,12 +219,6 @@ public class AlertError extends javax.swing.JFrame {
 	public void trasparencia(float trasp) {
 
 		PopupAlerts.setOpacity(this, trasp);
-
-	}
-
-	private void Ubicar(int y) {
-
-		this.setLocation(550, y - 120);
 
 	}
 

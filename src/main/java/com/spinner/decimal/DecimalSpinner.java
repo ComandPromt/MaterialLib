@@ -1,12 +1,19 @@
 package com.spinner.decimal;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.JSpinner;
+import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
+
+import com.toolTip.ToolTipLlamada;
+
+import mthos.JMthos;
 
 @SuppressWarnings("serial")
 
@@ -20,11 +27,137 @@ public class DecimalSpinner extends JSpinner {
 
 	protected float maxValor;
 
-	protected boolean mostrarUi;
-
 	protected float incremento;
 
-	DecimalSpinnerUI.Editor editor;
+	private DecimalSpinnerUI.Editor editor;
+
+	private int decimals;
+
+	private DecimalSpinnerUI spinnerui;
+
+	private Color fondo;
+
+	private Color buttonBackground;
+
+	private Color selectedColor;
+
+	private Color buttonColor;
+
+	private Color colorTexto;
+
+	private Font font;
+
+	private String text;
+
+	private Color background;
+
+	private Color foreground;
+
+	private Color border;
+
+	private Font fuente;
+
+	@Override
+	public void setToolTipText(String text) {
+
+		setToolTip(text, null, null, null, null);
+
+	}
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			try {
+
+				font = getFont().deriveFont(14f);
+
+			}
+
+			catch (Exception e) {
+
+				font = new Font("Dialog", Font.PLAIN, 14);
+
+			}
+
+		}
+
+		this.text = text;
+
+		this.background = background;
+
+		this.foreground = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		super.setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || background == null || foreground == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
+
+	public float getDecimals() {
+
+		return decimals;
+
+	}
+
+	public void setDecimals(int decimals) {
+
+		if (decimals < 0) {
+
+			decimals = 0;
+
+		}
+
+		this.decimals = decimals;
+
+	}
 
 	public float getValor() {
 
@@ -54,7 +187,17 @@ public class DecimalSpinner extends JSpinner {
 
 	public void setValor(float numeroValor) {
 
-		editor.setText(Float.toString(numeroValor));
+		if (decimals == 0) {
+
+			editor.setText(Float.toString(numeroValor));
+
+		}
+
+		else {
+
+			editor.setText(Float.toString(JMthos.truncateFloat(numeroValor, decimals)));
+
+		}
 
 	}
 
@@ -104,9 +247,26 @@ public class DecimalSpinner extends JSpinner {
 
 	}
 
-	public DecimalSpinner() {
+	public void setMostrarUi(boolean mostrarUi) {
 
-		this.mostrarUi = true;
+		setOpaque(false);
+
+		setUI(new DecimalSpinnerUI(font, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, mostrarUi,
+				negativo, incremento, minValor, maxValor, decimals));
+
+		ponerConstructor();
+
+	}
+
+	public DecimalSpinner(Font font) {
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		this.decimals = 2;
 
 		this.negativo = false;
 
@@ -118,9 +278,192 @@ public class DecimalSpinner extends JSpinner {
 
 		setOpaque(false);
 
-		setUI(new DecimalSpinnerUI(mostrarUi, negativo, incremento, minValor, maxValor));
+		if (font == null) {
+
+			font = new Font("Dialog", Font.PLAIN, 20);
+		}
+
+		this.font = font;
+
+		spinnerui = new DecimalSpinnerUI(font, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, true,
+				negativo, incremento, minValor, maxValor, decimals);
+
+		setUI(spinnerui);
 
 		ponerConstructor();
+
+		setValor(numeroValor);
+
+	}
+
+	public DecimalSpinner() {
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		this.decimals = 2;
+
+		this.negativo = false;
+
+		this.incremento = 1;
+
+		this.minValor = 0;
+
+		this.maxValor = 0;
+
+		setOpaque(false);
+
+		font = new Font("Dialog", Font.PLAIN, 20);
+
+		spinnerui = new DecimalSpinnerUI(font, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, true,
+				negativo, incremento, minValor, maxValor, decimals);
+
+		setUI(spinnerui);
+
+		ponerConstructor();
+
+		setValor(numeroValor);
+
+	}
+
+	public DecimalSpinner(int decimals, Font font) {
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		this.decimals = decimals;
+
+		this.negativo = false;
+
+		this.incremento = 1;
+
+		this.minValor = 0;
+
+		this.maxValor = 0;
+
+		setOpaque(false);
+
+		if (font == null) {
+
+			font = new Font("Dialog", Font.PLAIN, 20);
+		}
+
+		this.font = font;
+
+		spinnerui = new DecimalSpinnerUI(font, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, true,
+				negativo, incremento, minValor, maxValor, decimals);
+
+		setUI(spinnerui);
+
+		ponerConstructor();
+
+		setValor(numeroValor);
+
+	}
+
+	public DecimalSpinner(int decimals) {
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		this.decimals = decimals;
+
+		this.negativo = false;
+
+		this.incremento = 1;
+
+		this.minValor = 0;
+
+		this.maxValor = 0;
+
+		font = new Font("Dialog", Font.PLAIN, 20);
+
+		setOpaque(false);
+
+		spinnerui = new DecimalSpinnerUI(font, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, true,
+				negativo, incremento, minValor, maxValor, decimals);
+
+		setUI(spinnerui);
+
+		ponerConstructor();
+
+		setValor(numeroValor);
+
+	}
+
+	public DecimalSpinner(int decimals, Font font, Color foreground, Color background, Color buttonBackground,
+			Color buttonColor, Color selectedColor) {
+
+		if (font == null) {
+
+			font = new Font("Dialog", Font.PLAIN, 20);
+		}
+
+		this.font = font;
+
+		if (background == null) {
+
+			background = Color.WHITE;
+
+		}
+
+		if (buttonBackground == null) {
+
+			buttonBackground = Color.decode("#e7e7e7");
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.BLACK;
+
+		}
+
+		if (selectedColor == null) {
+
+			selectedColor = new Color(181, 181, 181);
+
+		}
+
+		this.colorTexto = foreground;
+
+		this.buttonColor = buttonColor;
+
+		this.selectedColor = selectedColor;
+
+		this.buttonBackground = buttonBackground;
+
+		this.fondo = background;
+
+		this.decimals = decimals;
+
+		this.negativo = false;
+
+		this.incremento = 1;
+
+		this.minValor = 0;
+
+		this.maxValor = 0;
+
+		setOpaque(false);
+
+		spinnerui = new DecimalSpinnerUI(font, foreground, background, buttonBackground, selectedColor, buttonColor,
+				true, negativo, incremento, minValor, maxValor, decimals);
+
+		setUI(spinnerui);
+
+		ponerConstructor();
+
+		setValor(numeroValor);
 
 	}
 
@@ -243,7 +586,7 @@ public class DecimalSpinner extends JSpinner {
 
 					}
 
-					editor.setText(Float.toString(numeroValor));
+					setValor(numeroValor);
 
 				}
 
@@ -258,26 +601,6 @@ public class DecimalSpinner extends JSpinner {
 			}
 
 		});
-	}
-
-	public DecimalSpinner(boolean showUI, boolean editable, boolean negativo, float min, float max, float incremento) {
-
-		this.mostrarUi = showUI;
-
-		this.negativo = negativo;
-
-		this.incremento = incremento;
-
-		this.minValor = min;
-
-		this.maxValor = max;
-
-		setOpaque(false);
-
-		setUI(new DecimalSpinnerUI(mostrarUi, negativo, incremento, minValor, maxValor));
-
-		ponerConstructor();
-
 	}
 
 	private void ponerValores() {

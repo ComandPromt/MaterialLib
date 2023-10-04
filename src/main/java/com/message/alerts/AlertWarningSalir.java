@@ -21,7 +21,7 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 	TimerTask task;
 
-	int i = 32;
+	int i;
 
 	private javax.swing.JLabel image;
 
@@ -31,7 +31,15 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 	public void setImage(URL path) {
 
-		image.setIcon(new ImageIcon(path));
+		try {
+
+			image.setIcon(new ImageIcon(path));
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
@@ -43,13 +51,13 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 	public AlertWarningSalir(boolean modal) {
 
+		i = 32;
+
 		setAlwaysOnTop(true);
 
 		initComponents();
 
-		this.setLocationRelativeTo(null);
-
-		Ubicar(0);
+		setLocationRelativeTo(null);
 
 		Fade.JFrameFadeOut(1f, 0f, 0.1f, 480, this, Fade.DISPOSE);
 
@@ -174,8 +182,6 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 				else {
 
-					Ubicar(i);
-
 					i += 32;
 
 					trasparencia((float) i / 352);
@@ -203,12 +209,6 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 	private void trasparencia(float trasp) {
 
 		PopupAlerts.setOpacity(this, trasp);
-
-	}
-
-	private void Ubicar(int y) {
-
-		this.setLocation(550, y - 120);
 
 	}
 

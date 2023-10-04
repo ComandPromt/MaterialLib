@@ -2,6 +2,7 @@ package com.spinner.decimal;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -20,25 +21,87 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSpinnerUI;
 
-import com.textField.simple.NTextField;
+import com.textField.text.NTextField;
+
+import mthos.JMthos;
 
 class DecimalSpinnerUI extends BasicSpinnerUI {
 
-	Editor editor;
+	private Editor editor;
 
-	float min;
+	private float min;
 
-	float max;
+	private float max;
 
-	float incremento;
+	private float incremento;
 
-	boolean negativo;
+	private boolean negativo;
 
-	boolean mostrarUi;
+	private boolean mostrarUi;
 
-	float numeroValor;
+	private float numeroValor;
 
-	public DecimalSpinnerUI(boolean mostrarUi, boolean negativo, float incremento, float minValor, float maxValor) {
+	private int decimals;
+
+	private Editor edicion;
+
+	private ArrowButton next;
+
+	private ArrowButton back;
+
+	private Color background;
+
+	private Color buttonBackground;
+
+	private Color selectedColor;
+
+	private Color buttonColor;
+
+	private Color foreground;
+
+	private Font font;
+
+	public DecimalSpinnerUI(Font font, Color foreground, Color background, Color buttonBackground, Color selectedColor,
+			Color buttonColor, boolean mostrarUi, boolean negativo, float incremento, float minValor, float maxValor,
+			int decimals) {
+
+		if (font == null) {
+
+			font = new Font("Dialog", Font.PLAIN, 20);
+
+		}
+
+		this.font = font;
+
+		if (foreground == null) {
+
+			foreground = Color.BLACK;
+
+		}
+
+		this.foreground = foreground;
+
+		this.buttonColor = buttonColor;
+
+		this.selectedColor = selectedColor;
+
+		if (buttonBackground == null) {
+
+			buttonBackground = Color.WHITE;
+
+		}
+
+		this.buttonBackground = buttonBackground;
+
+		if (background == null) {
+
+			background = Color.WHITE;
+
+		}
+
+		this.background = background;
+
+		this.decimals = decimals;
 
 		this.mostrarUi = mostrarUi;
 
@@ -60,7 +123,9 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 		try {
 
-			spinner.setEditor(new Editor(spinner, min, max, negativo, incremento, mostrarUi));
+			edicion = new Editor(spinner, font, foreground, background, min, max, negativo, incremento, mostrarUi);
+
+			spinner.setEditor(edicion);
 
 		}
 
@@ -72,22 +137,54 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 	}
 
+	private void setValor(int decimals) {
+
+		if (decimals == 0) {
+
+			editor.setText(Float.toString(numeroValor));
+
+		}
+
+		else {
+
+			editor.setText(Float.toString(JMthos.truncateFloat(numeroValor, decimals)));
+
+		}
+
+	}
+
+	private float incrementar(float incremento, boolean b) {
+
+		float num = Float.parseFloat(editor.getText());
+
+		if (b) {
+
+			return num + incremento;
+
+		} else {
+
+			return num - incremento;
+
+		}
+
+	}
+
 	@Override
 
 	protected Component createNextButton() {
 
 		if (mostrarUi) {
 
-			ArrowButton cmd = new ArrowButton(true);
+			next = new ArrowButton(true);
 
-			cmd.addActionListener(new ActionListener() {
+			next.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
 					try {
 
-						numeroValor += editor.incremento;
+						numeroValor = incrementar(editor.incremento, true);
 
 						if (editor.max != 0 && numeroValor > editor.max) {
 
@@ -95,7 +192,7 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 						}
 
-						editor.setText("" + numeroValor);
+						setValor(decimals);
 
 					}
 
@@ -107,7 +204,7 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 			});
 
-			return cmd;
+			return next;
 
 		}
 
@@ -124,16 +221,16 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 		if (mostrarUi) {
 
-			ArrowButton cmd = new ArrowButton(false);
+			back = new ArrowButton(false);
 
-			cmd.addActionListener(new ActionListener() {
+			back.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
 					try {
 
-						numeroValor -= editor.incremento;
+						numeroValor = incrementar(editor.incremento, false);
 
 						if (!editor.negativo && numeroValor < editor.min) {
 
@@ -141,7 +238,7 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 						}
 
-						editor.setText(Float.toString(numeroValor));
+						setValor(decimals);
 
 					}
 
@@ -153,7 +250,7 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 			});
 
-			return cmd;
+			return back;
 
 		}
 
@@ -178,11 +275,24 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 		boolean mostrarUi;
 
-		public Editor(JSpinner spinner, float min, float max, boolean negativo, float sumar, boolean mostrarUi) {
+		public Editor(JSpinner spinner, Font font, Color foreground, Color background, float min, float max,
+				boolean negativo, float sumar, boolean mostrarUi) {
+
+			setForeground(foreground);
+
+			setBackground(background);
 
 			spinner.addChangeListener(this);
 
 			setEditable(false);
+
+			if (font == null) {
+
+				font = new Font("Dialog", Font.PLAIN, 20);
+
+			}
+
+			setFont(font);
 
 			this.mostrarUi = mostrarUi;
 
@@ -290,9 +400,15 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 			Graphics2D g2 = (Graphics2D) grphcs;
 
+			if (buttonColor == null) {
+
+				buttonColor = getForeground();
+
+			}
+
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-			g2.setColor(getBackground());
+			g2.setColor(buttonBackground);
 
 			g2.fillRoundRect(0, 1, getWidth(), getHeight() - 2, 5, 5);
 
@@ -314,13 +430,13 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 				if (isSelected()) {
 
-					g2.setColor(new Color(181, 181, 181));
+					g2.setColor(selectedColor);
 
 				}
 
 				else {
 
-					g2.setColor(getForeground());
+					g2.setColor(buttonColor);
 
 				}
 
@@ -346,13 +462,13 @@ class DecimalSpinnerUI extends BasicSpinnerUI {
 
 				if (isSelected()) {
 
-					g2.setColor(new Color(181, 181, 181));
+					g2.setColor(selectedColor);
 
 				}
 
 				else {
 
-					g2.setColor(getForeground());
+					g2.setColor(buttonColor);
 
 				}
 

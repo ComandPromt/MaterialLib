@@ -1,5 +1,6 @@
 package com.spinner.simple;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -21,11 +22,21 @@ public class Spinner extends JSpinner {
 
 	protected int maxValor;
 
-	protected boolean mostrarUi;
-
 	protected int incremento;
 
-	SpinnerUI.Editor editor;
+	private SpinnerUI.Editor editor;
+
+	private Font fuente;
+
+	private Color fondo;
+
+	private Color buttonBackground;
+
+	private Color selectedColor;
+
+	private Color buttonColor;
+
+	private Color colorTexto;
 
 	@Override
 	public void setFont(Font font) {
@@ -131,9 +142,8 @@ public class Spinner extends JSpinner {
 
 	}
 
-	public Spinner() {
-
-		this.mostrarUi = true;
+	public Spinner(Font font, Color foreground, Color background, Color buttonBackground, Color buttonColor,
+			Color selectedColor) {
 
 		this.negativo = false;
 
@@ -143,9 +153,220 @@ public class Spinner extends JSpinner {
 
 		this.maxValor = 100;
 
+		if (font == null) {
+
+			font = new Font("Dialog", Font.PLAIN, 20);
+
+		}
+
+		this.fuente = font;
+
+		if (background == null) {
+
+			background = Color.WHITE;
+
+		}
+
+		if (buttonBackground == null) {
+
+			buttonBackground = Color.decode("#e7e7e7");
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.BLACK;
+
+		}
+
+		if (selectedColor == null) {
+
+			selectedColor = new Color(181, 181, 181);
+
+		}
+
+		this.colorTexto = foreground;
+
+		this.buttonColor = buttonColor;
+
+		this.selectedColor = selectedColor;
+
+		this.buttonBackground = buttonBackground;
+
+		this.fondo = background;
+
 		setOpaque(false);
 
-		setUI(new SpinnerUI(mostrarUi, negativo, incremento, minValor, maxValor));
+		setUI(new SpinnerUI(true, fuente, foreground, background, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor));
+
+		ponerConstructor();
+
+	}
+
+	public Spinner(Font font) {
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		this.negativo = false;
+
+		this.incremento = 1;
+
+		this.minValor = 0;
+
+		this.maxValor = 100;
+
+		if (fuente == null) {
+
+			fuente = new Font("Dialog", Font.PLAIN, 20);
+
+		}
+
+		this.fuente = font;
+
+		setOpaque(false);
+
+		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+				incremento, minValor, maxValor));
+
+		ponerConstructor();
+
+	}
+
+	public Spinner(int min, int max, int incremento) {
+
+		this.negativo = false;
+
+		this.minValor = min;
+
+		this.maxValor = max;
+
+		this.incremento = incremento;
+
+		fuente = new Font("Dialog", Font.PLAIN, 20);
+
+		setOpaque(false);
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+				incremento, minValor, maxValor));
+
+		ponerConstructor();
+
+	}
+
+	public Spinner(int min, int max, boolean negativo) {
+
+		this.negativo = negativo;
+
+		this.minValor = min;
+
+		this.maxValor = max;
+
+		this.incremento = 1;
+
+		fuente = new Font("Dialog", Font.PLAIN, 20);
+
+		setOpaque(false);
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+				incremento, minValor, maxValor));
+
+		ponerConstructor();
+
+	}
+
+	public Spinner(int min, int max) {
+
+		this.minValor = min;
+
+		this.maxValor = max;
+
+		this.incremento = 1;
+
+		this.negativo = false;
+
+		fuente = new Font("Dialog", Font.PLAIN, 20);
+
+		setOpaque(false);
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+				incremento, minValor, maxValor));
+
+		ponerConstructor();
+
+	}
+
+	public Spinner(int min, int max, boolean negativo, int incremento) {
+
+		this.minValor = min;
+
+		this.maxValor = max;
+
+		this.negativo = negativo;
+
+		this.incremento = incremento;
+
+		fuente = new Font("Dialog", Font.PLAIN, 20);
+
+		setOpaque(false);
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+				incremento, minValor, maxValor));
+
+		ponerConstructor();
+
+	}
+
+	public Spinner() {
+
+		this.negativo = false;
+
+		this.incremento = 1;
+
+		this.minValor = 0;
+
+		this.maxValor = 100;
+
+		fuente = new Font("Dialog", Font.PLAIN, 20);
+
+		setOpaque(false);
+
+		buttonBackground = Color.decode("#e7e7e7");
+
+		colorTexto = Color.BLACK;
+
+		selectedColor = new Color(181, 181, 181);
+
+		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+				incremento, minValor, maxValor));
 
 		ponerConstructor();
 
@@ -299,21 +520,12 @@ public class Spinner extends JSpinner {
 		});
 	}
 
-	public Spinner(boolean showUI, boolean editable, boolean negativo, int min, int max, int incremento) {
-
-		this.mostrarUi = showUI;
-
-		this.negativo = negativo;
-
-		this.incremento = incremento;
-
-		this.minValor = min;
-
-		this.maxValor = max;
+	public void setMostrarUi(boolean mostrarUi) {
 
 		setOpaque(false);
 
-		setUI(new SpinnerUI(mostrarUi, negativo, incremento, minValor, maxValor));
+		setUI(new SpinnerUI(mostrarUi, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor));
 
 		ponerConstructor();
 

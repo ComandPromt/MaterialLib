@@ -7,16 +7,112 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
 
-import textarea.TextAreaScroll;
+import com.textarea.NTextArea;
+import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 public class MaterialCard extends JPanel {
 
 	JLabel panel1;
 
-	TextAreaScroll panel2;
+	NTextArea panel2;
+
+	private String text;
+
+	private Color fondo;
+
+	private Color colorTexto;
+
+	private Color border;
+
+	private Font fuente;
+
+	@Override
+	public void setToolTipText(String text) {
+
+		setToolTip(text, null, null, null, null);
+
+	}
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			try {
+
+				font = getFont().deriveFont(14f);
+
+			}
+
+			catch (Exception e) {
+
+				font = new Font("Dialog", Font.PLAIN, 14);
+
+			}
+
+		}
+
+		this.text = text;
+
+		this.fondo = background;
+
+		this.colorTexto = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		super.setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || fondo == null || colorTexto == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
 
 	public void setHeaderText(String text) {
 
@@ -36,7 +132,7 @@ public class MaterialCard extends JPanel {
 
 		try {
 
-			// panel2.setText(text);
+			panel2.setText(text);
 
 		}
 
@@ -133,6 +229,35 @@ public class MaterialCard extends JPanel {
 
 	}
 
+	public void setEditable(boolean enabled) {
+
+		try {
+
+			panel2.setEditable(enabled);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+
+		try {
+
+			panel2.setEnabled(enabled);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setLabelText(String text) {
 
 		try {
@@ -147,11 +272,23 @@ public class MaterialCard extends JPanel {
 
 	}
 
-	public MaterialCard() {
+	public MaterialCard(String header, String text) {
 
-		panel1 = new JLabel("");
+		if (header == null) {
 
-		panel2 = new TextAreaScroll();
+			header = "";
+
+		}
+
+		if (text == null) {
+
+			text = "";
+
+		}
+
+		panel1 = new JLabel(header);
+
+		panel2 = new NTextArea(text);
 
 		panel1.setOpaque(true);
 
@@ -174,10 +311,13 @@ public class MaterialCard extends JPanel {
 		setLayout(null);
 
 		panel1.setHorizontalAlignment(SwingConstants.CENTER);
+
 		panel1.setBounds(0, 0, 451, 54);
+
 		add(panel1);
 
-		panel2.setBounds(0, 39, 451, 263);
+		panel2.setBounds(0, 53, 451, 249);
+
 		add(panel2);
 
 		setHeaderColor(new Color(0, 204, 106));
@@ -186,5 +326,10 @@ public class MaterialCard extends JPanel {
 
 		setBackground(Color.WHITE);
 
+		panel1.setFont(new Font("Dialog", Font.PLAIN, 30));
+
+		setFont(new Font("Dialog", Font.PLAIN, 30));
+
 	}
+
 }

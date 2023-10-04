@@ -27,7 +27,7 @@ import javax.swing.plaf.basic.ComboPopup;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
-import scrollbar.ScrollBarCustom;
+import com.scrollbar.ScrollBarCustom;
 
 public class ComboSuggestionUI extends BasicComboBoxUI {
 

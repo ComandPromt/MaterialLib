@@ -156,16 +156,17 @@ class SearchItem extends javax.swing.JPanel {
 
 	}
 
-	private void lbRemoveMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lbRemoveMouseClicked
+	private void lbRemoveMouseClicked(java.awt.event.MouseEvent evt) {
 
 		if (!lbRemove.getText().trim().equals("")) {
 
 			eventRemove.actionPerformed(null);
 
 		}
+
 	}
 
-	private void lbTextMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lbTextMouseClicked
+	private void lbTextMouseClicked(java.awt.event.MouseEvent evt) {
 
 		eventClick.actionPerformed(null);
 
