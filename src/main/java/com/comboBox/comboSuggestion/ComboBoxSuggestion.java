@@ -120,6 +120,8 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 		setUI(new ComboSuggestionUI());
 
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
 		this.addMouseWheelListener(new MouseWheelListener() {
 
 			@Override

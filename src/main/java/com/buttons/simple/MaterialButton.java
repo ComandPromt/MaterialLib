@@ -24,13 +24,14 @@ import com.material.utils.Utils;
 import com.materiallib.utils.MaterialColor;
 import com.toolTip.ToolTipLlamada;
 
+@SuppressWarnings("serial")
 public class MaterialButton extends JButton {
 
 	private RippleEffect ripple;
 
 	private ElevationEffect elevation;
 
-	private Type type;
+	public Type type;
 
 	private boolean isMousePressed;
 
@@ -138,11 +139,9 @@ public class MaterialButton extends JButton {
 
 	public MaterialButton() {
 
-		type = Type.DEFAULT;
+		setBorderPainted(false);
 
-		borderRadius = 2;
-
-		rippleColor = Color.WHITE;
+		setFocusPainted(false);
 
 		cursor = super.getCursor();
 
@@ -252,6 +251,8 @@ public class MaterialButton extends JButton {
 
 		this.rippleColor = rippleColor;
 
+		repaint();
+
 	}
 
 	public int getBorderRadius() {
@@ -309,11 +310,13 @@ public class MaterialButton extends JButton {
 	private int getElevation() {
 
 		if (isMousePressed) {
+
 			return 2;
 
 		}
 
 		else if (type == Type.RAISED || isFocusOwner() || isMouseOver) {
+
 			return 1;
 
 		}

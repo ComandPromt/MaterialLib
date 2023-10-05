@@ -116,6 +116,8 @@ public class ComboFont extends JComboBox {
 
 		setUI(new ComboSuggestionUI());
 
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
 		this.addMouseWheelListener(new MouseWheelListener() {
 
 			@Override
