@@ -31,6 +31,46 @@ public class SwitchButton extends Component {
 
 	private float speed;
 
+	private float alpha;
+
+	private Color alphaColor;
+
+	private int angulo;
+
+	public Color getAlphaColor() {
+
+		return alphaColor;
+
+	}
+
+	public void setAlphaColor(Color alphaColor) {
+
+		this.alphaColor = alphaColor;
+
+		repaint();
+
+	}
+
+	public void setAlpha(float alpha) {
+
+		if (alpha < 0f) {
+
+			alpha = 0f;
+
+		}
+
+		else if (alpha > 1f) {
+
+			alpha = 1f;
+
+		}
+
+		this.alpha = alpha;
+
+		repaint();
+
+	}
+
 	private List<EventSwitchSelected> events;
 
 	public float getSpeed() {
@@ -61,7 +101,27 @@ public class SwitchButton extends Component {
 
 	}
 
+	public int getAngulo() {
+
+		return angulo;
+
+	}
+
+	public void setAngulo(int angulo) {
+
+		this.angulo = angulo;
+
+		repaint();
+
+	}
+
 	public SwitchButton() {
+
+		angulo = 100;
+
+		alphaColor = Color.GRAY;
+
+		alpha = 0.5f;
 
 		speed = 2f;
 
@@ -184,13 +244,11 @@ public class SwitchButton extends Component {
 
 		int height = getHeight();
 
-		float alpha = getAlpha();
-
 		if (alpha < 1) {
 
-			g2.setColor(Color.GRAY);
+			g2.setColor(alphaColor);
 
-			g2.fillRoundRect(0, 0, width, height, 25, 25);
+			g2.fillRoundRect(0, 0, width, height, angulo, angulo);
 
 		}
 
@@ -198,7 +256,7 @@ public class SwitchButton extends Component {
 
 		g2.setColor(getBackground());
 
-		g2.fillRoundRect(0, 0, width, height, 25, 25);
+		g2.fillRoundRect(0, 0, width, height, angulo, angulo);
 
 		g2.setColor(getForeground());
 
@@ -210,23 +268,7 @@ public class SwitchButton extends Component {
 
 	}
 
-	private float getAlpha() {
-
-		float width = getWidth() - getHeight();
-
-		float alpha = (location - 2) / width;
-
-		if (alpha < 0) {
-
-			alpha = 0;
-
-		}
-
-		if (alpha > 1) {
-
-			alpha = 1;
-
-		}
+	public float getAlpha() {
 
 		return alpha;
 

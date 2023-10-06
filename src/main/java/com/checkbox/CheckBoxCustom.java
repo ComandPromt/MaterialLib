@@ -25,13 +25,60 @@ public class CheckBoxCustom extends JCheckBox {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color borde;
 
 	private Font fuente;
+
+	private Color colorActivo;
+
+	private Color colorReposo;
+
+	@Override
+	public void setBackground(Color bg) {
+
+		colorReposo = bg;
+
+		repaint();
+
+	}
+
+	public Color getCheckColor() {
+
+		return checkColor;
+
+	}
+
+	public Color getColorActivo() {
+
+		return colorActivo;
+
+	}
+
+	public Color getColorReposo() {
+
+		return colorReposo;
+
+	}
+
+	public void setColorActivo(Color colorActivo) {
+
+		this.colorActivo = colorActivo;
+
+		repaint();
+
+	}
+
+	public void setColorReposo(Color colorReposo) {
+
+		this.colorReposo = colorReposo;
+
+		repaint();
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -84,9 +131,9 @@ public class CheckBoxCustom extends JCheckBox {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.borde = border;
 
@@ -99,7 +146,7 @@ public class CheckBoxCustom extends JCheckBox {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || borde == null) {
+		if (text == null || fondo == null || colorTexto == null || borde == null) {
 
 			return super.createToolTip();
 
@@ -107,7 +154,7 @@ public class CheckBoxCustom extends JCheckBox {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, borde, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, borde, fuente);
 
 			tip.setComponent(this);
 
@@ -149,7 +196,67 @@ public class CheckBoxCustom extends JCheckBox {
 
 	}
 
+	public CheckBoxCustom(int position) {
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		colorActivo = new Color(69, 124, 235);
+
+		colorReposo = new Color(69, 124, 235);
+
+		border = 4;
+
+		checkColor = Color.WHITE;
+
+		setHorizontalAlignment(position);
+
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		setOpaque(false);
+
+		setFocusPainted(false);
+
+		setContentAreaFilled(false);
+
+		setBackground(new Color(69, 124, 235));
+
+	}
+
+	public CheckBoxCustom(String text, int position) {
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		border = 4;
+
+		checkColor = Color.WHITE;
+
+		setHorizontalAlignment(position);
+
+		setText(text);
+
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		setOpaque(false);
+
+		setFocusPainted(false);
+
+		setContentAreaFilled(false);
+
+		setBackground(new Color(69, 124, 235));
+
+		colorActivo = new Color(69, 124, 235);
+
+		colorReposo = new Color(69, 124, 235);
+
+	}
+
 	public CheckBoxCustom() {
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		colorActivo = new Color(69, 124, 235);
+
+		colorReposo = new Color(69, 124, 235);
 
 		border = 4;
 
@@ -172,6 +279,12 @@ public class CheckBoxCustom extends JCheckBox {
 	}
 
 	public CheckBoxCustom(String text) {
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		colorActivo = new Color(69, 124, 235);
+
+		colorReposo = new Color(69, 124, 235);
 
 		border = 4;
 
@@ -229,7 +342,7 @@ public class CheckBoxCustom extends JCheckBox {
 
 		if (isEnabled()) {
 
-			g2.setColor(getBackground());
+			g2.setColor(colorActivo);
 
 			if (isSelected()) {
 
@@ -251,7 +364,7 @@ public class CheckBoxCustom extends JCheckBox {
 
 			else {
 
-				g2.setColor(getBackground());
+				g2.setColor(colorReposo);
 
 				g2.fillRoundRect(x, ly, fontSize, fontSize, border, border);
 
@@ -261,7 +374,7 @@ public class CheckBoxCustom extends JCheckBox {
 
 		else {
 
-			g2.setColor(getBackground());
+			g2.setColor(colorReposo);
 
 			g2.fillRoundRect(x, ly, fontSize, fontSize, border, border);
 

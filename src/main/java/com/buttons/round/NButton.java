@@ -221,11 +221,13 @@ public class NButton extends JButton {
 
 	public NButton(String text) {
 
+		setBackground(Color.WHITE);
+
 		effectColor = new Color(173, 173, 173);
 
 		setText(text);
 
-		setFont(getFont().deriveFont(25f));
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -323,7 +325,7 @@ public class NButton extends JButton {
 
 		}
 
-		g2.fillRoundRect(0, 0, width - 1, height - 1, round, round);
+		g2.fillRoundRect(0, 0, width - 3, height - 3, round, round);
 
 		g2.setColor(getForeground());
 
@@ -354,7 +356,7 @@ public class NButton extends JButton {
 
 			}
 
-			g2.drawRoundRect(0, 0, width - 1, height - 1, round, round);
+			g2.drawRoundRect(0, 0, width - 3, height - 3, round, round);
 
 		}
 
