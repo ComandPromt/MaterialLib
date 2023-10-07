@@ -350,9 +350,35 @@ public class CopyTextArea extends JPanel {
 
 				super.componentResized(e);
 
+				if (getHeight() % 6 != 0) {
+
+					setSize(getWidth(), saberAltura(getHeight()));
+
+				}
+
 				panel.setSize(panel.getWidth(), getHeight());
 
-				textarea.setSize(textarea.getWidth(), (getHeight() + 20) - 4);
+				textarea.setSize(getWidth() - (panel.getWidth()), (getHeight() + 20) - 4);
+
+			}
+
+			private int saberAltura(int height) {
+
+				for (int i = 6; i > 0; i--) {
+
+					height--;
+
+					if (height % 6 == 0) {
+
+						i = 0;
+
+						height += 6;
+
+					}
+
+				}
+
+				return height;
 
 			}
 
