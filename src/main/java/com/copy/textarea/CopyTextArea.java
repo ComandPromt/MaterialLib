@@ -314,6 +314,30 @@ public class CopyTextArea extends JPanel {
 
 	}
 
+	public void setFontSize(int size) {
+
+		spinner.setValor(size);
+
+	}
+
+	public void setMinFontSize(int size) {
+
+		spinner.setMinValor(size);
+
+	}
+
+	public void setMaxFontSize(int size) {
+
+		spinner.setMaxValor(size);
+
+	}
+
+	public void setNegativo(boolean negativo) {
+
+		spinner.setNegativo(negativo);
+
+	}
+
 	public CopyTextArea() {
 
 		setBorder(new LineBorder(Color.BLACK));
