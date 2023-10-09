@@ -29,23 +29,67 @@ public class ButtonAeroLeft extends JButton {
 
 	private float shadowOffsetY;
 
-	private Color colorDeSombra = new Color(0, 0, 0);
+	private Color colorDeSombra;
 
-	private int direccionDeSombra = 60;
+	private int direccionDeSombra;
 
-	private int distanciaDeSombra = 1;
+	private int distanciaDeSombra;
 
-	private boolean foco = false;
+	private boolean foco;
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
 	private Font fuente;
+
+	private int angulo;
+
+	public int getDireccionDeSombra() {
+
+		return direccionDeSombra;
+
+	}
+
+	public int getDistanciaDeSombra() {
+
+		return distanciaDeSombra;
+
+	}
+
+	public void setDireccionDeSombra(int direccionDeSombra) {
+
+		this.direccionDeSombra = direccionDeSombra;
+
+		repaint();
+
+	}
+
+	public void setDistanciaDeSombra(int distanciaDeSombra) {
+
+		this.distanciaDeSombra = distanciaDeSombra;
+
+		repaint();
+
+	}
+
+	public int getAngulo() {
+
+		return angulo;
+
+	}
+
+	public void setAngulo(int angulo) {
+
+		this.angulo = angulo;
+
+		repaint();
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -98,9 +142,9 @@ public class ButtonAeroLeft extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -113,7 +157,7 @@ public class ButtonAeroLeft extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -121,7 +165,7 @@ public class ButtonAeroLeft extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -135,13 +179,25 @@ public class ButtonAeroLeft extends JButton {
 
 		super(icon);
 
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		setOpaque(false);
+
+		setContentAreaFilled(false);
+
+		setFocusPainted(false);
+
+		setBorderPainted(false);
+
 		colorDeSombra = new Color(0, 0, 0);
 
 		direccionDeSombra = 60;
 
-		distanciaDeSombra = 1;
+		distanciaDeSombra = 4;
 
 		foco = false;
+
+		setBackground(Color.PINK);
 
 	}
 
@@ -151,7 +207,7 @@ public class ButtonAeroLeft extends JButton {
 
 		direccionDeSombra = 60;
 
-		distanciaDeSombra = 1;
+		distanciaDeSombra = 4;
 
 		foco = false;
 
@@ -187,6 +243,8 @@ public class ButtonAeroLeft extends JButton {
 
 		});
 
+		setBackground(Color.PINK);
+
 	}
 
 	private void computeShadow() {
@@ -208,7 +266,7 @@ public class ButtonAeroLeft extends JButton {
 
 		Paint oldPaint = g2.getPaint();
 
-		RoundRectangle2D.Float r2d = new RoundRectangle2D.Float(0, 0, getWidth() + 10, getHeight(), 20, 20);
+		RoundRectangle2D.Float r2d = new RoundRectangle2D.Float(0, 0, getWidth() + 10, getHeight(), angulo, angulo);
 
 		g2.clip(r2d);
 

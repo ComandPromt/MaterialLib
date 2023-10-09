@@ -210,11 +210,11 @@ public class RoundedButton extends JButton {
 
 			g.setColor(fondo);
 
-			g.fillRect(0, 0, getWidth(), getHeight());
+			g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
 
 		}
 
-		if (grosor > 2) {
+		if (grosor > 0) {
 
 			g2d.setStroke(new BasicStroke(grosor));
 

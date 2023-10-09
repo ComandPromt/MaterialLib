@@ -33,9 +33,9 @@ import javax.swing.JToolTip;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicLabelUI;
 
-import com.materiallib.utils.GraphicsUtil;
-import com.materiallib.utils.HyperlinkHandler;
-import com.materiallib.utils.Reflection;
+import com.filters.GraphicsUtil;
+import com.filters.Reflection;
+import com.material.utils.HyperlinkHandler;
 import com.toolTip.ToolTipLlamada;
 
 import mthos.JMthos;

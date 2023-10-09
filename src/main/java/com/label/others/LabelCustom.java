@@ -59,6 +59,38 @@ public class LabelCustom extends JLabel {
 
 	private Font fuente;
 
+	private Color startColor;
+
+	private Color endColor;
+
+	public Color getStartColor() {
+
+		return startColor;
+
+	}
+
+	public Color getEndColor() {
+
+		return endColor;
+
+	}
+
+	public void setStartColor(Color startColor) {
+
+		this.startColor = startColor;
+
+		repaint();
+
+	}
+
+	public void setEndColor(Color endColor) {
+
+		this.endColor = endColor;
+
+		repaint();
+
+	}
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -159,6 +191,8 @@ public class LabelCustom extends JLabel {
 
 		super(icon);
 
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
 	}
 
 	public LabelCustom() {
@@ -169,15 +203,15 @@ public class LabelCustom extends JLabel {
 
 	public LabelCustom(String text) {
 
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
 		tipo = Tipo.NONE;
 
 		forma = Forma.ROUND;
 
 		colorDeSombra = new Color(0, 0, 0);
 
-		direccionDeSombra = 5;
-
-		distanciaDeSombra = 5;
+		distanciaDeSombra = 2;
 
 		vertical = true;
 
@@ -272,9 +306,17 @@ public class LabelCustom extends JLabel {
 
 		Ellipse2D curve;
 
-		Color startColor;
+		if (startColor == null) {
 
-		Color endColor;
+			startColor = getBackground().darker();
+
+		}
+
+		if (endColor == null) {
+
+			endColor = getBackground().brighter();
+
+		}
 
 		Area area;
 
@@ -294,7 +336,7 @@ public class LabelCustom extends JLabel {
 
 			}
 
-			Paint paint = new GradientPaint(x1, y1, getBackground(), x2, y2, getBackground().darker());
+			Paint paint = new GradientPaint(x1, y1, startColor, x2, y2, endColor);
 
 			g2.setPaint(paint);
 
@@ -317,8 +359,7 @@ public class LabelCustom extends JLabel {
 			}
 
 			paint = new LinearGradientPaint(x1, y1, x2, y2, new float[] { 0f, 0.30f, 0.5f, 0.70f, 1f },
-					new Color[] { getBackground().darker().darker(), getBackground(), getBackground().brighter(),
-							getBackground(), getBackground().darker() });
+					new Color[] { startColor, endColor, startColor, endColor, startColor });
 
 			g2.setPaint(paint);
 
@@ -334,19 +375,11 @@ public class LabelCustom extends JLabel {
 
 			curve = new Ellipse2D.Double(-20, bulletHeight / 2.0, bulletWidth + 20 * 2, bulletHeight);
 
-			startColor = getBackground().darker();
-
-			endColor = getBackground().brighter();
-
 			paint = g2.getPaint();
 
 			g2.setPaint(new GradientPaint(0.0f, 0.0f, startColor, 0.0f, (float) bulletHeight / 2, endColor));
 
 			g2.fill(getFiguraRectangulo());
-
-			startColor = getBackground().darker().darker();
-
-			endColor = getBackground().brighter();
 
 			g2.setPaint(
 					new GradientPaint(0.0f, (float) getHeight() / 2, startColor, 0.0f, (float) bulletHeight, endColor));
@@ -365,19 +398,11 @@ public class LabelCustom extends JLabel {
 
 			curve = new Ellipse2D.Double(-getWidth() / 2, 0, getWidth(), getHeight() * 2);
 
-			startColor = getBackground().darker();
-
-			endColor = getBackground().brighter();
-
 			paint = g2.getPaint();
 
 			g2.setPaint(new GradientPaint(0.0f, 0.0f, startColor, 0.0f, (float) getHeight() / 2, endColor));
 
 			g2.fill(getFiguraRectangulo());
-
-			startColor = getBackground().darker().darker();
-
-			endColor = getBackground().brighter();
 
 			g2.setPaint(
 					new GradientPaint(0.0f, (float) getHeight() / 2, startColor, 0.0f, (float) getHeight(), endColor));
@@ -396,19 +421,11 @@ public class LabelCustom extends JLabel {
 
 			curve = new Ellipse2D.Double(-20, -getHeight() / 2.0, getWidth() + 20 * 2, getHeight());
 
-			startColor = getBackground().darker();
-
-			endColor = getBackground().brighter();
-
 			paint = g2.getPaint();
 
 			g2.setPaint(new GradientPaint(0.0f, 0.0f, startColor, 0.0f, (float) getHeight() / 2, endColor));
 
 			g2.fill(getFiguraRectangulo());
-
-			startColor = getBackground().darker().darker();
-
-			endColor = getBackground().brighter();
 
 			g2.setPaint(new GradientPaint(0.0f, 0f, startColor, 0.0f, (float) getHeight() / 2, endColor));
 
@@ -426,19 +443,11 @@ public class LabelCustom extends JLabel {
 
 			curve = new Ellipse2D.Double(getWidth() / 2, 0, getWidth() * 2, getHeight() * 2);
 
-			startColor = getBackground().darker();
-
-			endColor = getBackground().brighter();
-
 			paint = g2.getPaint();
 
 			g2.setPaint(new GradientPaint(0.0f, 0.0f, startColor, 0.0f, (float) getHeight() / 2, endColor));
 
 			g2.fill(getFiguraRectangulo());
-
-			startColor = getBackground().darker().darker();
-
-			endColor = getBackground().brighter();
 
 			g2.setPaint(
 					new GradientPaint(0.0f, (float) getHeight() / 2, startColor, 0.0f, (float) getHeight(), endColor));

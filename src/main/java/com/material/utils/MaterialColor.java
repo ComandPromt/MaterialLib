@@ -2,7 +2,7 @@ package com.material.utils;
 
 import java.awt.Color;
 
-class MaterialColor {
+public class MaterialColor {
 
 	public static final Color RED__50 = Color.decode("#ffebee");
 	public static final Color RED__100 = Color.decode("#ffcdd2");

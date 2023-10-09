@@ -39,9 +39,9 @@ public class ButtonAero extends JButton {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -98,9 +98,9 @@ public class ButtonAero extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -113,7 +113,7 @@ public class ButtonAero extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -121,7 +121,7 @@ public class ButtonAero extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -135,13 +135,25 @@ public class ButtonAero extends JButton {
 
 		super(icon);
 
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		setOpaque(false);
+
+		setContentAreaFilled(false);
+
+		setFocusPainted(false);
+
+		setBorderPainted(false);
+
 		colorDeSombra = new Color(0, 0, 0);
 
 		direccionDeSombra = 60;
 
-		distanciaDeSombra = 1;
+		distanciaDeSombra = 4;
 
 		foco = false;
+
+		setBackground(Color.PINK);
 
 	}
 
@@ -151,7 +163,7 @@ public class ButtonAero extends JButton {
 
 		direccionDeSombra = 60;
 
-		distanciaDeSombra = 1;
+		distanciaDeSombra = 4;
 
 		foco = false;
 
@@ -186,6 +198,8 @@ public class ButtonAero extends JButton {
 			}
 
 		});
+
+		setBackground(Color.PINK);
 
 	}
 

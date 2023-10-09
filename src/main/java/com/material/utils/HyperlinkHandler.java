@@ -1,4 +1,4 @@
-package com.materiallib.utils;
+package com.material.utils;
 
 import java.awt.Cursor;
 import java.awt.Rectangle;

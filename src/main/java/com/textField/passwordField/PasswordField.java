@@ -18,8 +18,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JToolTip;
 import javax.swing.text.DefaultCaret;
 
+import com.material.utils.MaterialColor;
 import com.material.utils.Utils;
-import com.materiallib.utils.MaterialColor;
 import com.textField.text.MaterialTextField2;
 import com.toolTip.ToolTipLlamada;
 

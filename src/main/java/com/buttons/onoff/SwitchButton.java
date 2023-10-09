@@ -129,7 +129,7 @@ public class SwitchButton extends Component {
 
 		setPreferredSize(new Dimension(50, 25));
 
-		setForeground(Color.WHITE);
+		setForeground(Color.ORANGE);
 
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 

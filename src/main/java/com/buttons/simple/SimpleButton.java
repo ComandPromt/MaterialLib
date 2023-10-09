@@ -302,6 +302,8 @@ public class SimpleButton extends JButton {
 
 		});
 
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.materiallib.utils;
+package com.filters;
 
 import java.awt.AWTException;
 import java.awt.Color;

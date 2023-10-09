@@ -166,6 +166,8 @@ public class ToggleButton extends JComponent {
 
 		initAnimator();
 
+		setCircleColorDisabled(Color.ORANGE);
+
 	}
 
 	private void initAnimator() {

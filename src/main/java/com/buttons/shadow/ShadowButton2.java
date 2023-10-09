@@ -22,12 +22,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolTip;
 
-import com.materiallib.utils.GraphicsUtil;
+import com.filters.GraphicsUtil;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 
-public class ShadowRoundButton extends JButton {
+public class ShadowButton2 extends JButton {
 
 	private Image buttonHighlight;
 
@@ -141,7 +141,7 @@ public class ShadowRoundButton extends JButton {
 
 	}
 
-	public ShadowRoundButton(Icon icon) {
+	public ShadowButton2(Icon icon) {
 
 		super(icon);
 
@@ -161,7 +161,7 @@ public class ShadowRoundButton extends JButton {
 
 	}
 
-	public ShadowRoundButton(String text) {
+	public ShadowButton2(String text) {
 
 		colorDeSombra = new Color(0, 0, 0);
 
@@ -284,7 +284,19 @@ public class ShadowRoundButton extends JButton {
 
 		FontMetrics fm = getFontMetrics(getFont());
 
-		TextLayout layout = new TextLayout("aaa", getFont(), g2.getFontRenderContext());
+		TextLayout layout;
+
+		try {
+
+			layout = new TextLayout(getText(), getFont(), g2.getFontRenderContext());
+
+		}
+
+		catch (Exception e) {
+
+			layout = new TextLayout(" ", getFont(), g2.getFontRenderContext());
+
+		}
 
 		Rectangle2D bounds = layout.getBounds();
 

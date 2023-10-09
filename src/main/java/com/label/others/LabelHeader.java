@@ -16,7 +16,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JToolTip;
 
-import com.materiallib.utils.ColorTintFilter;
+import com.filters.ColorTintFilter;
 import com.toolTip.ToolTipLlamada;
 
 import mthos.JMthos;
@@ -63,6 +63,8 @@ public class LabelHeader extends JLabel {
 	public void setFilterColor(Color filterColor) {
 
 		this.filterColor = filterColor;
+
+		tinte();
 
 		repaint();
 
@@ -159,6 +161,8 @@ public class LabelHeader extends JLabel {
 
 			this.imagen = JMthos.iconToBufferedImage(icon);
 
+			setFilterColor(getFilterColor());
+
 			repaint();
 
 		}
@@ -173,6 +177,8 @@ public class LabelHeader extends JLabel {
 
 		super(icon);
 
+		inicio("");
+
 	}
 
 	public LabelHeader() {
@@ -183,6 +189,14 @@ public class LabelHeader extends JLabel {
 
 	public LabelHeader(String text) {
 
+		inicio(text);
+
+	}
+
+	private void inicio(String text) {
+
+		filterColor = Color.WHITE;
+
 		colorDeSombra = new Color(0, 0, 0);
 
 		direccionDeSombra = 5;
@@ -191,7 +205,11 @@ public class LabelHeader extends JLabel {
 
 		setOpaque(false);
 
-		setText(text);
+		if (!text.isEmpty()) {
+
+			setText(text);
+
+		}
 
 		setFont(new Font("Dialog", Font.PLAIN, 30));
 
@@ -226,13 +244,13 @@ public class LabelHeader extends JLabel {
 
 		try {
 
-			layout = new TextLayout("Text", getFont(), g2.getFontRenderContext());
+			layout = new TextLayout(getText(), getFont(), g2.getFontRenderContext());
 
 		}
 
 		catch (Exception e) {
 
-			layout = new TextLayout(getText(), getFont(), g2.getFontRenderContext());
+			layout = new TextLayout(" ", getFont(), g2.getFontRenderContext());
 
 		}
 
@@ -290,6 +308,14 @@ public class LabelHeader extends JLabel {
 
 		this.colored = colored;
 
+		tinte();
+
+		repaint();
+
+	}
+
+	private void tinte() {
+
 		tint = new ColorTintFilter(filterColor, .5f);
 
 		try {
@@ -301,8 +327,6 @@ public class LabelHeader extends JLabel {
 		catch (Exception e) {
 
 		}
-
-		repaint();
 
 	}
 

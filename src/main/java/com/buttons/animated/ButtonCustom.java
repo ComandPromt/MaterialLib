@@ -15,7 +15,7 @@ import com.toolTip.ToolTipLlamada;
 
 public class ButtonCustom extends JButton {
 
-	private Color background;
+	private Color fondo;
 
 	private Color colorHover;
 
@@ -27,7 +27,7 @@ public class ButtonCustom extends JButton {
 
 	private Color backgroundColor;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -63,7 +63,7 @@ public class ButtonCustom extends JButton {
 
 		this.backgroundColor = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -76,7 +76,7 @@ public class ButtonCustom extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || backgroundColor == null || foreground == null || border == null) {
+		if (text == null || backgroundColor == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -84,7 +84,7 @@ public class ButtonCustom extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, backgroundColor, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, backgroundColor, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -96,7 +96,9 @@ public class ButtonCustom extends JButton {
 
 	public ButtonCustom(String text) {
 
-		background = new Color(69, 191, 71);
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		fondo = new Color(69, 191, 71);
 
 		colorHover = new Color(76, 206, 78);
 
@@ -126,7 +128,7 @@ public class ButtonCustom extends JButton {
 
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-		setBackground(background);
+		setBackground(fondo);
 
 		setForeground(Color.WHITE);
 
@@ -150,7 +152,7 @@ public class ButtonCustom extends JButton {
 
 				mouseOver = false;
 
-				ButtonCustom.super.setBackground(background);
+				ButtonCustom.super.setBackground(fondo);
 
 			}
 
@@ -174,7 +176,7 @@ public class ButtonCustom extends JButton {
 
 				else {
 
-					ButtonCustom.super.setBackground(background);
+					ButtonCustom.super.setBackground(fondo);
 
 				}
 
@@ -188,7 +190,7 @@ public class ButtonCustom extends JButton {
 
 	public void setBackground(Color bg) {
 
-		background = bg;
+		fondo = bg;
 
 		super.setBackground(bg);
 

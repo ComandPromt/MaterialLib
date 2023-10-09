@@ -1,4 +1,4 @@
-package com.materiallib.utils;
+package com.filters;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

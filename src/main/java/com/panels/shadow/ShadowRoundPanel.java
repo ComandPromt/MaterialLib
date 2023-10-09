@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import com.materiallib.utils.ShadowRenderer;
+import com.material.utils.ShadowRenderer;
 
 @SuppressWarnings("serial")
 

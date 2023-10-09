@@ -41,9 +41,9 @@ public class ButtonAeroRound extends JButton {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -100,9 +100,9 @@ public class ButtonAeroRound extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -115,7 +115,7 @@ public class ButtonAeroRound extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -123,7 +123,7 @@ public class ButtonAeroRound extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -137,25 +137,39 @@ public class ButtonAeroRound extends JButton {
 
 		super(icon);
 
-		colorDeSombra = new Color(0, 0, 0);
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		setOpaque(false);
+
+		setContentAreaFilled(false);
+
+		setFocusPainted(false);
+
+		setBorderPainted(false);
+
+		colorDeSombra = Color.BLACK;
 
 		direccionDeSombra = 60;
 
-		distanciaDeSombra = 1;
+		distanciaDeSombra = 4;
 
 		angulo = 20;
 
 		foco = false;
 
+		setForeground(Color.WHITE);
+
+		setBackground(Color.PINK);
+
 	}
 
 	public ButtonAeroRound(String text) {
 
-		colorDeSombra = new Color(0, 0, 0);
+		colorDeSombra = Color.BLACK;
 
 		direccionDeSombra = 60;
 
-		distanciaDeSombra = 1;
+		distanciaDeSombra = 4;
 
 		angulo = 20;
 
@@ -173,7 +187,7 @@ public class ButtonAeroRound extends JButton {
 
 		setFont(new Font("Dialog", Font.PLAIN, 20));
 
-		setForeground(new Color(255, 255, 255));
+		setForeground(Color.WHITE);
 
 		addFocusListener(new FocusListener() {
 
@@ -193,6 +207,8 @@ public class ButtonAeroRound extends JButton {
 
 		});
 
+		setBackground(Color.PINK);
+
 	}
 
 	private void computeShadow() {
@@ -202,6 +218,62 @@ public class ButtonAeroRound extends JButton {
 		shadowOffsetX = (float) Math.cos(rads) * distanciaDeSombra;
 
 		shadowOffsetY = (float) Math.sin(rads) * distanciaDeSombra;
+
+	}
+
+	public Color getColorDeSombra() {
+
+		return colorDeSombra;
+
+	}
+
+	public void setColorDeSombra(Color colorDeSombra) {
+
+		this.colorDeSombra = colorDeSombra;
+
+		repaint();
+
+	}
+
+	public int getDireccionDeSombra() {
+
+		return direccionDeSombra;
+
+	}
+
+	public void setDireccionDeSombra(int direccionDeSombra) {
+
+		this.direccionDeSombra = direccionDeSombra;
+
+		repaint();
+
+	}
+
+	public int getDistanciaDeSombra() {
+
+		return distanciaDeSombra;
+
+	}
+
+	public void setDistanciaDeSombra(int distanciaDeSombra) {
+
+		this.distanciaDeSombra = distanciaDeSombra;
+
+		repaint();
+
+	}
+
+	public int getAngulo() {
+
+		return angulo;
+
+	}
+
+	public void setAngulo(int angulo) {
+
+		this.angulo = angulo;
+
+		repaint();
 
 	}
 
@@ -283,62 +355,6 @@ public class ButtonAeroRound extends JButton {
 		layout.draw(g2, x, y);
 
 		g2.setPaint(oldPaint);
-
-	}
-
-	public Color getColorDeSombra() {
-
-		return colorDeSombra;
-
-	}
-
-	public void setColorDeSombra(Color colorDeSombra) {
-
-		this.colorDeSombra = colorDeSombra;
-
-		repaint();
-
-	}
-
-	public int getDireccionDeSombra() {
-
-		return direccionDeSombra;
-
-	}
-
-	public void setDireccionDeSombra(int direccionDeSombra) {
-
-		this.direccionDeSombra = direccionDeSombra;
-
-		repaint();
-
-	}
-
-	public int getDistanciaDeSombra() {
-
-		return distanciaDeSombra;
-
-	}
-
-	public void setDistanciaDeSombra(int distanciaDeSombra) {
-
-		this.distanciaDeSombra = distanciaDeSombra;
-
-		repaint();
-
-	}
-
-	public int getAngulo() {
-
-		return angulo;
-
-	}
-
-	public void setAngulo(int angulo) {
-
-		this.angulo = angulo;
-
-		repaint();
 
 	}
 

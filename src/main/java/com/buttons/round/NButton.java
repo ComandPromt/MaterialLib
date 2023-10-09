@@ -221,7 +221,7 @@ public class NButton extends JButton {
 
 	public NButton(String text) {
 
-		setBackground(Color.WHITE);
+		setBackground(Color.PINK);
 
 		effectColor = new Color(173, 173, 173);
 

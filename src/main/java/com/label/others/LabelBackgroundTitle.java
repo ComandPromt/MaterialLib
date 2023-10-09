@@ -243,6 +243,8 @@ public class LabelBackgroundTitle extends JLabel {
 
 	public LabelBackgroundTitle(final String text) {
 
+		setBackground(Color.WHITE);
+
 		ffuente = new Font("Dialog", Font.PLAIN, 20);
 
 		shadowOpacity = 0.5f;
@@ -251,7 +253,7 @@ public class LabelBackgroundTitle extends JLabel {
 
 		shadowDistance = 5;
 
-		shadowDirection = 5;
+		shadowDirection = 60;
 
 		titleFont = new Font("Dialog", Font.PLAIN, 30);
 

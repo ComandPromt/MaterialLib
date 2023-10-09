@@ -9,7 +9,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JToolTip;
 
@@ -27,24 +26,39 @@ public class ResizedImage extends JLabel {
 
 	private boolean aspectRatio;
 
-	private BufferedImage originalImage;
-
 	private BufferedImage imagen;
 
 	private int w;
 
 	private int h;
 
-	private Icon icono;
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
 	private Font fuente;
+
+	private BufferedImage originalImage;
+
+	private float alturaTexto;
+
+	public float getAlturaTexto() {
+
+		return alturaTexto;
+
+	}
+
+	public void setAlturaTexto(float alturaTexto) {
+
+		this.alturaTexto = alturaTexto;
+
+		repaint();
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -97,9 +111,9 @@ public class ResizedImage extends JLabel {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -112,7 +126,7 @@ public class ResizedImage extends JLabel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -120,7 +134,7 @@ public class ResizedImage extends JLabel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -144,7 +158,19 @@ public class ResizedImage extends JLabel {
 
 	}
 
-	public ResizedImage(boolean aspectRatio) {
+	public void setAspectRatio(boolean aspectRatio, int width, int height) {
+
+		this.aspectRatio = aspectRatio;
+
+		repaint();
+
+	}
+
+	public ResizedImage(boolean aspectRatio, String text) {
+
+		alturaTexto = 2;
+
+		setFont(new Font("Dialog", Font.PLAIN, 40));
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -156,7 +182,45 @@ public class ResizedImage extends JLabel {
 
 				h = getHeight();
 
-				setIcon(icono);
+			}
+
+		});
+
+		this.aspectRatio = aspectRatio;
+
+		setText(text);
+
+	}
+
+	public ResizedImage(boolean aspectRatio, int width, int height) {
+
+		alturaTexto = 2;
+
+		setFont(new Font("Dialog", Font.PLAIN, 40));
+
+		w = width;
+
+		h = height;
+
+		this.aspectRatio = aspectRatio;
+
+	}
+
+	public ResizedImage(boolean aspectRatio) {
+
+		alturaTexto = 2;
+
+		setFont(new Font("Dialog", Font.PLAIN, 40));
+
+		addComponentListener(new ComponentAdapter() {
+
+			@Override
+
+			public void componentResized(ComponentEvent e) {
+
+				w = getWidth();
+
+				h = getHeight();
 
 			}
 
@@ -207,88 +271,74 @@ public class ResizedImage extends JLabel {
 	}
 
 	@Override
-	public void setIcon(Icon defaultIcon) {
-
-		if (defaultIcon != null) {
-
-			icono = defaultIcon;
-
-		}
-
-		try {
-
-			if (defaultIcon != null && w > 0) {
-
-				String ruta = defaultIcon.toString();
-
-				if (System.getProperty("os.name").contains("indows")) {
-
-					ruta = ruta.replace("file:/", "");
-
-				}
-
-				else {
-
-					ruta = ruta.replace("file:", "");
-
-				}
-
-				originalImage = JMthos.loadFileImage(ruta);
-
-				if (aspectRatio) {
-
-					Point punto = JMthos.getSizeOfImage(originalImage, w, h, aspectRatio);
-
-					ancho = punto.x;
-
-					alto = punto.y;
-
-				}
-
-				else {
-
-					ancho = originalImage.getWidth();
-
-					alto = originalImage.getHeight();
-
-				}
-
-				repaint();
-
-			}
-
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	@Override
 	public void paint(Graphics g) {
 
 		try {
 
-			if (originalImage != null) {
+			g.setColor(getBackground());
 
-				imagen = resizeImage(originalImage, ancho, alto);
+			g.fillRect(0, 0, getWidth(), getHeight());
 
-				if (aspectRatio) {
+			if (originalImage == null) {
 
-					g.drawImage(imagen, 0, 0, ancho, alto, null);
-
-				}
-
-				else {
-
-					g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
-
-				}
-
-				g.dispose();
+				originalImage = JMthos.iconToBufferedImage(getIcon());
 
 			}
+
+			if (aspectRatio) {
+
+				if (w == 0) {
+
+					w = getWidth();
+
+					h = getHeight();
+
+				}
+
+				Point punto = JMthos.getSizeOfImage(originalImage, w, h, aspectRatio);
+
+				ancho = punto.x;
+
+				alto = punto.y;
+
+				setSize(ancho, alto);
+
+			}
+
+			else {
+
+				ancho = originalImage.getWidth();
+
+				alto = originalImage.getHeight();
+
+			}
+
+			imagen = resizeImage(originalImage, ancho, alto);
+
+			if (aspectRatio) {
+
+				g.drawImage(imagen, 0, 0, ancho, alto, null);
+
+			}
+
+			else {
+
+				ancho = getWidth();
+
+				alto = getHeight();
+
+				g.drawImage(imagen, 0, 0, ancho, alto, null);
+
+			}
+
+			g.setColor(getForeground());
+
+			g.setFont(getFont());
+
+			g.drawString(getText(), (int) (ancho / alturaTexto - g.getFontMetrics().stringWidth(getText()) / 2),
+					(int) (alto / alturaTexto));
+
+			g.dispose();
 
 		}
 

@@ -1,4 +1,4 @@
-package com.materiallib.utils;
+package com.material.utils;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JToolTip;
 import javax.swing.border.EmptyBorder;
 
-import com.materiallib.utils.ShadowRenderer;
+import com.material.utils.ShadowRenderer;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
@@ -33,13 +33,41 @@ public class EffectButton extends JButton {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
 	private Font fuente;
+
+	private float opacity;
+
+	public float getOpacity() {
+
+		return opacity;
+
+	}
+
+	public void setOpacity(float opacity) {
+
+		if (opacity < 0f) {
+
+			opacity = 0f;
+
+		}
+
+		else if (opacity > 1f) {
+
+			opacity = 1f;
+
+		}
+
+		this.opacity = opacity;
+
+		repaint();
+
+	}
 
 	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
 
@@ -69,9 +97,9 @@ public class EffectButton extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -84,7 +112,7 @@ public class EffectButton extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -92,7 +120,7 @@ public class EffectButton extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -146,13 +174,33 @@ public class EffectButton extends JButton {
 
 	}
 
+	public void setSombra(int size) {
+
+		shadowSize = new Insets(size, size, size, size);
+
+		repaint();
+
+	}
+
+	public void setSombra(int top, int left, int bottom, int right) {
+
+		shadowSize = new Insets(top, left, bottom, right);
+
+		repaint();
+
+	}
+
 	public EffectButton(String text) {
 
-		round = 10;
+		opacity = 0.5f;
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		round = 45;
 
 		shadowColor = new Color(170, 170, 170);
 
-		shadowSize = new Insets(2, 5, 8, 5);
+		shadowSize = new Insets(8, 8, 8, 8);
 
 		rippleEffect = new RippleEffect(this);
 
@@ -169,6 +217,14 @@ public class EffectButton extends JButton {
 		setForeground(new Color(80, 80, 80));
 
 		rippleEffect.setRippleColor(new Color(220, 220, 220));
+
+		setBackground(Color.PINK);
+
+		setShadowColor(Color.GREEN);
+
+		setRippleColor(Color.RED);
+
+		setRound(45);
 
 	}
 
@@ -248,7 +304,18 @@ public class EffectButton extends JButton {
 
 		g2.dispose();
 
-		return new ShadowRenderer(5, 0.3f, shadowColor).createShadow(img);
+		try {
+
+			return new ShadowRenderer(Math.max(shadowSize.top, shadowSize.bottom), opacity, shadowColor)
+					.createShadow(img);
+
+		}
+
+		catch (Exception e) {
+
+			return new ShadowRenderer(0, opacity, shadowColor).createShadow(img);
+
+		}
 
 	}
 

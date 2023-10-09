@@ -42,9 +42,9 @@ public class AnimationButton extends JButton {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -101,9 +101,9 @@ public class AnimationButton extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -116,7 +116,7 @@ public class AnimationButton extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -124,7 +124,7 @@ public class AnimationButton extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -160,9 +160,11 @@ public class AnimationButton extends JButton {
 
 	}
 
-	public AnimationButton() {
+	public AnimationButton(String text) {
 
 		effectColor = new Color(220, 220, 220);
+
+		setText(text);
 
 		setBorder(null);
 
@@ -170,7 +172,7 @@ public class AnimationButton extends JButton {
 
 		setContentAreaFilled(false);
 
-		setFont(getFont().deriveFont(30f));
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
 
 		setFocusPainted(false);
 
@@ -226,6 +228,10 @@ public class AnimationButton extends JButton {
 		animator = new Animator(400, target);
 
 		animator.setResolution(0);
+
+		setEffectColor(Color.LIGHT_GRAY);
+
+		setBackground(Color.PINK);
 
 	}
 

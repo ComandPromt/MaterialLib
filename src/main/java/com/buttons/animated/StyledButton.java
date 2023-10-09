@@ -23,7 +23,7 @@ import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 
-public class StyledButtonCustom extends JButton {
+public class StyledButton extends JButton {
 
 	private AnimationStyle animationHover;
 
@@ -37,9 +37,9 @@ public class StyledButtonCustom extends JButton {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -73,9 +73,9 @@ public class StyledButtonCustom extends JButton {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -88,7 +88,7 @@ public class StyledButtonCustom extends JButton {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -96,7 +96,7 @@ public class StyledButtonCustom extends JButton {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -144,13 +144,15 @@ public class StyledButtonCustom extends JButton {
 
 	}
 
-	public StyledButtonCustom(String text) {
+	public StyledButton(String text) {
 
 		style = ButtonStyle.PRIMARY;
 
 		currentStyle = new ButtonColor(ButtonStyle.PRIMARY);
 
 		round = 5;
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
 
 		setText(text);
 

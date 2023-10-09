@@ -14,6 +14,7 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JToolTip;
+import javax.swing.SwingConstants;
 
 import com.toolTip.ToolTipLlamada;
 
@@ -30,11 +31,12 @@ public class RoundLabel extends JLabel {
 	private Color borderColor;
 
 	private Color fondo;
+
 	private String text;
 
-	private Color background;
+	private Color back;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -91,9 +93,9 @@ public class RoundLabel extends JLabel {
 
 		this.text = text;
 
-		this.background = background;
+		this.back = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -106,7 +108,7 @@ public class RoundLabel extends JLabel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || back == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -114,7 +116,7 @@ public class RoundLabel extends JLabel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, back, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -174,6 +176,8 @@ public class RoundLabel extends JLabel {
 
 		setText(text);
 
+		setHorizontalAlignment(SwingConstants.CENTER);
+
 	}
 
 	@Override
@@ -223,6 +227,8 @@ public class RoundLabel extends JLabel {
 
 		Graphics2D g2d = (Graphics2D) g.create();
 
+		g2d.setStroke(new BasicStroke(grosor));
+
 		if (fondo != null) {
 
 			g.setColor(fondo);
@@ -231,15 +237,9 @@ public class RoundLabel extends JLabel {
 
 		}
 
-		if (grosor > 2) {
+		g2d.setColor(borderColor);
 
-			g2d.setStroke(new BasicStroke(grosor));
-
-			g2d.setColor(borderColor);
-
-			g2d.drawRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
-
-		}
+		g2d.drawRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
 
 		Shape mask = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), radius, radius);
 

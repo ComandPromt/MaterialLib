@@ -19,14 +19,14 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JToolTip;
 
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 
-public class ImageAvatar extends JComponent {
+public class ImageAvatar extends JLabel {
 
 	private Icon image;
 
@@ -42,9 +42,9 @@ public class ImageAvatar extends JComponent {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -101,9 +101,9 @@ public class ImageAvatar extends JComponent {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -116,7 +116,7 @@ public class ImageAvatar extends JComponent {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -124,7 +124,7 @@ public class ImageAvatar extends JComponent {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 

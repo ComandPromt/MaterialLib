@@ -16,7 +16,7 @@ import javax.swing.JComponent;
 import javax.swing.JToolTip;
 import javax.swing.border.EmptyBorder;
 
-import com.materiallib.utils.ShadowRenderer;
+import com.material.utils.ShadowRenderer;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
