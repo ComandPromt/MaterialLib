@@ -6,7 +6,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.checkbox.PanelRedondo;
+import com.panels.round.PanelRedondo;
 
 public class VentanaEmergente {
 

@@ -21,9 +21,9 @@ public class SimpleCard extends JPanel {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -66,13 +66,13 @@ public class SimpleCard extends JPanel {
 
 			try {
 
-				font = getFont().deriveFont(14f);
+				font = getFont().deriveFont(20f);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 14);
+				font = new Font("Dialog", Font.PLAIN, 20);
 
 			}
 
@@ -80,9 +80,9 @@ public class SimpleCard extends JPanel {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -95,7 +95,7 @@ public class SimpleCard extends JPanel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -103,7 +103,7 @@ public class SimpleCard extends JPanel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -256,9 +256,10 @@ public class SimpleCard extends JPanel {
 
 			public void componentResized(ComponentEvent e) {
 
-				panel1.setSize(getWidth(), (int) Math.round(getHeight() * 0.16));
+				panel1.setSize(getWidth(), (int) Math.round(getHeight() * 0.19));
 
-				panel2.setSize(getWidth(), (int) Math.round(getHeight() * 0.85));
+				panel2.setBounds(0, (int) Math.round(getHeight() * 0.19), getWidth(),
+						(int) Math.round(getHeight() * 0.80));
 
 			}
 

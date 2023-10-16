@@ -93,7 +93,7 @@ public class ImageAvatar extends JLabel {
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 14);
+				font = new Font("Dialog", Font.PLAIN, 20);
 
 			}
 

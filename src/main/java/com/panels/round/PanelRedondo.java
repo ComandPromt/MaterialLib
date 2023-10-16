@@ -1,4 +1,4 @@
-package com.checkbox;
+package com.panels.round;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -20,7 +20,7 @@ import com.toolTip.ToolTipLlamada;
 
 public class PanelRedondo extends JPanel {
 
-	private int radius = 20;
+	private int radius;
 
 	JDialog dialogo;
 
@@ -28,9 +28,9 @@ public class PanelRedondo extends JPanel {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -87,9 +87,9 @@ public class PanelRedondo extends JPanel {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -102,7 +102,7 @@ public class PanelRedondo extends JPanel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -110,7 +110,7 @@ public class PanelRedondo extends JPanel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -121,6 +121,8 @@ public class PanelRedondo extends JPanel {
 	}
 
 	public PanelRedondo(JDialog dialogo, Component panel, int width, int height) {
+
+		radius = 20;
 
 		btnNewButton = new MetroButton("X");
 

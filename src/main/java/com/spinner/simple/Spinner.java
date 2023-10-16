@@ -8,7 +8,10 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import javax.swing.JSpinner;
+import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
+
+import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 
@@ -26,7 +29,7 @@ public class Spinner extends JSpinner {
 
 	private SpinnerUI.Editor editor;
 
-	private Font fuente;
+	private Font ffuente;
 
 	private Color fondo;
 
@@ -37,6 +40,100 @@ public class Spinner extends JSpinner {
 	private Color buttonColor;
 
 	private Color colorTexto;
+
+	private String text;
+
+	private Color bk;
+
+	private Color fg;
+
+	private Color border;
+
+	private Font fuente;
+
+	@Override
+	public void setToolTipText(String text) {
+
+		setToolTip(text, null, null, null, null);
+
+	}
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			try {
+
+				font = getFont().deriveFont(20f);
+
+			}
+
+			catch (Exception e) {
+
+				font = new Font("Dialog", Font.PLAIN, 20);
+
+			}
+
+		}
+
+		this.text = text;
+
+		this.bk = background;
+
+		this.fg = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		super.setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || bk == null || fg == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, bk, fg, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
 
 	@Override
 	public void setFont(Font font) {
@@ -159,7 +256,7 @@ public class Spinner extends JSpinner {
 
 		}
 
-		this.fuente = font;
+		this.ffuente = font;
 
 		if (background == null) {
 
@@ -197,7 +294,7 @@ public class Spinner extends JSpinner {
 
 		setOpaque(false);
 
-		setUI(new SpinnerUI(true, fuente, foreground, background, buttonBackground, selectedColor, buttonColor,
+		setUI(new SpinnerUI(true, ffuente, foreground, background, buttonBackground, selectedColor, buttonColor,
 				negativo, incremento, minValor, maxValor));
 
 		ponerConstructor();
@@ -220,17 +317,17 @@ public class Spinner extends JSpinner {
 
 		this.maxValor = 100;
 
-		if (fuente == null) {
+		if (ffuente == null) {
 
-			fuente = new Font("Dialog", Font.PLAIN, 20);
+			ffuente = new Font("Dialog", Font.PLAIN, 20);
 
 		}
 
-		this.fuente = font;
+		this.ffuente = font;
 
 		setOpaque(false);
 
-		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
 				incremento, minValor, maxValor));
 
 		ponerConstructor();
@@ -247,7 +344,7 @@ public class Spinner extends JSpinner {
 
 		this.incremento = incremento;
 
-		fuente = new Font("Dialog", Font.PLAIN, 20);
+		ffuente = new Font("Dialog", Font.PLAIN, 20);
 
 		setOpaque(false);
 
@@ -257,7 +354,7 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
 				incremento, minValor, maxValor));
 
 		ponerConstructor();
@@ -274,7 +371,7 @@ public class Spinner extends JSpinner {
 
 		this.incremento = 1;
 
-		fuente = new Font("Dialog", Font.PLAIN, 20);
+		ffuente = new Font("Dialog", Font.PLAIN, 20);
 
 		setOpaque(false);
 
@@ -284,7 +381,7 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
 				incremento, minValor, maxValor));
 
 		ponerConstructor();
@@ -301,7 +398,7 @@ public class Spinner extends JSpinner {
 
 		this.negativo = false;
 
-		fuente = new Font("Dialog", Font.PLAIN, 20);
+		ffuente = new Font("Dialog", Font.PLAIN, 20);
 
 		setOpaque(false);
 
@@ -311,7 +408,7 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
 				incremento, minValor, maxValor));
 
 		ponerConstructor();
@@ -328,7 +425,7 @@ public class Spinner extends JSpinner {
 
 		this.incremento = incremento;
 
-		fuente = new Font("Dialog", Font.PLAIN, 20);
+		ffuente = new Font("Dialog", Font.PLAIN, 20);
 
 		setOpaque(false);
 
@@ -338,7 +435,7 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
 				incremento, minValor, maxValor));
 
 		ponerConstructor();
@@ -355,7 +452,7 @@ public class Spinner extends JSpinner {
 
 		this.maxValor = 100;
 
-		fuente = new Font("Dialog", Font.PLAIN, 20);
+		ffuente = new Font("Dialog", Font.PLAIN, 20);
 
 		setOpaque(false);
 
@@ -365,7 +462,7 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
+		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
 				incremento, minValor, maxValor));
 
 		ponerConstructor();
@@ -524,7 +621,7 @@ public class Spinner extends JSpinner {
 
 		setOpaque(false);
 
-		setUI(new SpinnerUI(mostrarUi, fuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+		setUI(new SpinnerUI(mostrarUi, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
 				negativo, incremento, minValor, maxValor));
 
 		ponerConstructor();

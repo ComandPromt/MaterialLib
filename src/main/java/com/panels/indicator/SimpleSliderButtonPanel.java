@@ -38,9 +38,9 @@ public class SimpleSliderButtonPanel extends JPanel {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -97,9 +97,9 @@ public class SimpleSliderButtonPanel extends JPanel {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -112,7 +112,7 @@ public class SimpleSliderButtonPanel extends JPanel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -120,7 +120,7 @@ public class SimpleSliderButtonPanel extends JPanel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 

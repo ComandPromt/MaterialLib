@@ -13,9 +13,9 @@ public class JSliderCustom extends JSlider {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -58,13 +58,13 @@ public class JSliderCustom extends JSlider {
 
 			try {
 
-				font = getFont().deriveFont(14f);
+				font = getFont().deriveFont(20f);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 14);
+				font = new Font("Dialog", Font.PLAIN, 20);
 
 			}
 
@@ -72,9 +72,9 @@ public class JSliderCustom extends JSlider {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -87,7 +87,7 @@ public class JSliderCustom extends JSlider {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -95,7 +95,7 @@ public class JSliderCustom extends JSlider {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 

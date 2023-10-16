@@ -48,7 +48,9 @@ public class ShadowRenderer {
 	}
 
 	public BufferedImage createShadow(final BufferedImage image) {
+
 		try {
+
 			int shadowSize = size * 2;
 
 			int srcWidth = image.getWidth();
@@ -226,6 +228,7 @@ public class ShadowRenderer {
 			GraphicsUtilities.setPixels(dst, 0, 0, dstWidth, dstHeight, dstBuffer);
 
 			return dst;
+
 		}
 
 		catch (Exception e) {

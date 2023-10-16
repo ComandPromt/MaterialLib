@@ -1,7 +1,6 @@
 
 package com.message.alerts;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -32,20 +31,9 @@ public class AlertError extends javax.swing.JFrame {
 
 	private JPanel jPanel1;
 
-	private Color background;
-
-	@Override
-	public void setBackground(Color background) {
-
-		this.background = background;
-
-	}
-
 	public AlertError(boolean modal) {
 
 		i = 32;
-
-		background = Color.WHITE;
 
 		setAlwaysOnTop(true);
 
@@ -128,8 +116,6 @@ public class AlertError extends javax.swing.JFrame {
 			}
 
 		});
-
-		jPanel1.setBackground(background);
 
 		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 

@@ -41,11 +41,11 @@ public class ColorTintFilter extends AbstractFilter {
 
 		this.mixValue = mixValue;
 
-		int mix_r = (int) (mixColor.getRed() * mixValue);
+		int mixR = (int) (mixColor.getRed() * mixValue);
 
-		int mix_g = (int) (mixColor.getGreen() * mixValue);
+		int mixG = (int) (mixColor.getGreen() * mixValue);
 
-		int mix_b = (int) (mixColor.getBlue() * mixValue);
+		int mixB = (int) (mixColor.getBlue() * mixValue);
 
 		float factor = 1.0f - mixValue;
 
@@ -61,11 +61,11 @@ public class ColorTintFilter extends AbstractFilter {
 
 			value = (int) (i * factor);
 
-			preMultipliedRed[i] = value + mix_r;
+			preMultipliedRed[i] = value + mixR;
 
-			preMultipliedGreen[i] = value + mix_g;
+			preMultipliedGreen[i] = value + mixG;
 
-			preMultipliedBlue[i] = value + mix_b;
+			preMultipliedBlue[i] = value + mixB;
 
 		}
 

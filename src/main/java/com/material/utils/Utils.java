@@ -13,11 +13,11 @@ import java.util.Arrays;
 
 public class Utils {
 
-	private static final boolean useSun2D;
+	private static boolean useSun2D;
 
-	private static final Method getUsableBounds;
+	private static Method getUsableBounds;
 
-	static {
+	public Utils() {
 
 		boolean found = false;
 
@@ -25,9 +25,7 @@ public class Utils {
 
 		try {
 
-			Class sunGE = Class.forName("sun.java2d.SunGraphicsEnvironment");
-
-			Method[] meths = sunGE.getDeclaredMethods();
+			Method[] meths = Class.forName("sun.java2d.SunGraphicsEnvironment").getDeclaredMethods();
 
 			for (Method meth : meths) {
 
@@ -81,6 +79,7 @@ public class Utils {
 			catch (Exception ex) {
 
 				Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
 				screen = new Rectangle(0, 0, size.width, size.height);
 
 			}
@@ -113,6 +112,7 @@ public class Utils {
 
 			nativeTrans = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
 					.isWindowTranslucencySupported(GraphicsDevice.WindowTranslucency.PERPIXEL_TRANSLUCENT);
+
 		}
 
 		return nativeTrans;

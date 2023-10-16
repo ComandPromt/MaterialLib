@@ -33,6 +33,20 @@ public class SimpleTextArea extends JPanel {
 
 	private MaterialPanelDeslizante scrollPane;
 
+	public void setEditable(boolean editable) {
+
+		try {
+
+			textArea.setEditable(editable);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setText(String text) {
 
 		try {
@@ -264,6 +278,12 @@ public class SimpleTextArea extends JPanel {
 
 	public SimpleTextArea() {
 
+		this("");
+
+	}
+
+	public SimpleTextArea(String text) {
+
 		colorFondo = Color.WHITE;
 
 		setLayout(new GridLayout(0, 1, 0, 0));
@@ -271,6 +291,8 @@ public class SimpleTextArea extends JPanel {
 		textArea = new TextArea(Color.RED, Color.BLUE);
 
 		textArea.setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		textArea.setText(text);
 
 		DefaultContextMenu.addDefaultContextMenu(textArea);
 

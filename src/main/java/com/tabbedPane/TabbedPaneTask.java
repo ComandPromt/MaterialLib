@@ -1,19 +1,117 @@
 package com.tabbedPane;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JToolTip;
 
 import com.panels.image.ImagePanel;
+import com.toolTip.ToolTipLlamada;
 
 public class TabbedPaneTask extends JTabbedPane {
 
 	private static final long serialVersionUID = 1L;
+
+	private String text;
+
+	private Color fondo;
+
+	private Color colorTexto;
+
+	private Color border;
+
+	private Font fuente;
+
+	@Override
+	public void setToolTipText(String text) {
+
+		setToolTip(text, null, null, null, null);
+
+	}
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			try {
+
+				font = getFont().deriveFont(20f);
+
+			}
+
+			catch (Exception e) {
+
+				font = new Font("Dialog", Font.PLAIN, 20);
+
+			}
+
+		}
+
+		this.text = text;
+
+		this.fondo = background;
+
+		this.colorTexto = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		super.setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || fondo == null || colorTexto == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
 
 	public TabbedPaneTask() {
 

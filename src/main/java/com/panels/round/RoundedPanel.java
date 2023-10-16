@@ -1,4 +1,4 @@
-package com.checkbox;
+package com.panels.round;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -23,9 +23,9 @@ public class RoundedPanel extends JPanel {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -82,9 +82,9 @@ public class RoundedPanel extends JPanel {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -97,7 +97,7 @@ public class RoundedPanel extends JPanel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -105,7 +105,7 @@ public class RoundedPanel extends JPanel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 

@@ -35,17 +35,17 @@ class SliderButtonPanel extends JPanel {
 
 	private int iluminacion;
 
-	private JPanel panel1 = new JPanel();
+	private JPanel panel1;
 
-	private JPanel panel2 = new JPanel();
+	private JPanel panel2;
 
 	private Font font;
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
@@ -88,13 +88,13 @@ class SliderButtonPanel extends JPanel {
 
 			try {
 
-				font = getFont().deriveFont(14f);
+				font = getFont().deriveFont(20f);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 14);
+				font = new Font("Dialog", Font.PLAIN, 20);
 
 			}
 
@@ -102,9 +102,9 @@ class SliderButtonPanel extends JPanel {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -117,7 +117,7 @@ class SliderButtonPanel extends JPanel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -125,7 +125,7 @@ class SliderButtonPanel extends JPanel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 

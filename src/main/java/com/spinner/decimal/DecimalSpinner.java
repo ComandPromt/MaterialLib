@@ -49,9 +49,9 @@ public class DecimalSpinner extends JSpinner {
 
 	private String text;
 
-	private Color background;
+	private Color bk;
 
-	private Color foreground;
+	private Color fg;
 
 	private Color border;
 
@@ -94,13 +94,13 @@ public class DecimalSpinner extends JSpinner {
 
 			try {
 
-				font = getFont().deriveFont(14f);
+				font = getFont().deriveFont(20f);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 14);
+				font = new Font("Dialog", Font.PLAIN, 20);
 
 			}
 
@@ -108,9 +108,9 @@ public class DecimalSpinner extends JSpinner {
 
 		this.text = text;
 
-		this.background = background;
+		this.bk = background;
 
-		this.foreground = foreground;
+		this.fg = foreground;
 
 		this.border = border;
 
@@ -123,7 +123,7 @@ public class DecimalSpinner extends JSpinner {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || bk == null || fg == null || border == null) {
 
 			return super.createToolTip();
 
@@ -131,7 +131,7 @@ public class DecimalSpinner extends JSpinner {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, bk, fg, border, fuente);
 
 			tip.setComponent(this);
 
@@ -352,6 +352,7 @@ public class DecimalSpinner extends JSpinner {
 		if (font == null) {
 
 			font = new Font("Dialog", Font.PLAIN, 20);
+
 		}
 
 		this.font = font;

@@ -84,13 +84,13 @@ public class PanelGlowingGradient extends JComponent {
 
 			try {
 
-				font = getFont().deriveFont(14f);
+				font = getFont().deriveFont(20f);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 14);
+				font = new Font("Dialog", Font.PLAIN, 20);
 
 			}
 

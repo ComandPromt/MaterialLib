@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
 
-import com.textarea.NTextArea;
+import com.textarea.SimpleTextArea;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
@@ -18,7 +18,7 @@ public class MaterialCard extends JPanel {
 
 	JLabel panel1;
 
-	NTextArea panel2;
+	SimpleTextArea panel2;
 
 	private String text;
 
@@ -67,13 +67,13 @@ public class MaterialCard extends JPanel {
 
 			try {
 
-				font = getFont().deriveFont(14f);
+				font = getFont().deriveFont(20f);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 14);
+				font = new Font("Dialog", Font.PLAIN, 20);
 
 			}
 
@@ -258,17 +258,9 @@ public class MaterialCard extends JPanel {
 
 	}
 
-	public void setLabelText(String text) {
+	public MaterialCard() {
 
-		try {
-
-			panel2.setHeader(text);
-
-		}
-
-		catch (Exception e) {
-
-		}
+		this("", "");
 
 	}
 
@@ -288,7 +280,7 @@ public class MaterialCard extends JPanel {
 
 		panel1 = new JLabel(header);
 
-		panel2 = new NTextArea(text);
+		panel2 = new SimpleTextArea(text);
 
 		panel1.setOpaque(true);
 
@@ -300,9 +292,10 @@ public class MaterialCard extends JPanel {
 
 			public void componentResized(ComponentEvent e) {
 
-				panel1.setSize(getWidth(), (int) Math.round(getHeight() * 0.16));
+				panel1.setSize(getWidth(), (int) Math.round(getHeight() * 0.19));
 
-				panel2.setSize(getWidth(), (int) Math.round(getHeight() * 0.85));
+				panel2.setBounds(0, (int) Math.round(getHeight() * 0.19), getWidth(),
+						(int) Math.round(getHeight() * 0.80));
 
 			}
 
@@ -316,7 +309,7 @@ public class MaterialCard extends JPanel {
 
 		add(panel1);
 
-		panel2.setBounds(0, 53, 451, 249);
+		panel2.setBounds(0, 67, 451, 249);
 
 		add(panel2);
 

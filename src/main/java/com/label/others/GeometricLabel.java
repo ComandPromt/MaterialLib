@@ -22,7 +22,7 @@ public class GeometricLabel extends JLabel {
 
 	private float dividir;
 
-	private static double halfPI = Math.PI / 2.0;
+	private final double halfPI = Math.PI / 2.0;
 
 	private String text;
 
@@ -208,7 +208,7 @@ public class GeometricLabel extends JLabel {
 
 	}
 
-	static private Shape regularPolygon(int sides, double x, double y, double width, double height) {
+	private Shape regularPolygon(int sides, double x, double y, double width, double height) {
 
 		Path2D poly = new Path2D.Double(Path2D.WIND_EVEN_ODD, 12);
 
@@ -352,7 +352,7 @@ public class GeometricLabel extends JLabel {
 
 	}
 
-	static double circleX(int sides, int angle) {
+	double circleX(int sides, int angle) {
 
 		double coeff = (double) angle / (double) sides;
 
@@ -360,7 +360,7 @@ public class GeometricLabel extends JLabel {
 
 	}
 
-	static double circleY(int sides, int angle) {
+	double circleY(int sides, int angle) {
 
 		double coeff = (double) angle / (double) sides;
 

@@ -67,7 +67,17 @@ public class StyledButton extends JButton {
 
 		if (font == null) {
 
-			font = getFont().deriveFont(14f);
+			try {
+
+				font = getFont().deriveFont(20f);
+
+			}
+
+			catch (Exception e) {
+
+				font = new Font("Dialog", Font.PLAIN, 20);
+
+			}
 
 		}
 
