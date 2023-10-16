@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -31,6 +30,130 @@ import com.scrollbar.ScrollBarCustom;
 
 public class ComboSuggestionUI extends BasicComboBoxUI {
 
+	private Color borderColor;
+
+	private Color arrowVisible;
+
+	private Color arrowInvisible;
+
+	private Color selectionColor;
+
+	private Color selectionItemColor;
+
+	private Color selectionForegroundColor;
+
+	private Color menuColor;
+
+	private Color foregroundMenuColor;
+
+	private Color lineScrollColor;
+
+	public Color getBorderColor() {
+
+		return borderColor;
+
+	}
+
+	public Color getArrowVisible() {
+
+		return arrowVisible;
+
+	}
+
+	public Color getArrowInvisible() {
+
+		return arrowInvisible;
+
+	}
+
+	public Color getSelectionItemColor() {
+
+		return selectionItemColor;
+
+	}
+
+	public Color getSelectionForegroundColor() {
+
+		return selectionForegroundColor;
+
+	}
+
+	public Color getMenuColor() {
+
+		return menuColor;
+
+	}
+
+	public Color getForegroundMenuColor() {
+
+		return foregroundMenuColor;
+
+	}
+
+	public void setBorderColor(Color borderColor) {
+
+		this.borderColor = borderColor;
+
+	}
+
+	public void setArrowVisible(Color arrowVisible) {
+
+		this.arrowVisible = arrowVisible;
+
+	}
+
+	public void setArrowInvisible(Color arrowInvisible) {
+
+		this.arrowInvisible = arrowInvisible;
+
+	}
+
+	public void setSelectionItemColor(Color selectionItemColor) {
+
+		this.selectionItemColor = selectionItemColor;
+
+	}
+
+	public void setSelectionForegroundColor(Color selectionForegroundColor) {
+
+		this.selectionForegroundColor = selectionForegroundColor;
+
+	}
+
+	public void setMenuColor(Color menuColor) {
+
+		this.menuColor = menuColor;
+
+	}
+
+	public void setForegroundMenuColor(Color foregroundMenuColor) {
+
+		this.foregroundMenuColor = foregroundMenuColor;
+
+	}
+
+	public ComboSuggestionUI(Color lineScrollColor) {
+
+		this.lineScrollColor = lineScrollColor;
+
+		selectionColor = new Color(236, 236, 236);
+
+		borderColor = new Color(128, 189, 255);
+
+		arrowVisible = new Color(180, 180, 180);
+
+		arrowInvisible = new Color(150, 150, 150);
+
+		selectionItemColor = new Color(240, 240, 240);
+
+		selectionForegroundColor = new Color(17, 155, 215);
+
+		menuColor = Color.WHITE;
+
+		foregroundMenuColor = Color.BLACK;
+
+	}
+
 	@Override
 	public void installUI(JComponent jc) {
 
@@ -46,7 +169,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			public void focusGained(FocusEvent fe) {
 
-				border.setColor(new Color(128, 189, 255));
+				border.setColor(borderColor);
 
 			}
 
@@ -66,7 +189,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			public void popupMenuWillBecomeVisible(PopupMenuEvent pme) {
 
-				arrowButton.setBackground(new Color(180, 180, 180));
+				arrowButton.setBackground(arrowVisible);
 
 			}
 
@@ -74,7 +197,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			public void popupMenuWillBecomeInvisible(PopupMenuEvent pme) {
 
-				arrowButton.setBackground(new Color(150, 150, 150));
+				arrowButton.setBackground(arrowInvisible);
 
 			}
 
@@ -90,7 +213,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 		AutoCompleteDecorator.decorate(comboBox);
 
-		txt.setSelectionColor(new Color(54, 189, 248));
+		txt.setSelectionColor(selectionColor);
 
 		txt.setBorder(new EmptyBorder(0, 4, 0, 4));
 
@@ -146,13 +269,21 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 				}
 
+				label.setOpaque(true);
+
 				if (bln) {
 
-					label.setOpaque(true);
+					label.setBackground(selectionItemColor);
 
-					label.setBackground(new Color(240, 240, 240));
+					label.setForeground(selectionForegroundColor);
 
-					label.setForeground(new Color(17, 155, 215));
+				}
+
+				else {
+
+					label.setBackground(menuColor);
+
+					label.setForeground(foregroundMenuColor);
 
 				}
 
@@ -161,11 +292,6 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 			}
 
 		};
-
-	}
-
-	@Override
-	public void paintCurrentValueBackground(Graphics grphcs, Rectangle rctngl, boolean bln) {
 
 	}
 
@@ -188,9 +314,9 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			JScrollPane scroll = super.createScroller();
 
-			list.setBackground(Color.WHITE);
-
 			ScrollBarCustom sb = new ScrollBarCustom(null, null);
+
+			sb.setBackground(lineScrollColor);
 
 			sb.setPreferredSize(new Dimension(12, 70));
 
@@ -212,7 +338,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			setBorder(new EmptyBorder(5, 5, 5, 5));
 
-			setBackground(new Color(150, 150, 150));
+			setBackground(arrowInvisible);
 
 		}
 
@@ -255,9 +381,9 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 	@SuppressWarnings("serial")
 	private class Border extends EmptyBorder {
 
-		private Color focusColor = new Color(128, 189, 255);
+		private Color focusColor;
 
-		private Color color = new Color(206, 212, 218);
+		private Color color;
 
 		@SuppressWarnings("unused")
 		public Color getFocusColor() {
@@ -289,6 +415,10 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 		public Border(int border) {
 
 			super(border, border, border, border);
+
+			focusColor = new Color(128, 189, 255);
+
+			color = new Color(206, 212, 218);
 
 		}
 

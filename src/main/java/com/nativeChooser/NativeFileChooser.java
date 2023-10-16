@@ -1,14 +1,14 @@
 package com.nativeChooser;
 
-import java.awt.Toolkit;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,25 +17,69 @@ import mthos.JMthos;
 
 @SuppressWarnings("serial")
 
-public class NativeFileChooser extends JFrame {
+public class NativeFileChooser extends JPanel {
 
-	public String folder;
+	private String folder;
+
+	private List<File> archivos;
+
+	public List<File> getArchivos() {
+
+		return archivos;
+
+	}
+
+	public void setArchivos(List<File> archivos) {
+
+		this.archivos = archivos;
+
+	}
+
+	public NativeFileChooser(String filter) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
+
+		this(false, filter);
+
+	}
+
+	public NativeFileChooser(boolean folder) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
+
+		this(folder, "all");
+
+	}
 
 	public NativeFileChooser() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
 
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-		setIconImage(
-				Toolkit.getDefaultToolkit().getImage(NativeFileChooser.class.getResource("/imgs/imagenes/folder.png")));
-
-		this.setVisible(false);
+		this(false, "all");
 
 	}
 
-	public LinkedList<File> showOpenFileDialog(boolean carpeta, String filtro) {
+	public NativeFileChooser(boolean folder, String filter) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
 
-		LinkedList<File> files = new LinkedList<File>();
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+		filter = JMthos.eliminarEspacios(filter, true);
+
+		if (filter.isEmpty()) {
+
+			filter = "all";
+
+		}
+
+		archivos = new LinkedList<>();
+
+		showOpenFileDialog(folder, filter);
+
+		setVisible(true);
+
+	}
+
+	public void showOpenFileDialog(boolean carpeta, String filtro) {
+
+		archivos.clear();
 
 		try {
 
@@ -96,7 +140,7 @@ public class NativeFileChooser extends JFrame {
 
 				File[] selectedFile = fileChooser.getSelectedFiles();
 
-				files = addImages(carpeta, filtro, selectedFile);
+				addImages(carpeta, filtro, selectedFile);
 
 				Pattern p = Pattern.compile("\\.[a-zA-Z0-9]{3}$");
 
@@ -123,8 +167,6 @@ public class NativeFileChooser extends JFrame {
 
 		}
 
-		return files;
-
 	}
 
 	public String getFolder() {
@@ -133,27 +175,9 @@ public class NativeFileChooser extends JFrame {
 
 	}
 
-	public static String saberSeparador() {
+	private void addImages(boolean carpeta, String filtro, File[] fc) {
 
-		if (System.getProperty("os.name").contains("indows")) {
-
-			return "\\";
-
-		}
-
-		else {
-
-			return "/";
-
-		}
-
-	}
-
-	public static LinkedList<File> addImages(boolean carpeta, String filtro, File[] fc) {
-
-		LinkedList<File> files = new LinkedList<File>();
-
-		files.clear();
+		archivos.clear();
 
 		Arrays.asList(fc).forEach(x -> {
 
@@ -171,7 +195,7 @@ public class NativeFileChooser extends JFrame {
 
 					case "all":
 
-						files.add(new File(x.getAbsolutePath()));
+						archivos.add(new File(x.getAbsolutePath()));
 
 						break;
 
@@ -182,7 +206,7 @@ public class NativeFileChooser extends JFrame {
 						if (extension.equals("jpeg") || extension.equals("bmp") || extension.equals("jpg")
 								|| extension.equals("png") || extension.equals("gif")) {
 
-							files.add(new File(x.getAbsolutePath()));
+							archivos.add(new File(x.getAbsolutePath()));
 
 						}
 
@@ -194,7 +218,7 @@ public class NativeFileChooser extends JFrame {
 
 						if (extension.equals(filtro)) {
 
-							files.add(new File(x.getAbsolutePath()));
+							archivos.add(new File(x.getAbsolutePath()));
 
 						}
 
@@ -210,15 +234,13 @@ public class NativeFileChooser extends JFrame {
 
 				if (x.isDirectory()) {
 
-					files.add(new File(x.getAbsolutePath()));
+					archivos.add(new File(x.getAbsolutePath()));
 
 				}
 
 			}
 
 		});
-
-		return files;
 
 	}
 

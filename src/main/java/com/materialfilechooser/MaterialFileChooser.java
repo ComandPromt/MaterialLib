@@ -82,6 +82,12 @@ class MaterialFileChooser extends JPanel {
 
 			saberBuscador(tipo.getSelectedItem().toString());
 
+			if (path.getText().isEmpty()) {
+
+				path.setText(System.getProperty("user.home"));
+
+			}
+
 			buttonScrollablePanel.listarItems(path.getText(), ext, false);
 
 		}
@@ -127,7 +133,7 @@ class MaterialFileChooser extends JPanel {
 
 		panel_1.setLayout(null);
 
-		search = new SearchInput(JMthos.listar(System.getProperty("user.home"), "all", true, true));
+		search = new SearchInput(JMthos.listar(System.getProperty("user.home"), "all", true, false));
 
 		search.addKeyListener(new KeyAdapter() {
 			@Override
@@ -434,13 +440,13 @@ class MaterialFileChooser extends JPanel {
 
 						if (i == 0) {
 
-							test = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, true);
+							test = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, false);
 
 						}
 
 						else {
 
-							lista2 = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, true);
+							lista2 = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, false);
 
 							for (int y = 0; y < lista2.size(); y++) {
 
@@ -456,7 +462,7 @@ class MaterialFileChooser extends JPanel {
 
 				else {
 
-					test = (LinkedList<String>) JMthos.listar(path.getText(), filtro, false, true);
+					test = (LinkedList<String>) JMthos.listar(path.getText(), filtro, false, false);
 
 				}
 
@@ -553,7 +559,7 @@ class MaterialFileChooser extends JPanel {
 
 		try {
 
-			LinkedList<String> lista = (LinkedList<String>) JMthos.listar(path.getText(), "all", true, true);
+			LinkedList<String> lista = (LinkedList<String>) JMthos.listar(path.getText(), "all", true, false);
 
 			String busqueda = filtro;
 
@@ -565,7 +571,7 @@ class MaterialFileChooser extends JPanel {
 
 				for (int i = 0; i < filtros.length; i++) {
 
-					test2 = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, true);
+					test2 = (LinkedList<String>) JMthos.listar(path.getText(), filtros[i], false, false);
 
 					for (int y = 0; y < test2.size(); y++) {
 
@@ -585,7 +591,7 @@ class MaterialFileChooser extends JPanel {
 
 				}
 
-				test2 = (LinkedList<String>) JMthos.listar(path.getText(), busqueda, false, true);
+				test2 = (LinkedList<String>) JMthos.listar(path.getText(), busqueda, false, false);
 
 				for (int i = 0; i < test2.size(); i++) {
 

@@ -166,11 +166,15 @@ public class TextAreaScroll extends JScrollPane {
 
 		this.scrollForeground = color;
 
+		setColors(color, scrollBackground);
+
 	}
 
 	public void setScrollBackground(Color scrollBackground) {
 
 		this.scrollBackground = scrollBackground;
+
+		setColors(scrollForeground, scrollBackground);
 
 	}
 
@@ -234,7 +238,7 @@ public class TextAreaScroll extends JScrollPane {
 
 	}
 
-	void setColors(Color foreground, Color background) {
+	public void setColors(Color foreground, Color background) {
 
 		this.scrollForeground = foreground;
 

@@ -338,6 +338,20 @@ public class CopyTextArea extends JPanel {
 
 	}
 
+	public void setSelectionColor(Color color) {
+
+		try {
+
+			textarea.setSelectionColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public CopyTextArea() {
 
 		setBorder(new LineBorder(Color.BLACK));
@@ -590,6 +604,8 @@ public class CopyTextArea extends JPanel {
 		panel.add(limpiar);
 
 		textarea = new NTextArea("");
+
+		textarea.setSelectionColor(new Color(223, 223, 223));
 
 		textarea.setOpaque(true);
 

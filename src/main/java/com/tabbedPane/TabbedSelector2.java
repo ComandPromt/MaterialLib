@@ -227,6 +227,7 @@ public class TabbedSelector2 extends JTabbedPane {
 			g2.setStroke(new BasicStroke(3.0f));
 
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, selectionBorderOpacity));
+
 			g2.setColor(selectionColor);
 
 			g2.draw(background);
@@ -234,6 +235,7 @@ public class TabbedSelector2 extends JTabbedPane {
 			g2.drawRoundRect(tw - 2, 3, getWidth() - tw - 3, getHeight() - 6, 10, 10);
 
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, selectionOpacity));
+
 			g2.fillRoundRect(tw - 2, 3, getWidth() - tw - 3, getHeight() - 6, 10, 10);
 
 			g2.setStroke(stroke);

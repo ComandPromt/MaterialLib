@@ -1,8 +1,8 @@
 
 package com.textField.passwordField;
 
-import static com.textField.text.MaterialTextField2.HINT_OPACITY_MASK;
-import static com.textField.text.MaterialTextField2.LINE_OPACITY_MASK;
+import static com.textField.passwordField.MaterialTextField2.HINT_OPACITY_MASK;
+import static com.textField.passwordField.MaterialTextField2.LINE_OPACITY_MASK;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -20,7 +20,6 @@ import javax.swing.text.DefaultCaret;
 
 import com.material.utils.MaterialColor;
 import com.material.utils.Utils;
-import com.textField.text.MaterialTextField2;
 import com.toolTip.ToolTipLlamada;
 
 public class PasswordField extends JPasswordField {
@@ -163,6 +162,8 @@ public class PasswordField extends JPasswordField {
 		});
 
 		getCaret().setBlinkRate(500);
+
+		setForeground(Color.BLACK);
 
 	}
 

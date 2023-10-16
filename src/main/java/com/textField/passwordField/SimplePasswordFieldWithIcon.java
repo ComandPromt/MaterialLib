@@ -1,0 +1,451 @@
+package com.textField.passwordField;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPasswordField;
+import javax.swing.JToolTip;
+import javax.swing.border.EmptyBorder;
+
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTarget;
+import org.jdesktop.animation.timing.TimingTargetAdapter;
+
+import com.contextmenu.DefaultContextMenu;
+import com.toolTip.ToolTipLlamada;
+
+import mthos.JMthos;
+
+@SuppressWarnings("serial")
+public class SimplePasswordFieldWithIcon extends JPasswordField {
+
+	private String text;
+
+	private Color fondo;
+
+	private Color colorTexto;
+
+	private Color border;
+
+	private Font fuente;
+
+	private final Animator animator;
+
+	private float location;
+
+	private boolean show;
+
+	private Image eye;
+
+	private Image eye_hide;
+
+	private boolean mouseOver;
+
+	private Color lineColor;
+
+	private boolean hide;
+
+	private boolean showAndHide;
+
+	private int height;
+
+	@Override
+	public void setToolTipText(String text) {
+
+		setToolTip(text, null, null, null, null);
+
+	}
+
+	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+
+		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
+
+		if (background == null) {
+
+			background = new Color(32, 39, 55);
+
+		}
+
+		if (foreground == null) {
+
+			foreground = Color.WHITE;
+
+		}
+
+		if (border == null) {
+
+			border = new Color(173, 173, 173);
+
+		}
+
+		if (font == null) {
+
+			try {
+
+				font = getFont().deriveFont(20f);
+
+			}
+
+			catch (Exception e) {
+
+				font = new Font("Dialog", Font.PLAIN, 20);
+
+			}
+
+		}
+
+		this.text = text;
+
+		this.fondo = background;
+
+		this.colorTexto = foreground;
+
+		this.border = border;
+
+		this.fuente = font;
+
+		super.setToolTipText(text);
+
+	}
+
+	@Override
+	public JToolTip createToolTip() {
+
+		if (text == null || fondo == null || colorTexto == null || border == null) {
+
+			return super.createToolTip();
+
+		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
+	}
+
+	public boolean isShowAndHide() {
+
+		return showAndHide;
+
+	}
+
+	public void setShowAndHide(boolean showAndHide) {
+
+		this.showAndHide = showAndHide;
+
+		repaint();
+
+	}
+
+	public Color getLineColor() {
+
+		return lineColor;
+
+	}
+
+	public void setLineColor(Color lineColor) {
+
+		this.lineColor = lineColor;
+
+	}
+
+	public SimplePasswordFieldWithIcon(int height) {
+
+		if (height < 1) {
+
+			height = 25;
+
+		}
+
+		this.height = height;
+
+		mouseOver = false;
+
+		lineColor = new Color(3, 155, 216);
+
+		hide = true;
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		showAndHide = true;
+
+		setBorder(new EmptyBorder(20, 3, 10, 30));
+
+		setSelectionColor(new Color(76, 204, 255));
+
+		addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mouseEntered(MouseEvent me) {
+
+				mouseOver = true;
+
+				repaint();
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent me) {
+
+				mouseOver = false;
+
+				repaint();
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent me) {
+
+				if (showAndHide) {
+
+					int x = getWidth() - 30;
+
+					if (new Rectangle(x, 0, 30, 30).contains(me.getPoint())) {
+
+						hide = !hide;
+
+						if (hide) {
+
+							setEchoChar('*');
+
+						}
+
+						else {
+
+							setEchoChar((char) 0);
+
+						}
+
+						repaint();
+
+					}
+
+				}
+
+			}
+
+		});
+
+		addFocusListener(new FocusAdapter() {
+
+			@Override
+
+			public void focusGained(FocusEvent fe) {
+
+				showing(false);
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent fe) {
+
+				showing(true);
+
+			}
+
+		});
+
+		addMouseMotionListener(new MouseMotionAdapter() {
+
+			@Override
+
+			public void mouseMoved(MouseEvent me) {
+
+				if (showAndHide) {
+
+					int x = getWidth() - 30;
+
+					if (new Rectangle(x, 0, 30, 30).contains(me.getPoint())) {
+
+						setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+					}
+
+					else {
+
+						setCursor(new Cursor(Cursor.TEXT_CURSOR));
+
+					}
+
+				}
+			}
+
+		});
+
+		TimingTarget target = new TimingTargetAdapter() {
+
+			@Override
+			public void timingEvent(float fraction) {
+
+				location = fraction;
+
+				repaint();
+
+			}
+
+		};
+
+		eye = new ImageIcon(getClass().getResource("/imgs/imagenes/eye.png")).getImage();
+
+		eye_hide = new ImageIcon(getClass().getResource("/imgs/imagenes/eye_hide.png")).getImage();
+
+		eye = JMthos.resizeImage(eye, height, height);
+
+		eye_hide = JMthos.resizeImage(eye_hide, height, height);
+
+		animator = new Animator(300, target);
+
+		animator.setResolution(0);
+
+		animator.setAcceleration(0.5f);
+
+		animator.setDeceleration(0.5f);
+
+		DefaultContextMenu.addDefaultContextMenu(this);
+
+	}
+
+	private void showing(boolean action) {
+
+		if (animator.isRunning()) {
+
+			animator.stop();
+
+		}
+
+		else {
+
+			location = 1;
+
+		}
+
+		animator.setStartFraction(1f - location);
+
+		show = action;
+
+		location = 1f - location;
+
+		animator.start();
+
+	}
+
+	@Override
+	public void paint(Graphics grphcs) {
+
+		super.paint(grphcs);
+
+		Graphics2D g2 = (Graphics2D) grphcs;
+
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+
+		int width = getWidth();
+
+		int height = getHeight();
+
+		if (mouseOver) {
+
+			g2.setColor(lineColor);
+
+		}
+
+		else {
+
+			g2.setColor(new Color(150, 150, 150));
+
+		}
+
+		g2.fillRect(2, height - 1, width - 4, 1);
+
+		createLineStyle(g2);
+
+		if (showAndHide) {
+
+			createShowHide(g2);
+
+		}
+
+		g2.dispose();
+
+	}
+
+	private void createShowHide(Graphics2D g2) {
+
+		int x = getWidth() - height;
+
+		int y = getHeight() / 2 - height / 2;
+
+		g2.drawImage(hide ? eye_hide : eye, x, y, null);
+
+	}
+
+	private void createLineStyle(Graphics2D g2) {
+
+		if (isFocusOwner()) {
+
+			double width = getWidth() - 4;
+
+			int height = getHeight();
+
+			g2.setColor(lineColor);
+
+			double size;
+
+			if (show) {
+
+				size = width * (1 - location);
+
+			}
+
+			else {
+
+				size = width * location;
+
+			}
+
+			double x = (width - size) / 2;
+
+			g2.fillRect((int) (x + 2), height - 2, (int) size, 2);
+
+		}
+
+	}
+
+	@Override
+	public void setText(String string) {
+
+		if (!String.valueOf(getPassword()).equals(string)) {
+
+			showing(string.equals(""));
+
+		}
+
+		super.setText(string);
+
+	}
+
+}

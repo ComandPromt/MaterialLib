@@ -283,31 +283,31 @@ class ButtonScrollablePanel extends JPanel {
 						if (extension.contains(",")) {
 
 							lista = (LinkedList<String>) JMthos.listarConArray(path, extension.split(","), carpeta,
-									true);
+									false);
 
 						}
 
 						else {
 
-							lista = (LinkedList<String>) JMthos.listar(path, extension, false, true);
+							lista = (LinkedList<String>) JMthos.listar(path, extension, carpeta, false);
 
 						}
 
 						if (!carpeta) {
 
-							lista2 = (LinkedList<String>) JMthos.listar(path, "all", true, true);
+							lista2 = (LinkedList<String>) JMthos.listar(path, "all", true, false);
 
-						}
+							if (lista2 != null && !lista2.isEmpty()) {
 
-						if (lista2 != null && !lista2.isEmpty()) {
+								for (int i = 0; i < lista2.size(); i++) {
 
-							for (int i = 0; i < lista2.size(); i++) {
+									lista.add(lista2.get(i));
 
-								lista.add(lista2.get(i));
+								}
+
+								Collections.sort(lista);
 
 							}
-
-							Collections.sort(lista);
 
 						}
 					}
@@ -315,6 +315,8 @@ class ButtonScrollablePanel extends JPanel {
 					int indice = 0;
 
 					String mayorSize = JMthos.findLongestString(lista);
+
+					File file;
 
 					for (int row = 0; row < lista.size(); row++) {
 
@@ -330,14 +332,18 @@ class ButtonScrollablePanel extends JPanel {
 
 								constraints.fill = GridBagConstraints.HORIZONTAL;
 
-								if (carpeta) {
+								path = JMthos.ponerSeparador(path);
+
+								file = new File(path + lista.get(indice));
+
+								if (carpeta && file.isDirectory() || file.isDirectory()) {
 
 									addCarpeta(carpeta, constraints,
 											new Folder(lista.get(indice), mayorSize, lista.size(), carpeta));
 
 								}
 
-								else {
+								else if (!carpeta) {
 
 									if (new File(path + lista.get(indice)).isFile()) {
 

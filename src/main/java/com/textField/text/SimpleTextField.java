@@ -3,15 +3,9 @@ package com.textField.text;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
@@ -36,6 +30,30 @@ public class SimpleTextField extends JTextField {
 	private boolean round;
 
 	private int angulo;
+
+	private int grosor;
+
+	private Color borderColor;
+
+	public int getGrosor() {
+
+		return grosor;
+
+	}
+
+	public void setGrosor(int grosor) {
+
+		if (grosor < 1) {
+
+			grosor = 0;
+
+		}
+
+		this.grosor = grosor;
+
+		repaint();
+
+	}
 
 	public void setAngulo(int angulo) {
 
@@ -133,13 +151,33 @@ public class SimpleTextField extends JTextField {
 
 		this.round = round;
 
+		grosor = 5;
+
+		repaint();
+
+	}
+
+	public Color getBorderColor() {
+
+		return borderColor;
+
+	}
+
+	public void setBorderColor(Color borderColor) {
+
+		this.borderColor = borderColor;
+
 		repaint();
 
 	}
 
 	public SimpleTextField() {
 
-		angulo = 90;
+		grosor = 1;
+
+		borderColor = Color.BLACK;
+
+		angulo = 20;
 
 		setFont(getFont().deriveFont(30f));
 
@@ -156,66 +194,23 @@ public class SimpleTextField extends JTextField {
 
 		Stroke st = g2.getStroke();
 
-		g2.setStroke(new BasicStroke(5));
+		g2.setStroke(new BasicStroke(grosor));
+
+		g2.setColor(borderColor);
 
 		if (round) {
 
-			g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, angulo, angulo);
+			g2.drawRoundRect(grosor / 2, grosor / 2, getWidth() - grosor, getHeight() - grosor, angulo, angulo);
 
 		}
 
 		else {
 
-			g2.drawRect(0, 0, getWidth(), getHeight());
+			g2.drawRect(grosor / 2, grosor / 2, getWidth() - grosor, getHeight() - grosor);
 
 		}
 
 		g2.setStroke(st);
-
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-
-		Graphics2D g2 = (Graphics2D) g;
-
-		Paint oldPaint = g2.getPaint();
-
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		Shape rect;
-
-		if (round) {
-
-			rect = new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, angulo, angulo);
-
-		}
-
-		else {
-
-			rect = new Rectangle2D.Double(0, 0, getWidth(), getHeight());
-
-		}
-
-		g2.clip(rect);
-
-		g2.setPaint(new GradientPaint(0.0f, 0.0f, getBackground(), 0.0f, getHeight(), getBackground()));
-
-		if (round) {
-
-			g2.fillRoundRect(0, 0, getWidth(), getHeight(), 90, 90);
-
-		}
-
-		else {
-
-			g2.fillRect(0, 0, getWidth(), getHeight());
-
-		}
-
-		g2.setPaint(oldPaint);
-
-		super.paintComponent(g);
 
 	}
 

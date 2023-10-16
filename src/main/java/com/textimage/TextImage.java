@@ -23,13 +23,29 @@ public class TextImage extends JLabel {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
 	private Font fuente;
+
+	private int angulo;
+
+	public int getAngulo() {
+
+		return angulo;
+
+	}
+
+	public void setAngulo(int angulo) {
+
+		this.angulo = angulo;
+
+		repaint();
+
+	}
 
 	public void setSize(float size) {
 
@@ -108,9 +124,9 @@ public class TextImage extends JLabel {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -123,7 +139,7 @@ public class TextImage extends JLabel {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -131,7 +147,7 @@ public class TextImage extends JLabel {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -164,6 +180,10 @@ public class TextImage extends JLabel {
 		int width = getWidth();
 
 		int height = getHeight();
+
+		grphcs.setColor(getBackground());
+
+		grphcs.fillRoundRect(0, 0, width, height, angulo, angulo);
 
 		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 

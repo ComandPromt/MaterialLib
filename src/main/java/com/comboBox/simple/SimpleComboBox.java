@@ -3,11 +3,9 @@ package com.comboBox.simple;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -17,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.geom.Rectangle2D;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -59,7 +56,78 @@ public class SimpleComboBox extends JComboBox {
 
 	private Color lineColor;
 
+	private Color hoverLineColor;
+
 	private boolean mouseOver;
+
+	private Color colorSeleccion;
+
+	private Color selectionForegroundColor;
+
+	private Color foregroundMenuColor;
+
+	private Color fondoSeleccion;
+
+	private Color colorFlecha;
+
+	private ComboUI combo;
+
+	private Color hintTextColor;
+
+	@Override
+	public void setForeground(Color fg) {
+
+		foregroundMenuColor = fg;
+
+		repaint();
+
+	}
+
+	public Color getHintTextColor() {
+
+		return hintTextColor;
+
+	}
+
+	public void setHintTextColor(Color hintTextColor) {
+
+		this.hintTextColor = hintTextColor;
+
+		repaint();
+
+	}
+
+	public void setArrowSize(float arrowSize) {
+
+		combo.setArrowSize(arrowSize);
+
+	}
+
+	public Color getColorFlecha() {
+
+		return colorFlecha;
+
+	}
+
+	public void setColorFlecha(Color colorFlecha) {
+
+		combo.setColorFlecha(colorFlecha);
+
+	}
+
+	public Color getHoverLineColor() {
+
+		return hoverLineColor;
+
+	}
+
+	public void setHoverLineColor(Color hoverLineColor) {
+
+		this.hoverLineColor = hoverLineColor;
+
+		repaint();
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -145,6 +213,18 @@ public class SimpleComboBox extends JComboBox {
 
 	}
 
+	public void setFondoFlecha(Color fondoFlecha) {
+
+		combo.setFondoFlecha(fondoFlecha);
+
+	}
+
+	public void setGrosor(int grosor) {
+
+		combo.setGrosor(grosor);
+
+	}
+
 	public String getLabeText() {
 
 		return labeText;
@@ -169,9 +249,77 @@ public class SimpleComboBox extends JComboBox {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	public Color getColorSeleccion() {
+
+		return colorSeleccion;
+
+	}
+
+	public Color getFondoSeleccion() {
+
+		return fondoSeleccion;
+
+	}
+
+	public Color getSelectionForegroundColor() {
+
+		return selectionForegroundColor;
+
+	}
+
+	public Color getForegroundMenuColor() {
+
+		return foregroundMenuColor;
+
+	}
+
+	public void setSelectionForegroundColor(Color selectionForegroundColor) {
+
+		this.selectionForegroundColor = selectionForegroundColor;
+
+		repaint();
+
+	}
+
+	public void setForegroundMenuColor(Color foregroundMenuColor) {
+
+		this.foregroundMenuColor = foregroundMenuColor;
+
+		repaint();
+
+	}
+
+	public void setColorSeleccion(Color colorSeleccion) {
+
+		this.colorSeleccion = colorSeleccion;
+
+		repaint();
+
+	}
+
+	public void setFondoSeleccion(Color fondoSeleccion) {
+
+		this.fondoSeleccion = fondoSeleccion;
+
+		repaint();
+
+	}
 
 	public SimpleComboBox() {
+
+		this(Color.GRAY, Color.WHITE, Color.WHITE, 1);
+
+	}
+
+	@SuppressWarnings("unchecked")
+
+	public SimpleComboBox(Color scrollColor, Color scrollLine, Color bordeColor, int grosor) {
+
+		setEditable(true);
+
+		colorSeleccion = Color.WHITE;
+
+		fondoSeleccion = Color.WHITE;
 
 		setFont(getFont().deriveFont(Font.PLAIN, 20f));
 
@@ -183,7 +331,13 @@ public class SimpleComboBox extends JComboBox {
 
 		setBorder(new EmptyBorder(15, 3, 5, 3));
 
-		setUI(new ComboUI(this));
+		combo = new ComboUI(this, scrollColor, scrollLine, bordeColor, grosor);
+
+		setFondoFlecha(Color.WHITE);
+
+		setColorFlecha(Color.BLACK);
+
+		setUI(combo);
 
 		setRenderer(new DefaultListCellRenderer() {
 
@@ -197,7 +351,17 @@ public class SimpleComboBox extends JComboBox {
 
 				if (bln) {
 
-					com.setBackground(new Color(240, 240, 240));
+					com.setForeground(selectionForegroundColor);
+
+					com.setBackground(colorSeleccion);
+
+				}
+
+				else {
+
+					com.setForeground(foregroundMenuColor);
+
+					com.setBackground(fondoSeleccion);
 
 				}
 
@@ -207,23 +371,83 @@ public class SimpleComboBox extends JComboBox {
 
 		});
 
+		setArrowSize(1.4f);
+
 	}
 
 	private class ComboUI extends BasicComboBoxUI {
 
-		private final Animator animator;
+		private Color colorFlecha;
 
-		private boolean animateHinText = true;
+		private Color fondoFlecha;
+
+		private float arrowSize;
+
+		private final Animator animator;
 
 		private float location;
 
 		private boolean show;
 
-		private SimpleComboBox combo;
+		private Color bordeColor;
 
-		public ComboUI(SimpleComboBox combo) {
+		private int grosor;
 
-			this.combo = combo;
+		private Color scrollColor;
+
+		private Color scrollLine;
+
+		public void setGrosor(int grosor) {
+
+			this.grosor = grosor;
+
+			repaint();
+
+		}
+
+		public void setArrowSize(float arrowSize) {
+
+			this.arrowSize = arrowSize;
+
+			repaint();
+
+		}
+
+		public void setColorFlecha(Color colorFlecha) {
+
+			this.colorFlecha = colorFlecha;
+
+			repaint();
+
+		}
+
+		public void setFondoFlecha(Color fondoFlecha) {
+
+			this.fondoFlecha = fondoFlecha;
+
+			repaint();
+
+		}
+
+		public ComboUI(SimpleComboBox combo, Color scrollColor, Color scrollLine, Color bordeColor, int grosor) {
+
+			this.bordeColor = bordeColor;
+
+			if (grosor < 1) {
+
+				grosor = 1;
+
+			}
+
+			this.grosor = grosor;
+
+			this.scrollColor = scrollColor;
+
+			this.scrollLine = scrollLine;
+
+			arrowSize = 1.4f;
+
+			bordeColor = new Color(200, 200, 200);
 
 			addMouseListener(new MouseAdapter() {
 
@@ -311,16 +535,7 @@ public class SimpleComboBox extends JComboBox {
 				@Override
 				public void itemStateChanged(ItemEvent ie) {
 
-					if (!isFocusOwner() && (getSelectedIndex() == -1)) {
-
-						showing(true);
-
-					}
-
-					else {
-
-						showing(false);
-					}
+					showing((!isFocusOwner() && (getSelectedIndex() == -1)));
 
 				}
 
@@ -354,13 +569,6 @@ public class SimpleComboBox extends JComboBox {
 			TimingTarget target = new TimingTargetAdapter() {
 
 				@Override
-				public void begin() {
-
-					animateHinText = getSelectedIndex() == -1;
-
-				}
-
-				@Override
 				public void timingEvent(float fraction) {
 
 					location = fraction;
@@ -382,11 +590,6 @@ public class SimpleComboBox extends JComboBox {
 		}
 
 		@Override
-		public void paintCurrentValueBackground(Graphics grphcs, Rectangle rctngl, boolean bln) {
-
-		}
-
-		@Override
 		protected JButton createArrowButton() {
 
 			return new ArrowButton();
@@ -404,13 +607,13 @@ public class SimpleComboBox extends JComboBox {
 
 					JScrollPane scroll = new JScrollPane(list);
 
-					scroll.setBackground(Color.WHITE);
-
 					ScrollBarCustom sb = new ScrollBarCustom(null, null);
 
 					sb.setUnitIncrement(30);
 
-					sb.setForeground(new Color(180, 180, 180));
+					sb.setBackground(scrollLine);
+
+					sb.setForeground(scrollColor);
 
 					scroll.setVerticalScrollBar(sb);
 
@@ -420,7 +623,7 @@ public class SimpleComboBox extends JComboBox {
 
 			};
 
-			pop.setBorder(new LineBorder(new Color(200, 200, 200), 1));
+			pop.setBorder(new LineBorder(bordeColor, grosor));
 
 			return pop;
 
@@ -443,13 +646,13 @@ public class SimpleComboBox extends JComboBox {
 
 			if (mouseOver) {
 
-				g2.setColor(lineColor);
+				g2.setColor(hoverLineColor);
 
 			}
 
 			else {
 
-				g2.setColor(new Color(150, 150, 150));
+				g2.setColor(lineColor);
 
 			}
 
@@ -467,41 +670,9 @@ public class SimpleComboBox extends JComboBox {
 
 			Insets in = getInsets();
 
-			g2.setColor(new Color(150, 150, 150));
+			g2.setColor(hintTextColor);
 
-			FontMetrics ft = g2.getFontMetrics();
-
-			Rectangle2D r2 = ft.getStringBounds(combo.getLabeText(), g2);
-
-			double height = getHeight() - in.top - in.bottom;
-
-			double textY = (height - r2.getHeight()) / 2;
-
-			double size;
-
-			if (animateHinText) {
-
-				if (show) {
-
-					size = 18 * (1 - location);
-
-				}
-
-				else {
-
-					size = 18 * location;
-
-				}
-
-			}
-
-			else {
-
-				size = 18;
-
-			}
-
-			g2.drawString(combo.getLabeText(), in.right, ((int) (in.top + textY + ft.getAscent() - size)) - 2);
+			g2.drawString(labeText, in.right, getFont().getSize() - 5);
 
 		}
 
@@ -580,23 +751,27 @@ public class SimpleComboBox extends JComboBox {
 
 				Graphics2D g2 = (Graphics2D) grphcs;
 
+				g2.setColor(fondoFlecha);
+
+				g2.fillRect(0, 0, getWidth(), getHeight());
+
 				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 				int width = getWidth();
 
 				int height = getHeight();
 
-				int size = 10;
+				int size = (int) (getHeight() / arrowSize);
 
 				int x = (width - size) / 2;
 
 				int y = (height - size) / 2 + 5;
 
-				int px[] = { x, x + size, x + size / 2 };
+				int[] px = { x, x + size, x + size / 2 };
 
-				int py[] = { y, y, y + size };
+				int[] py = { y, y, y + size };
 
-				g2.setColor(getBackground());
+				g2.setColor(colorFlecha);
 
 				g2.fillPolygon(px, py, px.length);
 

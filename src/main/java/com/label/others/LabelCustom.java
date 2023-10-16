@@ -266,7 +266,7 @@ public class LabelCustom extends JLabel {
 
 		catch (Exception e) {
 
-			layout = new TextLayout("Text", getFont(), g2.getFontRenderContext());
+			layout = new TextLayout(" ", getFont(), g2.getFontRenderContext());
 
 		}
 

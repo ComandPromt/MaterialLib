@@ -2,17 +2,18 @@ package com.textarea;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 
+import javax.swing.JPanel;
 import javax.swing.JToolTip;
 
 import com.contextmenu.DefaultContextMenu;
+import com.scrollbar.MaterialPanelDeslizante;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
-
-public class NTextArea extends TextAreaScroll {
-
-	private TextArea textArea;
+public class SimpleTextArea extends JPanel {
 
 	private String text;
 
@@ -23,6 +24,56 @@ public class NTextArea extends TextAreaScroll {
 	private Color border;
 
 	private Font fuente;
+
+	private TextArea textArea;
+
+	private Color colorFondo;
+
+	private boolean borde;
+
+	private MaterialPanelDeslizante scrollPane;
+
+	public void setText(String text) {
+
+		try {
+
+			textArea.setText(text);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSelectionColor(Color color) {
+
+		try {
+
+			textArea.setSelectionColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setColors(Color foreground, Color background) {
+
+		try {
+
+			scrollPane.setColors(foreground, background);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -108,25 +159,11 @@ public class NTextArea extends TextAreaScroll {
 
 	}
 
-	public void setWrapStyleWord(boolean active) {
+	public void setVerticalScrollBarPolicy(int policy) {
 
 		try {
 
-			textArea.setWrapStyleWord(active);
-
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	public void setEditable(boolean editable) {
-
-		try {
-
-			textArea.setEditable(editable);
+			scrollPane.setVerticalScrollBarPolicy(policy);
 
 		}
 
@@ -151,12 +188,24 @@ public class NTextArea extends TextAreaScroll {
 
 	}
 
-	public void setText(String text) {
+	@Override
+	public void setBackground(Color bg) {
 
-		textArea.setText(text);
+		try {
+
+			colorFondo = bg;
+
+			textArea.setBackground(bg);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
+	@Override
 	public void setFont(Font font) {
 
 		try {
@@ -171,11 +220,25 @@ public class NTextArea extends TextAreaScroll {
 
 	}
 
-	public void setHeaderBackground(Color bg) {
+	public boolean isBorde() {
+
+		return borde;
+
+	}
+
+	public void setBorde(boolean borde) {
+
+		this.borde = borde;
+
+		repaint();
+
+	}
+
+	public void setForegroundScroll(Color color) {
 
 		try {
 
-			super.setBackground(bg);
+			scrollPane.setForeground(color);
 
 		}
 
@@ -185,11 +248,11 @@ public class NTextArea extends TextAreaScroll {
 
 	}
 
-	public void setBackgroundText(Color bg) {
+	public void setBackgroundScroll(Color color) {
 
 		try {
 
-			textArea.setBackground(bg);
+			scrollPane.setBackground(color);
 
 		}
 
@@ -199,51 +262,36 @@ public class NTextArea extends TextAreaScroll {
 
 	}
 
-	public void setTextColor(Color fg) {
+	public SimpleTextArea() {
 
-		try {
+		colorFondo = Color.WHITE;
 
-			textArea.setForeground(fg);
+		setLayout(new GridLayout(0, 1, 0, 0));
 
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	public void setSelectionColor(Color selectionColor) {
-
-		textArea.setSelectionColor(selectionColor);
-
-	}
-
-	public NTextArea(String text) {
-
-		setShow(true);
-
-		textArea = new TextArea(null, null, null, null);
-
-		setHeader(text);
-
-		textArea.setColumns(20);
-
-		textArea.setRows(5);
+		textArea = new TextArea(Color.RED, Color.BLUE);
 
 		textArea.setFont(new Font("Dialog", Font.PLAIN, 20));
 
-		setSelectionColor(Color.WHITE);
-
-		setViewportView(textArea);
-
 		DefaultContextMenu.addDefaultContextMenu(textArea);
+
+		scrollPane = new MaterialPanelDeslizante(textArea, null, null);
+
+		add(scrollPane);
 
 	}
 
-	public TextArea getTextArea() {
+	@Override
+	public void paint(Graphics g) {
 
-		return textArea;
+		super.paint(g);
+
+		if (!borde) {
+
+			g.setColor(colorFondo);
+
+			g.fillRect(0, 0, getWidth(), getHeight());
+
+		}
 
 	}
 

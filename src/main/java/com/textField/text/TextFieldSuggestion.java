@@ -111,6 +111,8 @@ public class TextFieldSuggestion extends JTextField {
 
 	public TextFieldSuggestion() {
 
+		setOpaque(true);
+
 		textUI = new TextFieldSuggestionUI(this);
 
 		setUI(textUI);
@@ -119,7 +121,23 @@ public class TextFieldSuggestion extends JTextField {
 
 	}
 
+	public void setSelectedTextColor() {
+
+		try {
+
+			textUI.getTextfield().setSelectedTextColor(colorTexto);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public TextFieldSuggestion(String text) {
+
+		setOpaque(true);
 
 		textUI = new TextFieldSuggestionUI(this);
 

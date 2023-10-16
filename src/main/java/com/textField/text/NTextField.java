@@ -42,6 +42,8 @@ public class NTextField extends JTextField {
 
 	private Color lineColor;
 
+	private Color inactiveLineColor;
+
 	private boolean center;
 
 	private String text;
@@ -142,6 +144,8 @@ public class NTextField extends JTextField {
 
 		this.center = center;
 
+		repaint();
+
 	}
 
 	public String getLabelText() {
@@ -153,6 +157,8 @@ public class NTextField extends JTextField {
 	public void setLabelText(String labelText) {
 
 		this.labelText = labelText;
+
+		repaint();
 
 	}
 
@@ -166,6 +172,22 @@ public class NTextField extends JTextField {
 
 		this.lineColor = lineColor;
 
+		repaint();
+
+	}
+
+	public Color getInactiveLineColor() {
+
+		return inactiveLineColor;
+
+	}
+
+	public void setInactiveLineColor(Color inactiveLineColor) {
+
+		this.inactiveLineColor = inactiveLineColor;
+
+		repaint();
+
 	}
 
 	public NTextField() {
@@ -178,9 +200,11 @@ public class NTextField extends JTextField {
 
 		lineColor = new Color(3, 155, 216);
 
+		inactiveLineColor = new Color(150, 150, 150);
+
 		center = false;
 
-		setFont(getFont().deriveFont(30f));
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
 
 		setBorder(new EmptyBorder(20, 3, 10, 3));
 
@@ -279,6 +303,8 @@ public class NTextField extends JTextField {
 		labelText = "";
 
 		lineColor = new Color(3, 155, 216);
+
+		inactiveLineColor = new Color(150, 150, 150);
 
 		center = false;
 
@@ -410,7 +436,7 @@ public class NTextField extends JTextField {
 
 		else {
 
-			g2.setColor(new Color(150, 150, 150));
+			g2.setColor(inactiveLineColor);
 
 		}
 
@@ -480,15 +506,15 @@ public class NTextField extends JTextField {
 
 	private void createLineStyle(Graphics2D g2) {
 
+		double width = getWidth() - 4;
+
+		int height = getHeight();
+
+		double size = width * location;
+
 		if (isFocusOwner()) {
 
-			double width = getWidth() - 4;
-
-			int height = getHeight();
-
 			g2.setColor(lineColor);
-
-			double size;
 
 			if (show) {
 
@@ -496,17 +522,17 @@ public class NTextField extends JTextField {
 
 			}
 
-			else {
+		}
 
-				size = width * location;
+		else {
 
-			}
-
-			double x = (width - size) / 2;
-
-			g2.fillRect((int) (x + 2), height - 2, (int) size, 2);
+			g2.setColor(inactiveLineColor);
 
 		}
+
+		double x = (width - size) / 2;
+
+		g2.fillRect((int) (x + 2), height - 2, (int) size, 2);
 
 	}
 

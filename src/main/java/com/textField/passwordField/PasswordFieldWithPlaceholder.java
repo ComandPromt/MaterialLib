@@ -21,7 +21,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
 import javax.swing.JToolTip;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.contextmenu.DefaultContextMenu;
@@ -30,8 +29,6 @@ import com.toolTip.ToolTipLlamada;
 @SuppressWarnings("serial")
 
 public class PasswordFieldWithPlaceholder extends JPasswordField {
-
-	private boolean left;
 
 	protected float anchoDeBorde;
 
@@ -58,6 +55,8 @@ public class PasswordFieldWithPlaceholder extends JPasswordField {
 	private Color border;
 
 	private Font fuente;
+
+	private boolean left;
 
 	@Override
 	public void setToolTipText(String text) {
@@ -179,8 +178,6 @@ public class PasswordFieldWithPlaceholder extends JPasswordField {
 
 	public PasswordFieldWithPlaceholder() {
 
-		left = false;
-
 		anchoDeBorde = 2f;
 
 		colorDeBorde = new Color(173, 173, 173);
@@ -201,7 +198,9 @@ public class PasswordFieldWithPlaceholder extends JPasswordField {
 
 		setPreferredSize(new Dimension(69, 20));
 
-		setFont(new Font("Dialog", Font.PLAIN, 30));
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		setForeground(Color.BLACK);
 
 		DefaultContextMenu.addDefaultContextMenu(this);
 
@@ -283,18 +282,6 @@ public class PasswordFieldWithPlaceholder extends JPasswordField {
 			Rectangle2D bounds = layout.getBounds();
 
 			int x = (int) (getWidth() - insets.left - insets.right - bounds.getWidth()) / 2;
-
-			if (left) {
-
-				setHorizontalAlignment(SwingConstants.RIGHT);
-
-			}
-
-			else {
-
-				setHorizontalAlignment(SwingConstants.LEFT);
-
-			}
 
 			x = 0 + insets.left;
 

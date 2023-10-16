@@ -1,4 +1,4 @@
-package com.textField.text;
+package com.textField.passwordField;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -26,7 +26,7 @@ import com.material.utils.SafePropertySetter;
 import com.material.utils.Utils;
 import com.toolTip.ToolTipLlamada;
 
-public class MaterialTextField2 extends JTextField {
+class MaterialTextField2 extends JTextField {
 
 	private static final long serialVersionUID = 1L;
 

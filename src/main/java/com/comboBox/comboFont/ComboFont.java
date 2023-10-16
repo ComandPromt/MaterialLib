@@ -18,13 +18,15 @@ public class ComboFont extends JComboBox {
 
 	private String text;
 
-	private Color background;
+	private Color fondo;
 
-	private Color foreground;
+	private Color colorTexto;
 
 	private Color border;
 
 	private Font fuente;
+
+	private ComboSuggestionUI comboBoxUi;
 
 	@Override
 	public void setToolTipText(String text) {
@@ -77,9 +79,9 @@ public class ComboFont extends JComboBox {
 
 		this.text = text;
 
-		this.background = background;
+		this.fondo = background;
 
-		this.foreground = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -92,7 +94,7 @@ public class ComboFont extends JComboBox {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || background == null || foreground == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -100,7 +102,7 @@ public class ComboFont extends JComboBox {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, background, foreground, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -110,11 +112,74 @@ public class ComboFont extends JComboBox {
 
 	}
 
+	public void setArrowInvisible(Color color) {
+
+		comboBoxUi.setArrowInvisible(color);
+
+	}
+
+	public void setArrowVisible(Color color) {
+
+		comboBoxUi.setArrowVisible(color);
+
+	}
+
+	public void setSelectionItemColor(Color color) {
+
+		comboBoxUi.setSelectionItemColor(color);
+
+	}
+
+	public void setSelectionForegroundColor(Color color) {
+
+		comboBoxUi.setSelectionForegroundColor(color);
+
+	}
+
+	public void setMenuColor(Color color) {
+
+		comboBoxUi.setMenuColor(color);
+
+	}
+
+	public void setForegroundMenuColor(Color color) {
+
+		comboBoxUi.setForegroundMenuColor(color);
+	}
+
+	public void setBorderColor(Color color) {
+
+		comboBoxUi.setBorderColor(color);
+	}
+
+	@Override
+	public void setForeground(Color fg) {
+
+		try {
+
+			comboBoxUi.setForegroundMenuColor(fg);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	@SuppressWarnings("unchecked")
 
 	public ComboFont() {
 
-		setUI(new ComboSuggestionUI());
+		this(Color.WHITE);
+
+	}
+
+	public ComboFont(Color lineScrollColor) {
+
+		comboBoxUi = new ComboSuggestionUI(lineScrollColor);
+
+		setUI(comboBoxUi);
 
 		setFont(new Font("Dialog", Font.PLAIN, 20));
 

@@ -336,7 +336,7 @@ public class LabelBackgroundTitle extends JLabel {
 
 		if ((getText() == null) || getText().length() <= 0) {
 
-			setText("Title");
+			setText(" ");
 
 		}
 

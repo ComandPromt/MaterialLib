@@ -164,10 +164,7 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public JFileChooserPanel(String text) {
+	public JFileChooserPanel(String text, String title, boolean folder) {
 
 		setBackground(Color.WHITE);
 
@@ -179,7 +176,7 @@ public class JFileChooserPanel extends JPanel {
 
 		btnNewButton.setBackground(Color.PINK);
 
-		threadDialog = new ThreadDialog(new JFrame(), this, "", true, null, true);
+		threadDialog = new ThreadDialog(new JFrame(), this, title, folder, null, true);
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -197,7 +194,13 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
-	public JFileChooserPanel(JFrame mainFrame, String text) {
+	public JFileChooserPanel(JFrame mainFrame, String text, String title, boolean folder) {
+
+		if (title == null) {
+
+			title = "";
+
+		}
 
 		if (mainFrame != null) {
 
@@ -215,7 +218,7 @@ public class JFileChooserPanel extends JPanel {
 
 			btnNewButton.setBackground(Color.PINK);
 
-			threadDialog = new ThreadDialog(mainFrame, this, "", true, null, true);
+			threadDialog = new ThreadDialog(mainFrame, this, title, folder, null, true);
 
 			btnNewButton.addActionListener(new ActionListener() {
 
@@ -235,7 +238,7 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
-	public JFileChooserPanel(final JFrame mainFrame, String title, String text, boolean folder, String[] filtro,
+	public JFileChooserPanel(final JFrame mainFrame, String text, String title, boolean folder, String[] filtro,
 			boolean all) {
 
 		if (filtro == null || (filtro.length == 1 && filtro[0].toString().toLowerCase().equals("all"))) {

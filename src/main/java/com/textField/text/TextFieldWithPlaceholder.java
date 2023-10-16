@@ -21,7 +21,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.contextmenu.DefaultContextMenu;
@@ -283,18 +282,6 @@ public class TextFieldWithPlaceholder extends JTextField {
 			Rectangle2D bounds = layout.getBounds();
 
 			int x = (int) (getWidth() - insets.left - insets.right - bounds.getWidth()) / 2;
-
-			if (left) {
-
-				setHorizontalAlignment(SwingConstants.RIGHT);
-
-			}
-
-			else {
-
-				setHorizontalAlignment(SwingConstants.LEFT);
-
-			}
 
 			x = 0 + insets.left;
 

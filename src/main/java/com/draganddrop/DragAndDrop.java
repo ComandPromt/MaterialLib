@@ -34,6 +34,8 @@ public class DragAndDrop extends JLabel {
 
 	private int angulo;
 
+	private int altura;
+
 	private String text;
 
 	private Color background;
@@ -204,7 +206,17 @@ public class DragAndDrop extends JLabel {
 
 	}
 
+	public void setAltura(int altura) {
+
+		this.altura = altura;
+
+		repaint();
+
+	}
+
 	public DragAndDrop(String text) {
+
+		altura = 0;
 
 		angulo = 20;
 
@@ -222,7 +234,7 @@ public class DragAndDrop extends JLabel {
 
 		setForeground(SystemColor.desktop);
 
-		setBackground(SystemColor.menu);
+		setBackground(Color.WHITE);
 
 		this.dragBorder = new javax.swing.border.TitledBorder("");
 
@@ -264,6 +276,24 @@ public class DragAndDrop extends JLabel {
 			rect = new Rectangle2D.Double(thickness, thickness, getWidth() - (thickness * 2),
 
 					getHeight() - (thickness * 2));
+
+		}
+
+		if (altura > 0) {
+
+			if (round) {
+
+				rect = new RoundRectangle2D.Double(thickness, altura + thickness, (getWidth() - (thickness * 2)),
+						(getHeight() - (thickness * 2)) - altura, angulo, angulo);
+
+			}
+
+			else {
+
+				rect = new Rectangle2D.Double(thickness, altura + thickness, (getWidth() - (thickness * 2)),
+						(getHeight() - (thickness * 2)) - altura);
+
+			}
 
 		}
 

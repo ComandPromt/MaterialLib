@@ -24,11 +24,7 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 	private List<String> items;
 
-	private Color focusColor;
-
 	private int round;
-
-	private Color color;
 
 	public List<String> getItems() {
 
@@ -58,17 +54,17 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 	}
 
+	public JTextField getTextfield() {
+
+		return textfield;
+
+	}
+
 	public TextFieldSuggestionUI(JTextField textfield) {
 
-		round = 15;
+		round = 20;
 
 		items = new ArrayList<>();
-
-		focusColor = new Color(128, 189, 255);
-
-		color = new Color(206, 212, 218);
-
-		this.textfield = textfield;
 
 		border = new Border(10);
 
@@ -88,7 +84,7 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 			public void focusGained(FocusEvent fe) {
 
-				border.setColor(new Color(128, 189, 255));
+				border.setColor(Color.RED);
 
 				textfield.repaint();
 
@@ -98,13 +94,15 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 			public void focusLost(FocusEvent fe) {
 
-				border.setColor(new Color(206, 212, 218));
+				border.setColor(Color.BLUE);
 
 				textfield.repaint();
 
 			}
 
 		});
+
+		this.textfield = textfield;
 
 		AutoCompleteDecorator.decorate(textfield, items, false);
 

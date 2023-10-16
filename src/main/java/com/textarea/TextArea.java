@@ -116,6 +116,18 @@ public class TextArea extends JTextArea {
 
 	}
 
+	public TextArea(Color foregroundScroll, Color backgroundScroll) {
+
+		this(null, null, foregroundScroll, backgroundScroll);
+
+	}
+
+	public TextArea() {
+
+		this(null, null, null, null);
+
+	}
+
 	public TextArea(Color selectionColor, Color lineColor, Color scrollColor, Color scrollLineColor) {
 
 		if (lineColor == null) {
@@ -130,6 +142,12 @@ public class TextArea extends JTextArea {
 
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 
+		if (selectionColor == null) {
+
+			selectionColor = new Color(223, 223, 223);
+
+		}
+
 		setSelectionColor(selectionColor);
 
 		getDocument().addDocumentListener(new DocumentListener() {
@@ -138,14 +156,30 @@ public class TextArea extends JTextArea {
 
 			public void insertUpdate(DocumentEvent e) {
 
-				getScroll().setAnimateHinText(getText().equals(""));
+				try {
+
+					getScroll().setAnimateHinText(getText().equals(""));
+
+				}
+
+				catch (Exception e1) {
+
+				}
 
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 
-				getScroll().setAnimateHinText(getText().equals(""));
+				try {
+
+					getScroll().setAnimateHinText(getText().equals(""));
+
+				}
+
+				catch (Exception e1) {
+
+				}
 
 			}
 
@@ -176,37 +210,47 @@ public class TextArea extends JTextArea {
 
 		});
 
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
 	}
 
 	private void showing(boolean action) {
 
-		TextAreaScroll s = getScroll();
+		try {
 
-		Animator animator = s.getAnimator();
+			TextAreaScroll s = getScroll();
 
-		float location = s.getAnimateLocation();
+			Animator animator = s.getAnimator();
 
-		if (animator.isRunning()) {
+			float location = s.getAnimateLocation();
 
-			animator.stop();
+			if (animator.isRunning()) {
+
+				animator.stop();
+
+			}
+
+			else {
+
+				location = 1;
+
+			}
+
+			animator.setStartFraction(1f - location);
+
+			s.setShow(action);
+
+			location = 1f - location;
+
+			s.setAnimateLocation(location);
+
+			animator.start();
 
 		}
 
-		else {
-
-			location = 1;
+		catch (Exception e) {
 
 		}
-
-		animator.setStartFraction(1f - location);
-
-		s.setShow(action);
-
-		location = 1f - location;
-
-		s.setAnimateLocation(location);
-
-		animator.start();
 
 	}
 
@@ -223,23 +267,33 @@ public class TextArea extends JTextArea {
 
 	}
 
-	protected TextAreaScroll getScroll() {
+	public TextAreaScroll getScroll() {
 
-		if (scroll == null) {
+		try {
 
-			Component com = getParent();
+			if (scroll == null) {
 
-			JViewport view = (JViewport) com;
+				Component com = getParent();
 
-			scroll = (TextAreaScroll) view.getParent();
+				JViewport view = (JViewport) com;
+
+				scroll = (TextAreaScroll) view.getParent();
+
+			}
+
+			scroll.setLineColor(scroll.getLineColor());
+
+			scroll.setColors(scroll.getScrollForeground(), scroll.getScrollBackground());
+
+			return scroll;
 
 		}
 
-		scroll.setLineColor(scroll.getLineColor());
+		catch (Exception e) {
 
-		scroll.setColors(scroll.getScrollForeground(), scroll.getScrollBackground());
+			return null;
 
-		return scroll;
+		}
 
 	}
 
