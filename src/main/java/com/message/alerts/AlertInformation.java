@@ -1,14 +1,13 @@
 
 package com.message.alerts;
 
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -66,20 +65,6 @@ public class AlertInformation extends javax.swing.JFrame {
 
 		});
 
-		image = new javax.swing.JLabel();
-
-		image.addMouseListener(new MouseAdapter() {
-
-			@Override
-
-			public void mousePressed(MouseEvent e) {
-
-				dispose();
-
-			}
-
-		});
-
 		titulo = new javax.swing.JLabel();
 
 		titulo.addMouseListener(new MouseAdapter() {
@@ -118,29 +103,9 @@ public class AlertInformation extends javax.swing.JFrame {
 
 		jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-		image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/informacion.png")));
-
 		titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
 		titulo.setText("ALERT INFORMATION");
-
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap()
-						.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(titulo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-								.addComponent(image, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
-						.addContainerGap()));
-
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(47)
-						.addComponent(image, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE).addGap(37)
-						.addComponent(titulo, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(64, Short.MAX_VALUE)));
-		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 
@@ -151,6 +116,27 @@ public class AlertInformation extends javax.swing.JFrame {
 
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
 				jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		jPanel1.setLayout(new GridLayout(0, 1, 0, 0));
+
+		image = new javax.swing.JLabel();
+
+		image.addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				dispose();
+
+			}
+
+		});
+
+		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+		image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/informacion.png")));
+		jPanel1.add(image);
+		jPanel1.add(titulo);
 
 		pack();
 	}

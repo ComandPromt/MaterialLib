@@ -113,6 +113,8 @@ public class RadioButtonCustom extends JRadioButton {
 
 		setOpaque(false);
 
+		setFocusPainted(false);
+
 		setFont(new Font("Dialog", Font.PLAIN, 20));
 
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -124,6 +126,8 @@ public class RadioButtonCustom extends JRadioButton {
 	public RadioButtonCustom(String text, Color background) {
 
 		setText(text);
+
+		setFocusPainted(false);
 
 		setFont(new Font("Dialog", Font.PLAIN, 20));
 
@@ -141,6 +145,8 @@ public class RadioButtonCustom extends JRadioButton {
 
 		setFont(new Font("Dialog", Font.PLAIN, 20));
 
+		setFocusPainted(false);
+
 		setOpaque(false);
 
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -150,6 +156,8 @@ public class RadioButtonCustom extends JRadioButton {
 	}
 
 	public RadioButtonCustom() {
+
+		setFocusPainted(false);
 
 		setOpaque(false);
 

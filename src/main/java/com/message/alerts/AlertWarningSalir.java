@@ -1,6 +1,7 @@
 
 package com.message.alerts;
 
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -136,30 +137,14 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 		titulo.setText("ALERT WARNING");
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
-						.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(image, GroupLayout.PREFERRED_SIZE, 375, GroupLayout.PREFERRED_SIZE)
-								.addComponent(titulo, GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
-						.addContainerGap()));
-
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(48)
-						.addComponent(image, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE).addGap(38)
-						.addComponent(titulo, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(65, Short.MAX_VALUE)));
-
-		jPanel1.setLayout(jPanel1Layout);
-
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-
-		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup()
-				.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 399, Short.MAX_VALUE).addContainerGap()));
-
+		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(jPanel1,
+				GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE));
 		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(jPanel1,
 				GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		jPanel1.setLayout(new GridLayout(0, 1, 0, 0));
+		jPanel1.add(image);
+		jPanel1.add(titulo);
 
 		getContentPane().setLayout(layout);
 

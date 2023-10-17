@@ -1,6 +1,8 @@
 
 package com.message.alerts;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -54,22 +56,9 @@ public class AlertError extends javax.swing.JFrame {
 	private void initComponents() {
 
 		jPanel1 = new javax.swing.JPanel();
+		jPanel1.setBackground(Color.WHITE);
 
 		jPanel1.addMouseListener(new MouseAdapter() {
-
-			@Override
-
-			public void mousePressed(MouseEvent e) {
-
-				dispose();
-
-			}
-
-		});
-
-		image = new javax.swing.JLabel();
-
-		image.addMouseListener(new MouseAdapter() {
 
 			@Override
 
@@ -117,31 +106,9 @@ public class AlertError extends javax.swing.JFrame {
 
 		});
 
-		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-		image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/error.png")));
-
 		titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
 		titulo.setText("ALERT ERROR");
-
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
-						.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(titulo, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addComponent(image, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-										.addContainerGap()))));
-
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(39)
-						.addComponent(image, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE).addGap(48)
-						.addComponent(titulo, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(64, Short.MAX_VALUE)));
-
-		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 
@@ -150,6 +117,27 @@ public class AlertError extends javax.swing.JFrame {
 
 		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(jPanel1,
 				GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		jPanel1.setLayout(new GridLayout(0, 1, 0, 0));
+
+		image = new javax.swing.JLabel();
+
+		image.addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				dispose();
+
+			}
+
+		});
+
+		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+		image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/error.png")));
+		jPanel1.add(image);
+		jPanel1.add(titulo);
 
 		getContentPane().setLayout(layout);
 

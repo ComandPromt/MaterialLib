@@ -1,14 +1,13 @@
 
 package com.message.alerts;
 
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -127,23 +126,6 @@ public class AlertSuccess extends javax.swing.JFrame {
 
 		titulo.setText("Webcamer introducida correctamente");
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
-						.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(image, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
-								.addComponent(titulo, GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
-						.addContainerGap()));
-
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(49)
-						.addComponent(image, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE).addGap(39)
-						.addComponent(titulo, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(63, Short.MAX_VALUE)));
-
-		jPanel1.setLayout(jPanel1Layout);
-
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 
 		getContentPane().setLayout(layout);
@@ -153,6 +135,9 @@ public class AlertSuccess extends javax.swing.JFrame {
 
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
 				jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		jPanel1.setLayout(new GridLayout(0, 1, 0, 0));
+		jPanel1.add(image);
+		jPanel1.add(titulo);
 
 		pack();
 	}

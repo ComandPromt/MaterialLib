@@ -1,6 +1,7 @@
 package com.message.alerts;
 
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.Window;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -10,13 +11,81 @@ import mthos.JMthos;
 
 public class PopupAlerts {
 
-	static float opacidad;
+	float opacidad;
 
-	private static Font fuente;
+	private Font fuente;
+
+	private Point size;
+
+	private boolean redimensionar;
+
+	public Font getFuente() {
+
+		return fuente;
+
+	}
+
+	public Point getSize() {
+
+		return size;
+
+	}
+
+	public void setSize(int width, int height) {
+
+		redimensionar = true;
+
+		size = new Point(width, height);
+
+	}
 
 	public PopupAlerts() {
 
 		opacidad = 0.5f;
+
+	}
+
+	public PopupAlerts(float opacidad, int width, int height) {
+
+		redimensionar = true;
+
+		if (opacidad < 0f) {
+
+			opacidad = 0f;
+
+		}
+
+		if (opacidad > 1f) {
+
+			opacidad = 1f;
+
+		}
+
+		this.opacidad = opacidad;
+
+		size = new Point(width, height);
+
+	}
+
+	public PopupAlerts(int width, int height) {
+
+		redimensionar = true;
+
+		opacidad = 0.5f;
+
+		size = new Point(width, height);
+
+	}
+
+	public float getOpacidad() {
+
+		return opacidad;
+
+	}
+
+	public void setOpacidad(float opacidad) {
+
+		this.opacidad = opacidad;
 
 	}
 
@@ -26,15 +95,27 @@ public class PopupAlerts {
 
 	}
 
-	public static void setFuente(Font fuente) {
+	public void setFuente(Font fuente) {
 
-		PopupAlerts.fuente = fuente;
+		this.fuente = fuente;
 
 	}
 
-	public static void mensaje(String mensaje, AlertType type, int size, String path) {
+	public void mensaje(String mensaje, AlertType type, int size, String path) {
 
 		boolean nulo = true;
+
+		if (type == null) {
+
+			type = AlertType.INFO;
+
+		}
+
+		if (path == null) {
+
+			path = "";
+
+		}
 
 		if (size <= 0) {
 
@@ -48,7 +129,7 @@ public class PopupAlerts {
 
 		}
 
-		if (path != null && !path.isEmpty() && path.contains("file:/")) {
+		if (!path.isEmpty() && path.contains("file:/")) {
 
 			nulo = false;
 
@@ -84,6 +165,12 @@ public class PopupAlerts {
 
 			error.setOpacity(opacidad);
 
+			if (redimensionar) {
+
+				error.setSize(this.size.x, this.size.y);
+
+			}
+
 			error.setLocationRelativeTo(null);
 
 			error.setVisible(true);
@@ -115,6 +202,12 @@ public class PopupAlerts {
 			informacion.titulo.setFont(fuente);
 
 			informacion.setOpacity(opacidad);
+
+			if (redimensionar) {
+
+				informacion.setSize(this.size.x, this.size.y);
+
+			}
 
 			informacion.setLocationRelativeTo(null);
 
@@ -148,6 +241,12 @@ public class PopupAlerts {
 
 			salir.setOpacity(opacidad);
 
+			if (redimensionar) {
+
+				salir.setSize(this.size.x, this.size.y);
+
+			}
+
 			salir.setLocationRelativeTo(null);
 
 			salir.setVisible(true);
@@ -179,6 +278,12 @@ public class PopupAlerts {
 			exito.titulo.setFont(fuente);
 
 			exito.setOpacity(opacidad);
+
+			if (redimensionar) {
+
+				exito.setSize(this.size.x, this.size.y);
+
+			}
 
 			exito.setLocationRelativeTo(null);
 

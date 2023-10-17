@@ -272,6 +272,8 @@ public class RoundSimpleCard extends JPanel {
 
 			cabecera.setFont(font);
 
+			repaint();
+
 		}
 
 		catch (Exception e) {
@@ -286,6 +288,8 @@ public class RoundSimpleCard extends JPanel {
 		try {
 
 			texto.setFont(font);
+
+			repaint();
 
 		}
 
@@ -315,7 +319,7 @@ public class RoundSimpleCard extends JPanel {
 
 			public void componentResized(ComponentEvent e) {
 
-				panel1.setSize(getWidth() - 25, (int) Math.round(getHeight() * 0.19));
+				panel1.setSize(getWidth(), (int) Math.round(getHeight() * 0.19));
 
 				panel2.setBounds(0, (int) Math.round(getHeight() * 0.19), getWidth(),
 						(int) Math.round(getHeight() * 0.80));
