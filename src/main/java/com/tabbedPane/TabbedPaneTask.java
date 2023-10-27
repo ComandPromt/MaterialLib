@@ -124,7 +124,7 @@ public class TabbedPaneTask extends JTabbedPane {
 
 		int i = getTabCount();
 
-		setTabComponentAt(i - 1, new PanelTitle(title, this));
+		setTabComponentAt(i - 1, new PanelTitle(title));
 
 	}
 
@@ -135,7 +135,7 @@ public class TabbedPaneTask extends JTabbedPane {
 
 		int i = getTabCount();
 
-		setTabComponentAt(i - 1, new PanelTitle(title, icon, this));
+		setTabComponentAt(i - 1, new PanelTitle(title, icon));
 
 	}
 
@@ -146,7 +146,7 @@ public class TabbedPaneTask extends JTabbedPane {
 
 		int i = getTabCount();
 
-		setTabComponentAt(i - 1, new PanelTitle(title, icon, tooltip, this));
+		setTabComponentAt(i - 1, new PanelTitle(title, icon, tooltip));
 
 	}
 
@@ -154,27 +154,19 @@ public class TabbedPaneTask extends JTabbedPane {
 
 		private static final long serialVersionUID = 1L;
 
-		private JTabbedPane pane;
-
-		public PanelTitle(String title, JTabbedPane tabbed) {
-
-			this.pane = tabbed;
+		public PanelTitle(String title) {
 
 			init(title, null, "");
 
 		}
 
-		public PanelTitle(String title, Icon icon, JTabbedPane tabbed) {
-
-			this.pane = tabbed;
+		public PanelTitle(String title, Icon icon) {
 
 			init(title, icon, "");
 
 		}
 
-		public PanelTitle(String title, Icon icon, String tooltip, JTabbedPane tabbed) {
-
-			this.pane = tabbed;
+		public PanelTitle(String title, Icon icon, String tooltip) {
 
 			init(title, icon, tooltip);
 

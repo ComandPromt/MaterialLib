@@ -26,8 +26,6 @@ public class PasswordIcons extends JPasswordField {
 
 	private Color fondo;
 
-	private Color colorTexto;
-
 	private Color border;
 
 	private Font fuente;

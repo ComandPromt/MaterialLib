@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class Go extends JButton {
 
 	private Color color;

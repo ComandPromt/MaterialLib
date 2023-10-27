@@ -7,9 +7,11 @@ import javax.swing.JButton;
 
 public class View2 extends JButton {
 
+	private static final long serialVersionUID = 1L;
+
 	private Color color;
 
-	private Color background;
+	private Color fondo;
 
 	public View2(Color color, Color background) {
 
@@ -27,14 +29,14 @@ public class View2 extends JButton {
 
 		this.color = color;
 
-		this.background = background;
+		this.fondo = background;
 
 	}
 
 	@Override
 	public void paint(Graphics g) {
 
-		g.setColor(background);
+		g.setColor(fondo);
 
 		g.fillRect(0, 0, getWidth(), getHeight());
 

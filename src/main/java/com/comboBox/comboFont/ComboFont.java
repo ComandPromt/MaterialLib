@@ -167,14 +167,13 @@ public class ComboFont extends JComboBox {
 
 	}
 
-	@SuppressWarnings("unchecked")
-
 	public ComboFont() {
 
 		this(Color.WHITE);
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public ComboFont(Color lineScrollColor) {
 
 		comboBoxUi = new ComboSuggestionUI(lineScrollColor);

@@ -30,7 +30,7 @@ public class SafePropertySetter<T> extends TimingTargetAdapter {
 
 	}
 
-	public static <T> TimingTarget getTarget(Setter<T> setter, T... values) {
+	public static <T> TimingTarget getTarget(Setter<T> setter, @SuppressWarnings("unchecked") T... values) {
 
 		return new SafePropertySetter<>(new KeyFrames.Builder<T>().addFrames(values).build(), false, null, setter);
 
@@ -42,13 +42,15 @@ public class SafePropertySetter<T> extends TimingTargetAdapter {
 
 	}
 
-	public static <T> TimingTarget getTargetTo(Getter<T> getter, Setter<T> setter, T... values) {
+	public static <T> TimingTarget getTargetTo(Getter<T> getter, Setter<T> setter,
+			@SuppressWarnings("unchecked") T... values) {
 
 		return getTargetTo(getter, setter, new KeyFrames.Builder<T>(values[0]).addFrames(values).build());
 
 	}
 
-	public static <T> TimingTarget getTargetTo(GetterAndSetter<T> getterAndSetter, T... values) {
+	public static <T> TimingTarget getTargetTo(GetterAndSetter<T> getterAndSetter,
+			@SuppressWarnings("unchecked") T... values) {
 
 		return getTargetTo(getterAndSetter, getterAndSetter, values);
 

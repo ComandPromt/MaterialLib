@@ -206,6 +206,7 @@ public class PasswordFieldWithPlaceholder extends JPasswordField {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void paintComponent(Graphics g) {
 
