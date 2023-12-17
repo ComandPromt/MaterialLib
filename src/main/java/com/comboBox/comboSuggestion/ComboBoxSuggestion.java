@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JToolTip;
@@ -27,6 +28,12 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 	private Font fuente;
 
 	private ComboSuggestionUI comboBoxUi;
+
+	public void setLineScrollColor(Color color) {
+
+		comboBoxUi.setLineScrollColor(color);
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -176,6 +183,101 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 	public ComboBoxSuggestion() {
 
 		this(Color.WHITE);
+
+	}
+
+	public ComboBoxSuggestion(List<String> list) {
+
+		this(Color.WHITE);
+
+		try {
+
+			for (String dato : list) {
+
+				addItem((E) dato);
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public ComboBoxSuggestion(Color scrollColor, Color verticalLine, List<String> list) {
+
+		this(verticalLine, scrollColor);
+
+		for (String dato : list) {
+
+			addItem((E) dato);
+
+		}
+
+	}
+
+	public ComboBoxSuggestion(Color color, List<String> list) {
+
+		this(color);
+
+		for (String dato : list) {
+
+			addItem((E) dato);
+
+		}
+
+	}
+
+	public ComboBoxSuggestion(Color scrollColor, Color lineScrollColor) {
+
+		comboBoxUi = new ComboSuggestionUI(scrollColor, lineScrollColor);
+
+		setUI(comboBoxUi);
+
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		this.addMouseWheelListener(new MouseWheelListener() {
+
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+
+				int valorIndice = getSelectedIndex();
+
+				if (e.getWheelRotation() < 0) {
+
+					valorIndice--;
+
+				}
+
+				else {
+
+					valorIndice++;
+
+				}
+
+				if (valorIndice < 0) {
+
+					valorIndice = 0;
+
+				}
+
+				if (valorIndice >= getItemCount()) {
+
+					valorIndice = getItemCount();
+
+					valorIndice--;
+
+				}
+
+				index = valorIndice;
+
+				setSelectedIndex(valorIndice);
+
+			}
+
+		});
 
 	}
 

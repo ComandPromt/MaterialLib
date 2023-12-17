@@ -48,6 +48,8 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 	private Color lineScrollColor;
 
+	private Color scrollColor;
+
 	public Color getBorderColor() {
 
 		return borderColor;
@@ -129,6 +131,30 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 	public void setForegroundMenuColor(Color foregroundMenuColor) {
 
 		this.foregroundMenuColor = foregroundMenuColor;
+
+	}
+
+	public ComboSuggestionUI(Color scrollColor, Color lineScrollColor) {
+
+		this.scrollColor = scrollColor;
+
+		this.lineScrollColor = lineScrollColor;
+
+		selectionColor = new Color(236, 236, 236);
+
+		borderColor = new Color(128, 189, 255);
+
+		arrowVisible = new Color(180, 180, 180);
+
+		arrowInvisible = new Color(150, 150, 150);
+
+		selectionItemColor = new Color(240, 240, 240);
+
+		selectionForegroundColor = new Color(17, 155, 215);
+
+		menuColor = Color.WHITE;
+
+		foregroundMenuColor = Color.BLACK;
 
 	}
 
@@ -316,6 +342,12 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			ScrollBarCustom sb = new ScrollBarCustom(null, null);
 
+			if (scrollColor != null) {
+
+				sb.setForeground(scrollColor);
+
+			}
+
 			sb.setBackground(lineScrollColor);
 
 			sb.setPreferredSize(new Dimension(12, 70));
@@ -452,6 +484,12 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 			g2.dispose();
 
 		}
+
+	}
+
+	public void setLineScrollColor(Color color) {
+
+		this.lineScrollColor = color;
 
 	}
 
