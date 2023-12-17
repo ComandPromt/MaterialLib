@@ -48,6 +48,10 @@ public class GradientPanel extends JPanel {
 
 	private Font fuente;
 
+	private Color gradientStart;
+
+	private Color gradientEnd;
+
 	public GradientPanel() {
 
 		gradiente = Gradiente.HORIZONTAL;
@@ -57,6 +61,14 @@ public class GradientPanel extends JPanel {
 		colorSecundario = Color.BLACK;
 
 		setColorPrimario(Color.WHITE);
+
+	}
+
+	public GradientPanel(Color gradientStart, Color gradientEnd) {
+
+		this.gradientStart = gradientStart;
+
+		this.gradientEnd = gradientEnd;
 
 	}
 
@@ -147,30 +159,64 @@ public class GradientPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 
-		Graphics2D g2 = (Graphics2D) g.create();
+		if (gradientStart == null && gradientEnd == null) {
 
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			Graphics2D g2 = (Graphics2D) g.create();
 
-		if (image != null)
-			g2.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		else {
+			if (image != null)
+				g2.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
-			Paint gp = getGradientePaint();
+			else {
 
-			g2.setPaint(gp);
+				Paint gp = getGradientePaint();
 
-			g2.fillRect(0, 0, getWidth(), getHeight());
+				g2.setPaint(gp);
 
-			g2.setColor(getForeground());
+				g2.fillRect(0, 0, getWidth(), getHeight());
 
-			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+				g2.setColor(getForeground());
+
+				g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+
+			}
+
+			g2.dispose();
+
+			super.paintChildren(g);
 
 		}
 
-		g2.dispose();
+		else {
 
-		super.paintChildren(g);
+			int height = getHeight();
+
+			Graphics2D g2 = (Graphics2D) g;
+
+			GradientPaint painter = new GradientPaint(0, 0, gradientStart, 0, height, gradientEnd);
+
+			Paint oldPainter = g2.getPaint();
+
+			g2.setPaint(painter);
+
+			g2.fill(g2.getClip());
+
+			painter = new GradientPaint(0, 0, gradientEnd, 0, height / 2, gradientStart);
+
+			g2.setPaint(painter);
+
+			g2.fill(g2.getClip());
+
+			painter = new GradientPaint(0, height / 2, gradientStart, 0, height, gradientEnd);
+
+			g2.setPaint(painter);
+
+			g2.fill(g2.getClip());
+
+			g2.setPaint(oldPainter);
+
+		}
 
 	}
 

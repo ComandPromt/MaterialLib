@@ -20,7 +20,7 @@ import com.toolTip.ToolTipLlamada;
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
-public class TextFieldConAnimacion extends JTextField {
+public class BootsTextField extends JTextField {
 
 	private boolean pintarBorde;
 
@@ -37,6 +37,8 @@ public class TextFieldConAnimacion extends JTextField {
 	private String placeholder;
 
 	private int angulo;
+
+	private Color placeholderColor;
 
 	private int numeroEspacios;
 
@@ -164,6 +166,8 @@ public class TextFieldConAnimacion extends JTextField {
 
 		this.angulo = angulo;
 
+		repaint();
+
 	}
 
 	public String getPlaceholder() {
@@ -224,15 +228,33 @@ public class TextFieldConAnimacion extends JTextField {
 
 		this.grosor = grosor;
 
+		repaint();
+
 	}
 
-	public TextFieldConAnimacion() {
+	public BootsTextField() {
 
 		this("");
 
 	}
 
-	public TextFieldConAnimacion(String text) {
+	public Color getPlaceholderColor() {
+
+		return placeholderColor;
+
+	}
+
+	public void setPlaceholderColor(Color placeholderColor) {
+
+		this.placeholderColor = placeholderColor;
+
+		repaint();
+
+	}
+
+	public BootsTextField(String text) {
+
+		placeholderColor = Color.BLACK;
 
 		numeroEspacios = 2;
 
@@ -353,29 +375,36 @@ public class TextFieldConAnimacion extends JTextField {
 
 			g.setColor(bordeActivo);
 
-			int calculo = angulo + (Math.round(placeholder.length() * ((fuentePlaceholder.getSize() * 12) / 20)));
+			if (!placeholder.isEmpty()) {
 
-			g2.setStroke(new BasicStroke(grosor));
+				int calculo = angulo + (Math.round(placeholder.length() * ((fuentePlaceholder.getSize() * 12) / 20)));
 
-			g.setColor(getBackground());
+				g.setColor(getBackground());
 
-			g.drawLine(angulo, 10, calculo, 10);
+				g.drawLine(angulo, 10, calculo, 10);
 
-			g2.setStroke(new BasicStroke(grosor));
+				g.setColor(placeholderColor);
 
-			g.setColor(Color.RED);
+				g.setFont(fuentePlaceholder);
 
-			g.setFont(fuentePlaceholder);
-
-			g.drawString(placeholder, angulo + 2, 15);
-
-			g2.setStroke(new BasicStroke(grosor));
+				g.drawString(placeholder, angulo + 2, 15);
+			}
 
 		}
 
 		else {
 
-			setText(" " + placeholder);
+			if (!getText().isEmpty()) {
+
+				setText(" " + getText().trim());
+
+			}
+
+			else if (!placeholder.isEmpty()) {
+
+				setText(" " + placeholder.trim());
+
+			}
 
 			setEnabled(false);
 
