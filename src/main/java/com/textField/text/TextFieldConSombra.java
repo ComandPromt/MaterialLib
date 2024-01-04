@@ -19,7 +19,7 @@ import com.contextmenu.DefaultContextMenu;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
-public class TextFieldShadow extends JTextField {
+public class TextFieldConSombra extends JTextField {
 
 	private int direccionDeSombra;
 
@@ -135,7 +135,13 @@ public class TextFieldShadow extends JTextField {
 
 	}
 
-	public TextFieldShadow() {
+	public TextFieldConSombra() {
+
+		this("");
+
+	}
+
+	public TextFieldConSombra(String text) {
 
 		round = true;
 
@@ -151,7 +157,9 @@ public class TextFieldShadow extends JTextField {
 
 		setOpaque(false);
 
-		setFont(new Font("Dialog", Font.PLAIN, 30));
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		setText(text);
 
 		DefaultContextMenu.addDefaultContextMenu(this);
 

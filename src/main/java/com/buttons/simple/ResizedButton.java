@@ -166,6 +166,12 @@ public class ResizedButton extends JButton {
 
 	}
 
+	public ResizedButton(String text) {
+
+		this(true, text);
+
+	}
+
 	public ResizedButton(boolean aspectRatio, String text) {
 
 		alturaTexto = 2;
@@ -189,6 +195,20 @@ public class ResizedButton extends JButton {
 		this.aspectRatio = aspectRatio;
 
 		setText(text);
+
+	}
+
+	public ResizedButton(int width, int height) {
+
+		alturaTexto = 2;
+
+		setFont(new Font("Dialog", Font.PLAIN, 40));
+
+		w = width;
+
+		h = height;
+
+		this.aspectRatio = true;
 
 	}
 
@@ -345,6 +365,8 @@ public class ResizedButton extends JButton {
 		catch (Exception e) {
 
 		}
+
+		super.paint(g);
 
 	}
 

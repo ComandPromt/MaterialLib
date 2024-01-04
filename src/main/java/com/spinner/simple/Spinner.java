@@ -178,8 +178,9 @@ public class Spinner extends JSpinner {
 
 	public void setValor(int numeroValor) {
 
-		if ((this.minValor != this.maxValor) && this.minValor < this.maxValor
-				&& (numeroValor >= this.minValor && numeroValor <= this.maxValor)) {
+		if ((this.minValor != this.maxValor && this.minValor < this.maxValor
+				&& (numeroValor >= this.minValor && numeroValor <= this.maxValor))
+				|| (this.minValor == 0 && this.maxValor == 0)) {
 
 			editor.setText(Integer.toString(numeroValor));
 
@@ -637,6 +638,8 @@ public class Spinner extends JSpinner {
 		incremento = editor.incremento;
 
 		negativo = editor.negativo;
+
+		numeroValor = getValor();
 
 	}
 

@@ -51,6 +51,12 @@ class SpinnerUI extends BasicSpinnerUI {
 
 	private Color foreground;
 
+	public SpinnerUI() {
+
+		this(true, null, null, null, null, null, null, false, 1, 0, 0);
+
+	}
+
 	public SpinnerUI(boolean mostrarUi, Font fuente, Color foreground, Color background, Color buttonBackground,
 			Color selectedColor, Color buttonColor, boolean negativo, int incremento, int minValor, int maxValor) {
 
@@ -138,6 +144,8 @@ class SpinnerUI extends BasicSpinnerUI {
 
 					try {
 
+						numeroValor = Integer.parseInt(editor.getText());
+
 						numeroValor += editor.incremento;
 
 						if (editor.max != 0 && numeroValor > editor.max) {
@@ -183,6 +191,8 @@ class SpinnerUI extends BasicSpinnerUI {
 				public void actionPerformed(ActionEvent e) {
 
 					try {
+
+						numeroValor = Integer.parseInt(editor.getText());
 
 						numeroValor -= editor.incremento;
 
