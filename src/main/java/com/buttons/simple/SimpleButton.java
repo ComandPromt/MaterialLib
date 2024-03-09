@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -239,6 +241,17 @@ public class SimpleButton extends JButton {
 	}
 
 	public SimpleButton(String text) {
+
+		addComponentListener(new ComponentAdapter() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+
+				repaint();
+
+			}
+
+		});
 
 		setColor(Color.WHITE);
 

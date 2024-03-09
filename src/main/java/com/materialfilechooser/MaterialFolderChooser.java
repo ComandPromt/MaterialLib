@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.buttons.round.RoundedButton;
+import com.buttons.simple.SimpleButton;
 import com.comboBox.comboSuggestion.ComboBoxSuggestion;
 import com.materialfilechooser.buttons.CarpetaPadre;
 import com.materialfilechooser.buttons.Go;
@@ -47,15 +47,15 @@ class MaterialFolderChooser extends JPanel {
 
 	public static LinkedList<String> test;
 
-	private String folder;
-
 	private static SearchInput search;
+
+	private String folder;
 
 	private static void saberBuscador() {
 
 		try {
 
-			search.setDataTesting((LinkedList<String>) JMthos.listar(path.getText(), "all", true, true));
+			search.setDataTesting((LinkedList<String>) JMthos.listar(path.getText(), "all", true, false));
 
 		}
 
@@ -85,15 +85,27 @@ class MaterialFolderChooser extends JPanel {
 
 	}
 
-	public MaterialFolderChooser(JFrame frame, ThreadDialog dialogo, String title) {
+	public MaterialFolderChooser(String originPath, JFrame frame, ThreadDialog dialogo, String title, boolean input) {
 
 		setBackground(Color.WHITE);
 
 		setLayout(null);
 
+		if (originPath == null || originPath.isEmpty()) {
+
+			folder = System.getProperty("user.home");
+
+		}
+
+		else {
+
+			folder = originPath;
+
+		}
+
 		test = new LinkedList<String>();
 
-		VentanaNuevoFile menu = new VentanaNuevoFile(frame, "New Folder", System.getProperty("user.home"), 470, 120);
+		VentanaNuevoFile menu = new VentanaNuevoFile(frame, "New Folder", folder, 470, 120);
 
 		path = new MaterialTextField();
 
@@ -117,13 +129,13 @@ class MaterialFolderChooser extends JPanel {
 
 		panel_1.setBackground(Color.WHITE);
 
-		panel_1.setBounds(0, 356, 735, 157);
+		panel_1.setBounds(0, 354, 735, 159);
 
 		add(panel_1);
 
 		panel_1.setLayout(null);
 
-		search = new SearchInput(JMthos.listar(System.getProperty("user.home"), "all", true, true));
+		search = new SearchInput(JMthos.listar(folder, "all", true, false));
 
 		search.addKeyListener(new KeyAdapter() {
 
@@ -132,9 +144,7 @@ class MaterialFolderChooser extends JPanel {
 
 				if (!search.getText().isEmpty() && e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-					folder = JMthos.ponerSeparador(path.getText());
-
-					path.setText(folder + search.getText());
+					path.setText(JMthos.ponerSeparador(path.getText()) + search.getText());
 
 				}
 
@@ -182,13 +192,25 @@ class MaterialFolderChooser extends JPanel {
 
 		panel_1.add(tipo);
 
-		RoundedButton btnNewButton_3 = new RoundedButton("Select");
+		SimpleButton btnNewButton_3 = new SimpleButton("Select");
+
+		btnNewButton_3.setBorderColor(Color.BLACK);
 
 		btnNewButton_3.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
-				dialogo.setLista(test);
+				if (input) {
+
+					dialogo.setLista2(test);
+
+				}
+
+				else {
+
+					dialogo.setLista(test);
+
+				}
 
 				dialogo.dispose();
 
@@ -198,15 +220,15 @@ class MaterialFolderChooser extends JPanel {
 
 		btnNewButton_3.setFont(new Font("Dialog", Font.PLAIN, 20));
 
-		btnNewButton_3.setText("Open");
-
 		btnNewButton_3.setIcon(null);
 
-		btnNewButton_3.setBounds(410, 106, 109, 40);
+		btnNewButton_3.setBounds(480, 106, 109, 40);
 
 		panel_1.add(btnNewButton_3);
 
-		RoundedButton btnNewButton_4 = new RoundedButton("Cancel");
+		SimpleButton btnNewButton_4 = new SimpleButton("Cancel");
+
+		btnNewButton_4.setBorderColor(Color.BLACK);
 
 		btnNewButton_4.addActionListener(new ActionListener() {
 
@@ -222,7 +244,7 @@ class MaterialFolderChooser extends JPanel {
 
 		btnNewButton_4.setFont(new Font("Dialog", Font.PLAIN, 20));
 
-		btnNewButton_4.setBounds(549, 106, 117, 40);
+		btnNewButton_4.setBounds(600, 106, 117, 40);
 
 		panel_1.add(btnNewButton_4);
 
@@ -250,7 +272,7 @@ class MaterialFolderChooser extends JPanel {
 
 		panel_3.setBackground(Color.WHITE);
 
-		panel_3.setBounds(0, 0, 735, 59);
+		panel_3.setBounds(0, 0, 735, 33);
 
 		add(panel_3);
 
@@ -306,7 +328,7 @@ class MaterialFolderChooser extends JPanel {
 
 		});
 
-		carpetaPadre.setBounds(403, 8, 39, 39);
+		carpetaPadre.setBounds(400, 0, 39, 29);
 
 		panel_3.add(carpetaPadre);
 
@@ -316,9 +338,9 @@ class MaterialFolderChooser extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 
-				path.setText(System.getProperty("user.home"));
+				path.setText(folder);
 
-				buttonScrollablePanel.setRutaParaVer(path.getText());
+				buttonScrollablePanel.setRutaParaVer(folder);
 
 				irAPath();
 
@@ -326,13 +348,13 @@ class MaterialFolderChooser extends JPanel {
 
 		});
 
-		btnNewButton_1.setBounds(454, 8, 39, 39);
+		btnNewButton_1.setBounds(449, 0, 39, 29);
 
 		panel_3.add(btnNewButton_1);
 
 		NewFolder btnNewButton_2 = new NewFolder(Color.decode("#AAAAAA"), null, null);
 
-		btnNewButton_2.setBounds(505, 8, 39, 39);
+		btnNewButton_2.setBounds(498, 0, 39, 29);
 
 		btnNewButton_2.addActionListener(new ActionListener() {
 
@@ -354,11 +376,11 @@ class MaterialFolderChooser extends JPanel {
 
 		path.setFont(new Font("Dialog", Font.PLAIN, 16));
 
-		path.setText(System.getProperty("user.home"));
+		path.setText(folder);
 
 		path.setBackground(Color.decode("#E7E7E7"));
 
-		path.setBounds(0, 0, 345, 59);
+		path.setBounds(0, -12, 345, 59);
 
 		panel_3.add(path);
 
@@ -374,17 +396,19 @@ class MaterialFolderChooser extends JPanel {
 
 		});
 
-		btnNewButton_6.setBounds(357, 8, 27, 39);
+		btnNewButton_6.setBounds(359, 0, 27, 29);
 
 		panel_3.add(btnNewButton_6);
 
-		RoundedButton btnNewButton_3_1 = new RoundedButton("Select");
+		SimpleButton btnNewButton_3_1 = new SimpleButton("All");
+
+		btnNewButton_3_1.setBorderColor(Color.BLACK);
 
 		btnNewButton_3_1.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
-				folder = JMthos.ponerSeparador(path.getText());
+				String folder = JMthos.ponerSeparador(path.getText());
 
 				test = (LinkedList<String>) JMthos.listar(folder, "all", true, true);
 
@@ -398,15 +422,15 @@ class MaterialFolderChooser extends JPanel {
 
 		});
 
-		btnNewButton_3_1.setText("All");
-
 		btnNewButton_3_1.setFont(new Font("Dialog", Font.PLAIN, 20));
 
-		btnNewButton_3_1.setBounds(556, 8, 69, 40);
+		btnNewButton_3_1.setBounds(560, 4, 66, 25);
 
 		panel_3.add(btnNewButton_3_1);
 
-		RoundedButton btnNewButton_3_1_1 = new RoundedButton("Clear");
+		SimpleButton btnNewButton_3_1_1 = new SimpleButton("Clear");
+
+		btnNewButton_3_1_1.setBorderColor(Color.BLACK);
 
 		btnNewButton_3_1_1.addActionListener(new ActionListener() {
 
@@ -420,12 +444,12 @@ class MaterialFolderChooser extends JPanel {
 
 		btnNewButton_3_1_1.setFont(new Font("Dialog", Font.PLAIN, 20));
 
-		btnNewButton_3_1_1.setBounds(637, 8, 86, 40);
+		btnNewButton_3_1_1.setBounds(639, 4, 86, 25);
 
 		panel_3.add(btnNewButton_3_1_1);
 
-		buttonScrollablePanel = new ButtonScrollablePanel(search, path.getText(), tipo.getSelectedItem().toString(),
-				true);
+		buttonScrollablePanel = new ButtonScrollablePanel(folder, search, path.getText(),
+				tipo.getSelectedItem().toString(), true);
 
 		buttonScrollablePanel.addMouseListener(new MouseAdapter() {
 
@@ -454,17 +478,9 @@ class MaterialFolderChooser extends JPanel {
 
 		panel_5 = new MaterialPanelDeslizante(buttonScrollablePanel, null, null);
 
-		panel_5.setBounds(0, 64, 735, 280);
+		panel_5.setBounds(0, 32, 735, 322);
 
 		add(panel_5);
-
-		JPanel panel = new JPanel();
-
-		panel.setBackground(Color.WHITE);
-
-		panel.setBounds(0, 58, 735, 10);
-
-		add(panel);
 
 		irAPath();
 

@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -150,6 +152,17 @@ public class RoundedButton extends JButton {
 	}
 
 	public RoundedButton(String text) {
+
+		addComponentListener(new ComponentAdapter() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+
+				repaint();
+
+			}
+
+		});
 
 		fondo = null;
 

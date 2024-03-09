@@ -56,6 +56,7 @@ public class AlertError extends javax.swing.JFrame {
 	private void initComponents() {
 
 		jPanel1 = new javax.swing.JPanel();
+
 		jPanel1.setBackground(Color.WHITE);
 
 		jPanel1.addMouseListener(new MouseAdapter() {
@@ -136,7 +137,9 @@ public class AlertError extends javax.swing.JFrame {
 		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
 		image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/error.png")));
+
 		jPanel1.add(image);
+
 		jPanel1.add(titulo);
 
 		getContentPane().setLayout(layout);

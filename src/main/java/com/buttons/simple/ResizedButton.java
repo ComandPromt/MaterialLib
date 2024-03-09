@@ -26,6 +26,8 @@ public class ResizedButton extends JButton {
 
 	private boolean aspectRatio;
 
+	private boolean centrar;
+
 	private BufferedImage imagen;
 
 	private int w;
@@ -166,6 +168,10 @@ public class ResizedButton extends JButton {
 
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
+
 	public ResizedButton(String text) {
 
 		this(true, text);
@@ -188,6 +194,8 @@ public class ResizedButton extends JButton {
 
 				h = getHeight();
 
+				repaint();
+
 			}
 
 		});
@@ -195,6 +203,12 @@ public class ResizedButton extends JButton {
 		this.aspectRatio = aspectRatio;
 
 		setText(text);
+
+	}
+
+	public ResizedButton() {
+
+		this(true);
 
 	}
 
@@ -242,6 +256,8 @@ public class ResizedButton extends JButton {
 
 				h = getHeight();
 
+				repaint();
+
 			}
 
 		});
@@ -262,7 +278,7 @@ public class ResizedButton extends JButton {
 
 	}
 
-	public BufferedImage resizeImage(BufferedImage originalImage, int newWidth, int newHeight) {
+	public BufferedImage resizeImage(BufferedImage originalImage, int newWidth, int newHeight, boolean center) {
 
 		int originalWidth = originalImage.getWidth();
 
@@ -272,21 +288,45 @@ public class ResizedButton extends JButton {
 
 		double heightRatio = (double) newHeight / originalHeight;
 
-		double scaleFactor = Math.min(widthRatio, heightRatio);
+		int scaledWidth;
 
-		int scaledWidth = (int) (originalWidth * scaleFactor);
+		int scaledHeight;
 
-		int scaledHeight = (int) (originalHeight * scaleFactor);
+		int x = 0;
 
-		imagen = new BufferedImage(scaledWidth, scaledHeight, originalImage.getType());
+		int y = 0;
 
-		Graphics2D g2d = imagen.createGraphics();
+		if (center) {
 
-		g2d.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, null);
+			scaledWidth = newWidth;
+
+			scaledHeight = newHeight;
+
+		}
+
+		else {
+
+			double scaleFactor = Math.min(widthRatio, heightRatio);
+
+			scaledWidth = (int) (originalWidth * scaleFactor);
+
+			scaledHeight = (int) (originalHeight * scaleFactor);
+
+			x = (newWidth - scaledWidth) / 2;
+
+			y = (newHeight - scaledHeight) / 2;
+
+		}
+
+		BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, originalImage.getType());
+
+		Graphics2D g2d = resizedImage.createGraphics();
+
+		g2d.drawImage(originalImage, x, y, scaledWidth, scaledHeight, null);
 
 		g2d.dispose();
 
-		return imagen;
+		return resizedImage;
 
 	}
 
@@ -307,13 +347,9 @@ public class ResizedButton extends JButton {
 
 			if (aspectRatio) {
 
-				if (w == 0) {
+				w = getWidth();
 
-					w = getWidth();
-
-					h = getHeight();
-
-				}
+				h = getHeight();
 
 				Point punto = JMthos.getSizeOfImage(originalImage, w, h, aspectRatio);
 
@@ -321,7 +357,27 @@ public class ResizedButton extends JButton {
 
 				alto = punto.y;
 
-				setSize(ancho, alto);
+				if (getText().isEmpty()) {
+
+					if (!centrar) {
+
+						imagen = resizeImage(originalImage, ancho, alto, true);
+
+						centrar = true;
+
+					}
+
+					g.drawImage(imagen, Math.round((w * 35) / 115f), 0, ancho, alto, null);
+
+				}
+
+				else {
+
+					imagen = resizeImage(originalImage, ancho, alto, false);
+
+					g.drawImage(imagen, 0, 0, ancho, alto, null);
+
+				}
 
 			}
 
@@ -331,23 +387,9 @@ public class ResizedButton extends JButton {
 
 				alto = originalImage.getHeight();
 
-			}
+				imagen = resizeImage(originalImage, getWidth(), getHeight(), false);
 
-			imagen = resizeImage(originalImage, ancho, alto);
-
-			if (aspectRatio) {
-
-				g.drawImage(imagen, 0, 0, ancho, alto, null);
-
-			}
-
-			else {
-
-				ancho = getWidth();
-
-				alto = getHeight();
-
-				g.drawImage(imagen, 0, 0, ancho, alto, null);
+				g.drawImage(imagen, 0, 0, getWidth(), getHeight(), null);
 
 			}
 
@@ -355,8 +397,13 @@ public class ResizedButton extends JButton {
 
 			g.setFont(getFont());
 
-			g.drawString(getText(), (int) (ancho / alturaTexto - g.getFontMetrics().stringWidth(getText()) / 2),
-					(int) (alto / alturaTexto));
+			if (!getText().isEmpty()) {
+
+				g.drawString(getText(),
+						(int) ((getWidth() / alturaTexto - g.getFontMetrics().stringWidth(getText()) / 2)) + 8,
+						(Math.round((getHeight() / 2f) + (alturaTexto * 2))));
+
+			}
 
 			g.dispose();
 

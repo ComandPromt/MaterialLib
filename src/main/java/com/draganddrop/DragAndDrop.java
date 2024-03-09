@@ -240,6 +240,8 @@ public class DragAndDrop extends JLabel {
 
 		setHorizontalAlignment(SwingConstants.CENTER);
 
+		setThickness(3);
+
 	}
 
 	@Override

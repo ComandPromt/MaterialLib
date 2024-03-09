@@ -51,6 +51,20 @@ public class Spinner extends JSpinner {
 
 	private Font fuente;
 
+	private boolean valorMaximo;
+
+	public boolean isValorMaximo() {
+
+		return valorMaximo;
+
+	}
+
+	public void setValorMaximo(boolean valorMaximo) {
+
+		this.valorMaximo = valorMaximo;
+
+	}
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -178,17 +192,27 @@ public class Spinner extends JSpinner {
 
 	public void setValor(int numeroValor) {
 
-		if ((this.minValor != this.maxValor && this.minValor < this.maxValor
-				&& (numeroValor >= this.minValor && numeroValor <= this.maxValor))
-				|| (this.minValor == 0 && this.maxValor == 0)) {
+		if (valorMaximo) {
 
-			editor.setText(Integer.toString(numeroValor));
+			if ((this.minValor != this.maxValor && this.minValor < this.maxValor
+					&& (numeroValor >= this.minValor && numeroValor <= this.maxValor))
+					|| (this.minValor == 0 && this.maxValor == 0)) {
+
+				editor.setText(Integer.toString(numeroValor));
+
+			}
+
+			else {
+
+				editor.setText(Integer.toString(this.minValor));
+
+			}
 
 		}
 
 		else {
 
-			editor.setText(Integer.toString(this.minValor));
+			editor.setText(Integer.toString(numeroValor));
 
 		}
 

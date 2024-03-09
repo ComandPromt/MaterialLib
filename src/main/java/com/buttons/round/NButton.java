@@ -247,6 +247,8 @@ public class NButton extends JButton {
 
 				setFont(getFont());
 
+				repaint();
+
 			}
 
 		});

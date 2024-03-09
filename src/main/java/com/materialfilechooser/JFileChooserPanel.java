@@ -3,11 +3,12 @@ package com.materialfilechooser;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 
-import javax.swing.JDialog;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToolTip;
@@ -35,9 +36,27 @@ public class JFileChooserPanel extends JPanel {
 
 	private Font fuente;
 
+	private JFrame frame;
+
+	private String carpeta;
+
 	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
 
 		calcularTooltip(text, background, foreground, border, font);
+
+	}
+
+	public void setIcon(Image icon) {
+
+		try {
+
+			frame.setIconImage(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
@@ -167,6 +186,22 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
+	public String getFirstItem() {
+
+		try {
+
+			return lista.getFirst();
+
+		}
+
+		catch (Exception e) {
+
+			return null;
+
+		}
+
+	}
+
 	@Override
 	public void setForeground(Color fg) {
 
@@ -253,7 +288,22 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
-	public JFileChooserPanel(String text, String title, boolean folder) {
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public JFileChooserPanel(String originPath, String title, String text, boolean folder) {
+
+		if (originPath == null || originPath.isEmpty()) {
+
+			carpeta = System.getProperty("user.home");
+
+		}
+
+		else {
+
+			carpeta = originPath;
+
+		}
 
 		setBackground(Color.WHITE);
 
@@ -265,7 +315,11 @@ public class JFileChooserPanel extends JPanel {
 
 		btnNewButton.setBackground(Color.PINK);
 
-		threadDialog = new ThreadDialog(new JFrame(), this, title, folder, null, true);
+		frame = new JFrame();
+
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imgs/imagenes/folder.png")).getImage());
+
+		threadDialog = new ThreadDialog(frame, this, carpeta, title, folder, null, true);
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -297,17 +351,16 @@ public class JFileChooserPanel extends JPanel {
 
 			lista = new LinkedList<>();
 
-			btnNewButton = new NButton("");
+			btnNewButton = new NButton(text);
 
 			btnNewButton.setEffectColor(Color.LIGHT_GRAY);
-
-			btnNewButton.setText(text);
 
 			btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 24));
 
 			btnNewButton.setBackground(Color.PINK);
 
-			threadDialog = new ThreadDialog(mainFrame, this, title, folder, null, true);
+			threadDialog = new ThreadDialog(mainFrame, this, System.getProperty("user.home"), title, folder, null,
+					true);
 
 			btnNewButton.addActionListener(new ActionListener() {
 
@@ -327,8 +380,20 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
-	public JFileChooserPanel(final JFrame mainFrame, String text, String title, boolean folder, String[] filtro,
-			boolean all) {
+	public JFileChooserPanel(String originPath, final JFrame mainFrame, String text, String title, boolean folder,
+			String[] filtro, boolean all) {
+
+		if (originPath == null || originPath.isEmpty()) {
+
+			carpeta = System.getProperty("user.home");
+
+		}
+
+		else {
+
+			carpeta = originPath;
+
+		}
 
 		if (filtro == null || (filtro.length == 1 && filtro[0].toString().toLowerCase().equals("all"))) {
 
@@ -358,17 +423,15 @@ public class JFileChooserPanel extends JPanel {
 
 			lista = new LinkedList<>();
 
-			btnNewButton = new NButton("New button");
+			btnNewButton = new NButton(text);
 
 			btnNewButton.setEffectColor(Color.LIGHT_GRAY);
-
-			btnNewButton.setText(text);
 
 			btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 24));
 
 			btnNewButton.setBackground(Color.PINK);
 
-			threadDialog = new ThreadDialog(mainFrame, this, title, folder, filtro, all);
+			threadDialog = new ThreadDialog(mainFrame, this, carpeta, title, folder, filtro, all);
 
 			btnNewButton.addActionListener(new ActionListener() {
 
@@ -385,55 +448,6 @@ public class JFileChooserPanel extends JPanel {
 			add(btnNewButton);
 
 		}
-
-	}
-
-}
-
-class ThreadDialog extends JDialog {
-
-	private static final long serialVersionUID = 1L;
-
-	private JFileChooserPanel superior;
-
-	private JFrame mainFrame;
-
-	public void setLista(LinkedList<String> lista) {
-
-		superior.setLista(lista);
-
-	}
-
-	public ThreadDialog(JFrame parent, JFileChooserPanel superior, String title, boolean folder, String[] filtro,
-			boolean all) {
-
-		super(parent, title, false);
-
-		mainFrame = parent;
-
-		this.superior = superior;
-
-		JPanel panel;
-
-		if (folder) {
-
-			panel = new MaterialFolderChooser(mainFrame, this, title);
-
-		}
-
-		else {
-
-			panel = new MaterialFileChooser(mainFrame, this, filtro, all, title);
-
-		}
-
-		setSize(750, 550);
-
-		add((JPanel) panel);
-
-		setLocationRelativeTo(null);
-
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 	}
 

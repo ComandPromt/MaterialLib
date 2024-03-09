@@ -32,6 +32,8 @@ class ButtonScrollablePanel extends JPanel {
 
 	private String ruta;
 
+	private String folder;
+
 	private void addArchivo(GridBagConstraints constraints, Archivo labelTest) {
 
 		(labelTest).addMouseListener(new MouseAdapter() {
@@ -195,7 +197,7 @@ class ButtonScrollablePanel extends JPanel {
 
 								}
 
-								MaterialFileChooser.irAPath();
+								MaterialFileChooser.irAPath(folder);
 
 							}
 
@@ -387,7 +389,9 @@ class ButtonScrollablePanel extends JPanel {
 
 	}
 
-	public ButtonScrollablePanel(SearchInput search, String path, String extension, boolean carpeta) {
+	public ButtonScrollablePanel(String folder, SearchInput search, String path, String extension, boolean carpeta) {
+
+		this.folder = folder;
 
 		this.ruta = path;
 

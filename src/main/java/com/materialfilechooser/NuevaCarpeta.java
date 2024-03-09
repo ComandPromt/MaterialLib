@@ -93,6 +93,7 @@ class NuevaCarpeta extends JPanel {
 		this.folder = folder;
 
 		textField = new MaterialTextField();
+		textField.setForeground(Color.BLACK);
 
 		textField.addKeyListener(new KeyAdapter() {
 

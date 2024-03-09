@@ -334,7 +334,7 @@ public class FileDragAndDrop extends JPanel {
 
 	}
 
-	public FileDragAndDrop(String button, String text, boolean carpeta) {
+	public FileDragAndDrop(String originPath, String button, String text, boolean carpeta) {
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -422,7 +422,7 @@ public class FileDragAndDrop extends JPanel {
 
 		add(panel);
 
-		boton = new JFileChooserPanel(button, text, carpeta);
+		boton = new JFileChooserPanel(originPath, button, text, carpeta);
 
 		panel.add(boton);
 
