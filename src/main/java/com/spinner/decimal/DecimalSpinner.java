@@ -70,6 +70,20 @@ public class DecimalSpinner extends JSpinner {
 
 	}
 
+	public void sumarAlto(int alto) {
+
+		try {
+
+			editor.setSumarAlto(alto);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setCenterText(boolean center) {
 
 		try {

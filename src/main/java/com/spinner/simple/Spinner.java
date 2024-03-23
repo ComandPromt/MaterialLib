@@ -479,6 +479,20 @@ public class Spinner extends JSpinner {
 
 	}
 
+	public void sumarAlto(int alto) {
+
+		try {
+
+			editor.setSumarAlto(alto);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setCenterText(boolean center) {
 
 		try {
@@ -634,7 +648,7 @@ public class Spinner extends JSpinner {
 					if (e.getWheelRotation() < 0) {
 
 						numeroValor += editor.incremento;
-						
+
 						if (maxValor != 0 && numeroValor > maxValor) {
 
 							numeroValor = editor.max;

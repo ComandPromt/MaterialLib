@@ -56,6 +56,22 @@ public class NTextField extends JTextField {
 
 	private Font fuente;
 
+	private int sumarAlto;
+
+	public int getSumarAlto() {
+
+		return sumarAlto;
+
+	}
+
+	public void setSumarAlto(int sumarAlto) {
+
+		this.sumarAlto = sumarAlto;
+
+		repaint();
+
+	}
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -492,13 +508,13 @@ public class NTextField extends JTextField {
 
 			int contador = labelText.length() * 4;
 
-			g2.drawString(labelText, (getWidth() / 2) - contador, (int) (in.top + textY + ft.getAscent() - size));
+			g2.drawString(labelText, (getWidth() / 2) - contador, (int) (textY + ft.getAscent() - size) + sumarAlto);
 
 		}
 
 		else {
 
-			g2.drawString(labelText, in.right, (int) (textY + ft.getAscent() - size));
+			g2.drawString(labelText, in.right, (int) (textY + ft.getAscent() - size) + sumarAlto);
 
 		}
 
