@@ -200,6 +200,11 @@ class MaterialFolderChooser extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 
+				seleccionar(dialogo, input);
+
+			}
+
+			private void seleccionar(ThreadDialog dialogo, boolean input) {
 				if (input) {
 
 					dialogo.setLista2(test);
@@ -213,7 +218,6 @@ class MaterialFolderChooser extends JPanel {
 				}
 
 				dialogo.dispose();
-
 			}
 
 		});

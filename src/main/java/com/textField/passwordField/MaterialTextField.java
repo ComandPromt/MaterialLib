@@ -26,7 +26,7 @@ import com.material.utils.SafePropertySetter;
 import com.material.utils.Utils;
 import com.toolTip.ToolTipLlamada;
 
-class MaterialTextField2 extends JTextField {
+class MaterialTextField extends JTextField {
 
 	private static final long serialVersionUID = 1L;
 
@@ -136,7 +136,7 @@ class MaterialTextField2 extends JTextField {
 
 	}
 
-	public MaterialTextField2() {
+	public MaterialTextField() {
 
 		super();
 
@@ -179,7 +179,7 @@ class MaterialTextField2 extends JTextField {
 
 	}
 
-	public MaterialTextField2(String text) {
+	public MaterialTextField(String text) {
 
 		this();
 

@@ -498,7 +498,7 @@ public class NTextField extends JTextField {
 
 		else {
 
-			g2.drawString(labelText, in.right, (int) (in.top + textY + ft.getAscent() - size));
+			g2.drawString(labelText, in.right, (int) (textY + ft.getAscent() - size));
 
 		}
 

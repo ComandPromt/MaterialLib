@@ -267,6 +267,8 @@ public class Spinner extends JSpinner {
 	public Spinner(Font font, Color foreground, Color background, Color buttonBackground, Color buttonColor,
 			Color selectedColor) {
 
+		valorMaximo = true;
+
 		this.negativo = false;
 
 		this.incremento = 1;
@@ -328,6 +330,8 @@ public class Spinner extends JSpinner {
 
 	public Spinner(Font font) {
 
+		valorMaximo = true;
+
 		buttonBackground = Color.decode("#e7e7e7");
 
 		colorTexto = Color.BLACK;
@@ -361,6 +365,8 @@ public class Spinner extends JSpinner {
 
 	public Spinner(int min, int max, int incremento) {
 
+		valorMaximo = true;
+
 		this.negativo = false;
 
 		this.minValor = min;
@@ -387,6 +393,8 @@ public class Spinner extends JSpinner {
 	}
 
 	public Spinner(int min, int max, boolean negativo) {
+
+		valorMaximo = true;
 
 		this.negativo = negativo;
 
@@ -415,6 +423,8 @@ public class Spinner extends JSpinner {
 
 	public Spinner(int min, int max) {
 
+		valorMaximo = true;
+
 		this.minValor = min;
 
 		this.maxValor = max;
@@ -442,6 +452,8 @@ public class Spinner extends JSpinner {
 
 	public Spinner(int min, int max, boolean negativo, int incremento) {
 
+		valorMaximo = true;
+
 		this.minValor = min;
 
 		this.maxValor = max;
@@ -467,7 +479,23 @@ public class Spinner extends JSpinner {
 
 	}
 
+	public void setCenterText(boolean center) {
+
+		try {
+
+			editor.setCenterText(center);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public Spinner() {
+
+		valorMaximo = true;
 
 		this.negativo = false;
 
@@ -491,6 +519,8 @@ public class Spinner extends JSpinner {
 				incremento, minValor, maxValor));
 
 		ponerConstructor();
+
+		setMaxValor(maxValor);
 
 	}
 
@@ -604,8 +634,8 @@ public class Spinner extends JSpinner {
 					if (e.getWheelRotation() < 0) {
 
 						numeroValor += editor.incremento;
-
-						if (editor.max != 0 && numeroValor > editor.max) {
+						
+						if (maxValor != 0 && numeroValor > maxValor) {
 
 							numeroValor = editor.max;
 
@@ -617,9 +647,9 @@ public class Spinner extends JSpinner {
 
 						numeroValor -= editor.incremento;
 
-						if (!editor.negativo && numeroValor < editor.min) {
+						if (numeroValor < minValor) {
 
-							numeroValor = editor.min;
+							numeroValor = minValor;
 
 						}
 

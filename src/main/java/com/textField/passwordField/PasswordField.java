@@ -1,8 +1,8 @@
 
 package com.textField.passwordField;
 
-import static com.textField.passwordField.MaterialTextField2.HINT_OPACITY_MASK;
-import static com.textField.passwordField.MaterialTextField2.LINE_OPACITY_MASK;
+import static com.textField.passwordField.MaterialTextField.HINT_OPACITY_MASK;
+import static com.textField.passwordField.MaterialTextField.LINE_OPACITY_MASK;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -26,9 +26,9 @@ public class PasswordField extends JPasswordField {
 
 	private static final long serialVersionUID = 1L;
 
-	private MaterialTextField2.FloatingLabel floatingLabel;
+	private MaterialTextField.FloatingLabel floatingLabel;
 
-	private MaterialTextField2.Line line;
+	private MaterialTextField.Line line;
 
 	private String hint;
 
@@ -130,9 +130,9 @@ public class PasswordField extends JPasswordField {
 
 	public PasswordField() {
 
-		floatingLabel = new MaterialTextField2.FloatingLabel(this);
+		floatingLabel = new MaterialTextField.FloatingLabel(this);
 
-		line = new MaterialTextField2.Line(this);
+		line = new MaterialTextField.Line(this);
 
 		hint = "";
 

@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
@@ -230,29 +231,25 @@ public class PasswordFieldWithIcon extends JPasswordField {
 			@Override
 			public void mousePressed(MouseEvent me) {
 
-				if (showAndHide) {
+				char[] passwordChars = getPassword();
 
-					int x = getWidth() - 30;
+				if (!new String(passwordChars).isEmpty() && showAndHide) {
 
-					if (new Rectangle(x, 0, 30, 30).contains(me.getPoint())) {
+					hide = !hide;
 
-						hide = !hide;
+					if (hide) {
 
-						if (hide) {
-
-							setEchoChar('*');
-
-						}
-
-						else {
-
-							setEchoChar((char) 0);
-
-						}
-
-						repaint();
+						setEchoChar('*');
 
 					}
+
+					else {
+
+						setEchoChar((char) 0);
+
+					}
+
+					repaint();
 
 				}
 
@@ -410,13 +407,13 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 	}
 
-	private void createShowHide(Graphics2D g2) {
+	private void createShowHide(Graphics2D g2d) {
 
 		int x = getWidth() - 30 + 5;
 
 		int y = (getHeight() - 20) / 2;
 
-		g2.drawImage(hide ? eye_hide : eye, x, y, null);
+		g2d.drawImage(hide ? eye_hide : eye, x, y, null);
 
 	}
 
@@ -460,6 +457,14 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 		g2.drawString(labelText, in.left, (int) (in.top + textY + ft.getAscent() - size));
 
+	}
+
+	private Point bezierPoint(Point p0, Point p1, Point p2, Point p3, double t) {
+		double x = Math.pow(1 - t, 3) * p0.x + 3 * Math.pow(1 - t, 2) * t * p1.x + 3 * (1 - t) * t * t * p2.x
+				+ Math.pow(t, 3) * p3.x;
+		double y = Math.pow(1 - t, 3) * p0.y + 3 * Math.pow(1 - t, 2) * t * p1.y + 3 * (1 - t) * t * t * p2.y
+				+ Math.pow(t, 3) * p3.y;
+		return new Point((int) Math.round(x), (int) Math.round(y));
 	}
 
 	private void createLineStyle(Graphics2D g2) {

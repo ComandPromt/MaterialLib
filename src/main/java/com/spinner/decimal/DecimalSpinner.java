@@ -70,6 +70,20 @@ public class DecimalSpinner extends JSpinner {
 
 	}
 
+	public void setCenterText(boolean center) {
+
+		try {
+
+			editor.setCenterText(center);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
 
 		if (background == null) {

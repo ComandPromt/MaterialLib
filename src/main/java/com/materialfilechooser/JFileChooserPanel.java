@@ -288,6 +288,12 @@ public class JFileChooserPanel extends JPanel {
 
 	}
 
+	public JFileChooserPanel(String title, String text, boolean folder) {
+
+		this("", title, text, folder);
+
+	}
+
 	/**
 	 * @wbp.parser.constructor
 	 */
