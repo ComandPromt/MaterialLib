@@ -20,6 +20,7 @@ import javax.swing.JToolTip;
 import javax.swing.border.LineBorder;
 
 import com.buttons.simple.SimpleButton;
+import com.jicons.Update;
 import com.spinner.simple.Spinner;
 import com.textarea.NTextArea;
 import com.toolTip.ToolTipLlamada;
@@ -538,7 +539,7 @@ public class CopyTextArea extends JPanel {
 
 		});
 
-		restaurar.setIcon(new ImageIcon(CopyTextArea.class.getResource("/imgs/imagenes/actualizar.png")));
+		restaurar.setIcon(new Update());
 
 		this.panel.add(restaurar);
 

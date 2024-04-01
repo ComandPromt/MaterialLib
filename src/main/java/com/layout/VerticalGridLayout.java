@@ -83,7 +83,7 @@ public class VerticalGridLayout extends GridLayout {
 					for (int r = 0,
 							y = insets.top + extraHeightAvailable; r < nrows; r++, y += heightOnComponent + getVgap()) {
 
-						int i = c * nrows + r; // In the horizontal version, this is: r * ncols + c
+						int i = c * nrows + r;
 
 						if (i < ncomponents) {
 
@@ -105,7 +105,7 @@ public class VerticalGridLayout extends GridLayout {
 					for (int r = 0,
 							y = insets.top + extraHeightAvailable; r < nrows; r++, y += heightOnComponent + getVgap()) {
 
-						int i = c * nrows + r; // In the horizontal version, this is: r * ncols + c
+						int i = c * nrows + r;
 
 						if (i < ncomponents) {
 

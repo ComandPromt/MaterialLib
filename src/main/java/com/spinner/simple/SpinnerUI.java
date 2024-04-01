@@ -51,14 +51,39 @@ class SpinnerUI extends BasicSpinnerUI {
 
 	private Color foreground;
 
+	private boolean valorMaximo;
+
+	private boolean valorMinimo;
+
+	public boolean isValorMaximo() {
+		return valorMaximo;
+	}
+
+	public void setValorMaximo(boolean valorMaximo) {
+		this.valorMaximo = valorMaximo;
+	}
+
+	public boolean isValorMinimo() {
+		return valorMinimo;
+	}
+
+	public void setValorMinimo(boolean valorMinimo) {
+		this.valorMinimo = valorMinimo;
+	}
+
 	public SpinnerUI() {
 
-		this(true, null, null, null, null, null, null, false, 1, 0, 0);
+		this(true, null, null, null, null, null, null, false, 1, 0, 0, true, true);
 
 	}
 
 	public SpinnerUI(boolean mostrarUi, Font fuente, Color foreground, Color background, Color buttonBackground,
-			Color selectedColor, Color buttonColor, boolean negativo, int incremento, int minValor, int maxValor) {
+			Color selectedColor, Color buttonColor, boolean negativo, int incremento, int minValor, int maxValor,
+			boolean valorMaximo, boolean valorMinimo) {
+
+		this.valorMaximo = valorMaximo;
+
+		this.valorMinimo = valorMinimo;
 
 		if (fuente == null) {
 
@@ -148,7 +173,7 @@ class SpinnerUI extends BasicSpinnerUI {
 
 						numeroValor += editor.incremento;
 
-						if (editor.max != 0 && numeroValor > editor.max) {
+						if (valorMaximo && editor.max != 0 && numeroValor > editor.max) {
 
 							numeroValor = editor.max;
 
@@ -196,7 +221,7 @@ class SpinnerUI extends BasicSpinnerUI {
 
 						numeroValor -= editor.incremento;
 
-						if (!editor.negativo && numeroValor < editor.min) {
+						if (valorMinimo && !editor.negativo && numeroValor < editor.min) {
 
 							numeroValor = editor.min;
 
@@ -248,7 +273,7 @@ class SpinnerUI extends BasicSpinnerUI {
 
 			setBackground(background);
 
-			setEditable(false);
+			setEditable(true);
 
 			if (font == null) {
 

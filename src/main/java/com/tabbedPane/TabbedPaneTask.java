@@ -188,7 +188,7 @@ public class TabbedPaneTask extends JTabbedPane {
 
 			GridBagConstraints gridBagConstraints;
 
-			lblTitle.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+			lblTitle.setFont(new java.awt.Font("Liberation Sans", 1, 14)); 
 
 			lblTitle.setText(title);
 

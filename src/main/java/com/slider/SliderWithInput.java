@@ -7,12 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.buttons.round.NButton;
+import com.jicons.Update;
 import com.textarea.NumberInput;
 
 @SuppressWarnings("serial")
@@ -166,7 +166,7 @@ public class SliderWithInput extends JPanel {
 
 		panel.add(textArea);
 
-		btnNewButton.setIcon(new ImageIcon(SliderWithInput.class.getResource("/imgs/imagenes/actualizar.png")));
+		btnNewButton.setIcon(new Update());
 
 		panel.add(btnNewButton);
 

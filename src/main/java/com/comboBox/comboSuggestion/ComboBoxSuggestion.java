@@ -33,6 +33,8 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 		comboBoxUi.setLineScrollColor(color);
 
+		repaint();
+
 	}
 
 	@Override
@@ -129,11 +131,15 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 		comboBoxUi.setArrowInvisible(color);
 
+		repaint();
+
 	}
 
 	public void setArrowVisible(Color color) {
 
 		comboBoxUi.setArrowVisible(color);
+
+		repaint();
 
 	}
 
@@ -141,11 +147,15 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 		comboBoxUi.setSelectionItemColor(color);
 
+		repaint();
+
 	}
 
 	public void setSelectionForegroundColor(Color color) {
 
 		comboBoxUi.setSelectionForegroundColor(color);
+
+		repaint();
 
 	}
 
@@ -153,30 +163,23 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 		comboBoxUi.setMenuColor(color);
 
+		repaint();
+
 	}
 
 	public void setForegroundMenuColor(Color color) {
 
 		comboBoxUi.setForegroundMenuColor(color);
+
+		repaint();
+
 	}
 
 	public void setBorderColor(Color color) {
 
 		comboBoxUi.setBorderColor(color);
-	}
 
-	@Override
-	public void setForeground(Color fg) {
-
-		try {
-
-			comboBoxUi.setForegroundMenuColor(fg);
-
-		}
-
-		catch (Exception e) {
-
-		}
+		repaint();
 
 	}
 

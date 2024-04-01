@@ -64,6 +64,20 @@ public class DecimalSpinner extends JSpinner {
 
 	}
 
+	public void setHeaderFont(Font font) {
+
+		try {
+
+			editor.setHeaderFont(font);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
 
 		calcularTooltip(text, background, foreground, border, font);
@@ -265,7 +279,7 @@ public class DecimalSpinner extends JSpinner {
 
 	public void setLabelText(String text) {
 
-		editor.setLabelText(text);
+		editor.setHeaderText(text);
 
 	}
 
@@ -321,6 +335,14 @@ public class DecimalSpinner extends JSpinner {
 		ponerConstructor();
 
 		setValor(numeroValor);
+
+	}
+
+	public DecimalSpinner(String text) {
+
+		this();
+
+		setLabelText(text);
 
 	}
 
@@ -546,7 +568,7 @@ public class DecimalSpinner extends JSpinner {
 
 		editor.setEditable(true);
 
-		editor.setLabelText("");
+		editor.setHeaderText("");
 
 		editor.addKeyListener(new KeyAdapter() {
 

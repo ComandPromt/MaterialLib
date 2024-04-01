@@ -21,6 +21,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -44,5 +45,6 @@
 	<classpathentry kind="lib" path="src/main/java/libs/jna-5.13.0.jar"/>
 	<classpathentry kind="lib" path="src/main/java/libs/timingframework-core-6.1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/java/libs/timingframework-swing-6.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/java/libs/JSimpleIcons.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

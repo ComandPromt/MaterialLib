@@ -6,9 +6,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.FocusAdapter;
@@ -28,6 +26,7 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import com.contextmenu.DefaultContextMenu;
+import com.jicons.Eye;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
@@ -49,9 +48,7 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 	private boolean show;
 
-	private final Image eye;
-
-	private final Image eye_hide;
+	private final Eye eye;
 
 	private boolean animateHinText;
 
@@ -64,6 +61,28 @@ public class PasswordFieldWithIcon extends JPasswordField {
 	private boolean hide;
 
 	private boolean showAndHide;
+
+	private ImageIcon icon;
+
+	private ImageIcon hideIcon;
+
+	public ImageIcon getHideIcon() {
+
+		return hideIcon;
+
+	}
+
+	public void setHideIcon(ImageIcon hideIcon) {
+
+		this.hideIcon = hideIcon;
+
+	}
+
+	public ImageIcon getIcon() {
+
+		return icon;
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -187,7 +206,19 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 	}
 
+	public void setIcon(ImageIcon icon) {
+
+		this.icon = icon;
+
+	}
+
 	public PasswordFieldWithIcon() {
+
+		Eye ojo = new Eye();
+
+		eye = ojo;
+
+		ojo.setTachado(true);
 
 		animateHinText = true;
 
@@ -239,11 +270,15 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 					if (hide) {
 
+						eye.setTachado(true);
+
 						setEchoChar('*');
 
 					}
 
 					else {
+
+						eye.setTachado(false);
 
 						setEchoChar((char) 0);
 
@@ -324,10 +359,6 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 		};
 
-		eye = new ImageIcon(getClass().getResource("/imgs/imagenes/eye.png")).getImage();
-
-		eye_hide = new ImageIcon(getClass().getResource("/imgs/imagenes/eye_hide.png")).getImage();
-
 		animator = new Animator(300, target);
 
 		animator.setResolution(0);
@@ -391,7 +422,7 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 		}
 
-		g2.fillRect(2, height - 1, width - 4, 1);
+		g2.fillRect(1, height - 1, width - 4, 1);
 
 		createHintText(g2);
 
@@ -409,11 +440,45 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 	private void createShowHide(Graphics2D g2d) {
 
-		int x = getWidth() - 30 + 5;
+		int iconX;
 
-		int y = (getHeight() - 20) / 2;
+		int iconY;
 
-		g2d.drawImage(hide ? eye_hide : eye, x, y, null);
+		if (icon == null) {
+
+			int eyeIconX = getWidth() - Math.round(eye.getWidth() * 1.2f);
+
+			eye.setWidth(Math.round(getHeight() / 3.5f));
+
+			eye.setHeight(Math.round(getHeight() / 3.5f));
+
+			eye.paintIcon(this, g2d, eyeIconX, Math.round(getHeight() / 2.5f));
+
+		}
+
+		else {
+
+			if (hide) {
+
+				iconX = getWidth() - hideIcon.getIconWidth() - 5;
+
+				iconY = (getHeight() - hideIcon.getIconHeight()) / 2;
+
+				hideIcon.paintIcon(this, g2d, iconX, iconY);
+
+			}
+
+			else {
+
+				iconX = getWidth() - icon.getIconWidth() - 5;
+
+				iconY = (getHeight() - icon.getIconHeight()) / 2;
+
+				icon.paintIcon(this, g2d, iconX, iconY);
+
+			}
+
+		}
 
 	}
 
@@ -457,14 +522,6 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 		g2.drawString(labelText, in.left, (int) (in.top + textY + ft.getAscent() - size));
 
-	}
-
-	private Point bezierPoint(Point p0, Point p1, Point p2, Point p3, double t) {
-		double x = Math.pow(1 - t, 3) * p0.x + 3 * Math.pow(1 - t, 2) * t * p1.x + 3 * (1 - t) * t * t * p2.x
-				+ Math.pow(t, 3) * p3.x;
-		double y = Math.pow(1 - t, 3) * p0.y + 3 * Math.pow(1 - t, 2) * t * p1.y + 3 * (1 - t) * t * t * p2.y
-				+ Math.pow(t, 3) * p3.y;
-		return new Point((int) Math.round(x), (int) Math.round(y));
 	}
 
 	private void createLineStyle(Graphics2D g2) {

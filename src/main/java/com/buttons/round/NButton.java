@@ -59,6 +59,10 @@ public class NButton extends JButton {
 
 	private int round;
 
+	private int cuerda;
+
+	private int media;
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -231,6 +235,10 @@ public class NButton extends JButton {
 
 	public NButton(String text) {
 
+		media = 0;
+
+		cuerda = 0;
+
 		setBackground(Color.PINK);
 
 		effectColor = new Color(173, 173, 173);
@@ -368,7 +376,34 @@ public class NButton extends JButton {
 
 			}
 
-			g2.drawRoundRect(0, 0, width - 3, height - 3, round, round);
+			if (cuerda == 0) {
+
+				cuerda = grosor;
+
+				cuerda *= 2;
+
+			}
+
+			if (media == 0) {
+
+				media = grosor;
+
+				if (grosor > 1) {
+
+					media = grosor / 2;
+
+				}
+
+				else {
+
+					media = 1;
+
+				}
+
+			}
+
+			g2.drawRoundRect(media, media, ((width - (grosor)) - 1) - (media), (height - (cuerda)) - (media * 2), round,
+					round);
 
 		}
 

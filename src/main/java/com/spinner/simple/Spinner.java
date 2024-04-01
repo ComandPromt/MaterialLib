@@ -53,15 +53,104 @@ public class Spinner extends JSpinner {
 
 	private boolean valorMaximo;
 
-	public boolean isValorMaximo() {
+	private boolean valorMinimo;
 
-		return valorMaximo;
+	private SpinnerUI editor2;
+
+	public Color getFondo() {
+
+		return fondo;
+
+	}
+
+	public void setFondo(Color fondo) {
+
+		this.fondo = fondo;
+
+		repaint();
+
+	}
+
+	public Color getButtonBackground() {
+
+		return buttonBackground;
+
+	}
+
+	public void setButtonBackground(Color buttonBackground) {
+
+		this.buttonBackground = buttonBackground;
+
+		repaint();
+
+	}
+
+	public Color getSelectedColor() {
+
+		return selectedColor;
+
+	}
+
+	public void setSelectedColor(Color selectedColor) {
+
+		this.selectedColor = selectedColor;
+
+		repaint();
+
+	}
+
+	public Color getButtonColor() {
+
+		return buttonColor;
+
+	}
+
+	public void setButtonColor(Color buttonColor) {
+
+		this.buttonColor = buttonColor;
+
+		repaint();
+
+	}
+
+	public Color getColorTexto() {
+
+		return colorTexto;
+
+	}
+
+	public void setColorTexto(Color colorTexto) {
+
+		this.colorTexto = colorTexto;
+
+		repaint();
+	}
+
+	public boolean isValorMinimo() {
+
+		return valorMinimo;
+
+	}
+
+	public void setValorMinimo(boolean valorMinimo) {
+
+		this.valorMinimo = valorMinimo;
+
+		editor2.setValorMinimo(valorMinimo);
 
 	}
 
 	public void setValorMaximo(boolean valorMaximo) {
 
 		this.valorMaximo = valorMaximo;
+
+		editor2.setValorMaximo(valorMaximo);
+
+	}
+
+	public boolean isValorMaximo() {
+
+		return valorMaximo;
 
 	}
 
@@ -254,7 +343,7 @@ public class Spinner extends JSpinner {
 
 	public void setLabelText(String text) {
 
-		editor.setLabelText(text);
+		editor.setHeaderText(text);
 
 	}
 
@@ -268,6 +357,8 @@ public class Spinner extends JSpinner {
 			Color selectedColor) {
 
 		valorMaximo = true;
+
+		valorMinimo = true;
 
 		this.negativo = false;
 
@@ -321,16 +412,24 @@ public class Spinner extends JSpinner {
 
 		setOpaque(false);
 
-		setUI(new SpinnerUI(true, ffuente, foreground, background, buttonBackground, selectedColor, buttonColor,
-				negativo, incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, foreground, background, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
+
+		setValor(minValor);
+
+		sumarAlto(15);
 
 	}
 
 	public Spinner(Font font) {
 
 		valorMaximo = true;
+
+		valorMinimo = true;
 
 		buttonBackground = Color.decode("#e7e7e7");
 
@@ -356,10 +455,16 @@ public class Spinner extends JSpinner {
 
 		setOpaque(false);
 
-		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
-				incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
+
+		setValor(minValor);
+
+		sumarAlto(getFont().getSize());
 
 	}
 
@@ -367,6 +472,8 @@ public class Spinner extends JSpinner {
 
 		valorMaximo = true;
 
+		valorMinimo = true;
+
 		this.negativo = false;
 
 		this.minValor = min;
@@ -385,10 +492,16 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
-				incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
+
+		setValor(minValor);
+
+		sumarAlto(getFont().getSize());
 
 	}
 
@@ -396,6 +509,8 @@ public class Spinner extends JSpinner {
 
 		valorMaximo = true;
 
+		valorMinimo = true;
+
 		this.negativo = negativo;
 
 		this.minValor = min;
@@ -414,16 +529,24 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
-				incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
+
+		setValor(minValor);
+
+		sumarAlto(getFont().getSize());
 
 	}
 
 	public Spinner(int min, int max) {
 
 		valorMaximo = true;
+
+		valorMinimo = true;
 
 		this.minValor = min;
 
@@ -443,16 +566,24 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
-				incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
+
+		setValor(minValor);
+
+		sumarAlto(getFont().getSize());
 
 	}
 
 	public Spinner(int min, int max, boolean negativo, int incremento) {
 
 		valorMaximo = true;
+
+		valorMinimo = true;
 
 		this.minValor = min;
 
@@ -472,10 +603,16 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
-				incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
+
+		setValor(minValor);
+
+		sumarAlto(getFont().getSize());
 
 	}
 
@@ -507,9 +644,33 @@ public class Spinner extends JSpinner {
 
 	}
 
+	public void setHeaderFont(Font font) {
+
+		try {
+
+			editor.setHeaderFont(font);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public Spinner(String text) {
+
+		this();
+
+		setLabelText(text);
+
+	}
+
 	public Spinner() {
 
 		valorMaximo = true;
+
+		valorMinimo = true;
 
 		this.negativo = false;
 
@@ -529,12 +690,20 @@ public class Spinner extends JSpinner {
 
 		selectedColor = new Color(181, 181, 181);
 
-		setUI(new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor, negativo,
-				incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
 
 		setMaxValor(maxValor);
+
+		setMinValor(minValor);
+
+		setValor(minValor);
+
+		sumarAlto(20);
 
 	}
 
@@ -600,7 +769,7 @@ public class Spinner extends JSpinner {
 
 		editor.setEditable(true);
 
-		editor.setLabelText("");
+		editor.setHeaderText("");
 
 		editor.addKeyListener(new KeyAdapter() {
 
@@ -649,7 +818,7 @@ public class Spinner extends JSpinner {
 
 						numeroValor += editor.incremento;
 
-						if (maxValor != 0 && numeroValor > maxValor) {
+						if (valorMaximo && maxValor != 0 && numeroValor > maxValor) {
 
 							numeroValor = editor.max;
 
@@ -661,7 +830,7 @@ public class Spinner extends JSpinner {
 
 						numeroValor -= editor.incremento;
 
-						if (numeroValor < minValor) {
+						if (valorMinimo && numeroValor < minValor) {
 
 							numeroValor = minValor;
 
@@ -690,8 +859,10 @@ public class Spinner extends JSpinner {
 
 		setOpaque(false);
 
-		setUI(new SpinnerUI(mostrarUi, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
-				negativo, incremento, minValor, maxValor));
+		editor2 = new SpinnerUI(true, ffuente, colorTexto, fondo, buttonBackground, selectedColor, buttonColor,
+				negativo, incremento, minValor, maxValor, valorMaximo, valorMinimo);
+
+		setUI(editor2);
 
 		ponerConstructor();
 
@@ -771,7 +942,11 @@ public class Spinner extends JSpinner {
 
 		editor.min = minValue;
 
-		editor.setText(Integer.toString(minValue));
+		if (getValor() < minValor) {
+
+			editor.setText(Integer.toString(minValor));
+
+		}
 
 	}
 
@@ -780,8 +955,6 @@ public class Spinner extends JSpinner {
 		editor.max = maxValue;
 
 		maxValor = maxValue;
-
-		editor.setText(Integer.toString(maxValue));
 
 	}
 

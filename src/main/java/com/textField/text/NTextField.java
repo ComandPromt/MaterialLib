@@ -58,6 +58,20 @@ public class NTextField extends JTextField {
 
 	private int sumarAlto;
 
+	private Font headerFont;
+
+	public Font getHeaderFont() {
+
+		return headerFont;
+
+	}
+
+	public void setHeaderFont(Font headerFont) {
+
+		this.headerFont = headerFont;
+
+	}
+
 	public int getSumarAlto() {
 
 		return sumarAlto;
@@ -170,7 +184,7 @@ public class NTextField extends JTextField {
 
 	}
 
-	public void setLabelText(String labelText) {
+	public void setHeaderText(String labelText) {
 
 		this.labelText = labelText;
 
@@ -203,6 +217,24 @@ public class NTextField extends JTextField {
 		this.inactiveLineColor = inactiveLineColor;
 
 		repaint();
+
+	}
+
+	public NTextField(String text) {
+
+		this();
+
+		setText(text);
+
+	}
+
+	public NTextField(String header, String text) {
+
+		this();
+
+		setHeaderText(header);
+
+		setText(text);
 
 	}
 
@@ -301,6 +333,8 @@ public class NTextField extends JTextField {
 		animator.setDeceleration(0.5f);
 
 		DefaultContextMenu.addDefaultContextMenu(this);
+
+		headerFont = getFont();
 
 	}
 
@@ -402,6 +436,8 @@ public class NTextField extends JTextField {
 
 		animator.setDeceleration(0.5f);
 
+		headerFont = getFont();
+
 	}
 
 	private void showing(boolean action) {
@@ -468,53 +504,60 @@ public class NTextField extends JTextField {
 
 	private void createHintText(Graphics2D g2) {
 
-		Insets in = getInsets();
+		if (!labelText.isEmpty()) {
 
-		g2.setColor(new Color(150, 150, 150));
+			Insets in = getInsets();
 
-		FontMetrics ft = g2.getFontMetrics();
+			g2.setColor(new Color(150, 150, 150));
 
-		Rectangle2D r2 = ft.getStringBounds(labelText, g2);
+			FontMetrics ft = g2.getFontMetrics();
 
-		double height = getHeight() - in.top - in.bottom;
+			Rectangle2D r2 = ft.getStringBounds(labelText, g2);
 
-		double textY = (height - r2.getHeight()) / 2;
+			double height = getHeight() - in.top - in.bottom;
 
-		double size;
+			double textY = (height - r2.getHeight()) / 2;
 
-		if (animateHinText) {
+			double size;
 
-			if (show) {
+			if (animateHinText) {
 
-				size = 18 * (1 - location);
+				if (show) {
+
+					size = 18 * (1 - location);
+
+				}
+
+				else {
+
+					size = 18 * location;
+
+				}
 
 			}
 
 			else {
 
-				size = 18 * location;
+				size = 18;
 
 			}
 
-		}
+			g2.setFont(headerFont);
 
-		else {
+			if (center) {
 
-			size = 18;
+				int contador = labelText.length() * 4;
 
-		}
+				g2.drawString(labelText, (getWidth() / 2) - contador,
+						(int) (textY + ft.getAscent() - size) + sumarAlto);
 
-		if (center) {
+			}
 
-			int contador = labelText.length() * 4;
+			else {
 
-			g2.drawString(labelText, (getWidth() / 2) - contador, (int) (textY + ft.getAscent() - size) + sumarAlto);
+				g2.drawString(labelText, in.right, (int) (textY + ft.getAscent() - size) + sumarAlto);
 
-		}
-
-		else {
-
-			g2.drawString(labelText, in.right, (int) (textY + ft.getAscent() - size) + sumarAlto);
+			}
 
 		}
 

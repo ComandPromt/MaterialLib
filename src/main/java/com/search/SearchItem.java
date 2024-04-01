@@ -199,7 +199,7 @@ class SearchItem extends javax.swing.JPanel {
 
 		lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-		lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/search_small.png"))); // NOI18N
+		lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/search_small.png"))); 
 
 		lbText.setFont(new java.awt.Font("sansserif", 0, 14));
 

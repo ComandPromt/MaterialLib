@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -188,26 +186,6 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 		Border border = new Border();
 
 		JTextField txt = (JTextField) comboBox.getEditor().getEditorComponent();
-
-		txt.addFocusListener(new FocusAdapter() {
-
-			@Override
-
-			public void focusGained(FocusEvent fe) {
-
-				border.setColor(borderColor);
-
-			}
-
-			@Override
-
-			public void focusLost(FocusEvent fe) {
-
-				border.setColor(new Color(206, 212, 218));
-
-			}
-
-		});
 
 		comboBox.addPopupMenuListener(new PopupMenuListener() {
 
@@ -415,8 +393,6 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 		private Color focusColor;
 
-		private Color color;
-
 		@SuppressWarnings("unused")
 		public Color getFocusColor() {
 
@@ -431,26 +407,11 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 		}
 
-		@SuppressWarnings("unused")
-		public Color getColor() {
-
-			return color;
-
-		}
-
-		public void setColor(Color color) {
-
-			this.color = color;
-
-		}
-
 		public Border(int border) {
 
 			super(border, border, border, border);
 
 			focusColor = new Color(128, 189, 255);
-
-			color = new Color(206, 212, 218);
 
 		}
 
@@ -475,7 +436,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			else {
 
-				g2.setColor(color);
+				g2.setColor(borderColor);
 
 			}
 

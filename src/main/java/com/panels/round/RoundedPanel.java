@@ -17,9 +17,9 @@ import com.toolTip.ToolTipLlamada;
 @SuppressWarnings("serial")
 public class RoundedPanel extends JPanel {
 
-	private int radius;
+	protected int radius;
 
-	private int thickness;
+	protected int thickness;
 
 	private String text;
 
@@ -176,13 +176,21 @@ public class RoundedPanel extends JPanel {
 
 		g2.setColor(getBackground());
 
-		g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getRadius(), getRadius());
+		g2.fillRoundRect(0, 0, getWidth() - thickness, getHeight() - thickness, getRadius(), getRadius());
 
 		g2.setColor(getForeground());
 
-		g2.setStroke(new BasicStroke(thickness));
+		if (thickness > 0) {
 
-		g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getRadius(), getRadius());
+			g2.setStroke(new BasicStroke(thickness));
+
+			int mitad = thickness;
+
+			mitad /= 2;
+
+			g2.drawRoundRect(mitad, mitad, getWidth() - thickness, getHeight() - thickness, getRadius(), getRadius());
+
+		}
 
 		super.paintComponent(g);
 
