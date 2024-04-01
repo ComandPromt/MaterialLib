@@ -212,6 +212,24 @@ public class PasswordFieldWithIcon extends JPasswordField {
 
 	}
 
+	public PasswordFieldWithIcon(String header) {
+
+		this();
+
+		setLabelText(header);
+
+	}
+
+	public PasswordFieldWithIcon(String header, String text) {
+
+		this();
+
+		setLabelText(header);
+
+		setText(text);
+
+	}
+
 	public PasswordFieldWithIcon() {
 
 		Eye ojo = new Eye();

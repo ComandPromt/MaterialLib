@@ -164,19 +164,19 @@ public class PasswordPanel extends RoundedPanel {
 
 	}
 
-	public PasswordPanel() {
+	public PasswordPanel(String headerText) {
 
-		this(true);
+		this(true, headerText);
 
 	}
 
-	public PasswordPanel(boolean icon) {
+	public PasswordPanel(boolean icon, String headerText) {
 
 		setLayout(null);
 
 		if (icon) {
 
-			panel = new PasswordFieldWithIcon();
+			panel = new PasswordFieldWithIcon(headerText);
 
 		}
 
