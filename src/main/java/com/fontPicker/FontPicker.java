@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 import com.comboBox.comboFont.ComboFont;
 import com.comboBox.comboSuggestion.ComboBoxSuggestion;
 import com.layout.MaterialPanelLayout;
+import com.spinner.simple.Spinner;
 
 @SuppressWarnings("serial")
 
@@ -35,6 +36,24 @@ public class FontPicker extends JPanel {
 	private MaterialPanelLayout panel;
 
 	private MaterialPanelLayout panel_1;
+
+	private Spinner fontSize;
+
+	public int getFontSize() {
+
+		try {
+
+			return fontSize.getValor();
+
+		}
+
+		catch (Exception e) {
+
+			return 8;
+
+		}
+
+	}
 
 	public void setStyleForeground(Color color) {
 
@@ -76,7 +95,15 @@ public class FontPicker extends JPanel {
 
 		if (panel_2.getFont().getSize() != size) {
 
-			panel_2.setFont(getFont().deriveFont(size));
+			try {
+
+				panel_2.setFont(new Font(comboBox.getSelectedItem().toString(), style, size));
+
+			}
+
+			catch (Exception e1) {
+
+			}
 
 		}
 
@@ -144,6 +171,22 @@ public class FontPicker extends JPanel {
 
 	}
 
+	public FontPicker(String fontName) {
+
+		this();
+
+		try {
+
+			comboBox.setSelectedItem(fontName);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public FontPicker() {
 
 		this(30f);
@@ -155,7 +198,7 @@ public class FontPicker extends JPanel {
 
 		try {
 
-			return panel_2.getFont();
+			return panel_2.getFont().deriveFont((float) fontSize.getValor());
 
 		}
 
@@ -164,6 +207,7 @@ public class FontPicker extends JPanel {
 			return null;
 
 		}
+
 	}
 
 	public void setPhrase(String text) {
@@ -171,6 +215,36 @@ public class FontPicker extends JPanel {
 		try {
 
 			panel_2.setText(text);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setFontSelected(String fontName) {
+
+		try {
+
+			comboBox.setSelectedItem(fontName);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public FontPicker(String fontName, float textSize) {
+
+		this(textSize);
+
+		try {
+
+			comboBox.setSelectedItem(fontName);
 
 		}
 
@@ -274,11 +348,19 @@ public class FontPicker extends JPanel {
 
 		lista.add(estilo);
 
+		fontSize = new Spinner(15);
+
+		fontSize.setMinValor(8);
+
+		lista.add(fontSize);
+
 		ArrayList<Integer> porcentajes = new ArrayList<>();
 
-		porcentajes.add(65);
+		porcentajes.add(60);
 
-		porcentajes.add(25);
+		porcentajes.add(30);
+
+		porcentajes.add(10);
 
 		panel_1 = new MaterialPanelLayout(lista, porcentajes, false);
 

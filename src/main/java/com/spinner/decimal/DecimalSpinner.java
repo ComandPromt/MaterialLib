@@ -336,6 +336,8 @@ public class DecimalSpinner extends JSpinner {
 
 		setValor(numeroValor);
 
+		sumarAlto(15);
+
 	}
 
 	public DecimalSpinner(String text) {
@@ -377,6 +379,8 @@ public class DecimalSpinner extends JSpinner {
 
 		setValor(numeroValor);
 
+		sumarAlto(15);
+
 	}
 
 	public DecimalSpinner(int decimals, Font font) {
@@ -416,6 +420,8 @@ public class DecimalSpinner extends JSpinner {
 
 		setValor(numeroValor);
 
+		sumarAlto(15);
+
 	}
 
 	public DecimalSpinner(int decimals) {
@@ -448,6 +454,8 @@ public class DecimalSpinner extends JSpinner {
 		ponerConstructor();
 
 		setValor(numeroValor);
+
+		sumarAlto(15);
 
 	}
 
@@ -515,6 +523,8 @@ public class DecimalSpinner extends JSpinner {
 		ponerConstructor();
 
 		setValor(numeroValor);
+
+		sumarAlto(15);
 
 	}
 

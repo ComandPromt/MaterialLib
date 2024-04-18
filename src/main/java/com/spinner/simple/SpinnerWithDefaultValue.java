@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
 import com.buttons.round.NButton;
-import com.layout.MaterialPanelLayout;
 import com.spinner.decimal.DecimalSpinner;
 
 public class SpinnerWithDefaultValue extends JPanel {
@@ -75,8 +74,6 @@ public class SpinnerWithDefaultValue extends JPanel {
 		porcentajes.add(80);
 
 		porcentajes.add(20);
-
-		MaterialPanelLayout panel_1 = new MaterialPanelLayout(lista, porcentajes, true);
 
 	}
 

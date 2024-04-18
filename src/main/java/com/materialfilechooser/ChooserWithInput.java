@@ -35,6 +35,20 @@ public class ChooserWithInput extends JPanel {
 
 	private JFrame frame;
 
+	public void setLeft(int left) {
+
+		try {
+
+			field.setLeft(left);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setHorizontalAlignment(int align) {
 
 		try {
@@ -131,6 +145,20 @@ public class ChooserWithInput extends JPanel {
 		try {
 
 			frame.setIconImage(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setHeader(String text) {
+
+		try {
+
+			field.setHeaderText(text);
 
 		}
 

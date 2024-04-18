@@ -468,6 +468,14 @@ public class Spinner extends JSpinner {
 
 	}
 
+	public Spinner(int value) {
+
+		this();
+
+		setValor(value);
+
+	}
+
 	public Spinner(int min, int max, int incremento) {
 
 		valorMaximo = true;

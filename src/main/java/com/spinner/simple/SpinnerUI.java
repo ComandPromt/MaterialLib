@@ -56,19 +56,27 @@ class SpinnerUI extends BasicSpinnerUI {
 	private boolean valorMinimo;
 
 	public boolean isValorMaximo() {
+
 		return valorMaximo;
+
 	}
 
 	public void setValorMaximo(boolean valorMaximo) {
+
 		this.valorMaximo = valorMaximo;
+
 	}
 
 	public boolean isValorMinimo() {
+
 		return valorMinimo;
+
 	}
 
 	public void setValorMinimo(boolean valorMinimo) {
+
 		this.valorMinimo = valorMinimo;
+
 	}
 
 	public SpinnerUI() {
@@ -429,6 +437,7 @@ class SpinnerUI extends BasicSpinnerUI {
 				}
 
 				g2.fillPolygon(px, py, px.length);
+
 			}
 
 			else {

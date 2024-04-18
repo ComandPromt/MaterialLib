@@ -60,6 +60,32 @@ public class NTextField extends JTextField {
 
 	private Font headerFont;
 
+	private int round;
+
+	private int left;
+
+	public void setLeft(int left) {
+
+		this.left = left;
+
+		repaint();
+
+	}
+
+	public int getRound() {
+
+		return round;
+
+	}
+
+	public void setRound(int round) {
+
+		this.round = round;
+
+		repaint();
+
+	}
+
 	public Font getHeaderFont() {
 
 		return headerFont;
@@ -336,6 +362,8 @@ public class NTextField extends JTextField {
 
 		headerFont = getFont();
 
+		setSumarAlto(15);
+
 	}
 
 	public NTextField(Color selectionColor) {
@@ -548,14 +576,14 @@ public class NTextField extends JTextField {
 
 				int contador = labelText.length() * 4;
 
-				g2.drawString(labelText, (getWidth() / 2) - contador,
+				g2.drawString(labelText, ((getWidth() / 2) - contador) + left,
 						(int) (textY + ft.getAscent() - size) + sumarAlto);
 
 			}
 
 			else {
 
-				g2.drawString(labelText, in.right, (int) (textY + ft.getAscent() - size) + sumarAlto);
+				g2.drawString(labelText, in.right + left, (int) (textY + ft.getAscent() - size) + sumarAlto);
 
 			}
 

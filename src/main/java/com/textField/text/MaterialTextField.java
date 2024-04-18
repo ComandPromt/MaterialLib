@@ -156,6 +156,14 @@ public class MaterialTextField extends JTextField {
 
 	}
 
+	public MaterialTextField(String text) {
+
+		this();
+
+		setText(text);
+
+	}
+
 	public MaterialTextField() {
 
 		round = 10;
