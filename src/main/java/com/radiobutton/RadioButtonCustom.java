@@ -25,6 +25,88 @@ public class RadioButtonCustom extends JRadioButton {
 
 	private Font fuente;
 
+	private int left;
+
+	private int altura;
+
+	private int ancho;
+
+	private int space;
+
+	private Color fillColor;
+
+	private Color deselectedColor;
+
+	private Color ringColor;
+
+	private Color deselectedBorderColor;
+
+	private Color focus;
+
+	public void setDeselectedColor(Color deselectedColor) {
+
+		this.deselectedColor = deselectedColor;
+
+		repaint();
+
+	}
+
+	public void setDeselectedBorderColor(Color deselectedBorderColor) {
+
+		this.deselectedBorderColor = deselectedBorderColor;
+
+		repaint();
+
+	}
+
+	public void setRingColor(Color ringColor) {
+
+		this.ringColor = ringColor;
+
+		repaint();
+
+	}
+
+	public void setFillColor(Color fillColor) {
+
+		this.fillColor = fillColor;
+
+		repaint();
+
+	}
+
+	public void setWidth(int width) {
+
+		this.ancho = width;
+
+		repaint();
+
+	}
+
+	public void setLeft(int left) {
+
+		this.left = left;
+
+		repaint();
+
+	}
+
+	public void setSpace(int space) {
+
+		this.space = space;
+
+		repaint();
+
+	}
+
+	public void setAltura(int altura) {
+
+		this.altura = altura;
+
+		repaint();
+
+	}
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -111,13 +193,7 @@ public class RadioButtonCustom extends JRadioButton {
 
 	public RadioButtonCustom(Color background) {
 
-		setOpaque(false);
-
-		setFocusPainted(false);
-
-		setFont(new Font("Dialog", Font.PLAIN, 20));
-
-		setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this("");
 
 		setBackground(background);
 
@@ -125,15 +201,7 @@ public class RadioButtonCustom extends JRadioButton {
 
 	public RadioButtonCustom(String text, Color background) {
 
-		setText(text);
-
-		setFocusPainted(false);
-
-		setFont(new Font("Dialog", Font.PLAIN, 20));
-
-		setOpaque(false);
-
-		setCursor(new Cursor(Cursor.HAND_CURSOR));
+		this(text);
 
 		setBackground(background);
 
@@ -141,6 +209,22 @@ public class RadioButtonCustom extends JRadioButton {
 
 	public RadioButtonCustom(String text) {
 
+		focus = Color.LIGHT_GRAY;
+
+		border = new Color(69, 124, 235);
+
+		ringColor = Color.WHITE;
+
+		deselectedBorderColor = new Color(128, 128, 128);
+
+		deselectedColor = Color.WHITE;
+
+		fillColor = new Color(69, 124, 235);
+
+		ancho = 16;
+
+		space = 3;
+
 		setText(text);
 
 		setFont(new Font("Dialog", Font.PLAIN, 20));
@@ -151,68 +235,40 @@ public class RadioButtonCustom extends JRadioButton {
 
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-		setBackground(new Color(69, 124, 235));
-
 	}
 
 	public RadioButtonCustom() {
 
-		setFocusPainted(false);
-
-		setOpaque(false);
-
-		setFont(new Font("Dialog", Font.PLAIN, 20));
-
-		setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-		setBackground(new Color(69, 124, 235));
+		this("");
 
 	}
 
 	@Override
 	public void paint(Graphics grphcs) {
 
-		super.paint(grphcs);
-
 		Graphics2D g2 = (Graphics2D) grphcs;
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		g2.setColor(getBackground());
+
+		g2.fillRect(0, 0, getWidth(), getHeight());
 
 		int ly = (getHeight() - 16) / 2;
 
 		if (isSelected()) {
 
-			if (isEnabled()) {
+			g2.setColor(border);
 
-				g2.setColor(getBackground());
+			g2.fillOval(left, ly + altura, ancho, ancho);
 
-			}
+			g2.setColor(ringColor);
 
-			else {
+			g2.fillOval(1 + left, (ly + 1) + altura, ancho - 2, ancho - 2);
 
-				g2.setColor(Color.GRAY);
+			g2.setColor(fillColor);
 
-			}
-
-			g2.fillOval(1, ly, 16, 16);
-
-			g2.setColor(Color.WHITE);
-
-			g2.fillOval(2, ly + 1, 14, 14);
-
-			if (isEnabled()) {
-
-				g2.setColor(getBackground());
-
-			}
-
-			else {
-
-				g2.setColor(Color.GRAY);
-
-			}
-
-			g2.fillOval(5, ly + 4, 8, 8);
+			g2.fillOval(4 + left, altura + (ly + 4), 8, 8);
 
 		}
 
@@ -220,23 +276,27 @@ public class RadioButtonCustom extends JRadioButton {
 
 			if (isFocusOwner()) {
 
-				g2.setColor(getBackground());
+				g2.setColor(focus);
 
 			}
 
 			else {
 
-				g2.setColor(Color.GRAY);
+				g2.setColor(deselectedBorderColor);
 
 			}
 
-			g2.fillOval(1, ly, 16, 16);
+			g2.fillOval(left, ly + altura, 16, 16);
 
-			g2.setColor(Color.WHITE);
+			g2.setColor(deselectedColor);
 
-			g2.fillOval(2, ly + 1, 14, 14);
+			g2.fillOval(1 + left, (ly + 1) + altura, 14, 14);
 
 		}
+
+		g2.setColor(getForeground());
+
+		g2.drawString(getText(), ancho + left + space, (getHeight() / 1.25f) + altura);
 
 		g2.dispose();
 

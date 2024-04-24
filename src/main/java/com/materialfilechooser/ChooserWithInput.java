@@ -35,6 +35,24 @@ public class ChooserWithInput extends JPanel {
 
 	private JFrame frame;
 
+	private ThreadDialog dialogo;
+
+	public String getFile() {
+
+		try {
+
+			return field.getText();
+
+		}
+
+		catch (Exception e) {
+
+			return "";
+
+		}
+
+	}
+
 	public void setLeft(int left) {
 
 		try {
@@ -168,7 +186,8 @@ public class ChooserWithInput extends JPanel {
 
 	}
 
-	public ChooserWithInput(String title, String originFolder, boolean folder, boolean unique) {
+	public ChooserWithInput(String title, String originFolder, boolean folder, String[] filter, boolean all,
+			boolean unique) {
 
 		este = this;
 
@@ -208,8 +227,9 @@ public class ChooserWithInput extends JPanel {
 
 					frame.setIconImage(new ImageIcon(getClass().getResource("/imgs/imagenes/folder.png")).getImage());
 
-					new ThreadDialog(frame, este, originFolder2, title, folder, null, true, field, unique)
-							.setVisible(true);
+					dialogo = new ThreadDialog(frame, este, originFolder2, title, folder, filter, all, field, unique);
+
+					dialogo.setVisible(true);
 
 				}
 

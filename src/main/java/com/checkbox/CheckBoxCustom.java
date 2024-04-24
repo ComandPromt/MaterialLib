@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 
 import javax.swing.JCheckBox;
@@ -40,6 +41,16 @@ public class CheckBoxCustom extends JCheckBox {
 	private int altura;
 
 	private int left;
+
+	private Point position;
+
+	public void setPosition(Point position) {
+
+		this.position = position;
+
+		repaint();
+
+	}
 
 	public int getLeft() {
 
@@ -413,7 +424,17 @@ public class CheckBoxCustom extends JCheckBox {
 
 		g2.setColor(getForeground());
 
-		g2.drawString(texto, (fontSize + 7) + left, (getHeight() / 1.5f) + altura);
+		if (position != null) {
+
+			g2.drawString(texto, (int) position.getX(), (int) position.getY());
+
+		}
+
+		else {
+
+			g2.drawString(texto, (fontSize + 7) + left, (getHeight() / 1.25f) + altura);
+
+		}
 
 	}
 

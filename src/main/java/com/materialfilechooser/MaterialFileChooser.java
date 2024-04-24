@@ -61,22 +61,6 @@ class MaterialFileChooser extends JPanel {
 
 			String ext = "all";
 
-			if (tipo.getSelectedItem() != null) {
-
-				if (tipo.getSelectedItem().toString().equals("All (*.*)")) {
-
-					ext = "all";
-
-				}
-
-				else {
-
-					ext = tipo.getSelectedItem().toString();
-
-				}
-
-			}
-
 			buttonScrollablePanel.removeAll();
 
 			buttonScrollablePanel.revalidate();
@@ -88,6 +72,12 @@ class MaterialFileChooser extends JPanel {
 			if (path.getText().isEmpty()) {
 
 				path.setText(folder);
+
+			}
+
+			if (tipo.getSelectedItem() != null && !tipo.getSelectedItem().toString().equals("All (*.*)")) {
+
+				ext = tipo.getSelectedItem().toString();
 
 			}
 
@@ -494,6 +484,8 @@ class MaterialFileChooser extends JPanel {
 					String[] filtros = filtro.split(",");
 
 					LinkedList<String> lista2 = new LinkedList<>();
+
+					test = new LinkedList<String>();
 
 					for (int i = 0; i < filtros.length; i++) {
 
