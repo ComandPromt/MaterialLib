@@ -43,6 +43,16 @@ public class RadioButtonCustom extends JRadioButton {
 
 	private Color focus;
 
+	private int heightText;
+
+	public void setHeightText(int heightText) {
+
+		this.heightText = heightText;
+
+		repaint();
+
+	}
+
 	public void setDeselectedColor(Color deselectedColor) {
 
 		this.deselectedColor = deselectedColor;
@@ -296,7 +306,7 @@ public class RadioButtonCustom extends JRadioButton {
 
 		g2.setColor(getForeground());
 
-		g2.drawString(getText(), ancho + left + space, (getHeight() / 1.25f) + altura);
+		g2.drawString(getText(), ancho + left + space, (getHeight() / 1.25f) + heightText);
 
 		g2.dispose();
 

@@ -730,6 +730,21 @@ public class DecimalSpinner extends JSpinner {
 
 	}
 
+	@Override
+	public void setFont(Font font) {
+
+		try {
+
+			editor.setFont(font);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setMinValor(float minValue) {
 
 		minValor = minValue;
