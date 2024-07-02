@@ -186,6 +186,13 @@ public class ChooserWithInput extends JPanel {
 
 	}
 
+	public ChooserWithInput(String title, String originFolder, boolean folder, String filter, boolean all,
+			boolean unique) {
+
+		this(title, originFolder, folder, new String[] { filter }, all, unique);
+
+	}
+
 	public ChooserWithInput(String title, String originFolder, boolean folder, String[] filter, boolean all,
 			boolean unique) {
 

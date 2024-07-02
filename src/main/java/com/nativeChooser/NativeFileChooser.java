@@ -300,7 +300,7 @@ public class NativeFileChooser extends JPanel {
 
 					case "images":
 
-						extension = JMthos.extraerExtension(x.getAbsolutePath());
+						extension = JMthos.saberExtension(x.getAbsolutePath());
 
 						if (extension.equals("jpeg") || extension.equals("bmp") || extension.equals("jpg")
 								|| extension.equals("png") || extension.equals("gif")) {
@@ -313,7 +313,7 @@ public class NativeFileChooser extends JPanel {
 
 					default:
 
-						extension = JMthos.extraerExtension(x.getAbsolutePath());
+						extension = JMthos.saberExtension(x.getAbsolutePath());
 
 						if (extension.equals(filtro)) {
 

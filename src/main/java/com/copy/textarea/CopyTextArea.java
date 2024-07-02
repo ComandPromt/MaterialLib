@@ -20,7 +20,7 @@ import javax.swing.JToolTip;
 import javax.swing.border.LineBorder;
 
 import com.buttons.simple.SimpleButton;
-import com.jicons.Update;
+import com.jicons.Reload;
 import com.spinner.simple.Spinner;
 import com.textarea.NTextArea;
 import com.toolTip.ToolTipLlamada;
@@ -539,7 +539,7 @@ public class CopyTextArea extends JPanel {
 
 		});
 
-		restaurar.setIcon(new Update());
+		restaurar.setIcon(new Reload());
 
 		this.panel.add(restaurar);
 

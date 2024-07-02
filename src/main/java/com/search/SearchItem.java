@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JToolTip;
 
+import com.jicons.MagnifyingGlass;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
@@ -199,7 +200,7 @@ class SearchItem extends javax.swing.JPanel {
 
 		lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-		lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/search_small.png"))); 
+		lbIcon.setIcon(new MagnifyingGlass());
 
 		lbText.setFont(new java.awt.Font("sansserif", 0, 14));
 

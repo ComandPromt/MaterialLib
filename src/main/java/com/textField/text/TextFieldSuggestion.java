@@ -109,15 +109,21 @@ public class TextFieldSuggestion extends JTextField {
 
 	}
 
+	public void setBorderColor(Color color) {
+
+		textUI.setBorderColor(color);
+
+	}
+
+	public void setGrosor(int thickness) {
+
+		textUI.setGrosor(thickness);
+
+	}
+
 	public TextFieldSuggestion() {
 
-		setOpaque(true);
-
-		textUI = new TextFieldSuggestionUI(this);
-
-		setUI(textUI);
-
-		DefaultContextMenu.addDefaultContextMenu(this);
+		this("");
 
 	}
 
@@ -146,6 +152,10 @@ public class TextFieldSuggestion extends JTextField {
 		setText(text);
 
 		DefaultContextMenu.addDefaultContextMenu(this);
+
+		setFont(new Font("Diaglog", Font.PLAIN, 20));
+
+		setGrosor(2);
 
 	}
 

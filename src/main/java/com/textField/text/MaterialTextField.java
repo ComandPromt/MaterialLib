@@ -2,75 +2,55 @@ package com.textField.text;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.geom.Area;
-import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.util.concurrent.TimeUnit;
 
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicTextFieldUI;
+import javax.swing.text.DefaultCaret;
+
+import org.jdesktop.core.animation.timing.Animator;
+import org.jdesktop.core.animation.timing.interpolators.SplineInterpolator;
+import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
 import com.contextmenu.DefaultContextMenu;
-import com.material.utils.ShadowRenderer;
+import com.material.utils.MaterialColor;
+import com.material.utils.SafePropertySetter;
+import com.material.utils.Utils;
 import com.toolTip.ToolTipLlamada;
 
-@SuppressWarnings("serial")
 public class MaterialTextField extends JTextField {
 
-	private int round;
+	private static final long serialVersionUID = 1L;
 
-	private Color shadowColor;
+	public static final int HINT_OPACITY_MASK = 0x99000000;
 
-	private BufferedImage imageShadow;
+	public static final int LINE_OPACITY_MASK = 0x66000000;
 
-	private final Insets shadowSize;
+	private FloatingLabel floatingLabel;
+
+	private Line line;
+
+	private String hint;
+
+	private Color accentColor;
 
 	private String text;
 
 	private Color fondo;
 
-	private Color colorFondo;
+	private Color colorTexto;
 
 	private Color border;
 
 	private Font fuente;
-
-	public int getRound() {
-
-		return round;
-
-	}
-
-	public void setRound(int round) {
-
-		this.round = round;
-
-		createImageShadow();
-
-		repaint();
-
-	}
-
-	public Color getShadowColor() {
-
-		return shadowColor;
-
-	}
-
-	public void setShadowColor(Color shadowColor) {
-
-		this.shadowColor = shadowColor;
-
-		createImageShadow();
-
-		repaint();
-
-	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -125,7 +105,7 @@ public class MaterialTextField extends JTextField {
 
 		this.fondo = background;
 
-		this.colorFondo = foreground;
+		this.colorTexto = foreground;
 
 		this.border = border;
 
@@ -138,7 +118,7 @@ public class MaterialTextField extends JTextField {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || fondo == null || colorFondo == null || border == null) {
+		if (text == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -146,13 +126,56 @@ public class MaterialTextField extends JTextField {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorFondo, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
 			return tip;
 
 		}
+
+	}
+
+	public MaterialTextField() {
+
+		super();
+
+		floatingLabel = new FloatingLabel(this);
+
+		line = new Line(this);
+
+		hint = "";
+
+		accentColor = MaterialColor.CYAN_500;
+
+		setBorder(null);
+
+		setBackground(Color.WHITE);
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20f));
+
+		floatingLabel.setText("");
+
+		setOpaque(false);
+
+		setBackground(MaterialColor.TRANSPARENT);
+
+		setCaret(new DefaultCaret() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected synchronized void damage(Rectangle r) {
+
+				this.repaint();
+
+			}
+
+		});
+
+		getCaret().setBlinkRate(500);
+
+		DefaultContextMenu.addDefaultContextMenu(this);
 
 	}
 
@@ -164,116 +187,313 @@ public class MaterialTextField extends JTextField {
 
 	}
 
-	public MaterialTextField() {
+	public String getLabel() {
 
-		round = 10;
+		return floatingLabel.getText();
 
-		shadowColor = new Color(170, 170, 170);
+	}
 
-		shadowSize = new Insets(2, 5, 8, 5);
+	public void setLabel(String label) {
 
-		setFont(getFont().deriveFont(30f));
+		floatingLabel.setText(label);
 
-		setUI(new TextUI());
+		repaint();
 
-		setOpaque(false);
+	}
 
-		setForeground(new Color(80, 80, 80));
+	public String getHint() {
 
-		setSelectedTextColor(new Color(255, 255, 255));
+		return hint;
 
-		setSelectionColor(new Color(133, 209, 255));
+	}
 
-		setBorder(new EmptyBorder(10, 12, 15, 12));
+	public void setHint(String hint) {
 
-		setBackground(new Color(255, 255, 255));
+		this.hint = hint;
 
-		DefaultContextMenu.addDefaultContextMenu(this);
+		repaint();
+
+	}
+
+	public Color getAccent() {
+
+		return accentColor;
+
+	}
+
+	public void setAccent(Color accentColor) {
+
+		this.accentColor = accentColor;
+
+		floatingLabel.setAccent(accentColor);
 
 	}
 
 	@Override
-	protected void paintComponent(Graphics grphcs) {
+	public void setForeground(Color fg) {
 
-		Graphics2D g2 = (Graphics2D) grphcs.create();
+		super.setForeground(fg);
+
+		if (floatingLabel != null)
+			floatingLabel.updateForeground();
+
+	}
+
+	@Override
+	public void setText(String s) {
+
+		super.setText(s);
+
+		floatingLabel.update();
+
+		line.update();
+
+	}
+
+	@Override
+	protected void processFocusEvent(FocusEvent e) {
+
+		super.processFocusEvent(e);
+
+		floatingLabel.update();
+
+		line.update();
+
+	}
+
+	@Override
+	protected void processKeyEvent(KeyEvent e) {
+
+		super.processKeyEvent(e);
+
+		floatingLabel.update();
+
+		line.update();
+
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+
+		Graphics2D g2 = (Graphics2D) g;
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		double width = getWidth() - (shadowSize.left + shadowSize.right);
-
-		double height = getHeight() - (shadowSize.top + shadowSize.bottom);
-
-		double x = shadowSize.left;
-
-		double y = shadowSize.top;
-
-		g2.drawImage(imageShadow, 0, 0, null);
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
 		g2.setColor(getBackground());
 
-		Area area = new Area(new RoundRectangle2D.Double(x, y, width, height, round, round));
+		g2.fillRect(0, 0, getWidth(), getHeight());
 
-		g2.fill(area);
+		g2.translate(0, 9);
 
-		g2.dispose();
+		super.paintComponent(g);
 
-		super.paintComponent(grphcs);
+		g2.translate(0, -9);
+
+		if (!getHint().isEmpty() && getText().isEmpty() && (getLabel().isEmpty() || isFocusOwner())
+				&& floatingLabel.isFloatingAbove()) {
+
+			g2.setColor(Utils.applyAlphaMask(getForeground(), HINT_OPACITY_MASK));
+
+			FontMetrics metrics = g.getFontMetrics(g.getFont());
+
+			g.drawString(getHint(), 0, metrics.getAscent() + 36);
+
+		}
+
+		floatingLabel.paint(g2);
+
+		g2.setColor(Utils.applyAlphaMask(getForeground(), LINE_OPACITY_MASK));
+
+		g2.fillRect(0, getHeight() - 9, getWidth(), 1);
+
+		g2.setColor(accentColor);
+
+		g2.fillRect((int) ((getWidth() - line.getWidth()) / 2), getHeight() - 10, (int) line.getWidth(), 2);
 
 	}
 
-	@Override
-	public void setBounds(int x, int y, int width, int height) {
+	public static class Line {
 
-		super.setBounds(x, y, width, height);
+		private final SwingTimerTimingSource timer;
 
-		createImageShadow();
+		private final JComponent target;
 
-	}
+		private Animator animator;
 
-	private void createImageShadow() {
+		private SafePropertySetter.Property<Double> width;
 
-		int height = getHeight();
+		public Line(JComponent target) {
 
-		int width = getWidth();
+			this.target = target;
 
-		if (width > 0 && height > 0) {
+			this.timer = new SwingTimerTimingSource();
 
-			imageShadow = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			timer.init();
 
-			Graphics2D g2 = imageShadow.createGraphics();
+			width = SafePropertySetter.animatableProperty(target, 0d);
 
-			g2.drawImage(createShadow(), 0, 0, null);
+		}
 
-			g2.dispose();
+		public void update() {
+
+			if (animator != null) {
+
+				animator.stop();
+
+			}
+
+			animator = new Animator.Builder(timer).setDuration(200, TimeUnit.MILLISECONDS)
+					.setEndBehavior(Animator.EndBehavior.HOLD).setInterpolator(new SplineInterpolator(0.4, 0, 0.2, 1))
+					.addTarget(SafePropertySetter.getTarget(width, width.getValue(),
+							target.isFocusOwner() ? (double) target.getWidth() + 1 : 0d))
+					.build();
+
+			animator.start();
+
+		}
+
+		public double getWidth() {
+
+			return width.getValue();
 
 		}
 
 	}
 
-	private BufferedImage createShadow() {
+	public static class FloatingLabel {
 
-		int width = getWidth() - (shadowSize.left + shadowSize.right);
+		private final SwingTimerTimingSource timer;
 
-		int height = getHeight() - (shadowSize.top + shadowSize.bottom);
+		private final JTextField target;
 
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		private Animator animator;
 
-		Graphics2D g2 = img.createGraphics();
+		private final SafePropertySetter.Property<Double> y;
 
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		private final SafePropertySetter.Property<Double> fontSize;
 
-		g2.fill(new RoundRectangle2D.Double(0, 0, width, height, round, round));
+		private final SafePropertySetter.Property<Color> color;
 
-		g2.dispose();
+		private String text;
 
-		return new ShadowRenderer(5, 0.3f, shadowColor).createShadow(img);
+		private Color accentColor = MaterialColor.CYAN_500;
 
-	}
+		public FloatingLabel(JTextField target) {
 
-	private class TextUI extends BasicTextFieldUI {
+			this.target = target;
 
-		@Override
-		protected void paintBackground(Graphics grphcs) {
+			this.timer = new SwingTimerTimingSource();
+
+			timer.init();
+
+			y = SafePropertySetter.animatableProperty(target, 36d);
+
+			fontSize = SafePropertySetter.animatableProperty(target, 16d);
+
+			color = SafePropertySetter.animatableProperty(target, MaterialColor.MIN_BLACK);
+
+			updateForeground();
+
+		}
+
+		public void updateForeground() {
+
+			color.setValue(Utils.applyAlphaMask(target.getForeground(), HINT_OPACITY_MASK));
+
+		}
+
+		public Color getAccent() {
+
+			return accentColor;
+
+		}
+
+		public void setAccent(Color accentColor) {
+
+			this.accentColor = accentColor;
+
+		}
+
+		public void update() {
+
+			if (animator != null) {
+
+				animator.stop();
+
+			}
+
+			Animator.Builder builder = new Animator.Builder(timer).setDuration(200, TimeUnit.MILLISECONDS)
+					.setEndBehavior(Animator.EndBehavior.HOLD).setInterpolator(new SplineInterpolator(0.4, 0, 0.2, 1));
+
+			double targetFontSize = (target.isFocusOwner() || !target.getText().isEmpty()) ? 12d : 16d;
+
+			if (fontSize.getValue() != targetFontSize) {
+
+				builder.addTarget(SafePropertySetter.getTarget(fontSize, fontSize.getValue(), targetFontSize));
+
+			}
+
+			double targetY = target.isFocusOwner() || !target.getText().isEmpty() ? 16d : 36d;
+
+			if (Math.abs(targetY - y.getValue()) > 0.1) {
+
+				builder.addTarget(SafePropertySetter.getTarget(y, y.getValue(), targetY));
+
+			}
+
+			Color targetColor;
+
+			if (target.isFocusOwner()) {
+
+				targetColor = accentColor;
+
+			}
+
+			else {
+
+				targetColor = Utils.applyAlphaMask(target.getForeground(), HINT_OPACITY_MASK);
+
+			}
+
+			if (!targetColor.equals(color.getValue())) {
+
+				builder.addTarget(SafePropertySetter.getTarget(color, color.getValue(), targetColor));
+
+			}
+
+			animator = builder.build();
+
+			animator.start();
+
+		}
+
+		public String getText() {
+
+			return text;
+
+		}
+
+		public void setText(String text) {
+
+			this.text = text;
+
+		}
+
+		public void paint(Graphics2D g) {
+
+			g.setColor(color.getValue());
+
+			FontMetrics metrics = g.getFontMetrics(g.getFont());
+
+			g.drawString(getText(), 0, metrics.getAscent() + y.getValue().intValue());
+
+		}
+
+		public boolean isFloatingAbove() {
+
+			return y.getValue() < 17d;
 
 		}
 

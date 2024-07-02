@@ -276,19 +276,25 @@ public class SimpleTextArea extends JPanel {
 
 	}
 
-	public SimpleTextArea() {
+	public SimpleTextArea(String text) {
 
-		this("");
+		this(text, Color.BLACK, Color.WHITE);
 
 	}
 
-	public SimpleTextArea(String text) {
+	public SimpleTextArea() {
+
+		this("", Color.BLACK, Color.WHITE);
+
+	}
+
+	public SimpleTextArea(String text, Color foreground, Color background) {
 
 		colorFondo = Color.WHITE;
 
 		setLayout(new GridLayout(0, 1, 0, 0));
 
-		textArea = new TextArea(Color.RED, Color.BLUE);
+		textArea = new TextArea(foreground, background);
 
 		textArea.setFont(new Font("Dialog", Font.PLAIN, 20));
 

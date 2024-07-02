@@ -176,6 +176,28 @@ public class CustomRoundPanel extends JPanel {
 
 	}
 
+	public CustomRoundPanel(int angle, boolean left) {
+
+		setOpaque(false);
+
+		if (left) {
+
+			setRoundTopRight(angle);
+
+			setRoundBottomRight(angle);
+
+		}
+
+		else {
+
+			setRoundTopLeft(angle);
+
+			setRoundBottomLeft(angle);
+
+		}
+
+	}
+
 	public CustomRoundPanel() {
 
 		setOpaque(false);

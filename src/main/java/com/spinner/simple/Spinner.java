@@ -423,6 +423,10 @@ public class Spinner extends JSpinner {
 
 		sumarAlto(15);
 
+		setMinValor(minValor);
+
+		setMaxValor(maxValor);
+
 	}
 
 	public Spinner(Font font) {
@@ -464,7 +468,15 @@ public class Spinner extends JSpinner {
 
 		setValor(minValor);
 
-		sumarAlto(getFont().getSize());
+		try {
+
+			sumarAlto(getFont().getSize());
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
@@ -509,7 +521,19 @@ public class Spinner extends JSpinner {
 
 		setValor(minValor);
 
-		sumarAlto(getFont().getSize());
+		try {
+
+			sumarAlto(getFont().getSize());
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+		setMinValor(minValor);
+
+		setMaxValor(maxValor);
 
 	}
 
@@ -546,7 +570,19 @@ public class Spinner extends JSpinner {
 
 		setValor(minValor);
 
-		sumarAlto(getFont().getSize());
+		try {
+
+			sumarAlto(getFont().getSize());
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+		setMinValor(minValor);
+
+		setMaxValor(maxValor);
 
 	}
 
@@ -583,7 +619,19 @@ public class Spinner extends JSpinner {
 
 		setValor(minValor);
 
-		sumarAlto(getFont().getSize());
+		try {
+
+			sumarAlto(getFont().getSize());
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+		setMinValor(min);
+
+		setMaxValor(max);
 
 	}
 
@@ -620,7 +668,19 @@ public class Spinner extends JSpinner {
 
 		setValor(minValor);
 
-		sumarAlto(getFont().getSize());
+		try {
+
+			sumarAlto(getFont().getSize());
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+		setMinValor(minValor);
+
+		setMaxValor(maxValor);
 
 	}
 
@@ -824,11 +884,11 @@ public class Spinner extends JSpinner {
 
 					if (e.getWheelRotation() < 0) {
 
-						numeroValor += editor.incremento;
+						numeroValor -= editor.incremento;
 
-						if (valorMaximo && maxValor != 0 && numeroValor > maxValor) {
+						if (valorMinimo && numeroValor < minValor) {
 
-							numeroValor = editor.max;
+							numeroValor = minValor;
 
 						}
 
@@ -836,11 +896,11 @@ public class Spinner extends JSpinner {
 
 					else {
 
-						numeroValor -= editor.incremento;
+						numeroValor += editor.incremento;
 
-						if (valorMinimo && numeroValor < minValor) {
+						if (valorMaximo && maxValor != 0 && numeroValor > maxValor) {
 
-							numeroValor = minValor;
+							numeroValor = editor.max;
 
 						}
 

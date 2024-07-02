@@ -189,6 +189,7 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public ComboBoxSuggestion(List<String> list) {
 
 		this(Color.WHITE);
@@ -209,6 +210,7 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public ComboBoxSuggestion(Color scrollColor, Color verticalLine, List<String> list) {
 
 		this(verticalLine, scrollColor);
@@ -221,6 +223,7 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public ComboBoxSuggestion(Color color, List<String> list) {
 
 		this(color);

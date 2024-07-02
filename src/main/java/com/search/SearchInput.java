@@ -18,6 +18,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
 
+import com.jicons.MagnifyingGlass;
 import com.scrollbar.MaterialPanelDeslizante;
 import com.toolTip.ToolTipLlamada;
 
@@ -437,7 +438,7 @@ public class SearchInput extends JTextField {
 
 		});
 
-		setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/search.png")));
+		setPrefixIcon(new MagnifyingGlass());
 
 	}
 

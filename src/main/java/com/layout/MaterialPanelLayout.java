@@ -101,7 +101,7 @@ public class MaterialPanelLayout extends JPanel {
 						: (porcentaje > 0) ? porcentaje * getSize().height / 100 : getSize().height / components.size();
 
 				dimension = vertical ? new Dimension(getSize().width, size) : new Dimension(size, getSize().height);
-
+				System.out.println(dimension);
 				com.setPreferredSize(dimension);
 
 				add(com);

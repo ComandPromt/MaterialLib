@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import com.buttons.simple.ResizedButton;
-import com.jicons.Update;
+import com.jicons.Reload;
 import com.layout.VerticalGridLayout;
 import com.materialfilechooser.JFileChooserPanel;
 import com.toolTip.ToolTipLlamada;
@@ -461,7 +461,7 @@ public class FileDragAndDrop extends JPanel {
 
 		btnNewButton.setBounds(223, 0, 48, 48);
 
-		btnNewButton.setIcon(new Update());
+		btnNewButton.setIcon(new Reload());
 
 		btnNewButton.addActionListener(new ActionListener() {
 

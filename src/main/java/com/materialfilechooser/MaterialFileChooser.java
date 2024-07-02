@@ -31,7 +31,7 @@ import com.materialfilechooser.buttons.Home;
 import com.materialfilechooser.buttons.NewFolder;
 import com.scrollbar.MaterialPanelDeslizante;
 import com.search.SearchInput;
-import com.textField.text.MaterialTextField;
+import com.textField.text.TextFieldSuggestion;
 
 import mthos.JMthos;
 
@@ -43,7 +43,7 @@ class MaterialFileChooser extends JPanel {
 
 	private MaterialPanelDeslizante panel_5;
 
-	public static MaterialTextField path;
+	public static TextFieldSuggestion path;
 
 	public static LinkedList<String> test;
 
@@ -125,7 +125,7 @@ class MaterialFileChooser extends JPanel {
 
 		final VentanaNuevoFile menu = new VentanaNuevoFile(frame, "New Folder", folder, 470, 120);
 
-		path = new MaterialTextField();
+		path = new TextFieldSuggestion();
 
 		path.addKeyListener(new KeyAdapter() {
 

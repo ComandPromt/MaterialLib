@@ -11,6 +11,7 @@ import javax.swing.JSpinner;
 import com.buttons.round.NButton;
 import com.spinner.decimal.DecimalSpinner;
 
+@SuppressWarnings("serial")
 public class SpinnerWithDefaultValue extends JPanel {
 
 	public SpinnerWithDefaultValue() {

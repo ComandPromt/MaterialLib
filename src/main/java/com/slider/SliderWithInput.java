@@ -12,8 +12,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.buttons.round.NButton;
-import com.jicons.Update;
-import com.textarea.NumberInput;
+import com.jicons.Reload;
+import com.spinner.simple.NumberInput;
 
 @SuppressWarnings("serial")
 
@@ -166,7 +166,7 @@ public class SliderWithInput extends JPanel {
 
 		panel.add(textArea);
 
-		btnNewButton.setIcon(new Update());
+		btnNewButton.setIcon(new Reload());
 
 		panel.add(btnNewButton);
 

@@ -11,14 +11,14 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import com.buttons.round.NButton;
-import com.textField.text.MaterialTextField;
+import com.textField.text.NTextField;
 
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
 class NuevaCarpeta extends JPanel {
 
-	private MaterialTextField textField;
+	private NTextField textField;
 
 	private JDialog menu;
 
@@ -92,7 +92,8 @@ class NuevaCarpeta extends JPanel {
 
 		this.folder = folder;
 
-		textField = new MaterialTextField();
+		textField = new NTextField();
+
 		textField.setForeground(Color.BLACK);
 
 		textField.addKeyListener(new KeyAdapter() {
@@ -115,6 +116,8 @@ class NuevaCarpeta extends JPanel {
 		textField.setBackground(Color.decode("#EEEEEE"));
 
 		textField.setBounds(12, 12, 362, 64);
+
+		textField.setBackground(Color.WHITE);
 
 		add(textField);
 

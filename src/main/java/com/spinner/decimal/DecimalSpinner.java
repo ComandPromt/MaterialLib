@@ -624,12 +624,11 @@ public class DecimalSpinner extends JSpinner {
 					numeroValor = getValor();
 
 					if (e.getWheelRotation() < 0) {
+						numeroValor -= editor.incremento;
 
-						numeroValor += editor.incremento;
+						if (!editor.negativo && numeroValor < editor.min) {
 
-						if (editor.max != 0 && numeroValor > editor.max) {
-
-							numeroValor = editor.max;
+							numeroValor = editor.min;
 
 						}
 
@@ -637,11 +636,11 @@ public class DecimalSpinner extends JSpinner {
 
 					else {
 
-						numeroValor -= editor.incremento;
+						numeroValor += editor.incremento;
 
-						if (!editor.negativo && numeroValor < editor.min) {
+						if (editor.max != 0 && numeroValor > editor.max) {
 
-							numeroValor = editor.min;
+							numeroValor = editor.max;
 
 						}
 

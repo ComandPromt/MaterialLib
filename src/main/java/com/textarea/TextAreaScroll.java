@@ -190,6 +190,14 @@ public class TextAreaScroll extends JScrollPane {
 
 	}
 
+	public TextAreaScroll(String text) {
+
+		this();
+
+		labelText = text;
+
+	}
+
 	public TextAreaScroll() {
 
 		animateHinText = true;

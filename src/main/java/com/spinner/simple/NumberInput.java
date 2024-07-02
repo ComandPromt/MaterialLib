@@ -1,4 +1,4 @@
-package com.textarea;
+package com.spinner.simple;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -157,11 +157,11 @@ public class NumberInput extends JPanel {
 
 					if (e.getWheelRotation() < 0) {
 
-						numeroValor += incremento;
+						numeroValor -= incremento;
 
-						if (maxValor != 0 && numeroValor > maxValor) {
+						if (numeroValor < minValor) {
 
-							numeroValor = maxValor;
+							numeroValor = minValor;
 
 						}
 
@@ -169,11 +169,11 @@ public class NumberInput extends JPanel {
 
 					else {
 
-						numeroValor -= incremento;
+						numeroValor += incremento;
 
-						if (numeroValor < minValor) {
+						if (maxValor != 0 && numeroValor > maxValor) {
 
-							numeroValor = minValor;
+							numeroValor = maxValor;
 
 						}
 

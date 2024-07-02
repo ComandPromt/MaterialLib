@@ -1,5 +1,6 @@
 package com.textField.text;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -26,6 +27,18 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 	private int round;
 
+	private float grosor;
+
+	private Color borderColor;
+
+	public void setBorderColor(Color borderColor) {
+
+		this.borderColor = borderColor;
+
+		textfield.repaint();
+
+	}
+
 	public List<String> getItems() {
 
 		return items;
@@ -41,6 +54,14 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 	public int getRound() {
 
 		return round;
+
+	}
+
+	public void setGrosor(float grosor) {
+
+		this.grosor = grosor;
+
+		textfield.repaint();
 
 	}
 
@@ -84,8 +105,6 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 			public void focusGained(FocusEvent fe) {
 
-				border.setColor(Color.RED);
-
 				textfield.repaint();
 
 			}
@@ -93,8 +112,6 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 			@Override
 
 			public void focusLost(FocusEvent fe) {
-
-				border.setColor(Color.BLUE);
 
 				textfield.repaint();
 
@@ -162,13 +179,16 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 		}
 
 		@Override
-		public void paintBorder(Component cmpnt, Graphics grphcs, int x, int y, int width, int height) {
 
-			Graphics2D g2 = (Graphics2D) grphcs.create();
+		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+
+			super.paintBorder(c, g, x, y, width, height);
+
+			Graphics2D g2 = (Graphics2D) g.create();
 
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-			if (cmpnt.isFocusOwner()) {
+			if (c.isFocusOwner()) {
 
 				g2.setColor(focusColor);
 
@@ -180,7 +200,11 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 			}
 
-			g2.drawRoundRect(x, y, width - 1, height - 1, round, round);
+			g2.setStroke(new BasicStroke(grosor));
+
+			g2.setColor(borderColor);
+
+			g2.drawRoundRect(1, y, width - 2, height - 2, round, round);
 
 			g2.dispose();
 
