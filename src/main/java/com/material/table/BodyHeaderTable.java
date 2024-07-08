@@ -14,10 +14,13 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import com.checkbox.CheckBoxCustom;
 import com.material.table.item.ItemHeader;
+import com.search.SearchTextField;
 import com.spinner.simple.SimpleSpinner;
 
 import mthos.JMthos;
@@ -50,6 +53,162 @@ public class BodyHeaderTable extends JPanel {
 	private JPanel customSeparator2;
 
 	private JPanel customSeparator3;
+
+	public void setDeleteIcon(String icon) {
+
+		try {
+
+			botones.getCrud().getDelete().setIcon(new ImageIcon(icon));
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setDeleteIcon(Icon icon) {
+
+		try {
+
+			botones.getCrud().getDelete().setIcon(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setDeleteIcon(ImageIcon icon) {
+
+		try {
+
+			botones.getCrud().getDelete().setIcon(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setEditIcon(String icon) {
+
+		try {
+
+			botones.getCrud().getEdit().setIcon(new ImageIcon(icon));
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setEditIcon(Icon icon) {
+
+		try {
+
+			botones.getCrud().getEdit().setIcon(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setEditIcon(ImageIcon icon) {
+
+		try {
+
+			botones.getCrud().getEdit().setIcon(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setAddIcon(String icon) {
+
+		try {
+
+			botones.getCrud().getNuevo().setIcon(new ImageIcon(icon));
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setAddIcon(Icon icon) {
+
+		try {
+
+			botones.getCrud().getNuevo().setIcon(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setAddIcon(ImageIcon icon) {
+
+		try {
+
+			botones.getCrud().getNuevo().setIcon(icon);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSearchBackground(Color color) {
+
+		try {
+
+			getSearchInput().setBackground(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public SearchTextField getSearchInput() {
+
+		try {
+
+			return botones.getBusqueda().getTextField();
+
+		}
+
+		catch (Exception e) {
+
+			return null;
+
+		}
+
+	}
 
 	@Override
 	public void setForeground(Color fg) {
@@ -327,7 +486,7 @@ public class BodyHeaderTable extends JPanel {
 
 		});
 
-		botones = new BotonesTabla();
+		botones = new BotonesTabla(cuerpo.getDatos());
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -437,7 +596,7 @@ public class BodyHeaderTable extends JPanel {
 						pagination.verNumeros(spiner.getValor(), numeroPaginas, cortePagination, cuerpo);
 
 						cuerpo.verDatos(
-								JMthos.calcularSucesionAritmetica("1#0,2#" + cuerpo.getItems() * cuerpo.getSplit(),
+								JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getItems() * cuerpo.getSplit(),
 										spiner.getValor()),
 								cuerpo.getDatos());
 
@@ -468,6 +627,8 @@ public class BodyHeaderTable extends JPanel {
 		setCheckBodyBackground(new Color(69, 124, 235));
 
 		setCheckActiveBodyBackground(new Color(69, 124, 235));
+
+		getSearchInput().setBackground(Color.WHITE);
 
 	}
 

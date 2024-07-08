@@ -60,6 +60,8 @@ public class ShadowButton extends JButton {
 
 	private Font fuente;
 
+	private Color borderColor;
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -166,6 +168,14 @@ public class ShadowButton extends JButton {
 
 	}
 
+	public void setBorderColor(Color borderColor) {
+
+		this.borderColor = borderColor;
+
+		repaint();
+
+	}
+
 	public ShadowButton(Icon icon) {
 
 		super(icon);
@@ -189,6 +199,22 @@ public class ShadowButton extends JButton {
 		foco = false;
 
 		shadow = true;
+
+		borderColor = getBackground();
+
+	}
+
+	public ShadowButton() {
+
+		this("");
+
+	}
+
+	public ShadowButton(String text, boolean shadow) {
+
+		this(text);
+
+		setShadow(shadow);
 
 	}
 
@@ -242,6 +268,8 @@ public class ShadowButton extends JButton {
 
 		});
 
+		borderColor = getBackground();
+
 	}
 
 	private void computeShadow() {
@@ -261,7 +289,7 @@ public class ShadowButton extends JButton {
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g2.setColor(Color.WHITE);
+		g2.setColor(borderColor);
 
 		g2.setStroke(new BasicStroke(1.5f));
 

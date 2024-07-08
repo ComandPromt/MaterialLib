@@ -18,9 +18,21 @@ class BotonesTabla extends JPanel {
 
 	private MaterialPanelLayout panel_1;
 
-	public BotonesTabla() {
+	public Crud getCrud() {
 
-		this(Color.WHITE);
+		return crud;
+
+	}
+
+	public Busqueda getBusqueda() {
+
+		return busqueda;
+
+	}
+
+	public BotonesTabla(ArrayList<String> datos) {
+
+		this(datos, Color.WHITE);
 
 	}
 
@@ -45,11 +57,11 @@ class BotonesTabla extends JPanel {
 
 	}
 
-	public BotonesTabla(Color background) {
+	public BotonesTabla(ArrayList<String> datos, Color background) {
 
 		setLayout(new GridLayout());
 
-		busqueda = new Busqueda();
+		busqueda = new Busqueda(datos);
 
 		crud = new Crud();
 

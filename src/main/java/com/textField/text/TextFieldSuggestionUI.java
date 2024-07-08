@@ -159,6 +159,7 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 		}
 
+		@SuppressWarnings("unused")
 		public void setColor(Color color) {
 
 			this.color = color;

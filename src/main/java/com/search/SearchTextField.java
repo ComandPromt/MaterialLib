@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -29,9 +30,23 @@ public class SearchTextField extends JPanel {
 
 	private CustomTextAreaScroll customTextAreaScroll;
 
+	public void setBackground(Color color) {
+
+		try {
+
+			searchField.setBackground(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public SearchTextField(List<String> lista) {
 
-		setLayout(new BorderLayout());
+		setLayout(new GridLayout());
 
 		suggestions = lista;
 

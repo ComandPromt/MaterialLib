@@ -138,6 +138,7 @@ public class Prueba extends javax.swing.JFrame {
 			e.printStackTrace();
 
 		}
+
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		panel_2.setLayout(new GridLayout(1, 0, 0, 0));
 		getContentPane().add(panel_2);

@@ -110,7 +110,9 @@ public class NumPagination extends JPanel {
 
 		indice = filter;
 
-		cuerpo.verDatos(JMthos.calcularSucesionAritmetica("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
+		cuerpo.verDatos(
+
+				JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
 				cuerpo.getDatos());
 
 		verNumeros(indice, filter, step, cuerpo);
@@ -127,7 +129,7 @@ public class NumPagination extends JPanel {
 
 		}
 
-		cuerpo.verDatos(JMthos.calcularSucesionAritmetica("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
+		cuerpo.verDatos(JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
 				cuerpo.getDatos());
 
 		verNumeros(indice, filter, step, cuerpo);
@@ -150,7 +152,9 @@ public class NumPagination extends JPanel {
 
 		}
 
-		cuerpo.verDatos(JMthos.calcularSucesionAritmetica("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
+		cuerpo.verDatos(
+
+				JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
 				cuerpo.getDatos());
 
 		verNumeros(indice, filter, step, cuerpo);

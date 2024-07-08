@@ -130,8 +130,10 @@ public class Numeros extends JPanel {
 
 						try {
 
-							cuerpo.verDatos(JMthos.calcularSucesionAritmetica(
-									"1#0,2#" + cuerpo.getItems() * cuerpo.getSplit(), indice), cuerpo.getDatos());
+							cuerpo.verDatos(
+									JMthos.calcularSucesionAritmeticaAInt(
+											"1#0,2#" + cuerpo.getItems() * cuerpo.getSplit(), indice),
+									cuerpo.getDatos());
 
 						}
 

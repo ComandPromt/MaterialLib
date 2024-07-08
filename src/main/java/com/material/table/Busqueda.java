@@ -1,64 +1,48 @@
 package com.material.table;
 
-import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import com.textField.text.NTextField;
+import com.search.SearchTextField;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JPanel {
 
-	private NTextField textField;
+	private SearchTextField textField;
 
-	public NTextField getTextField() {
+	public SearchTextField getTextField() {
 
 		return textField;
 
 	}
 
-	public void setBackground(Color color) {
+	public Busqueda(String header, ArrayList<String> lista) {
 
-		try {
+		setLayout(new GridLayout());
 
-			textField.setBackground(color);
-
-			super.setBackground(color);
-
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	public Busqueda(String header) {
-
-		setLayout(new GridLayout(1, 0, 0, 0));
-
-		textField = new NTextField(header, "");
+		textField = new SearchTextField(lista);
 
 		add(textField);
 
 	}
 
-	public Busqueda(String header, String text) {
+	public Busqueda(String header, String text, ArrayList<String> lista) {
 
-		setLayout(new GridLayout(1, 0, 0, 0));
+		setLayout(new GridLayout());
 
-		textField = new NTextField(header, text);
+		textField = new SearchTextField(lista);
 
 		add(textField);
 
 	}
 
-	public Busqueda() {
+	public Busqueda(ArrayList<String> lista) {
 
-		setLayout(new GridLayout(1, 0, 0, 0));
+		setLayout(new GridLayout());
 
-		textField = new NTextField("Search", "");
+		textField = new SearchTextField(lista);
 
 		add(textField);
 

@@ -1,3 +1,4 @@
+
 package com.search;
 
 import java.awt.Color;
@@ -11,17 +12,17 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
 
+import com.buttons.shadow.ShadowButton;
 import com.contextmenu.DefaultContextMenu;
 import com.toolTip.ToolTipLlamada;
 
-import mthos.JMthos;
-
 @SuppressWarnings("serial")
-public class BootSearchInput extends JTextField {
+public class BootSearchInputWithButton extends JTextField {
 
 	private int angle;
 
@@ -45,6 +46,8 @@ public class BootSearchInput extends JTextField {
 
 	private boolean centerPlaceholder;
 
+	private boolean iconRight;
+
 	private Color magnifyingGlassBackgroundColor;
 
 	private Color iconBackground;
@@ -67,13 +70,17 @@ public class BootSearchInput extends JTextField {
 
 	private String echo;
 
-	private boolean paintIconBackground;
+	private JButton rightButton;
 
-	public void setPaintIconBackground(boolean paintIconBackground) {
+	public JButton getButton() {
 
-		this.paintIconBackground = paintIconBackground;
+		return rightButton;
 
-		repaint();
+	}
+
+	public void setButton(JButton rightButton) {
+
+		this.rightButton = rightButton;
 
 	}
 
@@ -185,15 +192,25 @@ public class BootSearchInput extends JTextField {
 
 	}
 
-	public BootSearchInput(int angle) {
+	public BootSearchInputWithButton(int angle) {
 
 		this();
 
-		setAngle(angle);
+		this.angle = angle;
 
 	}
 
-	public BootSearchInput(String text) {
+	public BootSearchInputWithButton(String text, String button) {
+
+		this();
+
+		setText(text);
+
+		rightButton.setText(button);
+
+	}
+
+	public BootSearchInputWithButton(String text) {
 
 		this();
 
@@ -201,9 +218,9 @@ public class BootSearchInput extends JTextField {
 
 	}
 
-	public BootSearchInput() {
+	public BootSearchInputWithButton() {
 
-		this(20, 15);
+		this(20, 15, "");
 
 	}
 
@@ -218,7 +235,6 @@ public class BootSearchInput extends JTextField {
 		}
 
 		catch (Exception e) {
-
 		}
 
 	}
@@ -247,7 +263,7 @@ public class BootSearchInput extends JTextField {
 
 	}
 
-	public BootSearchInput(int columns, int angle) {
+	public BootSearchInputWithButton(int columns, int angle, String button) {
 
 		super(columns);
 
@@ -259,7 +275,7 @@ public class BootSearchInput extends JTextField {
 
 		echo = "x";
 
-		setAngle(angle);
+		this.angle = angle;
 
 		this.borderColor = Color.BLACK;
 
@@ -285,9 +301,17 @@ public class BootSearchInput extends JTextField {
 
 		this.centerPlaceholder = false;
 
+		this.iconRight = false;
+
 		this.magnifyingGlassBackgroundColor = Color.WHITE;
 
 		DefaultContextMenu.addDefaultContextMenu(this);
+
+		rightButton = new ShadowButton(button, false);
+
+		rightButton.setFont(new Font("Arial", Font.PLAIN, 12));
+
+		add(rightButton);
 
 		addMouseListener(new MouseAdapter() {
 
@@ -296,6 +320,8 @@ public class BootSearchInput extends JTextField {
 			public void mouseClicked(MouseEvent e) {
 
 				int rectX = getWidth() - Math.round(margin / 1.5f);
+
+				rectX -= 52;
 
 				int rectY = (getHeight() / 2) - (margin / 4);
 
@@ -315,7 +341,6 @@ public class BootSearchInput extends JTextField {
 
 		closeForeground = Color.WHITE;
 
-		setForeground(Color.BLACK);
 	}
 
 	@Override
@@ -327,23 +352,7 @@ public class BootSearchInput extends JTextField {
 
 		g2.setColor(getBackground());
 
-		if (thickness == 1) {
-
-			g2.setColor(getBackground());
-
-			g2.fill(new RoundRectangle2D.Float((thickness / 2f) + 1, (thickness / 2f), (getWidth() - thickness) - 1,
-					(getHeight() - thickness) - 1, angle, angle));
-
-		}
-
-		else {
-
-			g2.setColor(getBackground());
-
-			g2.fill(new RoundRectangle2D.Float((thickness / 2f) + 2, (thickness / 2f), (getWidth() - thickness) - 3,
-					(getHeight() - thickness) - 1, angle, angle));
-
-		}
+		g2.fill(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, angle, angle));
 
 		int margen = margin - 10;
 
@@ -351,57 +360,17 @@ public class BootSearchInput extends JTextField {
 
 		g2.setColor(iconBackground);
 
-		if (paintIconBackground) {
+		if (angle > 89) {
 
-			if (angle == 0) {
+			g2.fillRoundRect(thickness / 2, (thickness * 4), Math.round((margen - 2 * thickness) * 1.5f),
+					(getHeight() - (thickness * 8)), angle, angle);
 
-				if (thickness == 1) {
+		}
 
-					g2.fillRect(thickness, thickness, Math.round((margen - 2 * thickness) * 1.5f) + 4, getHeight() - 3);
+		else {
 
-				}
-
-				else {
-
-					g2.fillRect(thickness, thickness, Math.round((margen - 2 * thickness) * 1.5f) + 4,
-							getHeight() - thickness);
-
-				}
-
-			}
-
-			else {
-
-				if (getWidth() == getHeight()) {
-
-					g2.fillRoundRect(thickness, (int) JMthos.reglaDeTres(200, 50, getHeight()), 30, getWidth() / 2,
-							angle, angle);
-
-				}
-
-				else if (getWidth() > getHeight()) {
-
-					// Anchura es mayor que altura
-
-				}
-
-				else {
-
-					// Altura es mayor que anchura
-
-					// NO cambiar la x que es thickness + 2
-
-					// La anchura siempre es 30
-
-					// Formula para calcular la Y
-
-					// Formula para calcular la altura de la nueva elipse
-
-					g2.fillRoundRect(thickness + 2, 80, 30, 190, angle, angle);
-
-				}
-
-			}
+			g2.fillRoundRect(thickness / 2, 4, Math.round((margen - 2 * thickness) * 1.5f),
+					(getHeight() - thickness * 2) + 1, angle, angle);
 
 		}
 
@@ -411,42 +380,45 @@ public class BootSearchInput extends JTextField {
 
 		int y = (int) (getHeight() * 0.2);
 
+		int rectWidth = Math.round((margen - 2 * thickness) * 1.5f);
+
+		int rectHeight = getHeight() - y * 2;
+
+		if (angle > 0 && angle < 90) {
+
+			if (x + rectWidth > getWidth() - thickness) {
+
+				rectWidth = getWidth() - thickness - x;
+
+			}
+
+			if (y + rectHeight > getHeight() - thickness) {
+
+				rectHeight = getHeight() - thickness - y;
+
+			}
+
+			g2.fillRoundRect(x, thickness, rectWidth, rectHeight, angle, angle);
+
+		}
+
+		else {
+
+			g2.fillRoundRect(x, y - thickness, rectWidth, rectHeight + thickness, angle, angle);
+
+		}
+
 		if (magnifyingGlassIcon != null) {
 
-			int iconX = 5;
+			int iconX = iconRight ? getWidth() - margen - 5 : 5;
 
 			int iconY = (getHeight() / 2) - (margen / 2);
 
 			g2.setColor(magnifyingGlassBackgroundColor);
 
-			if (thickness > 4) {
+			g2.fillOval(iconX, iconY, margen, margen);
 
-				g2.fillOval(iconX + (int) JMthos.reglaDeTres(15, 12, thickness), iconY - 1, margen, margen);
-
-				g2.drawImage(icono.getImage(), iconX + ((int) JMthos.reglaDeTres(15, 12, thickness) - 1), iconY - 3,
-						margen, margen, this);
-
-			}
-
-			else {
-
-				if (angle > 300) {
-
-					g2.fillOval(iconX, iconY, margen, margen);
-
-					g2.drawImage(icono.getImage(), iconX, iconY - 1, margen, margen, this);
-
-				}
-
-				else {
-
-					g2.fillOval(iconX + 2, iconY, margen, margen);
-
-					g2.drawImage(icono.getImage(), iconX + 2, iconY - 1, margen, margen, this);
-
-				}
-
-			}
+			g2.drawImage(icono.getImage(), iconX, iconY, margen, margen, this);
 
 		}
 
@@ -478,7 +450,7 @@ public class BootSearchInput extends JTextField {
 
 		if (!getText().isEmpty()) {
 
-			g2.fillRoundRect((getWidth() - Math.round(margin / 1.5f)) - 10, (getHeight() / 2) - (margin / 4), 20, 20,
+			g2.fillRoundRect((getWidth() - Math.round(margin / 1.5f)) - 50, (getHeight() / 2) - (margin / 4), 20, 20,
 					angle, angle);
 
 			g2.setColor(closeForeground);
@@ -487,19 +459,22 @@ public class BootSearchInput extends JTextField {
 
 			if (closeFont.getFontName().equals("Algerian")) {
 
-				g2.drawString(echo, (getWidth() - Math.round(margin / 1.5f)) - 5,
+				g2.drawString(echo, ((getWidth() - Math.round(margin / 1.5f)) + 5) - 50,
 						((getHeight() / 2) - (margin / 4)) + 15);
 
 			}
 
 			else {
 
-				g2.drawString(echo, (getWidth() - Math.round(margin / 1.5f)) - 4,
+				g2.drawString(echo, ((getWidth() - Math.round(margin / 1.5f)) + 6) - 50,
+
 						((getHeight() / 2) - (margin / 4)) + 14);
 
 			}
 
 		}
+
+		rightButton.setBounds((getWidth() - margin) - 10, 3, margin + 7, getHeight() - 7);
 
 		g2.dispose();
 
@@ -512,23 +487,21 @@ public class BootSearchInput extends JTextField {
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+		g2.setColor(borderColor);
+
 		g2.setStroke(new java.awt.BasicStroke(thickness));
 
 		if (thickness == 1) {
 
-			g2.setColor(borderColor);
-
-			g2.draw(new RoundRectangle2D.Float((thickness / 2f) + 1, (thickness / 2f), (getWidth() - thickness) - 1,
+			g2.draw(new RoundRectangle2D.Float(thickness / 2f, (thickness / 2f), getWidth() - thickness,
 					(getHeight() - thickness) - 1, angle, angle));
 
 		}
 
 		else {
 
-			g2.setColor(borderColor);
-
-			g2.draw(new RoundRectangle2D.Float((thickness / 2f) + 2, (thickness / 2f), (getWidth() - thickness) - 3,
-					(getHeight() - thickness) - 1, angle, angle));
+			g2.draw(new RoundRectangle2D.Float((thickness / 2f) - 1, (thickness / 2f) - 1, (getWidth() - thickness) + 1,
+					(getHeight() - thickness) + 1, angle, angle));
 
 		}
 
@@ -545,18 +518,6 @@ public class BootSearchInput extends JTextField {
 	}
 
 	public void setAngle(int angle) {
-
-		if (angle < 0) {
-
-			angle = 0;
-
-		}
-
-		else if (angle > 360) {
-
-			angle = 360;
-
-		}
 
 		this.angle = angle;
 
@@ -612,11 +573,53 @@ public class BootSearchInput extends JTextField {
 
 	}
 
+	public void setIconRight(boolean iconRight) {
+
+		this.iconRight = iconRight;
+
+		repaint();
+
+	}
+
 	public void setMagnifyingGlassBackgroundColor(Color magnifyingGlassBackgroundColor) {
 
 		this.magnifyingGlassBackgroundColor = magnifyingGlassBackgroundColor;
 
 		repaint();
+
+	}
+
+	public void setButtonFont(Font font) {
+
+		try {
+
+			rightButton.setFont(font);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setButtonBackground(Color color) {
+
+		try {
+
+			rightButton.setBackground(color);
+
+			if (rightButton instanceof ShadowButton) {
+
+				((ShadowButton) rightButton).setBorderColor(color);
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
