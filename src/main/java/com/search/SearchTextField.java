@@ -30,6 +30,18 @@ public class SearchTextField extends JPanel {
 
 	private CustomTextAreaScroll customTextAreaScroll;
 
+	public void setSuggestions(List<String> suggestions) {
+
+		this.suggestions = suggestions;
+
+	}
+
+	public BootSearchInput getSearchField() {
+
+		return searchField;
+
+	}
+
 	public void setBackground(Color color) {
 
 		try {

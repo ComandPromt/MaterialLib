@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JToolTip;
 import javax.swing.border.EmptyBorder;
 
-import com.material.utils.ElevationEffect;
-import com.material.utils.MaterialColor;
-import com.material.utils.MaterialShadow;
+import com.colores.Colores;
+import com.effects.ElevationEffect;
+import com.effects.MaterialShadow;
 import com.material.utils.Utils;
 import com.toolTip.ToolTipLlamada;
 
@@ -131,6 +131,18 @@ public class MaterialPanel extends JPanel {
 
 	public void setElevation(int elevation) {
 
+		if (elevation > 5) {
+
+			elevation = 5;
+
+		}
+
+		else if (elevation < 1) {
+
+			elevation = 1;
+
+		}
+
 		this.elevation.setLevel(elevation);
 
 	}
@@ -140,7 +152,7 @@ public class MaterialPanel extends JPanel {
 
 		super.setBackground(bg);
 
-		setForeground(Utils.isDark(bg) ? MaterialColor.WHITE : MaterialColor.DARK_BLACK);
+		setForeground(Utils.isDark(bg) ? Colores.WHITE : Colores.DARK_BLACK);
 
 	}
 

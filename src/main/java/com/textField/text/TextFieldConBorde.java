@@ -35,6 +35,128 @@ public class TextFieldConBorde extends JTextField {
 
 	private Font fuente;
 
+	private String placeholder;
+
+	private Color placeholderColor;
+
+	private PlaceholderPosition placeholderVerticalPosition;
+
+	private HorizontalPosition placeholderHorizontalPosition;
+
+	private Font placeFont;
+
+	public enum PlaceholderPosition {
+
+		TOP, CENTER, BOTTOM
+
+	}
+
+	public enum HorizontalPosition {
+
+		LEFT, CENTER, RIGHT
+
+	}
+
+	public TextFieldConBorde() {
+
+		this("");
+
+	}
+
+	public TextFieldConBorde(String text) {
+
+		bordeActivo = Color.BLACK;
+
+		bordeInactivo = Color.LIGHT_GRAY;
+
+		grosor = 4;
+
+		placeholderColor = Color.GRAY;
+
+		placeholderVerticalPosition = PlaceholderPosition.CENTER;
+
+		placeholderHorizontalPosition = HorizontalPosition.LEFT;
+
+		setFont(getFont().deriveFont(Font.PLAIN, 20));
+
+		setText(text);
+
+		addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mouseEntered(MouseEvent e) {
+
+				pintarBorde = true;
+
+				repaint();
+
+			}
+
+			@Override
+
+			public void mouseExited(MouseEvent e) {
+
+				pintarBorde = false;
+
+				repaint();
+
+			}
+
+		});
+
+		DefaultContextMenu.addDefaultContextMenu(this);
+
+		addFocusListener(new java.awt.event.FocusAdapter() {
+
+			public void focusGained(java.awt.event.FocusEvent e) {
+
+				repaint();
+
+			}
+
+			public void focusLost(java.awt.event.FocusEvent e) {
+
+				repaint();
+
+			}
+
+		});
+
+	}
+
+	public void setPlaceholder(String placeholder) {
+
+		this.placeholder = placeholder;
+
+		repaint();
+
+	}
+
+	public void setPlaceholderColor(Color placeholderColor) {
+
+		this.placeholderColor = placeholderColor;
+
+		repaint();
+
+	}
+
+	public void setPlaceholderVerticalPosition(PlaceholderPosition placeholderVerticalPosition) {
+
+		this.placeholderVerticalPosition = placeholderVerticalPosition;
+
+		repaint();
+
+	}
+
+	public void setPlaceholderHorizontalPosition(HorizontalPosition placeholderHorizontalPosition) {
+
+		this.placeholderHorizontalPosition = placeholderHorizontalPosition;
+
+		repaint();
+
+	}
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -119,15 +241,99 @@ public class TextFieldConBorde extends JTextField {
 
 	}
 
-	public Color getBordeActivo() {
+	@Override
+	public void paint(Graphics g) {
 
-		return bordeActivo;
+		super.paint(g);
+
+		Graphics2D g2 = (Graphics2D) g;
+
+		g2.setStroke(new BasicStroke(grosor));
+
+		if (pintarBorde) {
+
+			g.setColor(bordeActivo);
+
+		}
+
+		else {
+
+			g.setColor(bordeInactivo);
+
+		}
+
+		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+
+		if (getText().isEmpty() && placeholder != null) {
+
+			g2.setColor(placeholderColor);
+
+			g2.setFont(placeFont);
+
+			int y = calculatePlaceholderVerticalPosition(g2);
+
+			int x = calculatePlaceholderHorizontalPosition(g2);
+
+			g2.drawString(placeholder, x, y);
+
+		}
 
 	}
 
-	public Color getBordeInactivo() {
+	private int calculatePlaceholderVerticalPosition(Graphics2D g2) {
 
-		return bordeInactivo;
+		int y = getHeight() / 2 + g2.getFontMetrics().getAscent() / 2 - 2;
+
+		if (placeholderVerticalPosition == PlaceholderPosition.TOP) {
+
+			y = g2.getFontMetrics().getAscent() + getInsets().top;
+
+		}
+
+		else if (placeholderVerticalPosition == PlaceholderPosition.BOTTOM) {
+
+			y = getHeight() - g2.getFontMetrics().getDescent() - getInsets().bottom;
+
+		}
+
+		return y;
+
+	}
+
+	private int calculatePlaceholderHorizontalPosition(Graphics2D g2) {
+
+		int x = getInsets().left;
+
+		switch (placeholderHorizontalPosition) {
+
+		case CENTER:
+			x = (getWidth() - g2.getFontMetrics().stringWidth(placeholder)) / 2;
+
+			break;
+
+		case RIGHT:
+
+			x = getWidth() - getInsets().right - g2.getFontMetrics().stringWidth(placeholder);
+
+			x -= 5;
+
+			break;
+
+		default:
+
+			x += 5;
+
+			break;
+
+		}
+
+		return x;
+
+	}
+
+	public Color getBordeActivo() {
+
+		return bordeActivo;
 
 	}
 
@@ -136,6 +342,12 @@ public class TextFieldConBorde extends JTextField {
 		this.bordeActivo = bordeActivo;
 
 		repaint();
+
+	}
+
+	public Color getBordeInactivo() {
+
+		return bordeInactivo;
 
 	}
 
@@ -167,72 +379,19 @@ public class TextFieldConBorde extends JTextField {
 
 	}
 
-	public TextFieldConBorde() {
+	public void setPlaceholderFont(Font font) {
 
-		this("");
+		try {
 
-	}
+			placeFont = font;
 
-	public TextFieldConBorde(String text) {
-
-		bordeActivo = Color.BLACK;
-
-		bordeInactivo = Color.LIGHT_GRAY;
-
-		grosor = 4;
-
-		setFont(getFont().deriveFont(Font.PLAIN, 20));
-
-		setText(text);
-
-		addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-
-				pintarBorde = true;
-
-				repaint();
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-
-				pintarBorde = false;
-
-				repaint();
-
-			}
-
-		});
-
-		DefaultContextMenu.addDefaultContextMenu(this);
-
-	}
-
-	@Override
-	public void paint(Graphics g) {
-
-		super.paint(g);
-
-		Graphics2D g2 = (Graphics2D) g;
-
-		g2.setStroke(new BasicStroke(grosor));
-
-		if (pintarBorde) {
-
-			g.setColor(bordeActivo);
+			repaint();
 
 		}
 
-		else {
-
-			g.setColor(bordeInactivo);
+		catch (Exception e) {
 
 		}
-
-		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
 
 	}
 

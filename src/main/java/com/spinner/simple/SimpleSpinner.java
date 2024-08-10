@@ -39,6 +39,12 @@ public class SimpleSpinner extends JTextField {
 
 	}
 
+	public void setValor(int valor) {
+
+		setText(Integer.toString(valor));
+
+	}
+
 	@Override
 	public void setText(String t) {
 

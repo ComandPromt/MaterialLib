@@ -26,565 +26,351 @@ import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import com.contextmenu.DefaultContextMenu;
-import com.jicons.Eye;
+import com.jicons.Ojo;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 public class PasswordFieldWithIcon extends JPasswordField {
 
 	private String text;
-
 	private Color fondo;
-
 	private Color colorTexto;
-
 	private Color border;
-
 	private Font fuente;
-
 	private final Animator animator;
-
 	private float location;
-
 	private boolean show;
-
-	private final Eye eye;
-
+	private final Ojo eye;
 	private boolean animateHinText;
-
 	private boolean mouseOver;
-
 	private String labelText;
-
 	private Color lineColor;
-
 	private boolean hide;
-
 	private boolean showAndHide;
-
 	private ImageIcon icon;
-
 	private ImageIcon hideIcon;
 
 	public ImageIcon getHideIcon() {
-
 		return hideIcon;
-
 	}
 
 	public void setHideIcon(ImageIcon hideIcon) {
-
 		this.hideIcon = hideIcon;
-
 	}
 
 	public ImageIcon getIcon() {
-
 		return icon;
-
 	}
 
 	@Override
 	public void setToolTipText(String text) {
-
 		setToolTip(text, null, null, null, null);
-
 	}
 
 	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
-
 		calcularTooltip(text, background, foreground, border, font);
-
 	}
 
 	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
-
 		if (background == null) {
-
 			background = new Color(32, 39, 55);
-
 		}
-
 		if (foreground == null) {
-
 			foreground = Color.WHITE;
-
 		}
-
 		if (border == null) {
-
 			border = new Color(173, 173, 173);
-
 		}
-
 		if (font == null) {
-
 			try {
-
 				font = getFont().deriveFont(20f);
-
-			}
-
-			catch (Exception e) {
-
+			} catch (Exception e) {
 				font = new Font("Dialog", Font.PLAIN, 20);
-
 			}
-
 		}
-
 		this.text = text;
-
 		this.fondo = background;
-
 		this.colorTexto = foreground;
-
 		this.border = border;
-
 		this.fuente = font;
-
 		super.setToolTipText(text);
-
 	}
 
 	@Override
 	public JToolTip createToolTip() {
-
 		if (text == null || fondo == null || colorTexto == null || border == null) {
-
 			return super.createToolTip();
-
-		}
-
-		else {
-
+		} else {
 			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
-
 			tip.setComponent(this);
-
 			return tip;
-
 		}
-
 	}
 
 	public boolean isShowAndHide() {
-
 		return showAndHide;
-
 	}
 
 	public void setShowAndHide(boolean showAndHide) {
-
 		this.showAndHide = showAndHide;
-
 		repaint();
-
 	}
 
 	public String getLabelText() {
-
 		return labelText;
-
 	}
 
 	public void setLabelText(String labelText) {
-
 		this.labelText = labelText;
-
 	}
 
 	public Color getLineColor() {
-
 		return lineColor;
-
 	}
 
 	public void setLineColor(Color lineColor) {
-
 		this.lineColor = lineColor;
-
 	}
 
 	public void setIcon(ImageIcon icon) {
-
 		this.icon = icon;
-
 	}
 
 	public PasswordFieldWithIcon(String header) {
-
 		this();
-
 		setLabelText(header);
-
 	}
 
 	public PasswordFieldWithIcon(String header, String text) {
-
 		this();
-
 		setLabelText(header);
-
 		setText(text);
+	}
+
+	public void setSizeIcon(int size) {
+
+		try {
+
+			eye.setSizeIcon(size);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
 	public PasswordFieldWithIcon() {
 
-		Eye ojo = new Eye();
-
-		eye = ojo;
-
-		ojo.setTachado(true);
-
+		eye = new Ojo();
+		setEye(1.2f);
 		animateHinText = true;
-
 		mouseOver = false;
-
 		labelText = "Label";
-
 		lineColor = new Color(3, 155, 216);
-
 		hide = true;
-
 		setFont(getFont().deriveFont(Font.PLAIN, 20f));
-
 		showAndHide = true;
-
 		setBorder(new EmptyBorder(20, 3, 10, 30));
-
 		setSelectionColor(new Color(76, 204, 255));
-
 		addMouseListener(new MouseAdapter() {
-
 			@Override
-
 			public void mouseEntered(MouseEvent me) {
-
 				mouseOver = true;
-
 				repaint();
-
 			}
 
 			@Override
 			public void mouseExited(MouseEvent me) {
-
 				mouseOver = false;
-
 				repaint();
-
 			}
 
 			@Override
 			public void mousePressed(MouseEvent me) {
-
 				char[] passwordChars = getPassword();
-
 				if (!new String(passwordChars).isEmpty() && showAndHide) {
-
 					hide = !hide;
-
 					if (hide) {
-
-						eye.setTachado(true);
-
-						setEchoChar('*');
-
-					}
-
-					else {
-
 						eye.setTachado(false);
-
+						setEchoChar('*');
+					} else {
+						eye.setTachado(true);
 						setEchoChar((char) 0);
-
 					}
-
 					repaint();
-
 				}
-
 			}
-
 		});
 
 		addFocusListener(new FocusAdapter() {
-
 			@Override
-
 			public void focusGained(FocusEvent fe) {
-
 				showing(false);
-
 			}
 
 			@Override
 			public void focusLost(FocusEvent fe) {
-
 				showing(true);
-
 			}
-
 		});
 
 		addMouseMotionListener(new MouseMotionAdapter() {
-
 			@Override
-
 			public void mouseMoved(MouseEvent me) {
-
 				if (showAndHide) {
-
 					int x = getWidth() - 30;
-
 					if (new Rectangle(x, 0, 30, 30).contains(me.getPoint())) {
-
 						setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-					}
-
-					else {
-
+					} else {
 						setCursor(new Cursor(Cursor.TEXT_CURSOR));
-
 					}
-
 				}
 			}
-
 		});
 
 		TimingTarget target = new TimingTargetAdapter() {
-
 			@Override
-
 			public void begin() {
-
 				animateHinText = String.valueOf(getPassword()).equals("");
-
 			}
 
 			@Override
 			public void timingEvent(float fraction) {
-
 				location = fraction;
-
 				repaint();
-
 			}
-
 		};
 
 		animator = new Animator(300, target);
-
 		animator.setResolution(0);
-
 		animator.setAcceleration(0.5f);
-
 		animator.setDeceleration(0.5f);
-
 		DefaultContextMenu.addDefaultContextMenu(this);
-
 	}
 
 	private void showing(boolean action) {
-
 		if (animator.isRunning()) {
-
 			animator.stop();
-
-		}
-
-		else {
-
+		} else {
 			location = 1;
-
 		}
-
 		animator.setStartFraction(1f - location);
-
 		show = action;
-
 		location = 1f - location;
-
 		animator.start();
-
 	}
 
 	@Override
 	public void paint(Graphics grphcs) {
-
 		super.paint(grphcs);
-
 		Graphics2D g2 = (Graphics2D) grphcs;
-
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
-
 		int width = getWidth();
-
 		int height = getHeight();
-
 		if (mouseOver) {
-
 			g2.setColor(lineColor);
-
-		}
-
-		else {
-
+		} else {
 			g2.setColor(new Color(150, 150, 150));
-
 		}
-
 		g2.fillRect(1, height - 1, width - 4, 1);
-
 		createHintText(g2);
-
 		createLineStyle(g2);
-
 		if (showAndHide) {
-
 			createShowHide(g2);
+		}
+		g2.dispose();
+	}
+
+	public void setEye(float thickness) {
+
+		try {
+
+			eye.setGrosor(thickness);
 
 		}
 
-		g2.dispose();
+		catch (Exception e) {
 
+		}
+
+		repaint();
+
+	}
+
+	public void setEye(Color color) {
+		try {
+			eye.setColor(color);
+
+		} catch (Exception e) {
+
+		}
+		repaint();
 	}
 
 	private void createShowHide(Graphics2D g2d) {
-
 		int iconX;
-
 		int iconY;
-
 		if (icon == null) {
-
-			int eyeIconX = getWidth() - Math.round(eye.getWidth() * 1.2f);
-
-			eye.setWidth(Math.round(getHeight() / 3.5f));
-
-			eye.setHeight(Math.round(getHeight() / 3.5f));
-
-			eye.paintIcon(this, g2d, eyeIconX, Math.round(getHeight() / 2.5f));
-
-		}
-
-		else {
-
+			int eyeIconX = getWidth() - Math.round(eye.getIconWidth() * 1.2f);
+			int eyeIconY = (getHeight() - eye.getIconHeight()) / 2;
+			eye.paintIcon(this, g2d, eyeIconX, eyeIconY);
+		} else {
 			if (hide) {
-
 				iconX = getWidth() - hideIcon.getIconWidth() - 5;
-
 				iconY = (getHeight() - hideIcon.getIconHeight()) / 2;
-
 				hideIcon.paintIcon(this, g2d, iconX, iconY);
-
-			}
-
-			else {
-
+			} else {
 				iconX = getWidth() - icon.getIconWidth() - 5;
-
 				iconY = (getHeight() - icon.getIconHeight()) / 2;
-
 				icon.paintIcon(this, g2d, iconX, iconY);
-
 			}
-
 		}
-
 	}
 
 	private void createHintText(Graphics2D g2) {
-
 		Insets in = getInsets();
-
 		g2.setColor(new Color(150, 150, 150));
-
 		FontMetrics ft = g2.getFontMetrics();
-
 		Rectangle2D r2 = ft.getStringBounds(labelText, g2);
-
 		double height = getHeight() - in.top - in.bottom;
-
 		double textY = (height - r2.getHeight()) / 2;
-
 		double size;
-
 		if (animateHinText) {
-
 			if (show) {
-
 				size = 18 * (1 - location);
-
-			}
-
-			else {
-
+			} else {
 				size = 18 * location;
-
 			}
-
-		}
-
-		else {
-
+		} else {
 			size = 18;
-
 		}
-
 		g2.drawString(labelText, in.left, (int) (in.top + textY + ft.getAscent() - size));
-
 	}
 
 	private void createLineStyle(Graphics2D g2) {
-
 		if (isFocusOwner()) {
-
 			double width = getWidth() - 4;
-
 			int height = getHeight();
-
 			g2.setColor(lineColor);
-
 			double size;
-
 			if (show) {
-
 				size = width * (1 - location);
-
-			}
-
-			else {
-
+			} else {
 				size = width * location;
-
 			}
-
 			double x = (width - size) / 2;
-
 			g2.fillRect((int) (x + 2), height - 2, (int) size, 2);
-
 		}
-
 	}
 
 	@Override
 	public void setText(String string) {
-
 		if (!String.valueOf(getPassword()).equals(string)) {
-
 			showing(string.equals(""));
-
 		}
-
 		super.setText(string);
-
 	}
-
 }

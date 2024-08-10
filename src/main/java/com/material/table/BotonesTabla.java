@@ -18,6 +18,12 @@ class BotonesTabla extends JPanel {
 
 	private MaterialPanelLayout panel_1;
 
+	public void setLista(ArrayList<String> lista) {
+
+		busqueda.setLista(lista);
+
+	}
+
 	public Crud getCrud() {
 
 		return crud;
@@ -30,6 +36,9 @@ class BotonesTabla extends JPanel {
 
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public BotonesTabla(ArrayList<String> datos) {
 
 		this(datos, Color.WHITE);
@@ -63,6 +72,8 @@ class BotonesTabla extends JPanel {
 
 		busqueda = new Busqueda(datos);
 
+		busqueda.getTextField().getSearchField().setBackColor(Color.WHITE);
+
 		crud = new Crud();
 
 		crud.setBackground(background);
@@ -77,9 +88,9 @@ class BotonesTabla extends JPanel {
 
 		ArrayList<Integer> porcentajes = new ArrayList<>();
 
-		porcentajes.add(50);
+		porcentajes.add(40);
 
-		porcentajes.add(50);
+		porcentajes.add(60);
 
 		panel_1 = new MaterialPanelLayout(lista, porcentajes, false);
 

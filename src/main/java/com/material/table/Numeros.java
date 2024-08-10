@@ -5,24 +5,27 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import com.buttons.indicators.IndicatorButton;
+import com.buttons.indicators.Indicators;
 
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
 public class Numeros extends JPanel {
 
-	private LinkedList<JLabel> numeros;
+	private LinkedList<IndicatorButton> numeros;
 
-	private JLabel boton;
+	private IndicatorButton boton;
 
 	private int indice;
 
-	private JLabel botonPresionado;
+	private IndicatorButton botonPresionado;
 
 	private Color fondo;
 
@@ -38,6 +41,26 @@ public class Numeros extends JPanel {
 
 	private Color fg;
 
+	private int numeroBotonPresionado;
+
+	private int presionado;
+
+	private NumPagination pagination;
+
+	private ArrayList<Integer> contadorNumeros;
+
+	public ArrayList<Integer> getContadorNumeros() {
+
+		return contadorNumeros;
+
+	}
+
+	public int getNumeroBotonPresionado() {
+
+		return numeroBotonPresionado;
+
+	}
+
 	public void setFondo(Color color) {
 
 		fondo = color;
@@ -46,13 +69,13 @@ public class Numeros extends JPanel {
 
 	}
 
-	public JLabel getBoton() {
+	public IndicatorButton getBoton() {
 
 		return boton;
 
 	}
 
-	public LinkedList<JLabel> getNumeros() {
+	public LinkedList<IndicatorButton> getNumeros() {
 
 		return numeros;
 
@@ -68,7 +91,15 @@ public class Numeros extends JPanel {
 	 * @wbp.parser.constructor
 	 */
 
-	public Numeros(int init, int numbers, int step, Cuerpo cuerpo, Font fuente, Color fg) {
+	public Numeros(int init, int numbers, int step, Cuerpo cuerpo, NumPagination pagination, Font fuente, Color fg) {
+
+		contadorNumeros = new ArrayList<>();
+
+		this.pagination = pagination;
+
+		presionado = -1;
+
+		numeroBotonPresionado = -1;
 
 		inicio = init;
 
@@ -106,11 +137,41 @@ public class Numeros extends JPanel {
 
 		int contador = 0;
 
+		contadorNumeros.clear();
+
 		for (int i = init; contador < step; contador++) {
 
 			if (i <= numbers) {
 
-				boton = new JLabel("" + i);
+				contadorNumeros.add(i);
+
+				boton = new IndicatorButton(Integer.toString(i));
+
+				boton.setBorderType(pagination.getIndicadorType());
+
+				try {
+
+					if (pagination.getIndicadorType().equals(Indicators.BORDE)) {
+
+						boton.setGrosor(1);
+
+					}
+
+					else {
+
+						boton.setGrosor(0);
+
+					}
+
+				}
+
+				catch (Exception e) {
+
+				}
+
+				boton.setSelectedColor(pagination.getIndicador());
+
+				boton.setRadius(0);
 
 				boton.setFont(fuente);
 
@@ -124,7 +185,7 @@ public class Numeros extends JPanel {
 
 					public void mousePressed(MouseEvent e) {
 
-						botonPresionado = (JLabel) e.getSource();
+						botonPresionado = (IndicatorButton) e.getSource();
 
 						indice = Integer.parseInt(botonPresionado.getText());
 
@@ -140,6 +201,32 @@ public class Numeros extends JPanel {
 						catch (Exception e1) {
 
 						}
+
+						presionado = indice;
+
+						pagination.setIndice(presionado);
+
+						presionado--;
+
+						int buscarIndice = JMthos.encontrarIndice(contadorNumeros, indice);
+
+						for (int i = 0; i < numeros.size(); i++) {
+
+							if (i == buscarIndice) {
+
+								numeros.get(i).setPaintSelected(true);
+
+							}
+
+							else {
+
+								numeros.get(i).setPaintSelected(false);
+
+							}
+
+						}
+
+						pagination.setCick(true);
 
 					}
 

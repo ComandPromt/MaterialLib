@@ -2,38 +2,23 @@ package com.material.table;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.buttons.round.NButton;
 import com.jicons.Delete;
-import com.jicons.Lapiz;
 import com.jicons.New;
-
-import mthos.JMthos;
 
 @SuppressWarnings("serial")
 public class Crud extends JPanel {
 
 	private NButton nuevo;
 
-	private NButton edit;
-
 	private NButton delete;
 
 	public NButton getNuevo() {
 
 		return nuevo;
-
-	}
-
-	public NButton getEdit() {
-
-		return edit;
 
 	}
 
@@ -49,8 +34,6 @@ public class Crud extends JPanel {
 		try {
 
 			nuevo.setBackground(bg);
-
-			edit.setBackground(bg);
 
 			delete.setBackground(bg);
 
@@ -72,20 +55,6 @@ public class Crud extends JPanel {
 
 		nuevo = new NButton("  ");
 
-		nuevo.addMouseListener(new MouseAdapter() {
-
-			@Override
-
-			public void mousePressed(MouseEvent e) {
-
-				ArrayList<JComponent> componentes = new ArrayList<>();
-
-				JMthos.showNewDialog(nuevo, "Add", JMthos.convertArrayListToList(componentes));
-
-			}
-
-		});
-
 		nuevo.setBackground(Color.WHITE);
 
 		New nuevo1 = new New();
@@ -94,12 +63,6 @@ public class Crud extends JPanel {
 
 		nuevo.setIcon(nuevo1);
 
-		edit = new NButton("  ");
-
-		edit.setBackground(Color.WHITE);
-
-		edit.setIcon(new Lapiz());
-
 		delete = new NButton("  ");
 
 		delete.setBackground(Color.WHITE);
@@ -107,8 +70,6 @@ public class Crud extends JPanel {
 		delete.setIcon(new Delete());
 
 		add(nuevo);
-
-		add(edit);
 
 		add(delete);
 

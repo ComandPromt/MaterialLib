@@ -1,11 +1,16 @@
-package com.material.utils;
+package com.effects;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +22,7 @@ import org.jdesktop.core.animation.timing.TimingTargetAdapter;
 import org.jdesktop.core.animation.timing.interpolators.AccelerationInterpolator;
 import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
-import com.material.utils.SafePropertySetter.Property;
+import com.effects.SafePropertySetter.Property;
 
 public class RippleEffect {
 
@@ -27,8 +32,103 @@ public class RippleEffect {
 
 	private final SwingTimerTimingSource timer;
 
-	private RippleEffect(final JComponent component) {
+	private Color rippleColor;
+	private final Point location;
+	private float animate;
 
+	public void setRippleColor(Color rippleColor) {
+
+		this.rippleColor = rippleColor;
+
+	}
+
+	public Color getRippleColor() {
+
+		return rippleColor;
+
+	}
+
+	private double getSize(Rectangle2D rec) {
+
+		double size;
+
+		if (rec.getWidth() > rec.getHeight()) {
+
+			if (location.getX() < rec.getWidth() / 2) {
+
+				size = rec.getWidth() - location.getX();
+
+			}
+
+			else {
+
+				size = location.getX();
+
+			}
+
+		}
+
+		else {
+
+			if (location.getY() < rec.getHeight() / 2) {
+
+				size = rec.getHeight() - location.getY();
+
+			}
+
+			else {
+
+				size = location.getY();
+
+			}
+
+		}
+
+		return size + (size * 0.1f);
+
+	}
+
+	private Shape getShape(double size) {
+
+		double s = size * animate;
+
+		double x = location.getX();
+
+		double y = location.getY();
+
+		Shape shape = new Ellipse2D.Double(x - s, y - s, s * 2, s * 2);
+
+		return shape;
+
+	}
+
+	public void render(Graphics2D g2, Shape contain) {
+
+		Area area = new Area(contain);
+
+		area.intersect(new Area(getShape(getSize(contain.getBounds2D()))));
+
+		g2.setColor(rippleColor);
+
+		float alpha = 0.3f;
+
+		if (animate >= 0.7f) {
+
+			double t = animate - 0.7f;
+
+			alpha = (float) (alpha - (alpha * (t / 0.3f)));
+
+		}
+
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
+		g2.fill(area);
+
+	}
+
+	public RippleEffect(final JComponent component) {
+		this.location = new Point(0, 0);
+		rippleColor = new Color(255, 255, 255);
 		ripples = new ArrayList<>();
 
 		this.target = component;

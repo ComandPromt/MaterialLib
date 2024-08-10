@@ -21,7 +21,17 @@ public class PasswordPanel extends RoundedPanel {
 
 	private Icon suffixIcon;
 
-	private int left;
+	public JPasswordField getPasswordField() {
+
+		return panel;
+
+	}
+
+	public void setPasswordField(JPasswordField panel) {
+
+		this.panel = panel;
+
+	}
 
 	public void setSuffixIcon(ImageIcon icon) {
 
@@ -68,7 +78,7 @@ public class PasswordPanel extends RoundedPanel {
 
 			int y = (getHeight() - prefixIcon.getIconHeight()) / 2;
 
-			g2.drawImage(prefix, thickness + left, y, this);
+			g2.drawImage(prefix, thickness, y, this);
 
 			panel.setBounds((prefixIcon.getIconWidth() + thickness) + 1, thickness, calcularAncho(), calcularAltura());
 
@@ -164,6 +174,9 @@ public class PasswordPanel extends RoundedPanel {
 
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public PasswordPanel(String headerText) {
 
 		this(true, headerText);

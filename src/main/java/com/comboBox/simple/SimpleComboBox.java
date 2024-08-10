@@ -219,19 +219,13 @@ public class SimpleComboBox extends JComboBox {
 
 	}
 
-	public void setGrosor(int grosor) {
-
-		combo.setGrosor(grosor);
-
-	}
-
 	public String getLabeText() {
 
 		return labeText;
 
 	}
 
-	public void setLabeText(String labeText) {
+	public void setLabelText(String labeText) {
 
 		this.labeText = labeText;
 
@@ -397,6 +391,7 @@ public class SimpleComboBox extends JComboBox {
 
 		private Color scrollLine;
 
+		@SuppressWarnings("unused")
 		public void setGrosor(int grosor) {
 
 			this.grosor = grosor;

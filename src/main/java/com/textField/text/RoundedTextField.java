@@ -122,6 +122,14 @@ public class RoundedTextField extends JTextField {
 
 	}
 
+	public RoundedTextField(String text) {
+
+		this(20, 15);
+
+		setText(text);
+
+	}
+
 	public RoundedTextField(int columns, int angle) {
 
 		super(columns);

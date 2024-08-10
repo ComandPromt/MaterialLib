@@ -16,6 +16,7 @@ import javax.swing.JToolTip;
 import javax.swing.SwingConstants;
 
 import com.contextmenu.DefaultContextMenu;
+import com.jicons.Lupa;
 import com.toolTip.ToolTipLlamada;
 
 import mthos.JMthos;
@@ -29,7 +30,7 @@ public class BootSearchInput extends JTextField {
 
 	private int thickness;
 
-	private Hola magnifyingGlassIcon;
+	private Lupa magnifyingGlassIcon;
 
 	private ImageIcon icono;
 
@@ -271,7 +272,7 @@ public class BootSearchInput extends JTextField {
 
 		setMargin(new Insets(0, margin, 0, 0));
 
-		this.magnifyingGlassIcon = new Hola();
+		this.magnifyingGlassIcon = new Lupa();
 
 		this.icono = magnifyingGlassIcon;
 
@@ -316,6 +317,9 @@ public class BootSearchInput extends JTextField {
 		closeForeground = Color.WHITE;
 
 		setForeground(Color.BLACK);
+
+		setBackColor(Color.WHITE);
+
 	}
 
 	@Override
@@ -324,6 +328,10 @@ public class BootSearchInput extends JTextField {
 		Graphics2D g2 = (Graphics2D) g.create();
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		g2.setColor(backColor);
+
+		g2.fillRect(0, 0, getWidth(), getHeight() - 1);
 
 		g2.setColor(getBackground());
 
@@ -404,8 +412,6 @@ public class BootSearchInput extends JTextField {
 			}
 
 		}
-
-		g2.setColor(backColor);
 
 		int x = thickness / 2;
 

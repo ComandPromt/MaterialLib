@@ -164,6 +164,12 @@ public class GeometricButton extends JButton {
 
 	}
 
+	public GeometricButton() {
+
+		this("");
+
+	}
+
 	public GeometricButton(String text) {
 
 		colorFondo = Color.WHITE;

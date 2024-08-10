@@ -1,4 +1,4 @@
-package com.material.utils;
+package com.effects;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics;

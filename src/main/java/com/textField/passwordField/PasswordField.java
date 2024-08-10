@@ -18,7 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JToolTip;
 import javax.swing.text.DefaultCaret;
 
-import com.material.utils.MaterialColor;
+import com.colores.Colores;
 import com.material.utils.Utils;
 import com.textField.text.MaterialTextField;
 import com.toolTip.ToolTipLlamada;
@@ -137,7 +137,7 @@ public class PasswordField extends JPasswordField {
 
 		hint = "";
 
-		accentColor = MaterialColor.CYAN_500;
+		accentColor = Colores.CYAN_500;
 
 		setBorder(null);
 
@@ -147,7 +147,7 @@ public class PasswordField extends JPasswordField {
 
 		setOpaque(false);
 
-		setBackground(MaterialColor.TRANSPARENT);
+		setBackground(Colores.TRANSPARENT);
 
 		setCaret(new DefaultCaret() {
 

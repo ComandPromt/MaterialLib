@@ -16,12 +16,18 @@ import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import com.buttons.indicators.Indicators;
 import com.checkbox.CheckBoxCustom;
+import com.dialog.confirm.MessageDialog;
+import com.dialog.confirm.MessageDialog.MessageType;
+import com.material.table.item.AddItem;
 import com.material.table.item.ItemHeader;
+import com.panels.others.VerySimplePanel;
 import com.search.SearchTextField;
-import com.spinner.simple.SimpleSpinner;
+import com.spinner.simple.Spinner;
 
 import mthos.JMthos;
 
@@ -32,7 +38,7 @@ public class BodyHeaderTable extends JPanel {
 
 	private NumPagination pagination;
 
-	private SimpleSpinner spiner;
+	private Spinner spiner;
 
 	private int filter;
 
@@ -53,6 +59,14 @@ public class BodyHeaderTable extends JPanel {
 	private JPanel customSeparator2;
 
 	private JPanel customSeparator3;
+
+	private String deleteMsg;
+
+	private int split;
+
+	private String deleteAllMsg;
+
+	private int corte;
 
 	public void setDeleteIcon(String icon) {
 
@@ -87,48 +101,6 @@ public class BodyHeaderTable extends JPanel {
 		try {
 
 			botones.getCrud().getDelete().setIcon(icon);
-
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	public void setEditIcon(String icon) {
-
-		try {
-
-			botones.getCrud().getEdit().setIcon(new ImageIcon(icon));
-
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	public void setEditIcon(Icon icon) {
-
-		try {
-
-			botones.getCrud().getEdit().setIcon(icon);
-
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	public void setEditIcon(ImageIcon icon) {
-
-		try {
-
-			botones.getCrud().getEdit().setIcon(icon);
 
 		}
 
@@ -367,7 +339,7 @@ public class BodyHeaderTable extends JPanel {
 
 	}
 
-	public SimpleSpinner getSpiner() {
+	public Spinner getSpiner() {
 
 		return spiner;
 
@@ -391,18 +363,112 @@ public class BodyHeaderTable extends JPanel {
 
 	}
 
+	private ArrayList<String> obtenerListaConSplit(ArrayList<String> lista, ArrayList<Integer> indices, int i) {
+
+		ArrayList<String> resultado = new ArrayList<>();
+
+		try {
+
+			int contador = 0;
+
+			if (!lista.equals(JMthos.obtenerListaConSplit(lista, cuerpo.getIndicesElementosSeleccionados().get(0),
+					cuerpo.getSplit()))) {
+
+				if (cuerpo.getIndicesElementosSeleccionados().size() < split
+						&& cuerpo.getDatos().size() / ItemHeader.columnas <= split) {
+
+					resultado = (ArrayList<String>) JMthos.borrarListaConSplit(cuerpo.getDatos(),
+							cuerpo.getIndicesElementosSeleccionados(), ItemHeader.columnas);
+
+				}
+
+				else {
+
+					for (int startIndex = 0; startIndex < lista.size(); startIndex++) {
+
+						if (indices.contains(startIndex)) {
+
+							if (startIndex == 0) {
+
+								if (i >= lista.size()) {
+
+									i = lista.size();
+
+								}
+
+								for (int x = 0; x < i; x++) {
+
+									resultado.add(lista.get(x));
+
+								}
+
+							}
+
+							else {
+
+								contador = (startIndex + i / 2)
+										+ JMthos.calcularSucesionAritmeticaAInt("1#0,2#1", startIndex);
+
+								ArrayList<String> sublist = new ArrayList<>(lista.subList(contador, contador += i));
+
+								for (String valor : sublist) {
+
+									resultado.add(valor);
+
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+		return resultado;
+
+	}
+
+	public void setDeleteMsg(String deleteMsg) {
+
+		this.deleteMsg = deleteMsg;
+
+	}
+
+	public void setDeleteAllMsg(String deleteAllMsg) {
+
+		this.deleteAllMsg = deleteAllMsg;
+
+	}
+
 	public BodyHeaderTable(List<String> columns, ArrayList<String> lista, int pageItems, int splitPagination,
 			Color footer) {
 
+		corte = splitPagination;
+
+		split = pageItems;
+
+		deleteMsg = "¿Quieres borrar los datos?";
+
+		deleteAllMsg = "¿Quieres vaciar la tabla?";
+
 		if (pageItems < 1) {
 
-			pageItems = 3;
+			pageItems = 4;
 
 		}
 
 		if (splitPagination < 1) {
 
-			splitPagination = 3;
+			splitPagination = 2;
 
 		}
 
@@ -414,15 +480,11 @@ public class BodyHeaderTable extends JPanel {
 
 		}
 
-		if (pageItems < 1) {
-
-			pageItems = 4;
-
-		}
-
 		filter = pageItems;
 
 		cuerpo = new Cuerpo(lista, pageItems, columns.size());
+
+		cuerpo.setNumItems(split);
 
 		int numeroPaginas = JMthos.dividirYRedondearAEntero(lista.size(), (cuerpo.getItems() * cuerpo.getSplit()));
 
@@ -466,7 +528,9 @@ public class BodyHeaderTable extends JPanel {
 
 		});
 
-		pagination = new NumPagination(lista.size(), numeroPaginas, splitPagination, cuerpo);
+		pagination = new NumPagination(spiner, lista.size(), numeroPaginas, splitPagination, cuerpo);
+
+		pagination.setCorte(corte);
 
 		panel_2.setLayout(new GridLayout());
 
@@ -487,6 +551,149 @@ public class BodyHeaderTable extends JPanel {
 		});
 
 		botones = new BotonesTabla(cuerpo.getDatos());
+
+		botones.getCrud().getNuevo().addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				botones.getCrud().getNuevo().addMouseListener(new MouseAdapter() {
+
+					@Override
+
+					public void mousePressed(MouseEvent e) {
+
+						ArrayList<JComponent> componentes = new ArrayList<>();
+
+						componentes.add(new VerySimplePanel(new AddItem(numeroPaginas, pagination, cuerpo, columns)));
+
+						JMthos.showNewDialog(botones.getCrud().getNuevo(),
+								JMthos.calcularSucesionAritmeticaAInt("1#300,2#400", columns.size()), 200, false, "Add",
+								JMthos.convertArrayListToList(componentes));
+
+					}
+
+				});
+
+			}
+
+		});
+
+		botones.getCrud().getDelete().addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				ArrayList<String> listaIndice = new ArrayList<>();
+
+				ArrayList<Integer> datosSeleccionados = cuerpo.getIndicesElementosSeleccionados();
+
+				MessageDialog dialogo;
+
+				if (!datosSeleccionados.isEmpty()) {
+
+					if (datosSeleccionados.size() == split) {
+
+						dialogo = new MessageDialog(Color.RED, Color.WHITE, "", deleteAllMsg);
+
+						if (dialogo.getMessageType().equals(MessageType.OK)) {
+
+							cuerpo.setDatos(listaIndice);
+
+							cuerpo.verDatos(0, listaIndice);
+
+							pagination.setPaso((cuerpo.getItems() / columns.size()) / cuerpo.getSplit());
+
+							pagination.setStep((cuerpo.getItems() / columns.size()) / cuerpo.getSplit());
+
+							spiner.setMaxValor(1);
+
+							cortePagination = 1;
+
+							pagination.verNumeros(spiner.getValor(), numeroPaginas, 1, cuerpo);
+
+							botones.getBusqueda().setLista(listaIndice);
+
+						}
+
+					}
+
+					else {
+
+						dialogo = new MessageDialog(Color.RED, Color.WHITE, "", deleteMsg);
+
+						if (dialogo.getMessageType().equals(MessageType.OK)) {
+
+							ArrayList<String> datos = cuerpo.getDatos();
+
+							listaIndice = obtenerListaConSplit(datos, cuerpo.getIndicesNoSeleccionados(),
+									cortePagination);
+
+							cuerpo.setDatos(listaIndice);
+
+							cuerpo.verDatos(0, listaIndice);
+
+							int numeroPaginas = JMthos.dividirYRedondearAEntero(listaIndice.size(),
+									(cuerpo.getItems() * cuerpo.getSplit()));
+
+							spiner.setMaxValor(numeroPaginas);
+
+							if (numeroPaginas == 1) {
+
+								cortePagination = 1;
+
+							}
+
+							pagination.setNumeroPaginas(numeroPaginas);
+
+							pagination.verNumeros(spiner.getValor(), numeroPaginas, cortePagination, cuerpo);
+
+							botones.getBusqueda().setLista(listaIndice);
+
+						}
+
+					}
+
+				}
+
+			}
+
+		});
+
+		botones.getBusqueda().getTextField().getSearchField().
+
+				addKeyListener(new KeyAdapter() {
+
+					@Override
+
+					public void keyPressed(KeyEvent e) {
+
+						try {
+
+							if (JMthos.isEnter(e)) {
+
+								cuerpo.borrarDatos();
+
+								cuerpo.verDatos(
+										JMthos.calcularSucesionAritmeticaAInt(
+												"1#0,2#" + cuerpo.getItems() * cuerpo.getSplit(), spiner.getValor()),
+										JMthos.encontrarCoincidencias(cuerpo.getDatos(),
+												botones.getBusqueda().getTextField().getSearchField().getText(),
+												cuerpo.getSplit()));
+
+							}
+
+						}
+
+				catch (Exception e1) {
+
+						}
+
+					}
+
+				});
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -581,9 +788,9 @@ public class BodyHeaderTable extends JPanel {
 
 		add(pagination);
 
-		spiner = new SimpleSpinner(1, numeroPaginas);
+		spiner = new Spinner(1, numeroPaginas);
 
-		spiner.addKeyListener(new KeyAdapter() {
+		spiner.getEditor().addKeyListener(new KeyAdapter() {
 
 			@Override
 
@@ -593,12 +800,39 @@ public class BodyHeaderTable extends JPanel {
 
 					if (JMthos.isEnter(e)) {
 
-						pagination.verNumeros(spiner.getValor(), numeroPaginas, cortePagination, cuerpo);
-
 						cuerpo.verDatos(
 								JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getItems() * cuerpo.getSplit(),
 										spiner.getValor()),
 								cuerpo.getDatos());
+
+						if ((filter - spiner.getValor()) <= numeroPaginas) {
+
+							pagination.verNumeros(spiner.getValor(), numeroPaginas, cortePagination, cuerpo);
+						}
+
+						else {
+
+							if (cortePagination > numeroPaginas) {
+
+								pagination.verNumeros(1, filter, numeroPaginas, cuerpo);
+
+							}
+
+							else {
+
+								pagination.verNumeros(spiner.getValor(), numeroPaginas, cortePagination, cuerpo);
+
+							}
+
+						}
+
+						pagination.getNumeros().getNumeros().get(
+								JMthos.encontrarIndice(pagination.getNumeros().getContadorNumeros(), spiner.getValor()))
+								.setPaintSelected(true);
+
+						pagination.setIndice(spiner.getValor());
+
+						pagination.setCick(false);
 
 					}
 
@@ -745,6 +979,34 @@ public class BodyHeaderTable extends JPanel {
 				valor.setFont(font);
 
 			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setIndicadorType(Indicators indicador) {
+
+		try {
+
+			pagination.setIndicadorType(indicador);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setIndicador(Color color) {
+
+		try {
+
+			pagination.setIndicador(color);
 
 		}
 

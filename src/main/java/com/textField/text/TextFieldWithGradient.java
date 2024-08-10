@@ -26,13 +26,14 @@ import javax.swing.border.EmptyBorder;
 import com.contextmenu.DefaultContextMenu;
 import com.toolTip.ToolTipLlamada;
 
-@SuppressWarnings("serial")
+import mthos.JMthos;
 
-public class TextFieldWithPlaceholder extends JTextField {
+@SuppressWarnings("serial")
+public class TextFieldWithGradient extends JTextField {
 
 	private boolean left;
 
-	protected float anchoDeBorde;
+	protected int anchoDeBorde;
 
 	protected Color colorDeBorde;
 
@@ -40,11 +41,9 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 	private Color colorDeTextoBackground;
 
-	private Integer angle;
+	private int angle;
 
 	private Image image;
-
-	private boolean round;
 
 	private Icon icon;
 
@@ -57,6 +56,44 @@ public class TextFieldWithPlaceholder extends JTextField {
 	private Color border;
 
 	private Font fuente;
+
+	private Color firstGradient;
+
+	private Color secondGradient;
+
+	private Font placeholderFont;
+
+	public void setPlaceholderFont(Font placeholderFont) {
+
+		this.placeholderFont = placeholderFont;
+
+		repaint();
+
+	}
+
+	public enum PlaceholderVerticalPosition {
+
+		TOP, CENTER, BOTTOM
+
+	}
+
+	public enum PlaceholderHorizontalPosition {
+
+		LEFT, CENTER, RIGHT
+
+	}
+
+	private PlaceholderVerticalPosition placeholderVerticalPosition = PlaceholderVerticalPosition.CENTER;
+
+	private PlaceholderHorizontalPosition placeholderHorizontalPosition = PlaceholderHorizontalPosition.LEFT;
+
+	public void setAngle(int angle) {
+
+		this.angle = angle;
+
+		repaint();
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -168,19 +205,35 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 	}
 
-	public void setRound(boolean round) {
+	public TextFieldWithGradient(String text) {
 
-		this.round = round;
+		this();
 
-		repaint();
+		setText(text);
 
 	}
 
-	public TextFieldWithPlaceholder() {
+	public void setFirstGradient(Color firstGradient) {
+
+		this.firstGradient = firstGradient;
+
+	}
+
+	public void setSecondGradient(Color secondGradient) {
+
+		this.secondGradient = secondGradient;
+
+	}
+
+	public TextFieldWithGradient() {
+
+		firstGradient = Color.BLUE;
+
+		secondGradient = Color.GREEN;
 
 		left = false;
 
-		anchoDeBorde = 2f;
+		anchoDeBorde = 2;
 
 		colorDeBorde = new Color(173, 173, 173);
 
@@ -188,11 +241,11 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 		colorDeTextoBackground = Color.GRAY;
 
-		angle = 20;
+		angle = 50;
 
 		image = null;
 
-		round = true;
+		placeholderFont = new Font(getFont().getName(), Font.PLAIN, 25);
 
 		setOpaque(false);
 
@@ -217,7 +270,7 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 		Shape r2d;
 
-		if (round) {
+		if (angle > 0) {
 
 			r2d = new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), angle, angle);
 
@@ -233,7 +286,7 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 		g2.setPaint(new GradientPaint(0.0f, 0.0f, getBackground(), 0.0f, getHeight(), getBackground()));
 
-		if (round) {
+		if (angle > 0) {
 
 			g2.fillRoundRect(0, 0, getWidth(), getHeight(), angle, angle);
 
@@ -273,21 +326,100 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 			g2.setColor(getForeground());
 
-			if (getText() == null)
+			if (getText() == null) {
+
 				setText("  ");
 
-			TextLayout layout = new TextLayout(descripcion == null ? " " : descripcion, getFont(),
+			}
+
+			TextLayout layout = new TextLayout(descripcion == null ? " " : descripcion, placeholderFont,
 					g2.getFontRenderContext());
 
 			Rectangle2D bounds = layout.getBounds();
 
-			int x = (int) (getWidth() - insets.left - insets.right - bounds.getWidth()) / 2;
+			int x;
 
-			x = 0 + insets.left;
+			switch (placeholderHorizontalPosition) {
 
-			int y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2;
+			case LEFT:
 
-			y += fm.getAscent() - 1;
+				x = anchoDeBorde + insets.left;
+
+				break;
+
+			case CENTER:
+
+				x = (getWidth() - insets.left - insets.right - (int) bounds.getWidth()) / 2;
+
+				break;
+
+			case RIGHT:
+
+				x = getWidth() - insets.right - (int) bounds.getWidth() - anchoDeBorde;
+
+				break;
+
+			default:
+
+				x = anchoDeBorde + insets.left;
+
+			}
+
+			int y;
+
+			switch (placeholderVerticalPosition) {
+
+			case TOP:
+
+				y = fm.getAscent() + insets.top;
+
+				break;
+
+			case CENTER:
+
+				y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2
+						+ fm.getAscent() - 1;
+
+				break;
+
+			case BOTTOM:
+
+				y = getHeight() - insets.bottom - fm.getDescent();
+
+				break;
+
+			default:
+
+				y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2
+						+ fm.getAscent() - 1;
+
+			}
+
+			if (placeholderHorizontalPosition == PlaceholderHorizontalPosition.LEFT
+					&& placeholderVerticalPosition != PlaceholderVerticalPosition.CENTER) {
+
+				if (angle > 29) {
+
+					x += JMthos.calcularSucesionAritmeticaAInt("30#0,40#5", angle);
+
+				}
+
+				y -= anchoDeBorde;
+
+				y -= 7;
+
+			}
+
+			else if (placeholderHorizontalPosition == PlaceholderHorizontalPosition.RIGHT
+					&& placeholderVerticalPosition != PlaceholderVerticalPosition.CENTER) {
+
+				x -= JMthos.calcularSucesionAritmeticaAInt("0#0,10#5", angle);
+
+				y -= anchoDeBorde;
+
+				y -= 7;
+
+			}
 
 			g2.setColor(colorDeTextoBackground);
 
@@ -295,9 +427,13 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 		}
 
-		g2.setPaint(new GradientPaint(0.0f, 0.0f, Color.BLACK, 0.0f, getHeight(), Color.BLACK));
+		int ancho = anchoDeBorde;
 
-		g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, angle, angle);
+		g2.setStroke(new BasicStroke((ancho * 2) + 3));
+
+		g2.setPaint(new GradientPaint(0f, 0.0f, firstGradient, 0.0f, getHeight(), secondGradient));
+
+		g2.drawRoundRect(0, 0, getWidth(), getHeight(), angle, angle);
 
 		g2.setPaint(oldPaint);
 
@@ -307,8 +443,6 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 	@Override
 	protected void paintBorder(Graphics g) {
-
-		int x = 1, y = 1;
 
 		int w = getWidth() - 2, h = getHeight() - 2;
 
@@ -320,9 +454,39 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 		g2.setColor(colorDeBorde);
 
-		if (round) {
+		if (angle > 0) {
 
-			g2.drawRoundRect(x, y, w, h, angle, angle);
+			int ancho = anchoDeBorde;
+
+			switch (ancho) {
+
+			case 1:
+
+				g2.drawRoundRect(2, ancho + 2, (w - ancho) - 1, (h - (ancho * 2)) - 1, angle, angle);
+
+				break;
+
+			case 2:
+
+			case 3:
+
+				g2.drawRoundRect((ancho) + 1, ancho + 1, (w - ancho) - 2, (h - (ancho * 2)), angle, angle);
+
+				break;
+
+			case 4:
+
+				g2.drawRoundRect((ancho) + 1, ancho + 2, (w - ancho) - 4, (h - (ancho * 2)), angle, angle);
+
+				break;
+
+			default:
+
+				g2.drawRoundRect((ancho) + 2, ancho + 1, ((w - ancho) - ancho) - 2, (h - (ancho * 2)), angle, angle);
+
+				break;
+
+			}
 
 		}
 
@@ -336,25 +500,25 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 	}
 
-	public Color getColorDeTextoBackground() {
+	public Color getPlaceholderColor() {
 
 		return colorDeTextoBackground;
 
 	}
 
-	public void setColorDeTextoBackground(Color colorDeTextoBackground) {
+	public void setPlaceholderColor(Color colorDeTextoBackground) {
 
 		this.colorDeTextoBackground = colorDeTextoBackground;
 
 	}
 
-	public Boolean getLeft() {
+	public Boolean getLeftIcon() {
 
 		return left;
 
 	}
 
-	public void setLeft(Boolean left) {
+	public void setLeftIcon(Boolean left) {
 
 		this.left = left;
 
@@ -368,7 +532,7 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 	}
 
-	public void setAnchoDeBorde(float anchoDeBorde) {
+	public void setAnchoDeBorde(int anchoDeBorde) {
 
 		this.anchoDeBorde = anchoDeBorde;
 
@@ -395,6 +559,22 @@ public class TextFieldWithPlaceholder extends JTextField {
 	public void setDescripcion(String descripcion) {
 
 		this.descripcion = descripcion;
+
+	}
+
+	public void setPlaceholderPosition(PlaceholderVerticalPosition position) {
+
+		this.placeholderVerticalPosition = position;
+
+		repaint();
+
+	}
+
+	public void setPlaceholderHorizontalPosition(PlaceholderHorizontalPosition position) {
+
+		this.placeholderHorizontalPosition = position;
+
+		repaint();
 
 	}
 

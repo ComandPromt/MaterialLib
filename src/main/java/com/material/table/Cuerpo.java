@@ -27,6 +27,24 @@ public class Cuerpo extends JPanel {
 
 	private boolean activate;
 
+	private ArrayList<Integer> indicesNoSeleccionados;
+
+	private int numItems;
+
+	private NumPagination pagination;
+
+	void setNumItems(int split) {
+
+		numItems = split;
+
+	}
+
+	public void setSplit(int split) {
+
+		this.split = split;
+
+	}
+
 	public int getSplit() {
 
 		return split;
@@ -167,6 +185,8 @@ public class Cuerpo extends JPanel {
 
 	public Cuerpo(ArrayList<String> lista, int items, int split) {
 
+		indicesNoSeleccionados = new ArrayList<>();
+
 		this.split = split;
 
 		this.items = items;
@@ -232,6 +252,52 @@ public class Cuerpo extends JPanel {
 		revalidate();
 
 		repaint();
+
+	}
+
+	public ArrayList<Integer> getIndicesNoSeleccionados() {
+
+		return indicesNoSeleccionados;
+
+	}
+
+	public ArrayList<Integer> getIndicesElementosSeleccionados() {
+
+		ArrayList<Integer> resultado = new ArrayList<>();
+
+		indicesNoSeleccionados.clear();
+
+		try {
+
+			for (int i = 0; i < numItems; i++) {
+
+				if (paginas.get(i).getCheckBox().isSelected()) {
+
+					resultado.add(i);
+
+				}
+
+				else {
+
+					indicesNoSeleccionados.add(i);
+
+				}
+
+			}
+
+			for (int i = numItems; i < getDatos().size(); i++) {
+
+				indicesNoSeleccionados.add(i);
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+		return resultado;
 
 	}
 

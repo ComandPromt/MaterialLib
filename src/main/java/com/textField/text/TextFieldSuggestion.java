@@ -2,6 +2,11 @@ package com.textField.text;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
@@ -10,12 +15,19 @@ import com.contextmenu.DefaultContextMenu;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
-
 public class TextFieldSuggestion extends JTextField {
 
 	private TextFieldSuggestionUI textUI;
 
-	private String text;
+	private String placeholderText = "Placeholder";
+
+	private boolean showPlaceholder = true;
+
+	private HorizontalAlignment hAlign = HorizontalAlignment.LEFT;
+
+	private VerticalAlignment vAlign = VerticalAlignment.CENTER;
+
+	private Color placeholderColor = Color.GRAY;
 
 	private Color fondo;
 
@@ -24,6 +36,28 @@ public class TextFieldSuggestion extends JTextField {
 	private Color border;
 
 	private Font fuente;
+
+	private Font placeholderFont;
+
+	public enum HorizontalAlignment {
+
+		LEFT, CENTER, RIGHT
+
+	}
+
+	public enum VerticalAlignment {
+
+		TOP, CENTER, BOTTOM
+
+	}
+
+	public void setPlaceholderFont(Font placeholderFont) {
+
+		this.placeholderFont = placeholderFont;
+
+		repaint();
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -74,7 +108,7 @@ public class TextFieldSuggestion extends JTextField {
 
 		}
 
-		this.text = text;
+		this.placeholderText = text;
 
 		this.fondo = background;
 
@@ -91,7 +125,7 @@ public class TextFieldSuggestion extends JTextField {
 	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || fondo == null || colorTexto == null || border == null) {
+		if (placeholderText == null || fondo == null || colorTexto == null || border == null) {
 
 			return super.createToolTip();
 
@@ -99,7 +133,7 @@ public class TextFieldSuggestion extends JTextField {
 
 		else {
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
+			ToolTipLlamada tip = new ToolTipLlamada(placeholderText, fondo, colorTexto, border, fuente);
 
 			tip.setComponent(this);
 
@@ -153,9 +187,23 @@ public class TextFieldSuggestion extends JTextField {
 
 		DefaultContextMenu.addDefaultContextMenu(this);
 
-		setFont(new Font("Diaglog", Font.PLAIN, 20));
+		setFont(new Font("Dialog", Font.PLAIN, 20));
+
+		placeholderFont = getFont();
 
 		setGrosor(2);
+
+		addKeyListener(new KeyAdapter() {
+
+			@Override
+
+			public void keyReleased(KeyEvent e) {
+
+				updatePlaceholderVisibility();
+
+			}
+
+		});
 
 	}
 
@@ -177,15 +225,157 @@ public class TextFieldSuggestion extends JTextField {
 
 	}
 
-	public void setRound(int round) {
+	public void setRound(int angle) {
 
-		textUI.setRound(round);
+		textUI.setRound(angle);
 
 	}
 
 	public int getRound() {
 
 		return textUI.getRound();
+
+	}
+
+	public void setPlaceholder(String text) {
+
+		this.placeholderText = text;
+
+		repaint();
+
+	}
+
+	public void setPlaceholderHorizontalAlignment(HorizontalAlignment alignment) {
+
+		this.hAlign = alignment;
+
+		repaint();
+
+	}
+
+	public void setPlaceholderVerticalAlignment(VerticalAlignment alignment) {
+
+		this.vAlign = alignment;
+
+		repaint();
+
+	}
+
+	public void setPlaceholderColor(Color color) {
+
+		this.placeholderColor = color;
+
+		repaint();
+
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+
+		Graphics2D g2 = (Graphics2D) g;
+
+		Insets insets = getInsets();
+
+		if (getText().isEmpty() && showPlaceholder) {
+
+			g2.setColor(placeholderColor);
+
+			g2.setFont(placeholderFont);
+
+			String text = placeholderText;
+
+			int textWidth = g2.getFontMetrics().stringWidth(text);
+
+			int textHeight = g2.getFontMetrics().getAscent();
+
+			int x = 0;
+
+			int y = 0;
+
+			switch (hAlign) {
+
+			case LEFT:
+
+				x = insets.left + (int) textUI.getGrosor();
+
+				break;
+
+			case CENTER:
+
+				x = (getWidth() - textWidth) / 2;
+
+				break;
+
+			case RIGHT:
+
+				x = (getWidth() - insets.right - textWidth) - (int) textUI.getGrosor();
+
+				break;
+
+			}
+
+			switch (vAlign) {
+
+			case TOP:
+
+				y = insets.top + textHeight;
+
+				break;
+
+			case CENTER:
+
+				y = (getHeight() - textHeight) / 2 + textHeight / 2;
+
+				break;
+
+			case BOTTOM:
+
+				y = getHeight() - insets.bottom;
+
+				break;
+
+			}
+
+			y += (placeholderFont.getSize() / 3) + 1;
+
+			g2.drawString(text, x, y);
+
+		}
+
+	}
+
+	@Override
+	public void setText(String text) {
+
+		super.setText(text);
+
+		updatePlaceholderVisibility();
+
+	}
+
+	@Override
+	public void setCaretColor(Color color) {
+
+		super.setCaretColor(color);
+
+	}
+
+	@Override
+	public void setFont(Font font) {
+
+		super.setFont(font);
+
+		repaint();
+
+	}
+
+	private void updatePlaceholderVisibility() {
+
+		showPlaceholder = getText().isEmpty();
+
+		repaint();
 
 	}
 

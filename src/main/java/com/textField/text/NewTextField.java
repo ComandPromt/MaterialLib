@@ -175,6 +175,14 @@ public class NewTextField extends JTextField {
 
 	}
 
+	public NewTextField(String text) {
+
+		this();
+
+		setText(text);
+
+	}
+
 	public NewTextField() {
 
 		setFont(getFont().deriveFont(20f));

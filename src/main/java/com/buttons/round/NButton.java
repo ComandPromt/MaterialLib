@@ -233,6 +233,12 @@ public class NButton extends JButton {
 
 	}
 
+	public NButton() {
+
+		this("");
+
+	}
+
 	public NButton(String text) {
 
 		media = 0;

@@ -20,8 +20,8 @@ import org.jdesktop.core.animation.timing.Animator;
 import org.jdesktop.core.animation.timing.interpolators.SplineInterpolator;
 import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
+import com.colores.Colores;
 import com.contextmenu.DefaultContextMenu;
-import com.material.utils.MaterialColor;
 import com.material.utils.SafePropertySetter;
 import com.material.utils.Utils;
 import com.toolTip.ToolTipLlamada;
@@ -51,6 +51,40 @@ public class MaterialTextField extends JTextField {
 	private Color border;
 
 	private Font fuente;
+
+	private Color hintColor;
+
+	private Font hintFont;
+
+	public void setPlaceholderFocusOff(Color color) {
+
+		try {
+
+			floatingLabel.setPlaceholderFocusOff(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setHintFont(Font hintFont) {
+
+		try {
+
+			this.hintFont = hintFont;
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -140,13 +174,17 @@ public class MaterialTextField extends JTextField {
 
 		super();
 
+		hintFont = getFont().deriveFont(20f);
+
+		hintColor = Color.LIGHT_GRAY;
+
 		floatingLabel = new FloatingLabel(this);
 
 		line = new Line(this);
 
 		hint = "";
 
-		accentColor = MaterialColor.CYAN_500;
+		accentColor = Colores.CYAN_500;
 
 		setBorder(null);
 
@@ -158,7 +196,7 @@ public class MaterialTextField extends JTextField {
 
 		setOpaque(false);
 
-		setBackground(MaterialColor.TRANSPARENT);
+		setBackground(Colores.TRANSPARENT);
 
 		setCaret(new DefaultCaret() {
 
@@ -193,11 +231,33 @@ public class MaterialTextField extends JTextField {
 
 	}
 
+	public void setLabelFont(Font font) {
+
+		try {
+
+			floatingLabel.setFont(font);
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setLabel(String label) {
 
-		floatingLabel.setText(label);
+		try {
 
-		repaint();
+			floatingLabel.setText(label);
+
+			repaint();
+
+		} catch (Exception e) {
+
+		}
 
 	}
 
@@ -209,9 +269,15 @@ public class MaterialTextField extends JTextField {
 
 	public void setHint(String hint) {
 
-		this.hint = hint;
+		try {
 
-		repaint();
+			this.hint = hint;
+
+			repaint();
+
+		} catch (Exception e) {
+
+		}
 
 	}
 
@@ -223,9 +289,17 @@ public class MaterialTextField extends JTextField {
 
 	public void setAccent(Color accentColor) {
 
-		this.accentColor = accentColor;
+		try {
 
-		floatingLabel.setAccent(accentColor);
+			this.accentColor = accentColor;
+
+			floatingLabel.setAccent(accentColor);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
@@ -244,9 +318,15 @@ public class MaterialTextField extends JTextField {
 
 		super.setText(s);
 
-		floatingLabel.update();
+		try {
 
-		line.update();
+			floatingLabel.update();
+
+			line.update();
+
+		} catch (Exception e) {
+
+		}
 
 	}
 
@@ -294,7 +374,9 @@ public class MaterialTextField extends JTextField {
 		if (!getHint().isEmpty() && getText().isEmpty() && (getLabel().isEmpty() || isFocusOwner())
 				&& floatingLabel.isFloatingAbove()) {
 
-			g2.setColor(Utils.applyAlphaMask(getForeground(), HINT_OPACITY_MASK));
+			g2.setFont(hintFont);
+
+			g2.setColor(Utils.applyAlphaMask(hintColor, HINT_OPACITY_MASK));
 
 			FontMetrics metrics = g.getFontMetrics(g.getFont());
 
@@ -378,7 +460,28 @@ public class MaterialTextField extends JTextField {
 
 		private String text;
 
-		private Color accentColor = MaterialColor.CYAN_500;
+		private Color accentColor = Colores.CYAN_500;
+
+		private Font font;
+
+		private Color placeholderFocusOff;
+
+		public void setPlaceholderFocusOff(Color placeholderFocusOff) {
+
+			this.placeholderFocusOff = placeholderFocusOff;
+
+		}
+
+		public void setFont(Font font) {
+
+			try {
+
+				this.font = font;
+
+			} catch (Exception e) {
+
+			}
+		}
 
 		public FloatingLabel(JTextField target) {
 
@@ -392,7 +495,9 @@ public class MaterialTextField extends JTextField {
 
 			fontSize = SafePropertySetter.animatableProperty(target, 16d);
 
-			color = SafePropertySetter.animatableProperty(target, MaterialColor.MIN_BLACK);
+			color = SafePropertySetter.animatableProperty(target, Colores.MIN_BLACK);
+
+			placeholderFocusOff = Color.BLACK;
 
 			updateForeground();
 
@@ -453,7 +558,7 @@ public class MaterialTextField extends JTextField {
 
 			else {
 
-				targetColor = Utils.applyAlphaMask(target.getForeground(), HINT_OPACITY_MASK);
+				targetColor = Utils.applyAlphaMask(placeholderFocusOff, HINT_OPACITY_MASK);
 
 			}
 
@@ -487,6 +592,8 @@ public class MaterialTextField extends JTextField {
 
 			FontMetrics metrics = g.getFontMetrics(g.getFont());
 
+			g.setFont(font);
+
 			g.drawString(getText(), 0, metrics.getAscent() + y.getValue().intValue());
 
 		}
@@ -494,6 +601,22 @@ public class MaterialTextField extends JTextField {
 		public boolean isFloatingAbove() {
 
 			return y.getValue() < 17d;
+
+		}
+
+	}
+
+	public void setHintColor(Color color) {
+
+		try {
+
+			hintColor = color;
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
 
 		}
 

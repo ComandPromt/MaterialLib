@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.border.Border;
 
 @SuppressWarnings("serial")
-public class RSButtonMetro extends JButton implements MouseListener, MouseMotionListener {
+public class ButtonMetro extends JButton implements MouseListener, MouseMotionListener {
 
 	private Color colorNormal;
 
@@ -32,7 +32,15 @@ public class RSButtonMetro extends JButton implements MouseListener, MouseMotion
 
 	private Font f;
 
-	public RSButtonMetro(String text) {
+	public ButtonMetro() {
+
+		this("");
+
+	}
+
+	public ButtonMetro(String text) {
+
+		setFocusPainted(false);
 
 		colorNormal = new Color(0, 139, 139);
 
@@ -75,6 +83,8 @@ public class RSButtonMetro extends JButton implements MouseListener, MouseMotion
 		addMouseListener(this);
 
 		addMouseMotionListener(this);
+
+		setText(text);
 
 	}
 

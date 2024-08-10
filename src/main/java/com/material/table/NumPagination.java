@@ -13,10 +13,12 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.buttons.indicators.Indicators;
 import com.jicons.Anterior;
 import com.jicons.First;
 import com.jicons.Last;
 import com.jicons.Posterior;
+import com.spinner.simple.Spinner;
 
 import mthos.JMthos;
 
@@ -44,6 +46,60 @@ public class NumPagination extends JPanel {
 	private Font footerFont;
 
 	private Color pagForeground;
+
+	private int paso;
+
+	private int numeroPaginas;
+
+	private boolean cick;
+
+	private Color indicador;
+
+	private Indicators indicadorType;
+
+	private int corte;
+
+	public int getCorte() {
+
+		return corte;
+
+	}
+
+	public void setCorte(int corte) {
+
+		this.corte = corte;
+
+	}
+
+	public int getStep() {
+
+		return step;
+
+	}
+
+	public void setCick(boolean cick) {
+
+		this.cick = cick;
+
+	}
+
+	public void setNumeroPaginas(int numeroPaginas) {
+
+		this.numeroPaginas = numeroPaginas;
+
+	}
+
+	public void setStep(int step) {
+
+		this.step = step;
+
+	}
+
+	public void setPaso(int paso) {
+
+		this.paso = paso;
+
+	}
 
 	@Override
 	public void setForeground(Color fg) {
@@ -90,6 +146,12 @@ public class NumPagination extends JPanel {
 
 	}
 
+	public void setIndice(int indice) {
+
+		this.indice = indice;
+
+	}
+
 	public int getIndice() {
 
 		try {
@@ -106,58 +168,133 @@ public class NumPagination extends JPanel {
 
 	}
 
-	private void last(int filter, Cuerpo cuerpo) {
+	public void last(int filter, Cuerpo cuerpo) {
 
-		indice = filter;
+		try {
 
-		cuerpo.verDatos(
+			setCick(false);
 
-				JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
-				cuerpo.getDatos());
+			indice = filter;
 
-		verNumeros(indice, filter, step, cuerpo);
+			calcularNumeroPaginas(cuerpo);
+
+			if (indice >= numeroPaginas) {
+
+				indice = numeroPaginas;
+
+			}
+
+			cuerpo.verDatos(
+
+					JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
+					cuerpo.getDatos());
+
+			indice--;
+
+			if ((filter - indice) + 1 < step) {
+
+				verNumeros(1, filter, step, cuerpo);
+
+			}
+
+			else {
+
+				verNumeros(indice, filter, step, cuerpo);
+
+			}
+
+			numeros.getNumeros().getLast().setPaintSelected(true);
+
+			indice++;
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 
 	private void anterior(int filter, Cuerpo cuerpo) {
 
-		--indice;
+		try {
 
-		if (indice < 1) {
+			setCick(false);
 
-			indice = 1;
+			if (numeros.getNumeroBotonPresionado() == -1) {
+
+				--indice;
+
+			}
+
+			if (indice < 1) {
+
+				indice = 1;
+
+			}
+
+			cuerpo.verDatos(
+					JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
+					cuerpo.getDatos());
+
+			if ((filter - indice) < step) {
+
+				verNumeros(1, filter, step, cuerpo);
+
+			}
+
+			else {
+
+				verNumeros(indice, filter, step, cuerpo);
+
+			}
+
+			indice--;
+
+			numeros.getNumeros().get(indice).setPaintSelected(true);
+
+			indice++;
 
 		}
 
-		cuerpo.verDatos(JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
-				cuerpo.getDatos());
+		catch (Exception e) {
 
-		verNumeros(indice, filter, step, cuerpo);
+		}
 
 	}
 
 	public void posterior(int filter, Cuerpo cuerpo) {
 
-		++indice;
+		try {
 
-		if (indice > filter) {
+			if (indice == 0) {
 
-			indice = filter;
+				indice = 1;
+
+			}
+
+			indice++;
+
+			if (indice > numeroPaginas) {
+
+				indice = numeroPaginas;
+
+			}
+
+			cuerpo.verDatos(
+					JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
+					cuerpo.getDatos());
+
+			verNumeros(indice, filter, step, cuerpo);
+
+			numeros.getNumeros().get(JMthos.encontrarIndice(numeros.getContadorNumeros(), indice))
+					.setPaintSelected(true);
 
 		}
 
-		if (indice == 1) {
-
-			indice = 2;
+		catch (Exception e) {
 
 		}
-
-		cuerpo.verDatos(
-
-				JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
-				cuerpo.getDatos());
-
-		verNumeros(indice, filter, step, cuerpo);
 
 	}
 
@@ -169,7 +306,13 @@ public class NumPagination extends JPanel {
 
 		}
 
-		numeros = new Numeros(numbers, filter, step, cuerpo, footerFont, pagForeground);
+		if (numbers == 0 && filter == 1 && step == 1) {
+
+			numbers = 1;
+
+		}
+
+		numeros = new Numeros(numbers, filter, step, cuerpo, this, footerFont, pagForeground);
 
 		numero.setBounds(Math.round(getWidth() * 0.15f), 0, Math.round(getWidth() * 0.7f), getHeight());
 
@@ -185,15 +328,47 @@ public class NumPagination extends JPanel {
 
 	}
 
-	private void verPrimero(int filter, Cuerpo cuerpo) {
-
-		indice = 0;
-
-		verNumeros(1, filter, step, cuerpo);
+	public void verPrimero(int filter, Cuerpo cuerpo) {
 
 		try {
 
-			cuerpo.verDatos(0, cuerpo.getDatos());
+			setCick(false);
+
+			indice = 0;
+
+			if (filter > 1) {
+
+				verNumeros(1, filter, step, cuerpo);
+
+				try {
+
+					cuerpo.verDatos(0, cuerpo.getDatos());
+
+				}
+
+				catch (Exception e) {
+
+				}
+
+			}
+
+			else {
+
+				verNumeros(1, filter, step, cuerpo);
+
+				try {
+
+					cuerpo.verDatos(0, cuerpo.getDatos());
+
+				}
+
+				catch (Exception e) {
+
+				}
+
+			}
+
+			numeros.getNumeros().getFirst().setPaintSelected(true);
 
 		}
 
@@ -203,7 +378,11 @@ public class NumPagination extends JPanel {
 
 	}
 
-	public NumPagination(int numbers, int filter, int step, Cuerpo cuerpo) {
+	public NumPagination(Spinner spinner, int numbers, int filter, int step, Cuerpo cuerpo) {
+
+		calcularNumeroPaginas(cuerpo);
+
+		paso = filter;
 
 		fondo = Color.WHITE;
 
@@ -211,7 +390,7 @@ public class NumPagination extends JPanel {
 
 		footerFont = getFont();
 
-		numeros = new Numeros(1, numbers, step, cuerpo, footerFont, pagForeground);
+		numeros = new Numeros(1, numbers, step, cuerpo, this, footerFont, pagForeground);
 
 		primero = new JLabel();
 
@@ -219,7 +398,7 @@ public class NumPagination extends JPanel {
 
 			public void mouseWheelMoved(MouseWheelEvent e) {
 
-				verPrimero(filter, cuerpo);
+				verPrimero(paso, cuerpo);
 
 			}
 
@@ -231,7 +410,7 @@ public class NumPagination extends JPanel {
 
 			public void mousePressed(MouseEvent e) {
 
-				verPrimero(filter, cuerpo);
+				verPrimero(paso, cuerpo);
 
 			}
 
@@ -259,7 +438,7 @@ public class NumPagination extends JPanel {
 
 			public void mouseWheelMoved(MouseWheelEvent e) {
 
-				anterior(filter, cuerpo);
+				anterior(paso, cuerpo);
 
 			}
 
@@ -271,7 +450,7 @@ public class NumPagination extends JPanel {
 
 			public void mousePressed(MouseEvent e) {
 
-				anterior(filter, cuerpo);
+				anterior(paso, cuerpo);
 
 			}
 
@@ -289,7 +468,7 @@ public class NumPagination extends JPanel {
 
 			public void mouseWheelMoved(MouseWheelEvent e) {
 
-				posterior(filter, cuerpo);
+				posterior(paso, cuerpo);
 
 			}
 
@@ -300,7 +479,7 @@ public class NumPagination extends JPanel {
 
 			public void mousePressed(MouseEvent e) {
 
-				posterior(filter, cuerpo);
+				posterior(paso, cuerpo);
 
 			}
 
@@ -314,13 +493,13 @@ public class NumPagination extends JPanel {
 
 				if (e.getWheelRotation() == 1) {
 
-					posterior(filter, cuerpo);
+					posterior(paso, cuerpo);
 
 				}
 
 				else {
 
-					anterior(filter, cuerpo);
+					anterior(paso, cuerpo);
 
 				}
 
@@ -352,7 +531,7 @@ public class NumPagination extends JPanel {
 
 				last.setBounds(Math.round(getWidth() * 0.9f), 0, Math.round(getWidth() * 0.1f), getHeight());
 
-				verPrimero(filter, cuerpo);
+				verPrimero(paso, cuerpo);
 
 			}
 
@@ -366,7 +545,7 @@ public class NumPagination extends JPanel {
 
 			public void mouseWheelMoved(MouseWheelEvent e) {
 
-				last(filter, cuerpo);
+				last(paso, cuerpo);
 
 			}
 
@@ -377,8 +556,8 @@ public class NumPagination extends JPanel {
 			@Override
 
 			public void mousePressed(MouseEvent e) {
-
-				last(filter, cuerpo);
+				System.out.println(paso);
+				last(paso, cuerpo);
 
 			}
 
@@ -403,6 +582,53 @@ public class NumPagination extends JPanel {
 		add(siguiente);
 
 		add(last);
+
+	}
+
+	private void calcularNumeroPaginas(Cuerpo cuerpo) {
+
+		numeroPaginas = JMthos.dividirYRedondearAEntero(cuerpo.getDatos().size(),
+				(cuerpo.getItems() * cuerpo.getSplit()));
+
+	}
+
+	public Color getIndicador() {
+
+		return indicador;
+
+	}
+
+	public void setIndicador(Color color) {
+
+		try {
+
+			indicador = color;
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public Indicators getIndicadorType() {
+
+		return indicadorType;
+
+	}
+
+	public void setIndicadorType(Indicators indicadorType) {
+
+		try {
+
+			this.indicadorType = indicadorType;
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 

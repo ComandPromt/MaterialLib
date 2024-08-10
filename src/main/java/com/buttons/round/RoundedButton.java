@@ -32,8 +32,6 @@ public class RoundedButton extends JButton {
 
 	private Color borderColor;
 
-	private Color fondo;
-
 	private String text;
 
 	private Color back;
@@ -164,8 +162,6 @@ public class RoundedButton extends JButton {
 
 		});
 
-		fondo = null;
-
 		borderColor = Color.BLACK;
 
 		grosor = 3;
@@ -179,15 +175,6 @@ public class RoundedButton extends JButton {
 		setContentAreaFilled(false);
 
 		setFocusPainted(false);
-
-	}
-
-	@Override
-	public void setBackground(Color bg) {
-
-		fondo = bg;
-
-		repaint();
 
 	}
 
@@ -229,13 +216,9 @@ public class RoundedButton extends JButton {
 
 		Graphics2D g2d = (Graphics2D) g.create();
 
-		if (fondo != null) {
+		g.setColor(getBackground());
 
-			g.setColor(fondo);
-
-			g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
-
-		}
+		g.fillRoundRect(0, 0, getWidth() - grosor, getHeight() - grosor, radius, radius);
 
 		if (grosor > 0) {
 
@@ -243,7 +226,7 @@ public class RoundedButton extends JButton {
 
 			g2d.setColor(borderColor);
 
-			g2d.drawRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+			g2d.drawRoundRect(grosor / 2, grosor / 2, getWidth() - grosor, getHeight() - grosor, radius, radius);
 
 		}
 

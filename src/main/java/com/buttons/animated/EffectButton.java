@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JToolTip;
 import javax.swing.border.EmptyBorder;
 
+import com.effects.RippleEffect;
 import com.material.utils.ShadowRenderer;
 import com.toolTip.ToolTipLlamada;
 
@@ -261,7 +262,7 @@ public class EffectButton extends JButton {
 
 		g2.fill(area);
 
-		rippleEffect.reder(grphcs, area);
+		rippleEffect.render(g2, area);
 
 		g2.dispose();
 

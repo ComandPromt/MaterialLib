@@ -13,6 +13,7 @@ import java.util.Optional;
 
 import javax.swing.JTextField;
 import javax.swing.JToolTip;
+import javax.swing.border.Border;
 
 import com.contextmenu.DefaultContextMenu;
 import com.toolTip.ToolTipLlamada;
@@ -52,10 +53,11 @@ public class BootsTextField extends JTextField {
 
 	private Font fuente;
 
-	@Override
+	private boolean entro;
+
 	public void setToolTipText(String text) {
 
-		setToolTip(text, null, null, null, null);
+		setToolTip(text, (Color) null, (Color) null, (Color) null, (Font) null);
 
 	}
 
@@ -67,39 +69,28 @@ public class BootsTextField extends JTextField {
 
 	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
 
-		if (background == null) {
-
+		if (background == null)
 			background = new Color(32, 39, 55);
 
-		}
-
-		if (foreground == null) {
-
+		if (foreground == null)
 			foreground = Color.WHITE;
 
-		}
-
-		if (border == null) {
-
+		if (border == null)
 			border = new Color(173, 173, 173);
 
-		}
-
-		if (font == null) {
+		if (font == null)
 
 			try {
 
-				font = getFont().deriveFont(20f);
+				font = getFont().deriveFont(20.0F);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 20);
+				font = new Font("Dialog", 0, 20);
 
 			}
-
-		}
 
 		this.text = text;
 
@@ -115,30 +106,23 @@ public class BootsTextField extends JTextField {
 
 	}
 
-	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || fondo == null || colorTexto == null || border == null) {
+		if (this.text == null || this.fondo == null || this.colorTexto == null || this.border == null)
 
 			return super.createToolTip();
 
-		}
+		ToolTipLlamada tip = new ToolTipLlamada(this.text, this.fondo, this.colorTexto, this.border, this.fuente);
 
-		else {
+		tip.setComponent(this);
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
-
-			tip.setComponent(this);
-
-			return tip;
-
-		}
+		return (JToolTip) tip;
 
 	}
 
 	public int getNumeroEspacios() {
 
-		return numeroEspacios;
+		return this.numeroEspacios;
 
 	}
 
@@ -152,17 +136,15 @@ public class BootsTextField extends JTextField {
 
 	public int getAngulo() {
 
-		return angulo;
+		return this.angulo;
 
 	}
 
 	public void setAngulo(int angulo) {
 
-		if (angulo < 0) {
+		if (angulo < 0)
 
 			angulo = 0;
-
-		}
 
 		this.angulo = angulo;
 
@@ -172,7 +154,7 @@ public class BootsTextField extends JTextField {
 
 	public String getPlaceholder() {
 
-		return placeholder;
+		return this.placeholder;
 
 	}
 
@@ -186,7 +168,7 @@ public class BootsTextField extends JTextField {
 
 	public Color getBordeActivo() {
 
-		return bordeActivo;
+		return this.bordeActivo;
 
 	}
 
@@ -200,7 +182,7 @@ public class BootsTextField extends JTextField {
 
 	public Color getBordeInactivo() {
 
-		return bordeInactivo;
+		return this.bordeInactivo;
 
 	}
 
@@ -214,17 +196,15 @@ public class BootsTextField extends JTextField {
 
 	public int getGrosor() {
 
-		return grosor;
+		return this.grosor;
 
 	}
 
 	public void setGrosor(int grosor) {
 
-		if (grosor < 0) {
+		if (grosor < 1)
 
-			grosor = 0;
-
-		}
+			grosor = 1;
 
 		this.grosor = grosor;
 
@@ -240,7 +220,7 @@ public class BootsTextField extends JTextField {
 
 	public Color getPlaceholderColor() {
 
-		return placeholderColor;
+		return this.placeholderColor;
 
 	}
 
@@ -254,59 +234,54 @@ public class BootsTextField extends JTextField {
 
 	public BootsTextField(String text) {
 
-		placeholderColor = Color.BLACK;
+		this.placeholderColor = Color.BLACK;
 
-		numeroEspacios = 2;
+		this.numeroEspacios = 2;
 
-		fuentePlaceholder = new Font("Dialog", Font.PLAIN, 20);
+		this.fuentePlaceholder = new Font("Dialog", 0, 20);
 
-		bordeActivo = Color.BLACK;
+		this.bordeActivo = Color.BLACK;
 
-		bordeInactivo = Color.BLACK;
+		this.bordeInactivo = Color.BLACK;
 
-		angulo = 20;
+		this.angulo = 20;
 
-		placeholder = "";
+		this.placeholder = "";
 
-		texto = "";
+		this.texto = "";
 
-		grosor = 1;
+		this.grosor = 1;
 
-		setBorder(null);
+		setBorder((Border) null);
 
-		setFont(getFont().deriveFont(Font.PLAIN, 20));
+		setFont(getFont().deriveFont(0, 20.0F));
 
 		setText(text);
 
 		addKeyListener(new KeyAdapter() {
 
-			@Override
 			public void keyPressed(KeyEvent e) {
 
 				if (isEditable() && !JMthos.tieneCaracterNoImprimible(e.getKeyCode())) {
 
-					if (!texto.isEmpty()) {
+					if (!texto.isEmpty())
 
 						if (e.getKeyCode() == 8 && !texto.equals(JMthos.calcularNumeroEspacios(numeroEspacios))) {
 
-							texto = Optional.ofNullable(texto).filter(s -> s.length() != 0)
+							texto = Optional.<String>ofNullable(texto).filter(s -> (s.length() != 0))
 									.map(s -> s.substring(0, s.length() - 1)).orElse(texto);
 
 						}
 
 						else if (e.getKeyCode() != 8) {
 
-							texto += e.getKeyChar();
+							texto = String.valueOf(texto) + e.getKeyChar();
 
 						}
 
-					}
-
-					if (texto.isEmpty()) {
+					if (texto.isEmpty())
 
 						texto = JMthos.calcularNumeroEspacios(numeroEspacios);
-
-					}
 
 					setText(texto);
 
@@ -318,7 +293,6 @@ public class BootsTextField extends JTextField {
 
 		addMouseListener(new MouseAdapter() {
 
-			@Override
 			public void mouseEntered(MouseEvent e) {
 
 				pintarBorde = true;
@@ -327,7 +301,6 @@ public class BootsTextField extends JTextField {
 
 			}
 
-			@Override
 			public void mouseExited(MouseEvent e) {
 
 				pintarBorde = false;
@@ -344,7 +317,7 @@ public class BootsTextField extends JTextField {
 
 	public Font getFuentePlaceholder() {
 
-		return fuentePlaceholder;
+		return this.fuentePlaceholder;
 
 	}
 
@@ -356,7 +329,6 @@ public class BootsTextField extends JTextField {
 
 	}
 
-	@Override
 	public void paint(Graphics g) {
 
 		super.paint(g);
@@ -365,11 +337,47 @@ public class BootsTextField extends JTextField {
 
 		g2.setStroke(new BasicStroke(grosor));
 
-		g.drawRoundRect(0, 10, getWidth() - 1, (getHeight() - 1) - 10, angulo, angulo);
+		switch (grosor) {
 
-		if (pintarBorde) {
+		case 1:
 
-			setText(texto);
+			g.drawRoundRect(0, 10, getWidth() - 1, getHeight() - 1 - 10, angulo, angulo);
+
+			break;
+
+		case 2:
+
+			g.drawRoundRect(1, 10, getWidth() - grosor, getHeight() - 1 - 10, angulo, angulo);
+
+			break;
+
+		default:
+
+			if (grosor % 2 == 0) {
+
+				g.drawRoundRect((grosor / 2) - 1, 10, (getWidth() - grosor) + 1, getHeight() - 2 - 10, angulo, angulo);
+
+			}
+
+			else {
+
+				g.drawRoundRect((grosor / 2), 10, (getWidth() - grosor) + 1, getHeight() - 1 - 10, angulo, angulo);
+
+			}
+
+			break;
+
+		}
+
+		if (this.pintarBorde) {
+
+			if (entro) {
+
+				texto = "";
+
+			}
+
+			setText(" " + this.texto);
 
 			setEnabled(true);
 
@@ -377,7 +385,7 @@ public class BootsTextField extends JTextField {
 
 			if (!placeholder.isEmpty()) {
 
-				int calculo = angulo + (Math.round(placeholder.length() * ((fuentePlaceholder.getSize() * 12) / 20)));
+				int calculo = angulo + Math.round((placeholder.length() * fuentePlaceholder.getSize() * 12 / 20));
 
 				g.setColor(getBackground());
 
@@ -388,27 +396,34 @@ public class BootsTextField extends JTextField {
 				g.setFont(fuentePlaceholder);
 
 				g.drawString(placeholder, angulo + 2, 15);
+
 			}
+
+			entro = false;
 
 		}
 
 		else {
 
-			if (!getText().isEmpty()) {
+			if (getText().trim().isEmpty() && texto.trim().isEmpty()) {
 
-				setText(" " + getText().trim());
+				entro = true;
+
+				texto = placeholder;
+
+			}
+
+			else if (texto.isEmpty() && !getText().trim().isEmpty()) {
+
+				texto = getText().trim();
 
 			}
 
-			else if (!placeholder.isEmpty()) {
-
-				setText(" " + placeholder.trim());
-
-			}
+			setText(" " + texto);
 
 			setEnabled(false);
 
-			g.setColor(bordeInactivo);
+			g.setColor(this.bordeInactivo);
 
 		}
 

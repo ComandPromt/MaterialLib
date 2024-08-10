@@ -31,6 +31,12 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 	private Color borderColor;
 
+	public float getGrosor() {
+
+		return grosor;
+
+	}
+
 	public void setBorderColor(Color borderColor) {
 
 		this.borderColor = borderColor;
@@ -83,7 +89,7 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 	public TextFieldSuggestionUI(JTextField textfield) {
 
-		round = 20;
+		round = 50;
 
 		items = new ArrayList<>();
 
@@ -205,7 +211,8 @@ class TextFieldSuggestionUI extends MetalTextFieldUI {
 
 			g2.setColor(borderColor);
 
-			g2.drawRoundRect(1, y, width - 2, height - 2, round, round);
+			g2.drawRoundRect((((int) grosor) / 2) + 1, (int) grosor, (width - ((int) grosor)) - 1,
+					height - ((int) grosor * 2), round, round);
 
 			g2.dispose();
 

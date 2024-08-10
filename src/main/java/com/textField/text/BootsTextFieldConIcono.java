@@ -2,6 +2,7 @@ package com.textField.text;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.LayoutManager;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -10,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolTip;
+import javax.swing.border.Border;
 
 import com.contextmenu.DefaultContextMenu;
 import com.toolTip.ToolTipLlamada;
@@ -37,9 +39,15 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	private Icon icono;
 
+	public BootsTextField getInput() {
+
+		return input;
+
+	}
+
 	public int getEspacioIcono() {
 
-		return espacioIcono;
+		return this.espacioIcono;
 
 	}
 
@@ -49,10 +57,9 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	}
 
-	@Override
 	public void setToolTipText(String text) {
 
-		setToolTip(text, null, null, null, null);
+		setToolTip(text, (Color) null, (Color) null, (Color) null, (Font) null);
 
 	}
 
@@ -64,39 +71,31 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
 
-		if (background == null) {
+		if (background == null)
 
 			background = new Color(32, 39, 55);
 
-		}
-
-		if (foreground == null) {
+		if (foreground == null)
 
 			foreground = Color.WHITE;
 
-		}
-
-		if (border == null) {
+		if (border == null)
 
 			border = new Color(173, 173, 173);
 
-		}
-
-		if (font == null) {
+		if (font == null)
 
 			try {
 
-				font = getFont().deriveFont(20f);
+				font = getFont().deriveFont(20.0F);
 
 			}
 
 			catch (Exception e) {
 
-				font = new Font("Dialog", Font.PLAIN, 20);
+				font = new Font("Dialog", 0, 20);
 
 			}
-
-		}
 
 		this.text = text;
 
@@ -112,30 +111,23 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	}
 
-	@Override
 	public JToolTip createToolTip() {
 
-		if (text == null || fondo == null || colorTexto == null || border == null) {
+		if (this.text == null || this.fondo == null || this.colorTexto == null || this.border == null)
 
 			return super.createToolTip();
 
-		}
+		ToolTipLlamada tip = new ToolTipLlamada(this.text, this.fondo, this.colorTexto, this.border, this.fuente);
 
-		else {
+		tip.setComponent(this);
 
-			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
-
-			tip.setComponent(this);
-
-			return tip;
-
-		}
+		return (JToolTip) tip;
 
 	}
 
 	public int getNumeroEspacios() {
 
-		return input.getNumeroEspacios();
+		return this.input.getNumeroEspacios();
 
 	}
 
@@ -143,11 +135,11 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setNumeroEspacios(numeroEspacios);
+			this.input.setNumeroEspacios(numeroEspacios);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
@@ -155,7 +147,7 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public int getAngulo() {
 
-		return input.getAngulo();
+		return this.input.getAngulo();
 
 	}
 
@@ -163,11 +155,11 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setAngulo(angulo);
+			this.input.setAngulo(angulo);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
@@ -175,7 +167,21 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public String getPlaceholder() {
 
-		return input.getPlaceholder();
+		return this.input.getPlaceholder();
+
+	}
+
+	public void setPlaceholder(Color color) {
+
+		try {
+
+			this.input.setPlaceholderColor(color);
+
+		}
+
+		catch (Exception exception) {
+
+		}
 
 	}
 
@@ -183,11 +189,11 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setPlaceholder(placeholder);
+			this.input.setPlaceholder(placeholder);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
@@ -195,7 +201,7 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public Color getBordeActivo() {
 
-		return input.getBordeActivo();
+		return this.input.getBordeActivo();
 
 	}
 
@@ -203,11 +209,11 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setBordeInactivo(bordeActivo);
+			this.input.setBordeInactivo(bordeActivo);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
@@ -215,7 +221,7 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public Color getBordeInactivo() {
 
-		return input.getBordeInactivo();
+		return this.input.getBordeInactivo();
 
 	}
 
@@ -223,11 +229,11 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setBordeInactivo(bordeInactivo);
+			this.input.setBordeInactivo(bordeInactivo);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
@@ -235,7 +241,7 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public int getGrosor() {
 
-		return input.getGrosor();
+		return this.input.getGrosor();
 
 	}
 
@@ -243,13 +249,19 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setGrosor(grosor);
+			this.input.setGrosor(grosor);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
+
+	}
+
+	public BootsTextFieldConIcono(String text) {
+
+		this(text, true);
 
 	}
 
@@ -261,7 +273,7 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public Color getPlaceholderColor() {
 
-		return input.getPlaceholderColor();
+		return this.input.getPlaceholderColor();
 
 	}
 
@@ -269,30 +281,29 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setPlaceholderColor(placeholderColor);
+			this.input.setPlaceholderColor(placeholderColor);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
 	}
 
-	@Override
 	public void setBackground(Color bg) {
 
 		super.setBackground(bg);
 
 		try {
 
-			input.setBackground(getBackground());
+			this.input.setBackground(getBackground());
 
-			label.setBackground(getBackground());
+			this.label.setBackground(getBackground());
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
@@ -300,56 +311,64 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public void setIcon(Icon icon) {
 
-		icono = icon;
+		this.icono = icon;
 
 	}
 
 	public BootsTextFieldConIcono(String text, boolean defaultIcon) {
 
-		setBorder(null);
+		setBorder((Border) null);
 
-		setFont(getFont().deriveFont(Font.PLAIN, 20));
+		setFont(getFont().deriveFont(0, 20.0F));
 
-		input = new BootsTextField(text);
+		this.input = new BootsTextField(text);
+		input.setGrosor(5);
+		input.setPlaceholderColor(Color.BLUE);
+		input.setPlaceholder("AAAA");
 
-		input.setBounds(0, 0, 414, 300);
+		this.input.setBounds(0, 0, 414, 300);
 
-		DefaultContextMenu.addDefaultContextMenu(input);
+		DefaultContextMenu.addDefaultContextMenu(this.input);
 
-		setLayout(null);
+		setLayout((LayoutManager) null);
 
-		add(input);
+		add(this.input);
 
-		label = new JLabel("");
+		this.label = new JLabel("");
 
-		label.setBounds(414, 0, 37, 300);
+		this.label.setBounds(414, 0, 37, 300);
 
-		add(label);
+		add(this.label);
 
 		addComponentListener(new ComponentAdapter() {
 
-			@Override
 			public void componentResized(ComponentEvent e) {
 
-				input.setBounds(0, 0, (int) (getWidth() * 0.8f), getHeight());
+				BootsTextFieldConIcono.this.input.setBounds(0, 0, (int) (BootsTextFieldConIcono.this.getWidth() * 0.8F),
+						BootsTextFieldConIcono.this.getHeight());
 
-				int ancho = (int) (getWidth() * 0.2f) - espacioIcono;
+				int ancho = (int) (BootsTextFieldConIcono.this.getWidth() * 0.2F)
+						- BootsTextFieldConIcono.this.espacioIcono;
 
-				label.setBounds((int) (getWidth() * 0.8f) + espacioIcono, 0, ancho, getHeight());
+				BootsTextFieldConIcono.this.label.setBounds(
+						(int) (BootsTextFieldConIcono.this.getWidth() * 0.8F)
+								+ BootsTextFieldConIcono.this.espacioIcono,
+						0, ancho, BootsTextFieldConIcono.this.getHeight());
 
-				if (icono == null) {
+				if (BootsTextFieldConIcono.this.icono == null) {
 
-					label.setIcon(JMthos.resize(
+					BootsTextFieldConIcono.this.label.setIcon(JMthos.resize(
 							new ImageIcon(
 									BootsTextFieldConIcono.class.getResource("/imgs/imagenes/text_field_boots.png")),
-							ancho, getHeight()));
+							ancho, BootsTextFieldConIcono.this.getHeight()));
 
 				}
 
 				else {
 
-					label.setIcon(JMthos.resize((ImageIcon) icono, ancho, getHeight()));
-
+					BootsTextFieldConIcono.this.label
+							.setIcon(JMthos.resize((ImageIcon) BootsTextFieldConIcono.this.icono, ancho,
+									BootsTextFieldConIcono.this.getHeight()));
 				}
 
 			}
@@ -360,7 +379,7 @@ public class BootsTextFieldConIcono extends JPanel {
 
 	public Font getFuentePlaceholder() {
 
-		return input.getFuentePlaceholder();
+		return this.input.getFuentePlaceholder();
 
 	}
 
@@ -368,7 +387,35 @@ public class BootsTextFieldConIcono extends JPanel {
 
 		try {
 
-			input.setFuentePlaceholder(fuentePlaceholder);
+			this.input.setFuentePlaceholder(fuentePlaceholder);
+
+		}
+
+		catch (Exception exception) {
+
+		}
+
+	}
+
+	public void setPlaceholderFont(Font font) {
+
+		try {
+
+			input.setFuentePlaceholder(font);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setText(String string) {
+
+		try {
+
+			input.setText(string);
 
 		}
 

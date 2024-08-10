@@ -88,9 +88,68 @@ public class MessageDialog extends javax.swing.JDialog {
 
 	}
 
+	public MessageDialog(String title, String message, Font font) {
+
+		this(null, null, title, message, null, font);
+
+	}
+
+	public MessageDialog(Color fondo, Color background, String title, String message, int fontSize) {
+
+		this(fondo, background, title, message, null, new Font("Dialog", Font.PLAIN, fontSize));
+
+	}
+
+	public MessageDialog(String title, String message, int fontSize) {
+
+		this(null, null, title, message, null, new Font("Dialog", Font.PLAIN, fontSize));
+
+	}
+
+	public MessageDialog(Color fondo, Color background, String title, String message, Font font) {
+
+		this(fondo, background, title, message, null, font);
+
+	}
+
+	public MessageDialog(Color fondo, Color background, String title, String message) {
+
+		this(fondo, background, title, message, null, null);
+
+	}
+
+	public MessageDialog(String title, String message) {
+
+		this(null, null, title, message, null, null);
+
+	}
+
 	public MessageDialog(Color fondo, Color background, String title, String message, Icon icon, Font font) {
 
 		super(new Fondo(background), true);
+
+		if (icon == null) {
+
+			icon = new javax.swing.ImageIcon(getClass().getResource("icon.png"));
+
+		}
+		if (font == null) {
+
+			font = new Font("Dialog", Font.PLAIN, 25);
+
+		}
+
+		if (fondo == null) {
+
+			fondo = Color.WHITE;
+
+		}
+
+		if (background == null) {
+
+			background = Color.LIGHT_GRAY;
+
+		}
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -110,12 +169,6 @@ public class MessageDialog extends javax.swing.JDialog {
 
 		});
 
-		if (icon == null) {
-
-			icon = new javax.swing.ImageIcon(getClass().getResource("icon.png"));
-
-		}
-
 		messageType = MessageType.CANCEL;
 
 		this.fram = new Fondo(background);
@@ -129,24 +182,6 @@ public class MessageDialog extends javax.swing.JDialog {
 		setIcon(icon);
 
 		init();
-
-		if (font == null) {
-
-			font = new Font("Dialog", Font.PLAIN, 40);
-
-		}
-
-		if (fondo == null) {
-
-			fondo = Color.WHITE;
-
-		}
-
-		if (background == null) {
-
-			background = Color.LIGHT_GRAY;
-
-		}
 
 		setFont(font);
 

@@ -16,14 +16,14 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.button.rs.RSButtonMetro;
+import com.button.rs.ButtonMetro;
 import com.layout.MaterialPanelLayout;
 import com.textField.text.NTextField;
 
 @SuppressWarnings("serial")
 public class ChooserWithInput extends JPanel {
 
-	private RSButtonMetro boton;
+	private ButtonMetro boton;
 
 	private JPanel panel;
 
@@ -81,7 +81,7 @@ public class ChooserWithInput extends JPanel {
 
 	}
 
-	public RSButtonMetro getButton() {
+	public ButtonMetro getButton() {
 
 		return boton;
 
@@ -208,7 +208,7 @@ public class ChooserWithInput extends JPanel {
 
 		lista.add(field);
 
-		boton = new RSButtonMetro("");
+		boton = new ButtonMetro("");
 
 		boton.setIcon(new ImageIcon(getClass().getResource("/imgs/imagenes/file.png")));
 

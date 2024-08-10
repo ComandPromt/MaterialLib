@@ -367,6 +367,12 @@ public class SearchInput extends JTextField {
 
 	public SearchInput(List<String> lista) {
 
+		this(lista, true);
+
+	}
+
+	public SearchInput(List<String> lista, boolean prefix) {
+
 		index = -1;
 
 		resultadosBusqueda = new String[8];
@@ -438,7 +444,17 @@ public class SearchInput extends JTextField {
 
 		});
 
-		setPrefixIcon(new MagnifyingGlass());
+		if (prefix) {
+
+			setPrefixIcon(new MagnifyingGlass());
+
+		}
+
+		else {
+
+			setSuffixIcon(new MagnifyingGlass());
+
+		}
 
 	}
 
