@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 import com.checkbox.CheckBoxCustom;
 
 @SuppressWarnings("serial")
-public class Pagina extends JPanel {
+class Pagina extends JPanel {
 
 	private JPanel panel;
 

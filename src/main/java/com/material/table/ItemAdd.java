@@ -1,4 +1,4 @@
-package com.material.table.item;
+package com.material.table;
 
 import java.awt.Color;
 import java.awt.event.ComponentAdapter;
@@ -16,7 +16,8 @@ import com.textField.text.NTextField;
 
 import mthos.JMthos;
 
-public class ItemAdd extends JPanel {
+@SuppressWarnings("serial")
+class ItemAdd extends JPanel {
 
 	private NTextField textField;
 
@@ -29,6 +30,12 @@ public class ItemAdd extends JPanel {
 	private ArrayList<String> lista;
 
 	private LabelHeader columna;
+
+	public LabelHeader getLabelHeader() {
+
+		return columna;
+
+	}
 
 	public ArrayList<String> getList() {
 
@@ -48,7 +55,7 @@ public class ItemAdd extends JPanel {
 
 		columna.setBackground(Color.WHITE);
 
-		comboBox = new ComboBoxSuggestion();
+		comboBox = new ComboBoxSuggestion<>();
 
 		delete = new NButton("-");
 

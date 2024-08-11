@@ -13,6 +13,7 @@ import java.awt.event.MouseWheelListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.buttons.indicators.IndicatorButton;
 import com.buttons.indicators.Indicators;
 import com.jicons.Anterior;
 import com.jicons.First;
@@ -23,7 +24,7 @@ import com.spinner.simple.Spinner;
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
-public class NumPagination extends JPanel {
+class NumPagination extends JPanel {
 
 	private Numeros numeros;
 
@@ -56,20 +57,6 @@ public class NumPagination extends JPanel {
 	private Color indicador;
 
 	private Indicators indicadorType;
-
-	private int corte;
-
-	public int getCorte() {
-
-		return corte;
-
-	}
-
-	public void setCorte(int corte) {
-
-		this.corte = corte;
-
-	}
 
 	public int getStep() {
 
@@ -556,7 +543,7 @@ public class NumPagination extends JPanel {
 			@Override
 
 			public void mousePressed(MouseEvent e) {
-				System.out.println(paso);
+
 				last(paso, cuerpo);
 
 			}
@@ -623,6 +610,28 @@ public class NumPagination extends JPanel {
 		try {
 
 			this.indicadorType = indicadorType;
+			for (IndicatorButton valor : numeros.getNumeros()) {
+
+				valor.setBorderType(indicadorType);
+
+			}
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setIndicadorDashPattern(int pattern) {
+
+		try {
+
+			for (IndicatorButton valor : numeros.getNumeros()) {
+
+				valor.setDashPattern(pattern);
+
+			}
 
 		}
 
@@ -632,4 +641,21 @@ public class NumPagination extends JPanel {
 
 	}
 
+	public void setIndicadorDotPattern(int pattern) {
+
+		try {
+
+			for (IndicatorButton valor : numeros.getNumeros()) {
+
+				valor.setDotPattern(pattern);
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 }

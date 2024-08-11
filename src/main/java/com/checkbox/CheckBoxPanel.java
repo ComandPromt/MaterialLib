@@ -126,6 +126,9 @@ public class CheckBoxPanel extends JPanel {
 
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public CheckBoxPanel(List<String> list) {
 
 		lista = new LinkedList<>();

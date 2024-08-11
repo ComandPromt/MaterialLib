@@ -23,8 +23,6 @@ import com.buttons.indicators.Indicators;
 import com.checkbox.CheckBoxCustom;
 import com.dialog.confirm.MessageDialog;
 import com.dialog.confirm.MessageDialog.MessageType;
-import com.material.table.item.AddItem;
-import com.material.table.item.ItemHeader;
 import com.panels.others.VerySimplePanel;
 import com.search.SearchTextField;
 import com.spinner.simple.Spinner;
@@ -32,7 +30,7 @@ import com.spinner.simple.Spinner;
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
-public class BodyHeaderTable extends JPanel {
+public class MaterialTable extends JPanel {
 
 	private CheckBoxCustom check;
 
@@ -67,6 +65,80 @@ public class BodyHeaderTable extends JPanel {
 	private String deleteAllMsg;
 
 	private int corte;
+
+	private AddItem textosCabecera;
+
+	public void setIcononLabelHeader(List<ImageIcon> icons) {
+
+		try {
+
+			for (int i = 0; i < textosCabecera.getDatos().size(); i++) {
+
+				textosCabecera.getDatos().get(i).getLabelHeader().setIcon(icons.get(i));
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setTinteImageonLabelHeader(boolean tinte) {
+
+		try {
+
+			for (ItemAdd valor : textosCabecera.getDatos()) {
+
+				valor.getLabelHeader().setTinteImage(tinte);
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSombraonLabelHeader(Color color) {
+
+		try {
+
+			for (ItemAdd valor : textosCabecera.getDatos()) {
+
+				valor.getLabelHeader().setSombra(color);
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setDireccionSombraonLabelHeader(int direccion) {
+
+		try {
+
+			for (ItemAdd valor : textosCabecera.getDatos()) {
+
+				valor.getLabelHeader().setDireccionSombra(direccion);
+
+			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 
 	public void setDeleteIcon(String icon) {
 
@@ -449,8 +521,16 @@ public class BodyHeaderTable extends JPanel {
 
 	}
 
-	public BodyHeaderTable(List<String> columns, ArrayList<String> lista, int pageItems, int splitPagination,
-			Color footer) {
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public MaterialTable(List<String> columns, List<String> lista) {
+
+		this(columns, lista, 0, 0);
+
+	}
+
+	public MaterialTable(List<String> columns, List<String> lista, int pageItems, int splitPagination) {
 
 		corte = splitPagination;
 
@@ -473,12 +553,6 @@ public class BodyHeaderTable extends JPanel {
 		}
 
 		cortePagination = splitPagination;
-
-		if (footer == null) {
-
-			footer = Color.WHITE;
-
-		}
 
 		filter = pageItems;
 
@@ -516,21 +590,7 @@ public class BodyHeaderTable extends JPanel {
 
 		panel_5.setLayout(new GridLayout());
 
-		cuerpo.addMouseListener(new MouseAdapter() {
-
-			@Override
-
-			public void mousePressed(MouseEvent e) {
-
-				System.out.println("Clickado el item ");
-
-			}
-
-		});
-
 		pagination = new NumPagination(spiner, lista.size(), numeroPaginas, splitPagination, cuerpo);
-
-		pagination.setCorte(corte);
 
 		panel_2.setLayout(new GridLayout());
 
@@ -566,7 +626,9 @@ public class BodyHeaderTable extends JPanel {
 
 						ArrayList<JComponent> componentes = new ArrayList<>();
 
-						componentes.add(new VerySimplePanel(new AddItem(numeroPaginas, pagination, cuerpo, columns)));
+						textosCabecera = new AddItem(numeroPaginas, pagination, cuerpo, columns);
+
+						componentes.add(new VerySimplePanel(textosCabecera));
 
 						JMthos.showNewDialog(botones.getCrud().getNuevo(),
 								JMthos.calcularSucesionAritmeticaAInt("1#300,2#400", columns.size()), 200, false, "Add",
@@ -979,6 +1041,20 @@ public class BodyHeaderTable extends JPanel {
 				valor.setFont(font);
 
 			}
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setIndicadorDotPattern(int pattern) {
+
+		try {
+
+			pagination.setIndicadorDotPattern(pattern);
 
 		}
 

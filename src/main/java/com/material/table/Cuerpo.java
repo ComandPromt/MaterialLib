@@ -3,11 +3,12 @@ package com.material.table;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Cuerpo extends JPanel {
+class Cuerpo extends JPanel {
 
 	private ArrayList<Pagina> paginas;
 
@@ -183,7 +184,7 @@ public class Cuerpo extends JPanel {
 
 	}
 
-	public Cuerpo(ArrayList<String> lista, int items, int split) {
+	public Cuerpo(List<String> lista, int items, int split) {
 
 		indicesNoSeleccionados = new ArrayList<>();
 
@@ -195,7 +196,7 @@ public class Cuerpo extends JPanel {
 
 		paginas = new ArrayList<>();
 
-		datos = lista;
+		datos = (ArrayList<String>) lista;
 
 	}
 

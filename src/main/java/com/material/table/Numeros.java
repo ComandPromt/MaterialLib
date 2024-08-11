@@ -17,7 +17,7 @@ import com.buttons.indicators.Indicators;
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
-public class Numeros extends JPanel {
+class Numeros extends JPanel {
 
 	private LinkedList<IndicatorButton> numeros;
 

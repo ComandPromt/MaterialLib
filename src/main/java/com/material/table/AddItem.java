@@ -1,4 +1,4 @@
-package com.material.table.item;
+package com.material.table;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -11,15 +11,19 @@ import javax.swing.JPanel;
 
 import com.buttons.round.NButton;
 import com.layout.MaterialPanelLayout;
-import com.material.table.Cuerpo;
-import com.material.table.NumPagination;
 
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
-public class AddItem extends JPanel {
+class AddItem extends JPanel {
 
 	private ArrayList<ItemAdd> datos;
+
+	public ArrayList<ItemAdd> getDatos() {
+
+		return datos;
+
+	}
 
 	public AddItem(int numeroPaginas, NumPagination pagination, Cuerpo cuerpo, List<String> cabeceras) {
 

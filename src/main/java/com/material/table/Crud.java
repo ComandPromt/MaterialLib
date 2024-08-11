@@ -10,7 +10,7 @@ import com.jicons.Delete;
 import com.jicons.New;
 
 @SuppressWarnings("serial")
-public class Crud extends JPanel {
+class Crud extends JPanel {
 
 	private NButton nuevo;
 

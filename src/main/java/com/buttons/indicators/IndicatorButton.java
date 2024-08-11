@@ -230,7 +230,7 @@ public class IndicatorButton extends JButton {
 
 		borderColor = Color.BLACK;
 
-		grosor = 3;
+		grosor = 0;
 
 		radius = 20;
 
@@ -259,17 +259,21 @@ public class IndicatorButton extends JButton {
 
 		}
 
-		if (borderType != Indicators.BORDE) {
-
-			g.fillRoundRect(0, 0, getWidth() - grosor, getHeight() - grosor, radius, radius);
-
-			pintarBorde(g2d);
-
-		}
-
 		else {
 
-			g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+			if (borderType != Indicators.BORDE) {
+
+				g.fillRoundRect(0, 0, getWidth() - grosor, getHeight() - grosor, radius, radius);
+
+				pintarBorde(g2d);
+
+			}
+
+			else {
+
+				g.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+
+			}
 
 		}
 

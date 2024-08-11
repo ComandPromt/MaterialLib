@@ -101,7 +101,7 @@ public class PopupAlerts {
 
 	}
 
-	public void mensaje(String mensaje, AlertType type, int size, String path) {
+	public void mensaje(String mensaje, AlertType type, int size, String image) {
 
 		boolean nulo = true;
 
@@ -111,9 +111,9 @@ public class PopupAlerts {
 
 		}
 
-		if (path == null) {
+		if (image == null) {
 
-			path = "";
+			image = "";
 
 		}
 
@@ -129,11 +129,11 @@ public class PopupAlerts {
 
 		}
 
-		if (!path.isEmpty() && path.contains("file:/")) {
+		if (!image.isEmpty() && image.contains("file:/")) {
 
 			nulo = false;
 
-			path = JMthos.cleanURL(path);
+			image = JMthos.cleanURL(image);
 
 		}
 
@@ -149,7 +149,7 @@ public class PopupAlerts {
 
 				try {
 
-					error.setImage(Paths.get(path).toUri().toURL());
+					error.setImage(Paths.get(image).toUri().toURL());
 
 				}
 
@@ -187,7 +187,7 @@ public class PopupAlerts {
 
 				try {
 
-					informacion.setImage(Paths.get(path).toUri().toURL());
+					informacion.setImage(Paths.get(image).toUri().toURL());
 
 				}
 
@@ -225,7 +225,7 @@ public class PopupAlerts {
 
 				try {
 
-					salir.setImage(Paths.get(path).toUri().toURL());
+					salir.setImage(Paths.get(image).toUri().toURL());
 
 				}
 
@@ -263,7 +263,7 @@ public class PopupAlerts {
 
 				try {
 
-					exito.setImage(Paths.get(path).toUri().toURL());
+					exito.setImage(Paths.get(image).toUri().toURL());
 
 				}
 

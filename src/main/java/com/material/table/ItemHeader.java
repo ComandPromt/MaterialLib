@@ -1,4 +1,4 @@
-package com.material.table.item;
+package com.material.table;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,12 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.jicons.MovimientoTriangulos;
-import com.material.table.Cuerpo;
 
 import mthos.JMthos;
 
 @SuppressWarnings("serial")
-public class ItemHeader extends JPanel {
+class ItemHeader extends JPanel {
 
 	private JLabel texto;
 
