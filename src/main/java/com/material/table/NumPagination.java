@@ -52,8 +52,6 @@ class NumPagination extends JPanel {
 
 	private int numeroPaginas;
 
-	private boolean cick;
-
 	private Color indicador;
 
 	private Indicators indicadorType;
@@ -61,12 +59,6 @@ class NumPagination extends JPanel {
 	public int getStep() {
 
 		return step;
-
-	}
-
-	public void setCick(boolean cick) {
-
-		this.cick = cick;
 
 	}
 
@@ -159,8 +151,6 @@ class NumPagination extends JPanel {
 
 		try {
 
-			setCick(false);
-
 			indice = filter;
 
 			calcularNumeroPaginas(cuerpo);
@@ -205,8 +195,6 @@ class NumPagination extends JPanel {
 	private void anterior(int filter, Cuerpo cuerpo) {
 
 		try {
-
-			setCick(false);
 
 			if (numeros.getNumeroBotonPresionado() == -1) {
 
@@ -318,8 +306,6 @@ class NumPagination extends JPanel {
 	public void verPrimero(int filter, Cuerpo cuerpo) {
 
 		try {
-
-			setCick(false);
 
 			indice = 0;
 

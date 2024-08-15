@@ -15,6 +15,7 @@ import com.effects.MaterialShadow;
 import com.material.utils.Utils;
 import com.toolTip.ToolTipLlamada;
 
+@SuppressWarnings("serial")
 public class LabelWithShadow extends JLabel {
 
 	private final ElevationEffect elevation;

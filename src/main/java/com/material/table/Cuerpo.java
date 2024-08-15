@@ -32,7 +32,15 @@ class Cuerpo extends JPanel {
 
 	private int numItems;
 
-	private NumPagination pagination;
+	private boolean filePath;
+
+	public void setFilePath(boolean filePath) {
+
+		this.filePath = filePath;
+
+		repaint();
+
+	}
 
 	void setNumItems(int split) {
 
@@ -114,6 +122,12 @@ class Cuerpo extends JPanel {
 					if (valores.size() == split) {
 
 						pagina = new Pagina(valores, getFont(), getForeground());
+
+						if (filePath) {
+
+							pagina.setFilePath(true);
+
+						}
 
 						pagina.getCheckBox().setSelected(activate);
 

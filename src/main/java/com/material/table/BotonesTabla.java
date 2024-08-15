@@ -16,7 +16,7 @@ class BotonesTabla extends JPanel {
 
 	private Crud crud;
 
-	private MaterialPanelLayout panel_1;
+	private MaterialPanelLayout panel1;
 
 	public void setLista(ArrayList<String> lista) {
 
@@ -56,7 +56,7 @@ class BotonesTabla extends JPanel {
 
 			crud.setBackground(bg);
 
-			panel_1.setBackground(bg);
+			panel1.setBackground(bg);
 
 		}
 
@@ -92,11 +92,11 @@ class BotonesTabla extends JPanel {
 
 		porcentajes.add(60);
 
-		panel_1 = new MaterialPanelLayout(lista, porcentajes, false);
+		panel1 = new MaterialPanelLayout(lista, porcentajes, false);
 
-		panel_1.setBackground(background);
+		panel1.setBackground(background);
 
-		add(panel_1);
+		add(panel1);
 
 	}
 

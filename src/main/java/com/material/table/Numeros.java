@@ -226,8 +226,6 @@ class Numeros extends JPanel {
 
 						}
 
-						pagination.setCick(true);
-
 					}
 
 				});

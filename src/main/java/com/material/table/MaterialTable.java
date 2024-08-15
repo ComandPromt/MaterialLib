@@ -46,7 +46,7 @@ public class MaterialTable extends JPanel {
 
 	private ArrayList<ItemHeader> items;
 
-	private JPanel panel_1;
+	private JPanel panel1;
 
 	private JPanel panel;
 
@@ -64,9 +64,21 @@ public class MaterialTable extends JPanel {
 
 	private String deleteAllMsg;
 
-	private int corte;
-
 	private AddItem textosCabecera;
+
+	public void setFilePath(boolean filePath) {
+
+		try {
+
+			cuerpo.setFilePath(filePath);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 
 	public void setIcononLabelHeader(List<ImageIcon> icons) {
 
@@ -304,7 +316,7 @@ public class MaterialTable extends JPanel {
 
 		try {
 
-			panel_1.setBackground(color);
+			panel1.setBackground(color);
 
 			for (ItemHeader valor : items) {
 
@@ -532,8 +544,6 @@ public class MaterialTable extends JPanel {
 
 	public MaterialTable(List<String> columns, List<String> lista, int pageItems, int splitPagination) {
 
-		corte = splitPagination;
-
 		split = pageItems;
 
 		deleteMsg = "¿Quieres borrar los datos?";
@@ -572,7 +582,7 @@ public class MaterialTable extends JPanel {
 
 		panel.setBounds(0, 0, 450, 47);
 
-		panel_1 = new JPanel();
+		panel1 = new JPanel();
 
 		JPanel panel_2 = new JPanel();
 
@@ -586,7 +596,7 @@ public class MaterialTable extends JPanel {
 
 		panel.setLayout(new GridLayout());
 
-		panel_1.setLayout(new GridLayout());
+		panel1.setLayout(new GridLayout());
 
 		panel_5.setLayout(new GridLayout());
 
@@ -767,7 +777,7 @@ public class MaterialTable extends JPanel {
 
 				customSeparator3.setBounds(0, Math.round(getHeight() * 0.105f), getWidth(), 2);
 
-				panel_1.setBounds(0, Math.round(getHeight() * 0.108f), Math.round(getWidth() * 0.025f),
+				panel1.setBounds(0, Math.round(getHeight() * 0.108f), Math.round(getWidth() * 0.025f),
 						Math.round(getHeight() * 0.095f));
 
 				panel_2.setBounds(Math.round(getWidth() * 0.025f), Math.round(getHeight() * 0.108f),
@@ -792,9 +802,9 @@ public class MaterialTable extends JPanel {
 
 		panel.add(botones);
 
-		panel_1.add(check);
+		panel1.add(check);
 
-		panel_1.setBackground(Color.WHITE);
+		panel1.setBackground(Color.WHITE);
 
 		items = new ArrayList<>();
 
@@ -838,7 +848,7 @@ public class MaterialTable extends JPanel {
 
 		add(panel);
 
-		add(panel_1);
+		add(panel1);
 
 		add(panel_2);
 
@@ -893,8 +903,6 @@ public class MaterialTable extends JPanel {
 								.setPaintSelected(true);
 
 						pagination.setIndice(spiner.getValor());
-
-						pagination.setCick(false);
 
 					}
 

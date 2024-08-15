@@ -22,6 +22,16 @@ class Pagina extends JPanel {
 
 	private CheckBoxCustom checkBox;
 
+	private boolean filePath;
+
+	public void setFilePath(boolean filePath) {
+
+		this.filePath = filePath;
+
+		repaint();
+
+	}
+
 	public CheckBoxCustom getCheckBox() {
 
 		return checkBox;
@@ -94,15 +104,23 @@ class Pagina extends JPanel {
 
 		for (int i = 0; i < lista.size(); i++) {
 
-			label = new JLabel(lista.get(i));
+			if (filePath) {
 
-			label.setHorizontalAlignment(SwingConstants.CENTER);
+			}
 
-			label.setFont(font);
+			else {
 
-			label.setForeground(fg);
+				label = new JLabel(lista.get(i));
 
-			panel.add(label);
+				label.setHorizontalAlignment(SwingConstants.CENTER);
+
+				label.setFont(font);
+
+				label.setForeground(fg);
+
+				panel.add(label);
+
+			}
 
 		}
 
