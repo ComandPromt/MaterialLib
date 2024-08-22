@@ -46,5 +46,6 @@
 	<classpathentry kind="lib" path="src/main/java/libs/timingframework-core-6.1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/java/libs/timingframework-swing-6.1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/java/libs/swing-worker-1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/java/libs/exp4j-0.4.8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

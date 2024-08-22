@@ -56,6 +56,8 @@ class NumPagination extends JPanel {
 
 	private Indicators indicadorType;
 
+	private int corte;
+
 	public int getStep() {
 
 		return step;
@@ -162,23 +164,12 @@ class NumPagination extends JPanel {
 			}
 
 			cuerpo.verDatos(
-
 					JMthos.calcularSucesionAritmeticaAInt("1#0,2#" + cuerpo.getSplit() * cuerpo.getItems(), indice),
 					cuerpo.getDatos());
 
 			indice--;
 
-			if ((filter - indice) + 1 < step) {
-
-				verNumeros(1, filter, step, cuerpo);
-
-			}
-
-			else {
-
-				verNumeros(indice, filter, step, cuerpo);
-
-			}
+			verNumeros(indice, filter, step, cuerpo);
 
 			numeros.getNumeros().getLast().setPaintSelected(true);
 
@@ -214,7 +205,7 @@ class NumPagination extends JPanel {
 
 			if ((filter - indice) < step) {
 
-				verNumeros(1, filter, step, cuerpo);
+				verNumeros(1, corte, step, cuerpo);
 
 			}
 
@@ -309,35 +300,15 @@ class NumPagination extends JPanel {
 
 			indice = 0;
 
-			if (filter > 1) {
+			verNumeros(1, corte, step, cuerpo);
 
-				verNumeros(1, filter, step, cuerpo);
+			try {
 
-				try {
-
-					cuerpo.verDatos(0, cuerpo.getDatos());
-
-				}
-
-				catch (Exception e) {
-
-				}
+				cuerpo.verDatos(0, cuerpo.getDatos());
 
 			}
 
-			else {
-
-				verNumeros(1, filter, step, cuerpo);
-
-				try {
-
-					cuerpo.verDatos(0, cuerpo.getDatos());
-
-				}
-
-				catch (Exception e) {
-
-				}
+			catch (Exception e) {
 
 			}
 
@@ -351,7 +322,9 @@ class NumPagination extends JPanel {
 
 	}
 
-	public NumPagination(Spinner spinner, int numbers, int filter, int step, Cuerpo cuerpo) {
+	public NumPagination(Spinner spinner, int numbers, int filter, int step, int corte, Cuerpo cuerpo) {
+
+		this.corte = corte;
 
 		calcularNumeroPaginas(cuerpo);
 

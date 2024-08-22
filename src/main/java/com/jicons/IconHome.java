@@ -1,5 +1,6 @@
 package com.jicons;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,7 +9,9 @@ import java.awt.geom.GeneralPath;
 import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
-public class Carpeta extends ImageIcon {
+public class IconHome extends ImageIcon {
+
+	public Color linea;
 
 	@Override
 	public synchronized void paintIcon(Component c, Graphics g, int x, int y) {
@@ -79,20 +82,6 @@ public class Carpeta extends ImageIcon {
 		ye[0] = Math.round(width * 0.166f);
 
 		ye[1] = 0;
-
-		ye[2] = Math.round(height * 0.166f);
-
-		g.fillPolygon(equis, ye, 3);
-
-		equis[0] = Math.round(width * 0.49f);
-
-		equis[1] = Math.round(width * 0.7f);
-
-		equis[2] = Math.round(width * 0.6f);
-
-		ye[0] = Math.round(height * 0.166f);
-
-		ye[1] = Math.round(height * 0.05f);
 
 		ye[2] = Math.round(height * 0.166f);
 

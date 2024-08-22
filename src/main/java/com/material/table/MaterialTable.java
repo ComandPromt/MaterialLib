@@ -80,6 +80,48 @@ public class MaterialTable extends JPanel {
 
 	}
 
+	public void setFilePath(String text, int type, ImageIcon icon) {
+
+		try {
+
+			cuerpo.setFilePath(text, type, icon, true);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setFileBottom(Color color) {
+
+		try {
+
+			cuerpo.setFileBottom(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setFilePath(String text, int type) {
+
+		try {
+
+			cuerpo.setFilePath(text, type, true);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setIcononLabelHeader(List<ImageIcon> icons) {
 
 		try {
@@ -493,6 +535,8 @@ public class MaterialTable extends JPanel {
 								contador = (startIndex + i / 2)
 										+ JMthos.calcularSucesionAritmeticaAInt("1#0,2#1", startIndex);
 
+								contador += JMthos.calcularSucesionAritmeticaAInt("2#0,3#1", contador);
+
 								ArrayList<String> sublist = new ArrayList<>(lista.subList(contador, contador += i));
 
 								for (String valor : sublist) {
@@ -544,8 +588,6 @@ public class MaterialTable extends JPanel {
 
 	public MaterialTable(List<String> columns, List<String> lista, int pageItems, int splitPagination) {
 
-		split = pageItems;
-
 		deleteMsg = "¿Quieres borrar los datos?";
 
 		deleteAllMsg = "¿Quieres vaciar la tabla?";
@@ -555,6 +597,8 @@ public class MaterialTable extends JPanel {
 			pageItems = 4;
 
 		}
+
+		split = pageItems;
 
 		if (splitPagination < 1) {
 
@@ -567,6 +611,8 @@ public class MaterialTable extends JPanel {
 		filter = pageItems;
 
 		cuerpo = new Cuerpo(lista, pageItems, columns.size());
+
+		cuerpo.setCabeceras(columns);
 
 		cuerpo.setNumItems(split);
 
@@ -600,7 +646,7 @@ public class MaterialTable extends JPanel {
 
 		panel_5.setLayout(new GridLayout());
 
-		pagination = new NumPagination(spiner, lista.size(), numeroPaginas, splitPagination, cuerpo);
+		pagination = new NumPagination(spiner, lista.size(), numeroPaginas, splitPagination, cortePagination, cuerpo);
 
 		panel_2.setLayout(new GridLayout());
 
@@ -636,7 +682,7 @@ public class MaterialTable extends JPanel {
 
 						ArrayList<JComponent> componentes = new ArrayList<>();
 
-						textosCabecera = new AddItem(numeroPaginas, pagination, cuerpo, columns);
+						textosCabecera = new AddItem(numeroPaginas, pagination, cuerpo);
 
 						componentes.add(new VerySimplePanel(textosCabecera));
 
@@ -702,7 +748,7 @@ public class MaterialTable extends JPanel {
 
 							listaIndice = obtenerListaConSplit(datos, cuerpo.getIndicesNoSeleccionados(),
 									cortePagination);
-
+							System.out.println(listaIndice);
 							cuerpo.setDatos(listaIndice);
 
 							cuerpo.verDatos(0, listaIndice);

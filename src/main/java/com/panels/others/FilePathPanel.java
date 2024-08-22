@@ -1,6 +1,9 @@
 package com.panels.others;
 
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
@@ -9,6 +12,8 @@ import com.jicons.Carpeta;
 import com.jicons.Copy;
 import com.jicons.IconFile;
 import com.textField.text.NTextField;
+
+import mthos.JMthos;
 
 @SuppressWarnings("serial")
 public class FilePathPanel extends JPanel {
@@ -21,6 +26,24 @@ public class FilePathPanel extends JPanel {
 
 	private NButton boton3;
 
+	private JPanel panel2;
+
+	private IconFile iconFile;
+
+	public void setType(int tipo) {
+
+		try {
+
+			iconFile.setTipo(tipo);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setTextField(NTextField textField) {
 
 		this.textField = textField;
@@ -31,11 +54,15 @@ public class FilePathPanel extends JPanel {
 
 		this.boton = boton;
 
+		panel2.setBackground(boton3.getBackground());
+
 	}
 
 	public void setBoton3(NButton boton2) {
 
 		this.boton2 = boton2;
+
+		panel2.setBackground(boton3.getBackground());
 
 	}
 
@@ -43,6 +70,7 @@ public class FilePathPanel extends JPanel {
 
 		this.boton3 = boton3;
 
+		panel2.setBackground(boton3.getBackground());
 	}
 
 	public NTextField getTextField() {
@@ -69,25 +97,59 @@ public class FilePathPanel extends JPanel {
 
 	}
 
-	public FilePathPanel(String text) {
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public FilePathPanel(String text, boolean showTextField) {
 
-		setLayout(new GridLayout(2, 1));
+		this(text, 2, showTextField);
 
-		textField = new NTextField(text);
+	}
 
-		JPanel panel1 = new JPanel();
+	public FilePathPanel(String text, int type, boolean showTextField) {
 
-		panel1.setLayout(new GridLayout());
+		iconFile = new IconFile("", type);
 
-		panel1.add(textField);
+		if (showTextField) {
 
-		add(panel1);
+			setLayout(new GridLayout(2, 1));
 
-		JPanel panel2 = new JPanel();
+			textField = new NTextField(text);
+
+			JPanel panel1 = new JPanel();
+
+			panel1.setLayout(new GridLayout());
+
+			panel1.add(textField);
+
+			add(panel1);
+
+		}
+
+		else {
+
+			setLayout(new GridLayout(1, 1));
+
+		}
+
+		panel2 = new JPanel();
 
 		panel2.setLayout(new GridLayout(1, 3));
 
 		boton = new NButton();
+
+		boton.addMouseListener(new MouseAdapter() {
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				JMthos.copy(text);
+
+			}
+
+		});
+
+		boton.setBackground(Color.WHITE);
 
 		boton.setIcon(new Copy());
 
@@ -95,17 +157,79 @@ public class FilePathPanel extends JPanel {
 
 		boton3 = new NButton();
 
-		boton3.setIcon(new IconFile("GIF", 12));
+		panel2.setBackground(Color.WHITE);
+
+		boton3.addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				JMthos.abrir(text);
+
+			}
+
+		});
+
+		boton3.setBackground(Color.WHITE);
+
+		boton3.setIcon(iconFile);
 
 		panel2.add(boton3);
 
 		boton2 = new NButton();
+
+		boton2.addMouseListener(new MouseAdapter() {
+
+			@Override
+
+			public void mousePressed(MouseEvent e) {
+
+				JMthos.abrir(JMthos.extraerCarpeta(text));
+
+			}
+
+		});
+
+		boton2.setBackground(Color.WHITE);
 
 		boton2.setIcon(new Carpeta());
 
 		panel2.add(boton2);
 
 		add(panel2);
+
+	}
+
+	public void setTextFileBottom(String text) {
+
+		try {
+
+			iconFile.setTexto(text);
+
+			boton3.setIcon(iconFile);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setFileBottom(Color color) {
+
+		try {
+
+			iconFile.setBottomColor(color);
+
+			boton3.setIcon(iconFile);
+
+		}
+
+		catch (Exception e) {
+
+		}
 
 	}
 

@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -25,7 +24,7 @@ class AddItem extends JPanel {
 
 	}
 
-	public AddItem(int numeroPaginas, NumPagination pagination, Cuerpo cuerpo, List<String> cabeceras) {
+	public AddItem(int numeroPaginas, NumPagination pagination, Cuerpo cuerpo) {
 
 		setLayout(new GridLayout());
 
@@ -37,13 +36,13 @@ class AddItem extends JPanel {
 
 		JPanel agregar = new JPanel();
 
-		datosItem.setLayout(new GridLayout(0, cabeceras.size(), 0, 0));
+		datosItem.setLayout(new GridLayout(0, cuerpo.getCabeceras().size(), 0, 0));
 
 		ItemAdd item;
 
-		for (int i = 0; i < cabeceras.size(); i++) {
+		for (int i = 0; i < cuerpo.getCabeceras().size(); i++) {
 
-			item = new ItemAdd(cabeceras.get(i));
+			item = new ItemAdd(cuerpo.getCabeceras().get(i));
 
 			this.datos.add(item);
 
@@ -82,7 +81,17 @@ class AddItem extends JPanel {
 
 				int perpage = cuerpo.getItems();
 
-				pagination.setStep(JMthos.divideAndCeil(lista.size(), perpage));
+				if ((lista.size() / cuerpo.getSplit()) > perpage) {
+
+					pagination.setStep(JMthos.divideAndCeil(lista.size(), perpage));
+
+				}
+
+				else {
+
+					pagination.setStep(1);
+
+				}
 
 				int index = pagination.getIndice();
 

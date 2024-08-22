@@ -1,4 +1,3 @@
-
 package com.button.rs;
 
 import java.awt.Color;

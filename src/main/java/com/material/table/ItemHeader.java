@@ -149,24 +149,31 @@ class ItemHeader extends JPanel {
 
 	private void clickear() {
 
-		cuerpo.borrarDatos();
+		try {
 
-		int index = indice;
+			cuerpo.borrarDatos();
 
-		if (index > 0) {
+			int index = indice;
 
-			index++;
+			if (index > 0) {
 
+				index++;
+
+			}
+
+			ArrayList<String> lista = (ArrayList<String>) JMthos.sortedMapToList(test
+					.convertirAMapYOrdenar(cuerpo.getDatos(), cuerpo.getSplit(), index, !mov.isParteSuperiorClicada()));
+
+			lista = (ArrayList<String>) JMthos.limpiarLista(lista, null);
+
+			cuerpo.setDatos(lista);
+
+			cuerpo.verDatos(0, lista);
 		}
 
-		ArrayList<String> lista = (ArrayList<String>) JMthos.sortedMapToList(
-				test.convertirAMapYOrdenar(cuerpo.getDatos(), cuerpo.getSplit(), index, !mov.isParteSuperiorClicada()));
+		catch (Exception e) {
 
-		lista = (ArrayList<String>) JMthos.limpiarLista(lista, null);
-
-		cuerpo.setDatos(lista);
-
-		cuerpo.verDatos(0, lista);
+		}
 
 	}
 

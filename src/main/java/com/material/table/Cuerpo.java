@@ -5,7 +5,10 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import com.jicons.ClassicFolder;
 
 @SuppressWarnings("serial")
 class Cuerpo extends JPanel {
@@ -33,6 +36,48 @@ class Cuerpo extends JPanel {
 	private int numItems;
 
 	private boolean filePath;
+
+	private List<String> cabeceras;
+
+	private String texto;
+
+	private int tipo;
+
+	private ImageIcon icono;
+
+	private Color colorFileBottom;
+
+	public ArrayList<Pagina> getPaginas() {
+
+		return paginas;
+
+	}
+
+	public void setFilePath(String text, int tipo, ImageIcon icon, boolean filePath) {
+
+		this.filePath = filePath;
+
+		this.tipo = tipo;
+
+		this.icono = icon;
+
+		this.texto = text;
+
+		repaint();
+
+	}
+
+	public void setFilePath(String text, int tipo, boolean filePath) {
+
+		this.filePath = filePath;
+
+		this.tipo = tipo;
+
+		this.texto = text;
+
+		repaint();
+
+	}
 
 	public void setFilePath(boolean filePath) {
 
@@ -113,6 +158,8 @@ class Cuerpo extends JPanel {
 
 			Pagina pagina;
 
+			ClassicFolder carpetaClasica;
+
 			for (int i = 0; i < vueltas; i++) {
 
 				if (contador < lista.size()) {
@@ -121,13 +168,9 @@ class Cuerpo extends JPanel {
 
 					if (valores.size() == split) {
 
-						pagina = new Pagina(valores, getFont(), getForeground());
+						pagina = new Pagina(valores, getFont(), getForeground(), filePath);
 
-						if (filePath) {
-
-							pagina.setFilePath(true);
-
-						}
+						pagina.setFileBottom(colorFileBottom);
 
 						pagina.getCheckBox().setSelected(activate);
 
@@ -138,6 +181,24 @@ class Cuerpo extends JPanel {
 						pagina.setCheckColor(activeColor);
 
 						pagina.setColorActivo(activeBackground);
+
+						if (!texto.isEmpty()) {
+
+							if (icono == null) {
+
+								carpetaClasica = new ClassicFolder(Color.LIGHT_GRAY);
+
+								carpetaClasica.setRestarDerecha(7);
+
+								icono = carpetaClasica;
+
+							}
+
+							pagina.setTextAndType(tipo, texto, icono);
+
+							pagina.setFileBottom(colorFileBottom);
+
+						}
 
 						paginas.add(pagina);
 
@@ -157,7 +218,7 @@ class Cuerpo extends JPanel {
 
 					if (valores.size() == split) {
 
-						pagina = new Pagina(valores, getFont(), getForeground());
+						pagina = new Pagina(valores, getFont(), getForeground(), filePath);
 
 						pagina.setBackground(color);
 
@@ -199,6 +260,10 @@ class Cuerpo extends JPanel {
 	}
 
 	public Cuerpo(List<String> lista, int items, int split) {
+
+		colorFileBottom = Color.PINK;
+
+		texto = "";
 
 		indicesNoSeleccionados = new ArrayList<>();
 
@@ -313,6 +378,28 @@ class Cuerpo extends JPanel {
 		}
 
 		return resultado;
+
+	}
+
+	public List<String> getCabeceras() {
+
+		return cabeceras;
+
+	}
+
+	public void setCabeceras(List<String> cabeceras) {
+
+		this.cabeceras = cabeceras;
+
+	}
+
+	public void setFileBottom(Color color) {
+
+		colorFileBottom = color;
+
+		revalidate();
+
+		repaint();
 
 	}
 

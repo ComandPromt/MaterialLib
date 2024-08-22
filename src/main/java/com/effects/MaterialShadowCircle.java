@@ -20,30 +20,36 @@ public class MaterialShadowCircle {
 
 	public static final int OFFSET_RIGHT = 5;
 
+	@SuppressWarnings("unchecked")
 	private static KeyFrames<Float> opacity1 = (new KeyFrames.Builder(Float.valueOf(0.0F)))
 			.addFrame(Float.valueOf(0.12F), 0.2D).addFrame(Float.valueOf(0.16F), 0.4D)
 			.addFrame(Float.valueOf(0.19F), 0.6D).addFrame(Float.valueOf(0.25F), 0.8D)
 			.addFrame(Float.valueOf(0.3F), 1.0D).build();
 
+	@SuppressWarnings("unchecked")
 	private static KeyFrames<Float> opacity2 = (new KeyFrames.Builder(Float.valueOf(0.0F)))
 			.addFrame(Float.valueOf(0.24F), 0.2D).addFrame(Float.valueOf(0.23F), 0.4D)
 			.addFrame(Float.valueOf(0.23F), 0.6D).addFrame(Float.valueOf(0.22F), 0.8D)
 			.addFrame(Float.valueOf(0.22F), 1.0D).build();
 
+	@SuppressWarnings("unchecked")
 	private static KeyFrames<Float> radius1 = (new KeyFrames.Builder(Float.valueOf(0.0F)))
 			.addFrame(Float.valueOf(3.0F), 0.2D).addFrame(Float.valueOf(6.0F), 0.4D)
 			.addFrame(Float.valueOf(20.0F), 0.6D).addFrame(Float.valueOf(28.0F), 0.8D)
 			.addFrame(Float.valueOf(38.0F), 1.0D).build();
 
+	@SuppressWarnings("unchecked")
 	private static KeyFrames<Float> radius2 = (new KeyFrames.Builder(Float.valueOf(0.0F)))
 			.addFrame(Float.valueOf(2.0F), 0.2D).addFrame(Float.valueOf(6.0F), 0.4D).addFrame(Float.valueOf(6.0F), 0.6D)
 			.addFrame(Float.valueOf(10.0F), 0.8D).addFrame(Float.valueOf(12.0F), 1.0D).build();
 
+	@SuppressWarnings("unchecked")
 	private static KeyFrames<Float> offset1 = (new KeyFrames.Builder(Float.valueOf(0.0F)))
 			.addFrame(Float.valueOf(1.0F), 0.2D).addFrame(Float.valueOf(3.0F), 0.4D)
 			.addFrame(Float.valueOf(10.0F), 0.6D).addFrame(Float.valueOf(14.0F), 0.8D)
 			.addFrame(Float.valueOf(19.0F), 1.0D).build();
 
+	@SuppressWarnings("unchecked")
 	private static KeyFrames<Float> offset2 = (new KeyFrames.Builder(Float.valueOf(0.0F)))
 			.addFrame(Float.valueOf(1.0F), 0.2D).addFrame(Float.valueOf(3.0F), 0.4D).addFrame(Float.valueOf(6.0F), 0.6D)
 			.addFrame(Float.valueOf(10.0F), 0.8D).addFrame(Float.valueOf(15.0F), 1.0D).build();
