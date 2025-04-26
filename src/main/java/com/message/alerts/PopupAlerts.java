@@ -101,9 +101,39 @@ public class PopupAlerts {
 
 	}
 
-	public void mensaje(String mensaje, AlertType type, int size, String image) {
+	public void mensaje(String mensaje, int speed) {
+
+		mensaje(mensaje, null, 0, "", speed);
+
+	}
+
+	public void mensaje(String mensaje) {
+
+		mensaje(mensaje, null, 0, "", 352);
+
+	}
+
+	public void mensaje(String mensaje, AlertType type, int speed) {
+
+		mensaje(mensaje, type, 0, "", speed);
+
+	}
+
+	public void mensaje(String mensaje, AlertType type) {
+
+		mensaje(mensaje, type, 0, "", 352);
+
+	}
+
+	public void mensaje(String mensaje, AlertType type, int size, String image, int speed) {
 
 		boolean nulo = true;
+
+		if (speed < 1) {
+
+			speed = 352;
+
+		}
 
 		if (type == null) {
 
@@ -117,7 +147,7 @@ public class PopupAlerts {
 
 		}
 
-		if (size <= 0) {
+		if (size < 1) {
 
 			size = 18;
 
@@ -143,7 +173,7 @@ public class PopupAlerts {
 
 			AlertError error;
 
-			error = new AlertError(false);
+			error = new AlertError(speed);
 
 			if (!nulo) {
 
@@ -181,7 +211,7 @@ public class PopupAlerts {
 
 			AlertInformation informacion;
 
-			informacion = new AlertInformation(false);
+			informacion = new AlertInformation(speed);
 
 			if (!nulo) {
 
@@ -219,7 +249,7 @@ public class PopupAlerts {
 
 			AlertWarningSalir salir;
 
-			salir = new AlertWarningSalir(false);
+			salir = new AlertWarningSalir(speed);
 
 			if (!nulo) {
 
@@ -257,7 +287,7 @@ public class PopupAlerts {
 
 			AlertSuccess exito;
 
-			exito = new AlertSuccess(false);
+			exito = new AlertSuccess(speed);
 
 			if (!nulo) {
 

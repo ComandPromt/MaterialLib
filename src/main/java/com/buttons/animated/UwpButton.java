@@ -156,9 +156,9 @@ public class UwpButton extends JButton {
 
 		borderSize = 2;
 
-		selectedColor = new Color(200, 200, 200);
+		selectedColor = Color.WHITE;
 
-		effectColor = new Color(255, 255, 255);
+		effectColor = Color.LIGHT_GRAY;
 
 		setFont(getFont().deriveFont(Font.PLAIN, 20f));
 
@@ -171,6 +171,8 @@ public class UwpButton extends JButton {
 		setText(text);
 
 		init();
+
+		setBackground(new Color(227, 227, 227));
 
 	}
 

@@ -3,6 +3,7 @@ package com.comboBox.comboSuggestion;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -47,6 +48,100 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 	private Color lineScrollColor;
 
 	private Color scrollColor;
+
+	private JTextField txt;
+
+	private int menuAlign;
+
+	private Font fuente;
+
+	public void setFontMenu(Font font) {
+
+		fuente = font;
+
+	}
+
+	public void setMenuHorizontalAlignment(int align) {
+
+		menuAlign = align;
+
+	}
+
+	public void setCenteredMenuText() {
+
+		try {
+
+			menuAlign = JTextField.CENTER;
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setCenteredText() {
+
+		try {
+
+			txt.setHorizontalAlignment(JTextField.CENTER);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setHorizontalAlignment(int align) {
+
+		try {
+
+			txt.setHorizontalAlignment(align);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSelectionColor(Color color) {
+
+		try {
+
+			txt.setSelectionColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSelectedTextColor(Color color) {
+
+		try {
+
+			txt.setSelectedTextColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setFg(Color fg) {
+
+		txt.setForeground(fg);
+
+	}
 
 	public Color getBorderColor() {
 
@@ -146,7 +241,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 		arrowInvisible = new Color(150, 150, 150);
 
-		selectionItemColor = new Color(240, 240, 240);
+		selectionItemColor = Color.WHITE;
 
 		selectionForegroundColor = new Color(17, 155, 215);
 
@@ -168,7 +263,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 		arrowInvisible = new Color(150, 150, 150);
 
-		selectionItemColor = new Color(240, 240, 240);
+		selectionItemColor = Color.WHITE;
 
 		selectionForegroundColor = new Color(17, 155, 215);
 
@@ -185,7 +280,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 		Border border = new Border();
 
-		JTextField txt = (JTextField) comboBox.getEditor().getEditorComponent();
+		txt = (JTextField) comboBox.getEditor().getEditorComponent();
 
 		comboBox.addPopupMenuListener(new PopupMenuListener() {
 
@@ -259,23 +354,25 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 				JLabel label = new JLabel(text);
 
-				label.setFont(comboBox.getFont());
+				label.setHorizontalAlignment(menuAlign);
 
-				if (i >= 0) {
+				label.setOpaque(true);
 
-					label.setBorder(new EmptyBorder(5, 8, 5, 8));
+				if (fuente == null) {
+
+					label.setFont(comboBox.getFont());
 
 				}
 
 				else {
 
-					label.setBorder(null);
+					label.setFont(fuente);
 
 				}
 
-				label.setOpaque(true);
-
 				if (bln) {
+
+					label.setForeground(Color.ORANGE);
 
 					label.setBackground(selectionItemColor);
 
@@ -288,6 +385,18 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 					label.setBackground(menuColor);
 
 					label.setForeground(foregroundMenuColor);
+
+				}
+
+				if (i >= 0) {
+
+					label.setBorder(new EmptyBorder(5, 8, 5, 8));
+
+				}
+
+				else {
+
+					label.setBorder(null);
 
 				}
 
@@ -318,7 +427,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			JScrollPane scroll = super.createScroller();
 
-			ScrollBarCustom sb = new ScrollBarCustom(null, null);
+			ScrollBarCustom sb = new ScrollBarCustom(null, null, Color.WHITE, 40);
 
 			if (scrollColor != null) {
 
@@ -440,7 +549,7 @@ public class ComboSuggestionUI extends BasicComboBoxUI {
 
 			}
 
-			g2.drawRect(x, y, width - 1, height - 1);
+			g2.drawRect(x, 1, width - 1, height - 2);
 
 			g2.dispose();
 

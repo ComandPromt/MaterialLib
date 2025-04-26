@@ -54,32 +54,33 @@ public class PasswordFieldWithShadow extends JPanel {
 
 	public void setType(int type) {
 
-		// switch (type) {
+		switch (type) {
 
-//		case 2:
-//
-//			textField = new PasswordField();
-//
-//			break;
-//
-//		case 3:
-//
-//			textField = new SimplePasswordField();
-//
-//			break;
-//
-//		case 4:
-//
-//			textField = new PasswordIcons();
-//			break;
-//
-//		default:
-//
-//			textField = new PasswordFieldWithIcon();
-//
-//			break;
-//
-//		}
+		case 2:
+
+			textField = new PasswordField();
+
+			break;
+
+		case 3:
+
+			textField = new SimplePasswordField();
+
+			break;
+
+		case 4:
+
+			textField = new PasswordIcons();
+
+			break;
+
+		default:
+
+			textField = new PasswordFieldWithIcon();
+
+			break;
+
+		}
 
 	}
 

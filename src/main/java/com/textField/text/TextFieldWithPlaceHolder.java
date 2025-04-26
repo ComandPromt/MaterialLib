@@ -28,7 +28,7 @@ import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
 
-public class TextFieldWithPlaceholder extends JTextField {
+public class TextFieldWithPlaceHolder extends JTextField {
 
 	protected float anchoDeBorde;
 
@@ -176,7 +176,7 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 	}
 
-	public TextFieldWithPlaceholder() {
+	public TextFieldWithPlaceHolder() {
 
 		anchoDeBorde = 2f;
 
@@ -348,13 +348,13 @@ public class TextFieldWithPlaceholder extends JTextField {
 
 	}
 
-	public Boolean getLeft() {
+	public Boolean getLeftImage() {
 
 		return left;
 
 	}
 
-	public void setLeft(Boolean left) {
+	public void setLeftImage(boolean left) {
 
 		this.left = left;
 

@@ -322,9 +322,12 @@ public class BootsTextFieldConIcono extends JPanel {
 		setFont(getFont().deriveFont(0, 20.0F));
 
 		this.input = new BootsTextField(text);
+		
 		input.setGrosor(5);
+		
 		input.setPlaceholderColor(Color.BLUE);
-		input.setPlaceholder("AAAA");
+		
+		input.setPlaceholder(text);
 
 		this.input.setBounds(0, 0, 414, 300);
 

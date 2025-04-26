@@ -70,7 +70,7 @@ public class SearchTextField extends JPanel {
 
 		customTextAreaScroll.setBackground(Color.WHITE);
 
-		ScrollBarCustom sb = new ScrollBarCustom(getForeground(), getBackground());
+		ScrollBarCustom sb = new ScrollBarCustom(getForeground(), getBackground(), null, 0);
 
 		sb.setUnitIncrement(30);
 

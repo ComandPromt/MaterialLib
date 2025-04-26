@@ -5,8 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -16,12 +14,6 @@ import Animacion.Fade;
 
 @SuppressWarnings("serial")
 public class AlertInformation extends javax.swing.JFrame {
-
-	Timer timer;
-
-	TimerTask task;
-
-	int i;
 
 	private JLabel image;
 
@@ -37,7 +29,17 @@ public class AlertInformation extends javax.swing.JFrame {
 
 	public AlertInformation(boolean modal) {
 
-		i = 32;
+		this(352);
+
+	}
+
+	public AlertInformation(int speed) {
+
+		if (speed < 1) {
+
+			speed = 480;
+
+		}
 
 		setAlwaysOnTop(true);
 
@@ -45,7 +47,7 @@ public class AlertInformation extends javax.swing.JFrame {
 
 		setLocationRelativeTo(null);
 
-		Fade.JFrameFadeOut(1f, 0f, 0.1f, 480, this, Fade.DISPOSE);
+		Fade.JFrameFadeOut(1f, 0f, 0.1f, speed, this, Fade.DISPOSE);
 
 	}
 
@@ -83,24 +85,6 @@ public class AlertInformation extends javax.swing.JFrame {
 
 		setUndecorated(true);
 
-		addWindowListener(new java.awt.event.WindowAdapter() {
-
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent evt) {
-
-				formWindowClosing(evt);
-
-			}
-
-			@Override
-			public void windowOpened(java.awt.event.WindowEvent evt) {
-
-				formWindowOpened(evt);
-
-			}
-
-		});
-
 		jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
 		titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -135,7 +119,9 @@ public class AlertInformation extends javax.swing.JFrame {
 		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
 		image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/imagenes/informacion.png")));
+
 		jPanel1.add(image);
+
 		jPanel1.add(titulo);
 
 		pack();
@@ -144,52 +130,6 @@ public class AlertInformation extends javax.swing.JFrame {
 	public void setTitulo(String mensaje) {
 
 		titulo.setText(mensaje);
-
-	}
-
-	private void formWindowOpened(java.awt.event.WindowEvent evt) {
-
-		task = new TimerTask() {
-
-			@Override
-
-			public void run() {
-
-				if (i == 352) {
-
-					timer.cancel();
-
-				}
-
-				else {
-
-					i += 32;
-
-					trasparencia((float) i / 352);
-
-				}
-
-			}
-
-		};
-
-		timer = new java.util.Timer();
-
-		timer.schedule(task, 0, 2);
-
-	}
-
-	private void formWindowClosing(java.awt.event.WindowEvent evt) {
-
-		setVisible(false);
-
-		dispose();
-
-	}
-
-	private void trasparencia(float trasp) {
-
-		PopupAlerts.setOpacity(this, trasp);
 
 	}
 

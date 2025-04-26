@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JToolTip;
 import javax.swing.border.EmptyBorder;
 
-import com.effects.RippleEffect;
 import com.material.utils.ShadowRenderer;
 import com.toolTip.ToolTipLlamada;
 
@@ -27,8 +26,6 @@ public class EffectButton extends JButton {
 	private Color shadowColor;
 
 	private Insets shadowSize;
-
-	private RippleEffect rippleEffect;
 
 	private BufferedImage imageShadow;
 
@@ -173,18 +170,6 @@ public class EffectButton extends JButton {
 
 	}
 
-	public void setRippleColor(Color color) {
-
-		rippleEffect.setRippleColor(color);
-
-	}
-
-	public Color getRippleColor() {
-
-		return rippleEffect.getRippleColor();
-
-	}
-
 	public void setSombra(int size) {
 
 		shadowSize = new Insets(size, size, size, size);
@@ -201,6 +186,12 @@ public class EffectButton extends JButton {
 
 	}
 
+	public EffectButton() {
+
+		this("");
+
+	}
+
 	public EffectButton(String text) {
 
 		opacity = 0.5f;
@@ -212,8 +203,6 @@ public class EffectButton extends JButton {
 		shadowColor = new Color(170, 170, 170);
 
 		shadowSize = new Insets(8, 8, 8, 8);
-
-		rippleEffect = new RippleEffect(this);
 
 		setText(text);
 
@@ -227,13 +216,9 @@ public class EffectButton extends JButton {
 
 		setForeground(new Color(80, 80, 80));
 
-		rippleEffect.setRippleColor(new Color(220, 220, 220));
-
 		setBackground(Color.PINK);
 
 		setShadowColor(Color.GREEN);
-
-		setRippleColor(Color.RED);
 
 		setRound(45);
 
@@ -261,8 +246,6 @@ public class EffectButton extends JButton {
 		Area area = new Area(new RoundRectangle2D.Double(x, y, width, height, round, round));
 
 		g2.fill(area);
-
-		rippleEffect.render(g2, area);
 
 		g2.dispose();
 

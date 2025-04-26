@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import com.buttons.round.NButton;
 import com.jicons.Carpeta;
-import com.jicons.Copy;
+import com.jicons.CopyOld;
 import com.jicons.IconFile;
 import com.textField.text.NTextField;
 
@@ -151,7 +151,7 @@ public class FilePathPanel extends JPanel {
 
 		boton.setBackground(Color.WHITE);
 
-		boton.setIcon(new Copy());
+		boton.setIcon(new CopyOld());
 
 		panel2.add(boton);
 

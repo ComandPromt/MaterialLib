@@ -9,9 +9,37 @@ import javax.swing.JScrollBar;
 
 public class ScrollBarCustom extends JScrollBar {
 
-	public ScrollBarCustom(Color foreground, Color background) {
+	private ModernScrollBarUI bar;
 
-		setUI(new ModernScrollBarUI());
+	public void setScrollSize(int size) {
+
+		bar.setThumbSize(size);
+
+	}
+
+	public void setBackground2(Color color) {
+
+		bar.setFondo(color);
+
+	}
+
+	public ScrollBarCustom(Color foreground, Color background, Color background2, int size) {
+
+		if (background2 == null) {
+
+			background2 = Color.WHITE;
+
+		}
+
+		if (size < 1) {
+
+			size = 40;
+
+		}
+
+		bar = new ModernScrollBarUI(background2, size);
+
+		setUI(bar);
 
 		setPreferredSize(new Dimension(8, 8));
 

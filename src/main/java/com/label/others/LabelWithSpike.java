@@ -64,6 +64,12 @@ public class LabelWithSpike extends JLabel {
 
 	public void setAngle(int angle) {
 
+		if (angle > 0 && angle < 27) {
+
+			angle = 27;
+
+		}
+
 		this.angle = angle;
 
 		repaint();
@@ -215,6 +221,12 @@ public class LabelWithSpike extends JLabel {
 
 		setFont(getFont().deriveFont(Font.PLAIN, 20f));
 
+		if (angle < 27) {
+
+			angle = 27;
+
+		}
+
 		this.angle = angle;
 
 		setText(text);
@@ -284,105 +296,102 @@ public class LabelWithSpike extends JLabel {
 
 		default:
 
-			if (angle > 26) {
+			System.out.println(angle);
+			if (grosor > 1) {
 
-				if (grosor > 1) {
+				g2.fillRect(cateto, (grosor / 2), (getWidth() - 2 * cateto), (getHeight() - grosor));
 
-					g2.fillRect(cateto, (grosor / 2), (getWidth() - 2 * cateto), (getHeight() - grosor));
+			}
+
+			else {
+
+				g2.fillRect(cateto + grosor, (grosor / 2) + 1, (getWidth() - 2 * cateto) - ((grosor * 2) - 1),
+						(getHeight() - grosor * 2));
+
+			}
+
+			int[] equis = new int[3];
+
+			int[] ye = new int[3];
+
+			int[] equis2 = new int[3];
+
+			if (grosor == 1) {
+
+				ye[0] = (grosor / 2);
+
+				equis[0] = ((cateto + (grosor / 2)) - (int) JMthos.reglaDeTres(10, 4, grosor)) + 1;
+
+				equis[1] = (cateto + (grosor / 2) - (int) JMthos.reglaDeTres(10, 4, grosor)) + 1;
+
+				equis[2] = (grosor / 2) + 1;
+
+				ye[1] = ((getHeight() - grosor) + (int) JMthos.reglaDeTres(10, 4, grosor)) + 1;
+
+				equis2[0] = (getWidth() - equis[0]) + 1;
+
+				equis2[1] = (getWidth() - equis[1]) + 1;
+
+				equis2[2] = getWidth() - 1;
+
+			}
+
+			else {
+
+				ye[0] = (grosor / 2) - 1;
+
+				equis[0] = (cateto + (grosor / 2)) - (int) JMthos.reglaDeTres(10, 4, grosor);
+
+				if (grosor == 2 || grosor == 4) {
+
+					equis[1] = (cateto + (grosor / 2) - (int) JMthos.reglaDeTres(10, 4, grosor)) - 1;
 
 				}
 
 				else {
 
-					g2.fillRect(cateto + grosor, (grosor / 2) + 1, (getWidth() - 2 * cateto) - ((grosor * 2) - 1),
-							(getHeight() - grosor * 2));
-
+					equis[1] = (cateto + (grosor / 2) - (int) JMthos.reglaDeTres(10, 4, grosor));
 				}
 
-				int[] equis = new int[3];
+				ye[1] = (getHeight() - grosor) + (int) JMthos.reglaDeTres(10, 4, grosor);
 
-				int[] ye = new int[3];
-
-				int[] equis2 = new int[3];
-
-				if (grosor == 1) {
-
-					ye[0] = (grosor / 2);
-
-					equis[0] = ((cateto + (grosor / 2)) - (int) JMthos.reglaDeTres(10, 4, grosor)) + 1;
-
-					equis[1] = (cateto + (grosor / 2) - (int) JMthos.reglaDeTres(10, 4, grosor)) + 1;
-
-					equis[2] = (grosor / 2) + 1;
-
-					ye[1] = ((getHeight() - grosor) + (int) JMthos.reglaDeTres(10, 4, grosor)) + 1;
+				if (grosor == 2) {
 
 					equis2[0] = (getWidth() - equis[0]) + 1;
 
-					equis2[1] = (getWidth() - equis[1]) + 1;
+				}
 
-					equis2[2] = getWidth() - 1;
+				else {
+
+					equis2[0] = (getWidth() - equis[0]);
+
+				}
+
+				if (grosor > 5) {
+
+					equis2[1] = (getWidth() - equis[1]) + 1;
 
 				}
 
 				else {
 
-					ye[0] = (grosor / 2) - 1;
-
-					equis[0] = (cateto + (grosor / 2)) - (int) JMthos.reglaDeTres(10, 4, grosor);
-
-					if (grosor == 2 || grosor == 4) {
-
-						equis[1] = (cateto + (grosor / 2) - (int) JMthos.reglaDeTres(10, 4, grosor)) - 1;
-
-					}
-
-					else {
-
-						equis[1] = (cateto + (grosor / 2) - (int) JMthos.reglaDeTres(10, 4, grosor));
-					}
-
-					ye[1] = (getHeight() - grosor) + (int) JMthos.reglaDeTres(10, 4, grosor);
-
-					if (grosor == 2) {
-
-						equis2[0] = (getWidth() - equis[0]) + 1;
-
-					}
-
-					else {
-
-						equis2[0] = (getWidth() - equis[0]);
-
-					}
-
-					if (grosor > 5) {
-
-						equis2[1] = (getWidth() - equis[1]) + 1;
-
-					}
-
-					else {
-
-						equis2[1] = (getWidth() - equis[1]);
-
-					}
-
-					equis2[2] = getWidth() - grosor / 2;
-
-					equis[2] = (grosor / 2);
+					equis2[1] = (getWidth() - equis[1]);
 
 				}
 
-				ye[2] = getHeight() / 2;
+				equis2[2] = getWidth() - grosor / 2;
 
-				g2.fillPolygon(equis, ye, 3);
-
-				// g2.drawLine(getWidth(), getHeight() / 2, equis2[1], ye[1]);
-
-				g2.fillPolygon(equis2, ye, 3);
+				equis[2] = (grosor / 2);
 
 			}
+
+			ye[2] = getHeight() / 2;
+
+			g2.fillPolygon(equis, ye, 3);
+
+			// g2.drawLine(getWidth(), getHeight() / 2, equis2[1], ye[1]);
+
+			g2.fillPolygon(equis2, ye, 3);
 
 			break;
 

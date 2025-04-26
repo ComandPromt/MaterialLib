@@ -154,6 +154,12 @@ public class StyledButton extends JButton {
 
 	}
 
+	public StyledButton() {
+
+		this("");
+
+	}
+
 	public StyledButton(String text) {
 
 		style = ButtonStyle.PRIMARY;

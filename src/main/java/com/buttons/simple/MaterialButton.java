@@ -29,15 +29,15 @@ public class MaterialButton extends JButton {
 
 	private ElevationEffect elevation;
 
-	private MaterialType type = MaterialType.DEFAULT;
+	private MaterialType type;
 
-	private boolean isMousePressed = false;
+	private boolean isMousePressed;
 
-	private boolean isMouseOver = false;
+	private boolean isMouseOver;
 
-	private Color rippleColor = Color.WHITE;
+	private Color rippleColor;
 
-	private Cursor cursor = getCursor();
+	private Cursor cursor;
 
 	private String text;
 
@@ -50,6 +50,18 @@ public class MaterialButton extends JButton {
 	private Font fuente;
 
 	private int angle;
+
+	private FontMetrics metrics;
+
+	private int x;
+
+	private int y;
+
+	private Color bg;
+
+	private Color fg;
+
+	private Graphics2D g2;
 
 	public void setAngle(int angle) {
 
@@ -155,17 +167,19 @@ public class MaterialButton extends JButton {
 
 		setPreferredSize(new Dimension(200, 40));
 
+		setBorderPainted(false);
+
 		setSize(new Dimension(200, 40));
 
-		this.ripple = RippleEffect.applyTo(this);
+		ripple = RippleEffect.applyTo(this);
 
-		this.elevation = ElevationEffect.applyTo(this, 0);
+		elevation = ElevationEffect.applyTo(this, 0);
+
+		rippleColor = Color.WHITE;
+
+		cursor = getCursor();
 
 		type = MaterialType.DEFAULT;
-
-		isMousePressed = false;
-
-		isMouseOver = false;
 
 		rippleColor = Color.WHITE;
 
@@ -177,31 +191,31 @@ public class MaterialButton extends JButton {
 
 			public void mousePressed(MouseEvent mouseEvent) {
 
-				MaterialButton.this.isMousePressed = true;
+				isMousePressed = true;
 
 			}
 
 			public void mouseReleased(MouseEvent mouseEvent) {
 
-				MaterialButton.this.isMousePressed = false;
+				isMousePressed = false;
 
-				MaterialButton.this.repaint();
+				repaint();
 
 			}
 
 			public void mouseEntered(MouseEvent e) {
 
-				MaterialButton.this.isMouseOver = true;
+				isMouseOver = true;
 
-				MaterialButton.this.repaint();
+				repaint();
 
 			}
 
 			public void mouseExited(MouseEvent e) {
 
-				MaterialButton.this.isMouseOver = false;
+				isMouseOver = false;
 
-				MaterialButton.this.repaint();
+				repaint();
 
 			}
 
@@ -211,8 +225,7 @@ public class MaterialButton extends JButton {
 
 			public boolean contains(JComponent c, int x, int y) {
 
-				return (x > 0 && y > 0 && x < MaterialButton.this.getWidth() - 0
-						&& y < MaterialButton.this.getHeight() - 0);
+				return (x > 0 && y > 0 && x < getWidth() - 0 && y < getHeight() - 0);
 
 			}
 
@@ -302,7 +315,7 @@ public class MaterialButton extends JButton {
 
 	protected void paintComponent(Graphics g) {
 
-		Graphics2D g2 = (Graphics2D) g;
+		g2 = (Graphics2D) g;
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -331,7 +344,7 @@ public class MaterialButton extends JButton {
 
 		else {
 
-			Color bg = getBackground();
+			bg = getBackground();
 
 			g2.setColor(new Color(bg.getRed() / 255.0F, bg.getGreen() / 255.0F, bg.getBlue() / 255.0F, 0.6F));
 
@@ -339,11 +352,11 @@ public class MaterialButton extends JButton {
 
 		}
 
-		FontMetrics metrics = g.getFontMetrics(getFont());
+		metrics = g.getFontMetrics(getFont());
 
-		int x = (getWidth() - 0 - metrics.stringWidth(getText().toUpperCase())) / 2;
+		x = (getWidth() - 0 - metrics.stringWidth(getText().toUpperCase())) / 2;
 
-		int y = (getHeight() - 0 - metrics.getHeight()) / 2 + metrics.getAscent();
+		y = (getHeight() - 0 - metrics.getHeight()) / 2 + metrics.getAscent();
 
 		g2.setFont(getFont());
 
@@ -355,7 +368,7 @@ public class MaterialButton extends JButton {
 
 		else {
 
-			Color fg = getForeground();
+			fg = getForeground();
 
 			g2.setColor(new Color(fg.getRed() / 255.0F, fg.getGreen() / 255.0F, fg.getBlue() / 255.0F, 0.6F));
 
@@ -372,10 +385,6 @@ public class MaterialButton extends JButton {
 			this.ripple.paint(g2);
 
 		}
-
-	}
-
-	protected void paintBorder(Graphics g) {
 
 	}
 

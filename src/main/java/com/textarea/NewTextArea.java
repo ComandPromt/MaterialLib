@@ -15,10 +15,11 @@ import javax.swing.event.DocumentListener;
 
 import org.jdesktop.animation.timing.Animator;
 
+import com.contextmenu.DefaultContextMenu;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
-public class TextArea extends JTextArea {
+class NewTextArea extends JTextArea {
 
 	private TextAreaScroll scroll;
 
@@ -116,19 +117,27 @@ public class TextArea extends JTextArea {
 
 	}
 
-	public TextArea(Color foregroundScroll, Color backgroundScroll) {
+	public NewTextArea(Color foregroundScroll, Color backgroundScroll) {
 
 		this(null, null, foregroundScroll, backgroundScroll);
 
 	}
 
-	public TextArea() {
+	public NewTextArea() {
 
 		this(null, null, null, null);
 
 	}
 
-	public TextArea(Color selectionColor, Color lineColor, Color scrollColor, Color scrollLineColor) {
+	public NewTextArea(String text) {
+
+		this(null, null, null, null);
+
+		setText(text);
+
+	}
+
+	public NewTextArea(Color selectionColor, Color lineColor, Color scrollColor, Color scrollLineColor) {
 
 		if (lineColor == null) {
 
@@ -212,6 +221,10 @@ public class TextArea extends JTextArea {
 
 		setFont(new Font("Dialog", Font.PLAIN, 20));
 
+		DefaultContextMenu.addDefaultContextMenu(this);
+		if (scrollColor != null && scrollLineColor != null) {
+			scroll = new TextAreaScroll();
+		}
 	}
 
 	private void showing(boolean action) {

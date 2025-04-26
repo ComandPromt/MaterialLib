@@ -210,9 +210,9 @@ public class TextAreaScroll extends JScrollPane {
 
 		lineColor = new Color(3, 155, 216);
 
-		setVerticalScrollBar(new ScrollBarCustom(null, null));
+		setVerticalScrollBar(new ScrollBarCustom(null, null, Color.WHITE, 40));
 
-		scrol = new ScrollBarCustom(null, null);
+		scrol = new ScrollBarCustom(null, null, Color.WHITE, 40);
 
 		scrol.setOrientation(JScrollBar.HORIZONTAL);
 
@@ -252,9 +252,9 @@ public class TextAreaScroll extends JScrollPane {
 
 		this.scrollBackground = background;
 
-		setVerticalScrollBar(new ScrollBarCustom(foreground, background));
+		setVerticalScrollBar(new ScrollBarCustom(foreground, background, Color.WHITE, 40));
 
-		scrol = new ScrollBarCustom(foreground, background);
+		scrol = new ScrollBarCustom(foreground, background, Color.WHITE, 40);
 
 		scrol.setOrientation(JScrollBar.HORIZONTAL);
 

@@ -13,22 +13,60 @@ import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-final class ModernScrollBarUI extends BasicScrollBarUI {
+public class ModernScrollBarUI extends BasicScrollBarUI {
 
-	private final int THUMB_SIZE = 50;
+	private int thumbSize;
+
+	private Color fondo;
+
+	public void setThumbSize(int thumbSize) {
+
+		this.thumbSize = thumbSize;
+
+	}
+
+	public void setFondo(Color fondo) {
+
+		this.fondo = fondo;
+
+	}
+
+	public ModernScrollBarUI() {
+
+		thumbSize = 40;
+
+		fondo = Color.WHITE;
+
+	}
+
+	public ModernScrollBarUI(Color background, int size) {
+
+		thumbSize = size;
+
+		fondo = background;
+
+	}
+
+	public ModernScrollBarUI(Color background) {
+
+		thumbSize = 40;
+
+		fondo = background;
+
+	}
 
 	@Override
 	protected Dimension getMaximumThumbSize() {
 
 		if (scrollbar.getOrientation() == JScrollBar.VERTICAL) {
 
-			return new Dimension(0, THUMB_SIZE);
+			return new Dimension(0, thumbSize);
 
 		}
 
 		else {
 
-			return new Dimension(THUMB_SIZE, 0);
+			return new Dimension(thumbSize, 0);
 
 		}
 
@@ -39,13 +77,13 @@ final class ModernScrollBarUI extends BasicScrollBarUI {
 
 		if (scrollbar.getOrientation() == JScrollBar.VERTICAL) {
 
-			return new Dimension(0, THUMB_SIZE);
+			return new Dimension(0, thumbSize);
 
 		}
 
 		else {
 
-			return new Dimension(THUMB_SIZE, 0);
+			return new Dimension(thumbSize, 0);
 
 		}
 
@@ -112,7 +150,7 @@ final class ModernScrollBarUI extends BasicScrollBarUI {
 
 		}
 
-		g2.setColor(new Color(240, 240, 240));
+		g2.setColor(fondo);
 
 		g2.fillRect(x, y, width, height);
 

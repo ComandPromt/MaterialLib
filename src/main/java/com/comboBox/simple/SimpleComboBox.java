@@ -602,7 +602,7 @@ public class SimpleComboBox extends JComboBox {
 
 					JScrollPane scroll = new JScrollPane(list);
 
-					ScrollBarCustom sb = new ScrollBarCustom(null, null);
+					ScrollBarCustom sb = new ScrollBarCustom(null, null, null, 0);
 
 					sb.setUnitIncrement(30);
 

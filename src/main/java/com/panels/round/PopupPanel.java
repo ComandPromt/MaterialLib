@@ -1,30 +1,34 @@
 package com.panels.round;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JToolTip;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import com.buttons.simple.MetroButton;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
-
-public class PanelRedondo extends JPanel {
-
-	private int radius;
+public class PopupPanel extends JPanel {
 
 	JDialog dialogo;
 
 	MetroButton btnNewButton;
+
+	private JPanel cabecera;
+
+	private JComponent panel;
 
 	private String text;
 
@@ -35,6 +39,42 @@ public class PanelRedondo extends JPanel {
 	private Color border;
 
 	private Font fuente;
+
+	private int lastX;
+
+	private int lastY;
+
+	private int grosorBorde;
+
+	private JPanel cuerpo;
+
+	private JPanel blanco;
+
+	@Override
+
+	public void setBackground(Color bg) {
+
+		super.setBackground(bg);
+
+		try {
+
+			cabecera.setBackground(bg);
+
+			btnNewButton.setBackground(bg);
+
+			panel.setBackground(bg);
+
+			cuerpo.setBackground(bg);
+
+			blanco.setBackground(bg);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -120,15 +160,38 @@ public class PanelRedondo extends JPanel {
 
 	}
 
-	public PanelRedondo(JDialog dialogo, Component panel, int width, int height) {
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public PopupPanel(JDialog dialogo, JComponent panel, int width, int height) {
 
-		radius = 20;
+		this(dialogo, panel, width, height, 1, Color.BLACK);
+
+	}
+
+	public PopupPanel(JDialog dialogo, JComponent panel, int width, int height, int grosor, Color borde) {
+
+		if (grosor < 1) {
+
+			grosor = 1;
+
+		}
+
+		grosorBorde = grosor;
+
+		if (borde == null) {
+
+			borde = Color.BLACK;
+
+		}
+
+		setBorder(new LineBorder(borde, grosor));
 
 		btnNewButton = new MetroButton("X");
 
-		btnNewButton.setFont(getFont().deriveFont(30f));
+		btnNewButton.setBackground(Color.WHITE);
 
-		btnNewButton.setOpaque(false);
+		btnNewButton.setFont(getFont().deriveFont(30f));
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -136,19 +199,15 @@ public class PanelRedondo extends JPanel {
 
 			public void componentResized(ComponentEvent e) {
 
-				btnNewButton.setBounds(dialogo.getWidth() - 25, 7, 25, 25);
+				btnNewButton.setBounds(dialogo.getWidth() - 25 - grosorBorde, grosorBorde, 25, 25);
 
 			}
 
 		});
 
-		setBackground(Color.WHITE);
-
 		this.dialogo = dialogo;
 
 		setOpaque(false);
-
-		setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		btnNewButton.setSelectedIcon(null);
 
@@ -156,7 +215,7 @@ public class PanelRedondo extends JPanel {
 
 		btnNewButton.setIcon(null);
 
-		btnNewButton.setBounds(275, 0, 40, 40);
+		btnNewButton.setBounds(dialogo.getWidth() - 25, 7, 25, 25);
 
 		btnNewButton.addActionListener(new ActionListener() {
 
@@ -172,27 +231,45 @@ public class PanelRedondo extends JPanel {
 
 		add(btnNewButton);
 
-		panel.setBounds(0, 0, width, height);
+		this.panel = panel;
 
-		add(panel);
+		cabecera = new JPanel();
 
-	}
+		cabecera.setBounds(grosor, grosor, width - 25, 32);
 
-	public void setRadius(int radius) {
+		blanco = new JPanel();
 
-		this.radius = radius;
+		blanco.setBounds(width - 25, 20, 25 - grosor, 25);
 
-		setBorder(new EmptyBorder(radius / 2, radius / 2, radius / 2, radius / 2));
+		blanco.setBackground(Color.WHITE);
 
-		revalidate();
+		cabecera.setBackground(Color.WHITE);
 
-		repaint();
+		add(blanco);
 
-	}
+		add(cabecera);
 
-	public int getRadius() {
+		cuerpo = new JPanel();
 
-		return radius;
+		cuerpo.setLayout(new GridLayout());
+
+		cuerpo.setBounds(grosor, 32, width - (grosor * 2), (height - 32) - grosor);
+
+		cuerpo.add(panel);
+
+		add(cuerpo);
+
+		addMouseMotionListener(new MouseAdapter() {
+
+			@Override
+
+			public void mouseDragged(MouseEvent e) {
+
+				dialogo.setLocation(e.getXOnScreen() - lastX, e.getYOnScreen() - lastY);
+
+			}
+
+		});
 
 	}
 

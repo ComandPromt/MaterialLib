@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import com.buttons.animated.ButtonCustom;
+import com.buttons.simple.ButtonCustom;
 import com.layout.MaterialPanelLayout;
 
 @SuppressWarnings("serial")

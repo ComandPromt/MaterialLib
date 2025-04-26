@@ -25,7 +25,7 @@ public class SimpleTextArea extends JPanel {
 
 	private Font fuente;
 
-	private TextArea textArea;
+	private NewTextArea textArea;
 
 	private Color colorFondo;
 
@@ -66,20 +66,6 @@ public class SimpleTextArea extends JPanel {
 		try {
 
 			textArea.setSelectionColor(color);
-
-		}
-
-		catch (Exception e) {
-
-		}
-
-	}
-
-	public void setColors(Color foreground, Color background) {
-
-		try {
-
-			scrollPane.setColors(foreground, background);
 
 		}
 
@@ -252,7 +238,7 @@ public class SimpleTextArea extends JPanel {
 
 		try {
 
-			scrollPane.setForeground(color);
+			scrollPane.setForeground(color, true);
 
 		}
 
@@ -266,7 +252,7 @@ public class SimpleTextArea extends JPanel {
 
 		try {
 
-			scrollPane.setBackground(color);
+			scrollPane.setBackground(color, true);
 
 		}
 
@@ -278,23 +264,23 @@ public class SimpleTextArea extends JPanel {
 
 	public SimpleTextArea(String text) {
 
-		this(text, Color.BLACK, Color.WHITE);
+		this(text, Color.BLACK, Color.WHITE, Color.WHITE, 40);
 
 	}
 
 	public SimpleTextArea() {
 
-		this("", Color.BLACK, Color.WHITE);
+		this("", Color.BLACK, Color.WHITE, Color.WHITE, 40);
 
 	}
 
-	public SimpleTextArea(String text, Color foreground, Color background) {
+	public SimpleTextArea(String text, Color foreground, Color background, Color background2, int size) {
 
 		colorFondo = Color.WHITE;
 
 		setLayout(new GridLayout(0, 1, 0, 0));
 
-		textArea = new TextArea(foreground, background);
+		textArea = new NewTextArea(foreground, background);
 
 		textArea.setFont(new Font("Dialog", Font.PLAIN, 20));
 
@@ -302,7 +288,7 @@ public class SimpleTextArea extends JPanel {
 
 		DefaultContextMenu.addDefaultContextMenu(textArea);
 
-		scrollPane = new MaterialPanelDeslizante(textArea, null, null);
+		scrollPane = new MaterialPanelDeslizante(textArea, foreground, background, background2, size);
 
 		add(scrollPane);
 
@@ -318,6 +304,34 @@ public class SimpleTextArea extends JPanel {
 			g.setColor(colorFondo);
 
 			g.fillRect(0, 0, getWidth(), getHeight());
+
+		}
+
+	}
+
+	public void setThumbSize(int size) {
+
+		try {
+
+			scrollPane.setThumbSize(size, true);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setBackgroundScroll2(Color color) {
+
+		try {
+
+			scrollPane.setBackground2(color, true);
+
+		}
+
+		catch (Exception e) {
 
 		}
 

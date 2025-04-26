@@ -109,7 +109,7 @@ public class SimpleComponentPanelDeslizante extends JPanel {
 
 	public MaterialPanelDeslizante materialPanel;
 
-	public SimpleComponentPanelDeslizante(JPanel panel, Color select, Color background) {
+	public SimpleComponentPanelDeslizante(JPanel panel, Color select, Color background, Color background2, int size) {
 
 		if (select == null) {
 
@@ -127,7 +127,7 @@ public class SimpleComponentPanelDeslizante extends JPanel {
 
 		add(panel);
 
-		materialPanel = new MaterialPanelDeslizante(panel, select, background);
+		materialPanel = new MaterialPanelDeslizante(panel, select, background, background2, size);
 
 		add(materialPanel);
 

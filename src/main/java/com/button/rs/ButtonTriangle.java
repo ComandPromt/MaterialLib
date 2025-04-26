@@ -15,13 +15,15 @@ public class ButtonTriangle extends JButton {
 
 	private Color colorHover = new Color(67, 150, 209);
 
-	private Color colorSecondTriangle = new Color(192, 0, 0); // Color for the second triangle
+	private Color colorSecondTriangle = new Color(192, 0, 0);
 
 	private Font font = new Font("Tahoma", Font.BOLD, 14);
 
 	public ButtonTriangle() {
 
 		setFocusPainted(false);
+
+		setBorderPainted(false);
 
 		setFont(font);
 

@@ -5,8 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -17,12 +15,6 @@ import Animacion.Fade;
 @SuppressWarnings("serial")
 
 public class AlertWarningSalir extends javax.swing.JFrame {
-
-	Timer timer;
-
-	TimerTask task;
-
-	int i;
 
 	private javax.swing.JLabel image;
 
@@ -52,7 +44,17 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 	public AlertWarningSalir(boolean modal) {
 
-		i = 32;
+		this(352);
+
+	}
+
+	public AlertWarningSalir(int speed) {
+
+		if (speed < 1) {
+
+			speed = 480;
+
+		}
 
 		setAlwaysOnTop(true);
 
@@ -60,7 +62,7 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 		setLocationRelativeTo(null);
 
-		Fade.JFrameFadeOut(1f, 0f, 0.1f, 480, this, Fade.DISPOSE);
+		Fade.JFrameFadeOut(1f, 0f, 0.1f, speed, this, Fade.DISPOSE);
 
 	}
 
@@ -109,24 +111,6 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 
 		setUndecorated(true);
 
-		addWindowListener(new java.awt.event.WindowAdapter() {
-
-			@Override
-			public void windowClosing(java.awt.event.WindowEvent evt) {
-
-				formWindowClosing(evt);
-
-			}
-
-			@Override
-			public void windowOpened(java.awt.event.WindowEvent evt) {
-
-				formWindowOpened(evt);
-
-			}
-
-		});
-
 		jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
 		image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -149,51 +133,6 @@ public class AlertWarningSalir extends javax.swing.JFrame {
 		getContentPane().setLayout(layout);
 
 		pack();
-
-	}
-
-	private void formWindowOpened(java.awt.event.WindowEvent evt) {
-
-		task = new TimerTask() {
-
-			@Override
-			public void run() {
-
-				if (i == 352) {
-
-					timer.cancel();
-
-				}
-
-				else {
-
-					i += 32;
-
-					trasparencia((float) i / 352);
-
-				}
-
-			}
-
-		};
-
-		timer = new java.util.Timer();
-
-		timer.schedule(task, 0, 2);
-
-	}
-
-	private void formWindowClosing(java.awt.event.WindowEvent evt) {
-
-		setVisible(false);
-
-		dispose();
-
-	}
-
-	private void trasparencia(float trasp) {
-
-		PopupAlerts.setOpacity(this, trasp);
 
 	}
 

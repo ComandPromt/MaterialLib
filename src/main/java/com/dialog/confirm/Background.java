@@ -35,6 +35,14 @@ class Background extends JPanel {
 
 	private Color fondoPintura;
 
+	private float movimiento;
+
+	public Icon getIcon() {
+
+		return icon;
+
+	}
+
 	public void setIcon(Icon icon) {
 
 		this.icon = icon;
@@ -137,6 +145,8 @@ class Background extends JPanel {
 
 		fondoPintura = Color.WHITE;
 
+		movimiento = 0.437f;
+
 		setOpaque(false);
 
 		setBackground(new Color(245, 245, 245));
@@ -180,14 +190,11 @@ class Background extends JPanel {
 
 		int iconX = (width - (iconSize + totalIconSpace)) / 2;
 
-		int iconY = 0;
-
 		Area area = new Area(new Rectangle2D.Double(x, y, width, height - y));
 
-		area.subtract(new Area(
-				new Ellipse2D.Double(iconX, iconY - iconSpace, iconSize + totalIconSpace, iconSize + totalIconSpace)));
+		area.subtract(new Area(new Ellipse2D.Double(iconX, 0, iconSize + totalIconSpace, iconSize + totalIconSpace)));
 
-		area.add(new Area(new Ellipse2D.Double(iconX + iconSpace, 0, iconSize, iconSize)));
+		area.add(new Area(new Ellipse2D.Double(iconX + iconSpace, 5, iconSize, iconSize)));
 
 		g2.setColor(getBackground());
 
@@ -201,8 +208,6 @@ class Background extends JPanel {
 
 			int iconHeight = img.getHeight(this);
 
-			int adjustedIconX = iconX + iconSpace;
-
 			if (iconWidth > iconSize) {
 
 				double scaleFactor = (double) iconSize / iconWidth;
@@ -210,12 +215,6 @@ class Background extends JPanel {
 				iconWidth = (int) (iconWidth * scaleFactor);
 
 				iconHeight = (int) (iconHeight * scaleFactor);
-
-			}
-
-			else if (iconHeight < iconSize) {
-
-				adjustedIconX = (iconSize + iconWidth * 2);
 
 			}
 
@@ -233,13 +232,39 @@ class Background extends JPanel {
 
 			int adjustedIconY = 0;
 
-			g2.drawImage(roundedImage, adjustedIconX, adjustedIconY, this);
+			g2.drawImage(roundedImage, Math.round(getWidth() * movimiento), adjustedIconY + 3, this);
 
 		}
 
 		g2.dispose();
 
 		super.paintComponent(g);
+
+	}
+
+	public void setMove(float move) {
+
+		movimiento = move;
+
+		repaint();
+
+	}
+
+	public void setMove(boolean move) {
+
+		if (move) {
+
+			movimiento = 0.456f;
+
+		}
+
+		else {
+
+			movimiento = 0.437f;
+
+		}
+
+		repaint();
 
 	}
 

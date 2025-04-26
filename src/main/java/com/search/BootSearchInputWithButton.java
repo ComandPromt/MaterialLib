@@ -383,7 +383,6 @@ public class BootSearchInputWithButton extends JTextField {
 
 		int y = (int) (getHeight() * 0.2);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		int iconX = 5;
 
 		int iconY = (getHeight() / 2) - (margen / 2);
@@ -416,8 +415,6 @@ public class BootSearchInputWithButton extends JTextField {
 			}
 
 		}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		if (magnifyingGlassIcon != null) {
 

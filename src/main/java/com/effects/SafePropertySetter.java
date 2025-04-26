@@ -30,6 +30,7 @@ public class SafePropertySetter<T> extends TimingTargetAdapter {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> TimingTarget getTarget(Setter<T> setter, T... values) {
 		return (TimingTarget) new SafePropertySetter<>((new KeyFrames.Builder()).addFrames((Object[]) values).build(),
 
@@ -43,13 +44,15 @@ public class SafePropertySetter<T> extends TimingTargetAdapter {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> TimingTarget getTargetTo(Getter<T> getter, Setter<T> setter, T... values) {
 
 		return getTargetTo(getter, setter, (new KeyFrames.Builder(values[0])).addFrames((Object[]) values).build());
 
 	}
 
-	public static <T> TimingTarget getTargetTo(GetterAndSetter<T> getterAndSetter, T... values) {
+	public static <T> TimingTarget getTargetTo(GetterAndSetter<T> getterAndSetter,
+			@SuppressWarnings("unchecked") T... values) {
 
 		return getTargetTo(getterAndSetter, getterAndSetter, values);
 
@@ -73,6 +76,7 @@ public class SafePropertySetter<T> extends TimingTargetAdapter {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void timingEvent(Animator source, double fraction) {
 
 		this.setter.setValue((T) ((KeyFrames) this.keyFrames.get()).getInterpolatedValueAt(fraction));
@@ -83,6 +87,7 @@ public class SafePropertySetter<T> extends TimingTargetAdapter {
 
 		if (this.isToAnimation) {
 
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			KeyFrames.Builder<T> builder = new KeyFrames.Builder(this.getter.getValue());
 
 			boolean first = true;

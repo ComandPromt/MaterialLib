@@ -161,6 +161,16 @@ public class ShadowButton2 extends JButton {
 
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
+
+	public ShadowButton2() {
+
+		this("");
+
+	}
+
 	public ShadowButton2(String text) {
 
 		colorDeSombra = new Color(0, 0, 0);

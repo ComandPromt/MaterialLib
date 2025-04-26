@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.io.Writer;
 
 import javax.swing.Action;
-import javax.swing.JEditorPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.Document;
@@ -27,14 +26,9 @@ import javax.swing.text.ViewFactory;
  *
  * @author Timothy Prinzing
  */
-@SuppressWarnings("serial") // Same-version serialization only
-public abstract class EditorKit implements Cloneable, Serializable {
 
-	/**
-	 * Construct an EditorKit.
-	 */
-	public EditorKit() {
-	}
+@SuppressWarnings("serial")
+public abstract class EditorKit implements Cloneable, Serializable {
 
 	/**
 	 * Creates a copy of the editor kit. This is implemented to use
@@ -42,31 +36,25 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 *
 	 * @return the copy
 	 */
+
 	public Object clone() {
+
 		Object o;
+
 		try {
+
 			o = super.clone();
-		} catch (CloneNotSupportedException cnse) {
-			o = null;
+
 		}
+
+		catch (CloneNotSupportedException cnse) {
+
+			o = null;
+
+		}
+
 		return o;
-	}
 
-	/**
-	 * Called when the kit is being installed into the a JEditorPane.
-	 *
-	 * @param c the JEditorPane
-	 */
-	public void install(JEditorPane c) {
-	}
-
-	/**
-	 * Called when the kit is being removed from the JEditorPane. This is used to
-	 * unregister any listeners that were attached.
-	 *
-	 * @param c the JEditorPane
-	 */
-	public void deinstall(JEditorPane c) {
 	}
 
 	/**
@@ -74,6 +62,7 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 *
 	 * @return the type
 	 */
+
 	public abstract String getContentType();
 
 	/**
@@ -82,6 +71,7 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 *
 	 * @return the factory
 	 */
+
 	public abstract ViewFactory getViewFactory();
 
 	/**
@@ -90,6 +80,7 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 *
 	 * @return the set of actions
 	 */
+
 	public abstract Action[] getActions();
 
 	/**
@@ -98,14 +89,17 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 *
 	 * @return the caret
 	 */
+
 	public abstract Caret createCaret();
 
 	/**
+	 * 
 	 * Creates an uninitialized text storage model that is appropriate for this type
 	 * of editor.
 	 *
 	 * @return the model
 	 */
+
 	public abstract Document createDefaultDocument();
 
 	/**
@@ -119,6 +113,7 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 * @exception BadLocationException if pos represents an invalid location within
 	 *                                 the document.
 	 */
+
 	public abstract void read(InputStream in, Document doc, int pos) throws IOException, BadLocationException;
 
 	/**
@@ -133,6 +128,7 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 * @exception BadLocationException if pos represents an invalid location within
 	 *                                 the document.
 	 */
+
 	public abstract void write(OutputStream out, Document doc, int pos, int len)
 			throws IOException, BadLocationException;
 
@@ -151,6 +147,7 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 * @exception BadLocationException if pos represents an invalid location within
 	 *                                 the document.
 	 */
+
 	public abstract void read(Reader in, Document doc, int pos) throws IOException, BadLocationException;
 
 	/**
@@ -169,6 +166,7 @@ public abstract class EditorKit implements Cloneable, Serializable {
 	 * @exception BadLocationException if pos represents an invalid location within
 	 *                                 the document.
 	 */
+
 	public abstract void write(Writer out, Document doc, int pos, int len) throws IOException, BadLocationException;
 
 }

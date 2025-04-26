@@ -144,6 +144,12 @@ public class NiceButton extends JButton {
 
 	}
 
+	public NiceButton() {
+
+		this("");
+
+	}
+
 	public NiceButton(String text) {
 
 		setFont(getFont().deriveFont(30f));

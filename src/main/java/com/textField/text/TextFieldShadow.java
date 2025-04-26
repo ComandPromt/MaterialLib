@@ -77,107 +77,169 @@ public class TextFieldShadow extends JTextField {
 	}
 
 	public enum PlaceholderPosition {
+		
 		TOP, CENTER, BOTTOM
+	
 	}
 
 	public enum PlaceholderHorizontalPosition {
+	
 		LEFT, CENTER, RIGHT
+	
 	}
 
 	public TextFieldShadow(String text) {
+		
 		this();
+	
 		setText(text);
+
 	}
 
 	public TextFieldShadow() {
+		
 		angle = 50;
+		
 		this.direccionDeSombra = 60;
+		
 		this.distanciaDeSombra = 1;
+		
 		this.vertical = true;
+		
 		this.borde = 2.0F;
+		
 		this.opacidad = Float.valueOf(1.0F);
 
 		setOpaque(false);
+
 		setFont(new Font("Dialog", 0, 30));
+
 		DefaultContextMenu.addDefaultContextMenu(this);
 
-		placeholderColor = Color.GRAY; // Default placeholder color
-		placeholderPosition = PlaceholderPosition.CENTER; // Default placeholder position
-		placeholderHorizontalPosition = PlaceholderHorizontalPosition.CENTER; // Default horizontal placeholder position
+		placeholderColor = Color.GRAY;
+
+		placeholderPosition = PlaceholderPosition.CENTER;
+
+		placeholderHorizontalPosition = PlaceholderHorizontalPosition.CENTER;
+
 		placeholderFont = getFont();
+
 		addFocusListener(new FocusListener() {
+			
 			@Override
+			
 			public void focusGained(FocusEvent e) {
+			
 				repaint();
+
 			}
 
 			@Override
+			
 			public void focusLost(FocusEvent e) {
+			
 				repaint();
+
 			}
+			
 		});
 
 		getDocument().addDocumentListener(new DocumentListener() {
+			
 			@Override
+			
 			public void insertUpdate(DocumentEvent e) {
+			
 				repaint();
+
 			}
 
 			@Override
 			public void removeUpdate(DocumentEvent e) {
+				
 				repaint();
+			
 			}
 
-			@Override
+			@Override			
 			public void changedUpdate(DocumentEvent e) {
+			
 				repaint();
+
 			}
+			
 		});
 
 		addKeyListener(new KeyAdapter() {
+			
 			@Override
 			public void keyReleased(KeyEvent e) {
+			
 				if (getText().isEmpty()) {
+
 					repaint();
 				}
+			
 			}
+			
 		});
+		
 	}
 
 	public String getPlaceholder() {
+		
 		return placeholder;
+	
 	}
 
 	public void setPlaceholder(String placeholder) {
+	
 		this.placeholder = placeholder;
+
 		repaint();
+	
 	}
 
 	public Color getPlaceholderColor() {
+	
 		return placeholderColor;
+
 	}
 
 	public void setPlaceholderColor(Color placeholderColor) {
+		
 		this.placeholderColor = placeholderColor;
+		
 		repaint();
+	
 	}
 
 	public PlaceholderPosition getPlaceholderPosition() {
+	
 		return placeholderPosition;
+	
 	}
 
 	public void setPlaceholderPosition(PlaceholderPosition position) {
+		
 		this.placeholderPosition = position;
+		
 		repaint();
+	
 	}
 
 	public PlaceholderHorizontalPosition getPlaceholderHorizontalPosition() {
+	
 		return placeholderHorizontalPosition;
+
 	}
 
 	public void setPlaceholderHorizontalPosition(PlaceholderHorizontalPosition position) {
+		
 		this.placeholderHorizontalPosition = position;
+		
 		repaint();
+	
 	}
 
 	private void mostrarPlaceholder(Graphics g) {

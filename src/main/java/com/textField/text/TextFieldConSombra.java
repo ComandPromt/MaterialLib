@@ -23,20 +23,33 @@ import com.toolTip.ToolTipLlamada;
 public class TextFieldConSombra extends JTextField {
 
 	private int direccionDeSombra;
+	
 	private int distanciaDeSombra;
+	
 	private boolean vertical;
+	
 	private float borde;
+	
 	private Float opacidad;
+	
 	private String text;
+	
 	private Color fondo;
+	
 	private Color colorTexto;
+	
 	private Color border;
+	
 	private Font fuente;
+	
 	private boolean round;
 
 	private String placeholder;
+
 	private Color placeholderColor;
+
 	private PlaceholderPosition placeholderVerticalPosition;
+
 	private HorizontalPosition placeholderHorizontalPosition;
 
 	private Font placeFont;
@@ -58,11 +71,15 @@ public class TextFieldConSombra extends JTextField {
 	}
 
 	public enum PlaceholderPosition {
+	
 		TOP, CENTER, BOTTOM
+	
 	}
 
 	public enum HorizontalPosition {
+		
 		LEFT, CENTER, RIGHT
+	
 	}
 
 	public TextFieldConSombra() {
@@ -110,87 +127,154 @@ public class TextFieldConSombra extends JTextField {
 			}
 
 			public void focusLost(java.awt.event.FocusEvent e) {
+	
 				repaint();
+
 			}
+		
 		});
+		
 	}
 
 	public void setPlaceholder(String placeholder) {
+		
 		this.placeholder = placeholder;
+		
 		repaint();
+	
 	}
 
 	public void setPlaceholderColor(Color placeholderColor) {
+	
 		this.placeholderColor = placeholderColor;
+
 		repaint();
+
 	}
 
 	public void setPlaceholderVerticalPosition(PlaceholderPosition placeholderVerticalPosition) {
+		
 		this.placeholderVerticalPosition = placeholderVerticalPosition;
+		
 		repaint();
+	
 	}
 
 	public void setPlaceholderHorizontalPosition(HorizontalPosition placeholderHorizontalPosition) {
+	
 		this.placeholderHorizontalPosition = placeholderHorizontalPosition;
+
 		repaint();
+
 	}
 
 	@Override
 	public void setToolTipText(String text) {
+		
 		setToolTip(text, null, null, null, null);
+	
 	}
 
 	public void setToolTip(String text, Color background, Color foreground, Color border, Font font) {
+	
 		calcularTooltip(text, background, foreground, border, font);
+
 	}
 
 	private void calcularTooltip(String text, Color background, Color foreground, Color border, Font font) {
+		
 		if (background == null) {
+		
 			background = new Color(32, 39, 55);
+
 		}
+		
 		if (foreground == null) {
+		
 			foreground = Color.WHITE;
+
 		}
+		
 		if (border == null) {
+		
 			border = new Color(173, 173, 173);
+
 		}
+		
 		if (font == null) {
+		
 			try {
+
 				font = getFont().deriveFont(20f);
-			} catch (Exception e) {
-				font = new Font("Dialog", Font.PLAIN, 20);
+
 			}
+
+			catch (Exception e) {
+
+				font = new Font("Dialog", Font.PLAIN, 20);
+
+			}
+
 		}
+		
 		this.text = text;
+		
 		this.fondo = background;
+		
 		this.colorTexto = foreground;
+		
 		this.border = border;
+		
 		this.fuente = font;
+		
 		super.setToolTipText(text);
+	
 	}
 
 	@Override
 	public JToolTip createToolTip() {
+	
 		if (text == null || fondo == null || colorTexto == null || border == null) {
+
 			return super.createToolTip();
-		} else {
-			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
-			tip.setComponent(this);
-			return tip;
+
 		}
+
+		else {
+
+			ToolTipLlamada tip = new ToolTipLlamada(text, fondo, colorTexto, border, fuente);
+
+			tip.setComponent(this);
+
+			return tip;
+
+		}
+
 	}
 
 	@Override
 	protected void paintBorder(Graphics g) {
+
 		Graphics2D g2 = (Graphics2D) g;
+
 		Stroke st = g2.getStroke();
+
 		g2.setStroke(new BasicStroke(borde));
+
 		if (round) {
+		
 			g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getHeight() / 3, getHeight() / 3);
-		} else {
-			g2.drawRect(0, 0, getWidth(), getHeight());
+
 		}
+
+		else {
+			
+			g2.drawRect(0, 0, getWidth(), getHeight());
+		
+		}
+		
 		g2.setStroke(st);
+	
 	}
 
 	@Override
@@ -261,77 +345,133 @@ public class TextFieldConSombra extends JTextField {
 	}
 
 	private int calculatePlaceholderVerticalPosition(Graphics2D g2) {
+	
 		int y = getHeight() / 2 + g2.getFontMetrics().getAscent() / 2 - 2;
+
 		if (placeholderVerticalPosition == PlaceholderPosition.TOP) {
+		
 			y = g2.getFontMetrics().getAscent() + getInsets().top;
-		} else if (placeholderVerticalPosition == PlaceholderPosition.BOTTOM) {
-			y = getHeight() - g2.getFontMetrics().getDescent() - getInsets().bottom;
+
 		}
+
+		else if (placeholderVerticalPosition == PlaceholderPosition.BOTTOM) {
+
+			y = getHeight() - g2.getFontMetrics().getDescent() - getInsets().bottom;
+
+		}
+
 		return y;
+		
 	}
 
 	private int calculatePlaceholderHorizontalPosition(Graphics2D g2) {
+		
 		int x = getInsets().left;
+		
 		if (placeholderHorizontalPosition == HorizontalPosition.CENTER) {
+		
 			x = (getWidth() - g2.getFontMetrics().stringWidth(placeholder)) / 2;
-		} else if (placeholderHorizontalPosition == HorizontalPosition.RIGHT) {
-			x = getWidth() - getInsets().right - g2.getFontMetrics().stringWidth(placeholder);
+
 		}
+
+		else if (placeholderHorizontalPosition == HorizontalPosition.RIGHT) {
+
+			x = getWidth() - getInsets().right - g2.getFontMetrics().stringWidth(placeholder);
+
+		}
+
 		return x;
+
 	}
 
 	public Float getOpacidad() {
+	
 		return opacidad;
+
 	}
 
 	public void setOpacidad(Float opacidad) {
+		
 		if (opacidad < 0f) {
+		
 			opacidad = 0f;
-		} else if (opacidad > 1f) {
+
+		} 
+		
+		else if (opacidad > 1f) {
+		
 			opacidad = 1f;
+
 		}
+
 		this.opacidad = opacidad;
+
 	}
 
 	public int getDireccionDeSombra() {
+		
 		return direccionDeSombra;
+	
 	}
 
 	public void setDireccionDeSombra(int direccionDeSombra) {
+	
 		this.direccionDeSombra = direccionDeSombra;
+
 		repaint();
+
 	}
 
 	public int getDistanciaDeSombra() {
+		
 		return distanciaDeSombra;
+	
 	}
 
 	public void setDistanciaDeSombra(int distanciaDeSombra) {
+	
 		this.distanciaDeSombra = distanciaDeSombra;
+
 		repaint();
+
 	}
 
 	public boolean isVertical() {
+		
 		return vertical;
+	
 	}
 
 	public void setVertical(boolean vertical) {
+	
 		this.vertical = vertical;
+
 		repaint();
+
 	}
 
 	public float getBorde() {
+		
 		return borde;
+	
 	}
 
 	public void setBorde(float borde) {
+	
 		this.borde = borde;
-		updateInsets();
-		repaint();
-	}
 
-	private void updateInsets() {
-		int borderPadding = (int) borde + 5; // Adding some extra padding
-		setBorder(new EmptyBorder(borderPadding, borderPadding, borderPadding, borderPadding));
+		updateInsets();
+		
+		repaint();
+	
 	}
+	
+	private void updateInsets() {
+		
+		int borderPadding = (int) borde + 5;
+		
+		setBorder(new EmptyBorder(borderPadding, borderPadding, borderPadding, borderPadding));
+		
+	}
+	
 }

@@ -1,4 +1,4 @@
-package com.jmenu.horizontal;
+package com.jmenu.simple;
 
 import java.awt.Graphics;
 

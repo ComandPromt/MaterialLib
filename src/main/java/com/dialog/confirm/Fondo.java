@@ -14,6 +14,8 @@ class Fondo extends JFrame {
 
 		getContentPane().setBackground(background);
 
+		setLocationRelativeTo(null);
+
 	}
 
 	public Fondo() {

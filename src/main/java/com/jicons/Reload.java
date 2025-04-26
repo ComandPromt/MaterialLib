@@ -104,11 +104,11 @@ public class Reload extends ImageIcon {
 
 		g2d.fillPolygon(equis, ye, 3);
 
-		g2d.drawArc(Math.round(c.getWidth() * 0.125f), 0, c.getWidth() - (Math.round(c.getWidth() * 0.125f) * 2),
-				c.getHeight() - 1, 0, 135);
+		g2d.drawArc(Math.round(c.getWidth() * 0.125f), 1, c.getWidth() - (Math.round(c.getWidth() * 0.125f) * 2),
+				c.getHeight() - 2, 0, 135);
 
-		g2d.drawArc(Math.round(c.getWidth() * 0.125f), 0, c.getWidth() - (Math.round(c.getWidth() * 0.125f) * 2),
-				c.getHeight() - 1, -180, 135);
+		g2d.drawArc(Math.round(c.getWidth() * 0.125f), 1, c.getWidth() - (Math.round(c.getWidth() * 0.125f) * 2),
+				c.getHeight() - 2, -180, 135);
 
 		equis[0] = Math.round(c.getWidth() * 0.75f);
 

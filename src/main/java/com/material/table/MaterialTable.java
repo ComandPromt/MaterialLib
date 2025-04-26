@@ -66,6 +66,33 @@ public class MaterialTable extends JPanel {
 
 	private AddItem textosCabecera;
 
+	private List<String> dato1;
+
+	private int dato2;
+
+	private ArrayList<String> dato3;
+
+	private ArrayList<String> listaIndice;
+
+	public void vaciarTabla() {
+
+		cuerpo.setDatos(dato3);
+
+		cuerpo.verDatos(0, dato3);
+
+		pagination.setPaso((cuerpo.getItems() / dato1.size()) / cuerpo.getSplit());
+
+		pagination.setStep((cuerpo.getItems() / dato1.size()) / cuerpo.getSplit());
+
+		spiner.setMaxValor(1);
+
+		cortePagination = 1;
+
+		pagination.verNumeros(spiner.getValor(), dato2, 1, cuerpo);
+
+		botones.getBusqueda().setLista(dato3);
+	}
+
 	public void setFilePath(boolean filePath) {
 
 		try {
@@ -80,11 +107,11 @@ public class MaterialTable extends JPanel {
 
 	}
 
-	public void setFilePath(String text, int type, ImageIcon icon) {
+	public void setFilePath(int type, ImageIcon icon) {
 
 		try {
 
-			cuerpo.setFilePath(text, type, icon, true);
+			cuerpo.setFilePath(type, icon, true);
 
 		}
 
@@ -108,11 +135,11 @@ public class MaterialTable extends JPanel {
 
 	}
 
-	public void setFilePath(String text, int type) {
+	public void setFilePath(int type) {
 
 		try {
 
-			cuerpo.setFilePath(text, type, true);
+			cuerpo.setFilePath(type, true);
 
 		}
 
@@ -588,6 +615,8 @@ public class MaterialTable extends JPanel {
 
 	public MaterialTable(List<String> columns, List<String> lista, int pageItems, int splitPagination) {
 
+		listaIndice = new ArrayList<>();
+
 		deleteMsg = "¿Quieres borrar los datos?";
 
 		deleteAllMsg = "¿Quieres vaciar la tabla?";
@@ -704,8 +733,6 @@ public class MaterialTable extends JPanel {
 
 			public void mousePressed(MouseEvent e) {
 
-				ArrayList<String> listaIndice = new ArrayList<>();
-
 				ArrayList<Integer> datosSeleccionados = cuerpo.getIndicesElementosSeleccionados();
 
 				MessageDialog dialogo;
@@ -714,25 +741,17 @@ public class MaterialTable extends JPanel {
 
 					if (datosSeleccionados.size() == split) {
 
-						dialogo = new MessageDialog(Color.RED, Color.WHITE, "", deleteAllMsg);
+						dialogo = new MessageDialog(Color.RED, Color.WHITE, "", deleteAllMsg, null, null);
 
 						if (dialogo.getMessageType().equals(MessageType.OK)) {
 
-							cuerpo.setDatos(listaIndice);
+							dato1 = columns;
 
-							cuerpo.verDatos(0, listaIndice);
+							dato2 = numeroPaginas;
 
-							pagination.setPaso((cuerpo.getItems() / columns.size()) / cuerpo.getSplit());
+							dato3 = listaIndice;
 
-							pagination.setStep((cuerpo.getItems() / columns.size()) / cuerpo.getSplit());
-
-							spiner.setMaxValor(1);
-
-							cortePagination = 1;
-
-							pagination.verNumeros(spiner.getValor(), numeroPaginas, 1, cuerpo);
-
-							botones.getBusqueda().setLista(listaIndice);
+							vaciarTabla();
 
 						}
 
@@ -740,7 +759,7 @@ public class MaterialTable extends JPanel {
 
 					else {
 
-						dialogo = new MessageDialog(Color.RED, Color.WHITE, "", deleteMsg);
+						dialogo = new MessageDialog(0, 0, Color.RED, Color.WHITE, "", deleteMsg);
 
 						if (dialogo.getMessageType().equals(MessageType.OK)) {
 
@@ -748,7 +767,7 @@ public class MaterialTable extends JPanel {
 
 							listaIndice = obtenerListaConSplit(datos, cuerpo.getIndicesNoSeleccionados(),
 									cortePagination);
-							System.out.println(listaIndice);
+
 							cuerpo.setDatos(listaIndice);
 
 							cuerpo.verDatos(0, listaIndice);
@@ -979,6 +998,12 @@ public class MaterialTable extends JPanel {
 		setCheckActiveBodyBackground(new Color(69, 124, 235));
 
 		getSearchInput().setBackground(Color.WHITE);
+
+		dato1 = columns;
+
+		dato2 = numeroPaginas;
+
+		dato3 = listaIndice;
 
 	}
 

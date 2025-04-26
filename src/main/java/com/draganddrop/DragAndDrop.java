@@ -214,6 +214,12 @@ public class DragAndDrop extends JLabel {
 
 	}
 
+	public DragAndDrop() {
+
+		this("");
+
+	}
+
 	public DragAndDrop(String text) {
 
 		altura = 0;

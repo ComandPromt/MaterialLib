@@ -303,7 +303,7 @@ public class CustomComboBox<E> extends JComboBox<E> {
 
 					scroll.setBackground(Color.WHITE);
 
-					ScrollBarCustom sb = new ScrollBarCustom(getForeground(), getBackground());
+					ScrollBarCustom sb = new ScrollBarCustom(getForeground(), getBackground(), null, 0);
 
 					sb.setUnitIncrement(30);
 

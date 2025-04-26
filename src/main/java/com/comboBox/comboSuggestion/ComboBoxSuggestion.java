@@ -29,6 +29,164 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 
 	private ComboSuggestionUI comboBoxUi;
 
+	public void setFontMenu(Font font) {
+
+		try {
+
+			comboBoxUi.setFontMenu(font);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setCenteredMenuText() {
+
+		try {
+
+			comboBoxUi.setCenteredMenuText();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setCenteredText() {
+
+		try {
+
+			comboBoxUi.setCenteredText();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setHorizontalAlignment(int align) {
+
+		try {
+
+			comboBoxUi.setHorizontalAlignment(align);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSelectedTextColor(Color color) {
+
+		try {
+
+			comboBoxUi.setSelectedTextColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setSelectionColor(Color color) {
+
+		try {
+
+			comboBoxUi.setSelectionColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	@Override
+	public void setForeground(Color fg) {
+
+		try {
+
+			comboBoxUi.setFg(fg);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setPopupSelectionForegroundColor(Color fg) {
+
+		try {
+
+			comboBoxUi.setSelectionForegroundColor(fg);
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setForegroundPopup(Color fg) {
+
+		try {
+
+			comboBoxUi.setForegroundMenuColor(fg);
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setBackgroundSelectionPopup(Color color) {
+
+		try {
+
+			comboBoxUi.setSelectionItemColor(color);
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setBackgroundPopup(Color color) {
+
+		try {
+
+			comboBoxUi.setMenuColor(color);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	public void setLineScrollColor(Color color) {
 
 		comboBoxUi.setLineScrollColor(color);
@@ -146,14 +304,6 @@ public class ComboBoxSuggestion<E> extends JComboBox<E> {
 	public void setSelectionItemColor(Color color) {
 
 		comboBoxUi.setSelectionItemColor(color);
-
-		repaint();
-
-	}
-
-	public void setSelectionForegroundColor(Color color) {
-
-		comboBoxUi.setSelectionForegroundColor(color);
 
 		repaint();
 

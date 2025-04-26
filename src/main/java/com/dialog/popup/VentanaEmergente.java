@@ -1,36 +1,64 @@
 package com.dialog.popup;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.panels.round.PanelRedondo;
+import com.panels.round.PopupPanel;
 
 public class VentanaEmergente {
 
-	public VentanaEmergente(JFrame frame, JPanel panel, String title, int width, int height, boolean round) {
+	public VentanaEmergente(JFrame frame, JPanel panel, String title, int width, int height, boolean defaultDesign,
+			int thickness, ImageIcon icon) {
+
+		this(frame, panel, title, width, height, defaultDesign, 25, Color.BLACK, thickness, icon);
+
+	}
+
+	public VentanaEmergente(JFrame frame, JPanel panel, String title, int width, int height, boolean defaultDesign,
+			int angle, Color border, int thickness, ImageIcon icon) {
 
 		JDialog popupDialog = new JDialog(frame, title, true);
 
-		if (round) {
+		if (defaultDesign) {
 
-			popupDialog.setUndecorated(true);
+			popupDialog.getContentPane().setLayout(new GridLayout());
 
-			popupDialog.setBackground(new Color(0, 0, 0, 0));
+			panel.setBounds(0, 0, width, height);
 
-			popupDialog.setContentPane(new PanelRedondo(popupDialog, panel, width, height));
+			popupDialog.getContentPane().add(panel);
+
+			popupDialog.setIconImage(icon.getImage());
 
 		}
 
 		else {
 
-			popupDialog.getContentPane().setLayout(null);
+			if (angle < 0) {
 
-			panel.setBounds(0, 0, width, height);
+				angle = 0;
 
-			popupDialog.getContentPane().add(panel);
+			}
+
+			popupDialog.setUndecorated(true);
+
+			popupDialog.setBackground(new Color(0, 0, 0, 0));
+
+			if (angle < 1) {
+
+				popupDialog.setContentPane(new PopupPanel(popupDialog, panel, width, height));
+
+			}
+
+			else {
+
+				popupDialog = new RoundedDialog(panel, title, icon, width, height, border, thickness, angle);
+
+			}
 
 		}
 

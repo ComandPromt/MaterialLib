@@ -50,6 +50,10 @@ public class ButtonHover extends JButton {
 
 		setContentAreaFilled(false);
 
+		setFocusPainted(false);
+
+		setBorderPainted(false);
+
 	}
 
 	protected void paintComponent(Graphics g) {

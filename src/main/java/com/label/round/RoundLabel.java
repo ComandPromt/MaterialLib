@@ -42,6 +42,26 @@ public class RoundLabel extends JLabel {
 
 	private Font fuente;
 
+	private String ruta;
+
+	public String getRuta() {
+
+		return ruta;
+
+	}
+
+	public Color getColorFondo() {
+
+		return fondo;
+
+	}
+
+	public BufferedImage getImagenFondo() {
+
+		return originalImage;
+
+	}
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -162,6 +182,12 @@ public class RoundLabel extends JLabel {
 
 	}
 
+	public RoundLabel() {
+
+		this("");
+
+	}
+
 	public RoundLabel(String text) {
 
 		setFont(getFont().deriveFont(Font.PLAIN, 30f));
@@ -192,33 +218,47 @@ public class RoundLabel extends JLabel {
 	@Override
 	public void setIcon(Icon defaultIcon) {
 
-		try {
+		if (defaultIcon == null) {
 
-			String ruta = defaultIcon.toString();
+			originalImage = null;
 
-			if (System.getProperty("os.name").contains("indows")) {
+			ruta = null;
 
-				ruta = ruta.replace("file:/", "");
-
-			}
-
-			else {
-
-				ruta = ruta.replace("file:", "");
-
-			}
-
-			originalImage = loadFileImage(ruta);
-
-			setPreferredSize(new Dimension(originalImage.getWidth(), originalImage.getHeight()));
-
-			repaint();
+			setPreferredSize(null);
 
 		}
 
-		catch (Exception e) {
+		else {
+
+			try {
+
+				ruta = defaultIcon.toString();
+
+				if (System.getProperty("os.name").contains("indows")) {
+
+					ruta = ruta.replace("file:/", "");
+
+				}
+
+				else {
+
+					ruta = ruta.replace("file:", "");
+
+				}
+
+				originalImage = loadFileImage(ruta);
+
+				setPreferredSize(new Dimension(originalImage.getWidth(), originalImage.getHeight()));
+
+			}
+
+			catch (Exception e) {
+
+			}
 
 		}
+
+		repaint();
 
 	}
 
@@ -245,16 +285,20 @@ public class RoundLabel extends JLabel {
 
 		g2d.setClip(mask);
 
-		if (grosor > 2) {
+		if (originalImage != null) {
 
-			g2d.drawImage(originalImage, grosor / 2, grosor / 2, getWidth() - (grosor - 1), getHeight() - (grosor - 1),
-					this);
+			if (grosor > 2) {
 
-		}
+				g2d.drawImage(originalImage, grosor / 2, grosor / 2, getWidth() - (grosor - 1),
+						getHeight() - (grosor - 1), this);
 
-		else {
+			}
 
-			g2d.drawImage(originalImage, 0, 0, getWidth(), getHeight(), this);
+			else {
+
+				g2d.drawImage(originalImage, 0, 0, getWidth(), getHeight(), this);
+
+			}
 
 		}
 

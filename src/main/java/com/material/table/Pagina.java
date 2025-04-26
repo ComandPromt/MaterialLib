@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.checkbox.CheckBoxCustom;
+import com.panels.others.CopyPanel;
 import com.panels.others.FilePathPanel;
 
 import mthos.JMthos;
@@ -35,8 +36,6 @@ class Pagina extends JPanel {
 	private Font fuente;
 
 	private Color fg;
-
-	private String texto;
 
 	private int tipo;
 
@@ -79,13 +78,11 @@ class Pagina extends JPanel {
 
 	}
 
-	public void setTextAndType(int type, String text, ImageIcon icon) {
+	public void setTextAndType(int type, ImageIcon icon) {
 
 		tipo = type;
 
 		panel.removeAll();
-
-		texto = text;
 
 		JLabel label;
 
@@ -99,13 +96,13 @@ class Pagina extends JPanel {
 
 					filePanel = new FilePathPanel(lista.get(i), false);
 
-					filePanel.setTextFileBottom(text);
-
 					filePanel.getBoton3().setIcon(icon);
 
 					filePanel.setType(type);
 
 					filePanel.setFileBottom(bottom);
+
+					filePanel.setTextFileBottom(JMthos.saberExtension(lista.get(i)).toUpperCase());
 
 					panel.add(filePanel);
 
@@ -141,7 +138,7 @@ class Pagina extends JPanel {
 
 	public Pagina(List<String> lista, Font font, Color fg, boolean file) {
 
-		texto = "";
+		tipo = 7;
 
 		this.lista = lista;
 
@@ -283,27 +280,39 @@ class Pagina extends JPanel {
 
 					filePanel = new FilePathPanel(lista.get(i), false);
 
-					filePanel.setTextFileBottom(texto);
+					filePanel.setTextFileBottom(JMthos.saberExtension(lista.get(i)).toUpperCase());
 
 					filePanel.setType(tipo);
 
 					filePanel.setFileBottom(color);
+
 					filePanel.getBoton3().setIcon(icono);
+
 					panel.add(filePanel);
 
 				}
 
 				else {
 
-					label = new JLabel(lista.get(i));
+					if (lista.get(i).startsWith("ffmpeg -i")) {
 
-					label.setHorizontalAlignment(SwingConstants.CENTER);
+						panel.add(new CopyPanel(lista.get(i)));
 
-					label.setFont(fuente);
+					}
 
-					label.setForeground(fg);
+					else {
 
-					panel.add(label);
+						label = new JLabel(lista.get(i));
+
+						label.setHorizontalAlignment(SwingConstants.CENTER);
+
+						label.setFont(fuente);
+
+						label.setForeground(fg);
+
+						panel.add(label);
+
+					}
 
 				}
 

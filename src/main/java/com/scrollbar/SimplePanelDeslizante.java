@@ -128,7 +128,7 @@ public class SimplePanelDeslizante extends JPanel {
 
 		add(panel);
 
-		materialPanel = new MaterialPanelDeslizante(panel, select, background);
+		materialPanel = new MaterialPanelDeslizante(panel, select, background, Color.WHITE, 40);
 
 		JList<String> list = new JList<String>();
 

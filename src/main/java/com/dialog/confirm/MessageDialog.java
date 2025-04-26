@@ -3,38 +3,38 @@ package com.dialog.confirm;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-import com.buttons.animated.ButtonCustom;
+import com.buttons.round.NButton;
 
 @SuppressWarnings("serial")
-public class MessageDialog extends javax.swing.JDialog {
+public class MessageDialog extends JDialog {
 
 	private Background background1;
 
-	private ButtonCustom cmdCancel;
-
-	private ButtonCustom cmdOK;
-
-	private javax.swing.JLabel lbTitle;
+	private JLabel lbTitle;
 
 	private JLabel txt;
 
@@ -48,21 +48,200 @@ public class MessageDialog extends javax.swing.JDialog {
 
 	private MessageType messageType;
 
+	private int ancho;
+
+	private int alto;
+
+	private JPanel panel;
+
+	private NButton btnNewButton;
+
+	private NButton btnNewButton_1;
+
+	@Override
+	public void dispose() {
+
+		try {
+
+			fram.dispose();
+
+			super.dispose();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setBackgroundButtons(Color ok, Color cancel) {
+
+		try {
+
+			btnNewButton_1.setBackground(ok);
+
+			btnNewButton.setBackground(cancel);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setForegroundButtons(Color ok, Color cancel) {
+
+		try {
+
+			btnNewButton_1.setForeground(ok);
+
+			btnNewButton.setForeground(cancel);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setButtonFont(Font ok, Font cancel) {
+
+		try {
+
+			btnNewButton_1.setFont(ok);
+
+			btnNewButton.setFont(cancel);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setButtonText(String ok, String cancel) {
+
+		try {
+
+			btnNewButton_1.setText(ok);
+
+			btnNewButton.setText(cancel);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setFondo(Color fondo) {
+
+		try {
+
+			background1.setFondo(fondo);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	@Override
+	public void setBackground(Color bgColor) {
+
+		try {
+
+			super.setBackground(bgColor);
+
+			txt.setBackground(bgColor);
+
+			lbTitle.setBackground(bgColor);
+
+			panel.setBackground(bgColor);
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setMessage(Font font) {
+
+		try {
+
+			txt.setFont(font);
+
+		}
+
+		catch (Exception exception) {
+
+		}
+
+	}
+
+	public void setTitle(Font font) {
+
+		try {
+
+			lbTitle.setFont(font);
+
+		}
+
+		catch (Exception exception) {
+
+		}
+
+	}
+
+	public void setMessage(Color color) {
+
+		try {
+
+			txt.setForeground(color);
+
+		}
+
+		catch (Exception exception) {
+
+		}
+
+	}
+
+	public void setTitle(Color color) {
+
+		try {
+
+			lbTitle.setForeground(color);
+
+		}
+
+		catch (Exception exception) {
+
+		}
+
+	}
+
 	public void setIcon(Icon icon) {
 
 		try {
 
-			if (icon == null) {
-
-				icon = new javax.swing.ImageIcon(getClass().getResource("icon.png"));
-
-			}
+			if (icon == null)
+				icon = new ImageIcon(getClass().getResource("icon.png"));
 
 			background1.setIcon(icon);
 
 		}
 
-		catch (Exception e) {
+		catch (Exception exception) {
 
 		}
 
@@ -76,108 +255,260 @@ public class MessageDialog extends javax.swing.JDialog {
 
 			txt.setFont(font);
 
-			cmdCancel.setFont(font);
+		}
 
-			cmdOK.setFont(font);
+		catch (Exception exception) {
 
 		}
 
-		catch (Exception e) {
+	}
 
-		}
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public MessageDialog(Color fondo, Color background, String title, String message, Icon icon, Font font,
+			boolean cancelFirst) {
+
+		super((Fondo) null, true);
+
+		if (icon == null)
+			icon = new ImageIcon(getClass().getResource("icon.png"));
+
+		messageType = MessageType.CANCEL;
+
+		fram = new Fondo(background);
+
+		initComponents(cancelFirst);
+
+		background1.setFondo(fondo);
+
+		setIcon(icon);
+
+		init();
+
+		if (font == null)
+
+			font = new Font("Dialog", 0, 30);
+
+		if (fondo == null)
+
+			fondo = Color.WHITE;
+
+		if (background == null)
+
+			background = Color.LIGHT_GRAY;
+
+		setFont(font);
+
+		showMessage(message, title);
+
+	}
+
+	public MessageDialog(String title, String mesage, Icon icon) {
+
+		this(600, 300, null, null, title, mesage, icon, null, true);
+
+	}
+
+	public MessageDialog(String title, String mesage, Icon icon, boolean cancelFirst) {
+
+		this(600, 300, null, null, title, mesage, icon, null, cancelFirst);
+
+	}
+
+	public MessageDialog(String title, String mesage) {
+
+		this(600, 300, null, null, title, mesage, null, null, true);
+
+	}
+
+	public MessageDialog(String title, String mesage, boolean cancelFirst) {
+
+		this(600, 300, null, null, title, mesage, null, null, cancelFirst);
+
+	}
+
+	public MessageDialog(String title, String message, Font font, Icon icon) {
+
+		this(600, 300, (Color) null, (Color) null, title, message, icon, font, true);
 
 	}
 
 	public MessageDialog(String title, String message, Font font) {
 
-		this(null, null, title, message, null, font);
+		this(600, 300, (Color) null, (Color) null, title, message, (Icon) null, font, true);
 
 	}
 
-	public MessageDialog(Color fondo, Color background, String title, String message, int fontSize) {
+	public MessageDialog(String title, String message, Font font, boolean cancelFirst) {
 
-		this(fondo, background, title, message, null, new Font("Dialog", Font.PLAIN, fontSize));
-
-	}
-
-	public MessageDialog(String title, String message, int fontSize) {
-
-		this(null, null, title, message, null, new Font("Dialog", Font.PLAIN, fontSize));
+		this(600, 300, (Color) null, (Color) null, title, message, (Icon) null, font, cancelFirst);
 
 	}
 
-	public MessageDialog(Color fondo, Color background, String title, String message, Font font) {
+	public MessageDialog(int width, int height, String title, String message, Font font, Icon icon,
+			boolean cancelFirst) {
 
-		this(fondo, background, title, message, null, font);
-
-	}
-
-	public MessageDialog(Color fondo, Color background, String title, String message) {
-
-		this(fondo, background, title, message, null, null);
+		this(width, height, (Color) null, (Color) null, title, message, icon, font, cancelFirst);
 
 	}
 
-	public MessageDialog(String title, String message) {
+	public MessageDialog(int width, int height, String title, String message, Font font, boolean cancelFirst) {
 
-		this(null, null, title, message, null, null);
+		this(width, height, (Color) null, (Color) null, title, message, (Icon) null, font, cancelFirst);
+
+	}
+
+	public MessageDialog(Color fondo, Color background, String title, String message, int fontSize, Icon icon,
+			boolean cancelFirst) {
+
+		this(600, 300, fondo, background, title, message, icon, new Font("Dialog", 0, fontSize), cancelFirst);
+
+	}
+
+	public MessageDialog(Color fondo, Color background, String title, String message, int fontSize, Icon icon) {
+
+		this(600, 300, fondo, background, title, message, icon, new Font("Dialog", 0, fontSize), true);
+
+	}
+
+	public MessageDialog(Color fondo, Color background, String title, String message, int fontSize,
+			boolean cancelFirst) {
+
+		this(600, 300, fondo, background, title, message, (Icon) null, new Font("Dialog", 0, fontSize), cancelFirst);
 
 	}
 
 	public MessageDialog(Color fondo, Color background, String title, String message, Icon icon, Font font) {
 
-		super(new Fondo(background), true);
+		this(600, 300, fondo, background, title, message, icon, font, true);
 
-		if (icon == null) {
+	}
 
-			icon = new javax.swing.ImageIcon(getClass().getResource("icon.png"));
+	public MessageDialog(Color fondo, Color background, String title, String message, int fontSize, Font font) {
 
-		}
-		if (font == null) {
+		this(600, 300, fondo, background, title, message, (Icon) null, font, true);
 
-			font = new Font("Dialog", Font.PLAIN, 25);
+	}
 
-		}
+	public MessageDialog(Color fondo, Color background, String title, String message, int fontSize, Font font,
+			Icon icon) {
 
-		if (fondo == null) {
+		this(600, 300, fondo, background, title, message, icon, font, true);
 
-			fondo = Color.WHITE;
+	}
 
-		}
+	public MessageDialog(int width, int height, Color fondo, Color background, String title, String message,
+			int fontSize, boolean cancelFirst) {
 
-		if (background == null) {
+		this(width, height, fondo, background, title, message, (Icon) null, new Font("Dialog", 0, fontSize),
+				cancelFirst);
 
-			background = Color.LIGHT_GRAY;
+	}
 
-		}
+	public MessageDialog(int width, int height, String title, String message, int fontSize, boolean cancelFirst) {
+
+		this(width, height, (Color) null, (Color) null, title, message, (Icon) null, new Font("Dialog", 0, fontSize),
+				cancelFirst);
+
+	}
+
+	public MessageDialog(int width, int height, Color fondo, Color background, String title, String message, Font font,
+			boolean cancelFirst) {
+
+		this(width, height, fondo, background, title, message, (Icon) null, font, cancelFirst);
+
+	}
+
+	public MessageDialog(int width, int height, Color fondo, Color background, String title, String message) {
+
+		this(width, height, fondo, background, title, message, (Icon) null, (Font) null, true);
+
+	}
+
+	public MessageDialog(int width, int height, Color fondo, Color background, String title, String message,
+			boolean cancelFirst) {
+
+		this(width, height, fondo, background, title, message, (Icon) null, (Font) null, cancelFirst);
+
+	}
+
+	public MessageDialog(int width, int height, String title, String message, boolean cancelFirst) {
+
+		this(width, height, (Color) null, (Color) null, title, message, (Icon) null, (Font) null, cancelFirst);
+
+	}
+
+	public MessageDialog(int width, int height, Color fondo, Color background, final String title, final String message,
+			Icon icon, Font font, boolean cancelFirst) {
+
+		super((Fondo) null, true);
+
+		this.ancho = width;
+
+		this.alto = height;
+
+		this.lbTitle = new JLabel();
+
+		if (title.isEmpty())
+
+			this.lbTitle.setVisible(false);
 
 		addComponentListener(new ComponentAdapter() {
 
-			@Override
 			public void componentResized(ComponentEvent e) {
 
-				cmdCancel.setBounds(0, getHeight() - cmdCancel.getHeight(), getWidth() / 2, cmdCancel.getHeight());
+				if (title.isEmpty() && message.isEmpty()) {
 
-				cmdOK.setBounds(getWidth() / 2, getHeight() - cmdCancel.getHeight(), getWidth() / 2,
-						cmdCancel.getHeight());
+					MessageDialog.this.setSize(600, 275);
 
-				txt.setBounds(0, Math.round(getHeight() * 0.33f), getWidth(), txt.getHeight());
+				}
 
-				lbTitle.setBounds(0, Math.round(getHeight() * 0.57f), getWidth(), lbTitle.getHeight());
+				else {
+
+					if (MessageDialog.this.ancho < 600)
+
+						MessageDialog.this.ancho = 600;
+
+					if (MessageDialog.this.alto < 275)
+
+						MessageDialog.this.alto = 275;
+
+					MessageDialog.this.setSize(MessageDialog.this.ancho, MessageDialog.this.alto);
+
+				}
 
 			}
 
 		});
 
-		messageType = MessageType.CANCEL;
+		if (icon == null)
+
+			icon = new ImageIcon(getClass().getResource("icon.png"));
+
+		if (font == null)
+
+			font = new Font("Dialog", 0, 25);
+
+		if (fondo == null)
+
+			fondo = Color.RED;
+
+		if (background == null)
+
+			background = Color.WHITE;
+
+		this.messageType = MessageType.CANCEL;
 
 		this.fram = new Fondo(background);
 
-		initComponents();
+		initComponents(cancelFirst);
 
-		background1.setFondo(fondo);
+		this.background1.setMove(true);
 
-		background1.setBackground(background);
+		this.background1.setFondo(fondo);
+
+		this.background1.setBackground(background);
 
 		setIcon(icon);
 
@@ -185,7 +516,7 @@ public class MessageDialog extends javax.swing.JDialog {
 
 		setFont(font);
 
-		showMessage(message, title);
+		showMessage(title, message);
 
 	}
 
@@ -195,49 +526,41 @@ public class MessageDialog extends javax.swing.JDialog {
 
 		SimpleAttributeSet center = new SimpleAttributeSet();
 
-		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		StyleConstants.setAlignment(center, 1);
 
-		txt.setOpaque(false);
+		this.txt.setOpaque(false);
 
-		txt.setBackground(new Color(0, 0, 0, 0));
-
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(0);
 
 		addWindowListener(new WindowAdapter() {
 
-			@Override
-
 			public void windowClosing(WindowEvent e) {
 
-				closeMessage();
+				MessageDialog.this.closeMessage();
 
 			}
 
 		});
 
-		animator = new Animator(350, new TimingTargetAdapter() {
-
-			@Override
+		this.animator = new Animator(350, (TimingTarget) new TimingTargetAdapter() {
 
 			public void timingEvent(float fraction) {
 
-				float f = show ? fraction : 1f - fraction;
+				float f = MessageDialog.this.show ? fraction : (1.0F - fraction);
 
-				glass.setAlpha(f - f * 0.3f);
+				MessageDialog.this.glass.setAlpha(f - f * 0.3F);
 
-				setOpacity(f);
+				MessageDialog.this.setOpacity(f);
 
 			}
 
-			@Override
-
 			public void end() {
 
-				if (show == false) {
+				if (!MessageDialog.this.show) {
 
-					dispose();
+					MessageDialog.this.dispose();
 
-					glass.setVisible(false);
+					MessageDialog.this.glass.setVisible(false);
 
 				}
 
@@ -245,53 +568,53 @@ public class MessageDialog extends javax.swing.JDialog {
 
 		});
 
-		animator.setResolution(0);
+		this.animator.setResolution(0);
 
-		animator.setAcceleration(.5f);
+		this.animator.setAcceleration(0.5F);
 
-		animator.setDeceleration(.5f);
+		this.animator.setDeceleration(0.5F);
 
-		setOpacity(0f);
+		setOpacity(0.0F);
 
-		glass = new Glass();
+		this.glass = new Glass();
 
 	}
 
 	private void startAnimator(boolean show) {
 
-		if (animator.isRunning()) {
+		if (this.animator.isRunning()) {
 
-			float f = animator.getTimingFraction();
+			float f = this.animator.getTimingFraction();
 
-			animator.stop();
+			this.animator.stop();
 
-			animator.setStartFraction(1f - f);
+			this.animator.setStartFraction(1.0F - f);
 
 		}
 
 		else {
 
-			animator.setStartFraction(0f);
+			this.animator.setStartFraction(0.0F);
 
 		}
 
 		this.show = show;
 
-		animator.start();
+		this.animator.start();
 
 	}
 
-	public void showMessage(String title, String message) {
+	void showMessage(String title, String message) {
 
-		fram.setGlassPane(glass);
+		this.fram.setGlassPane(this.glass);
 
-		glass.setVisible(true);
+		this.glass.setVisible(true);
 
-		lbTitle.setText(title);
+		this.lbTitle.setText(title);
 
-		txt.setText(message);
+		this.txt.setText(message);
 
-		setLocationRelativeTo(fram);
+		setLocationRelativeTo(this.fram);
 
 		startAnimator(true);
 
@@ -307,96 +630,50 @@ public class MessageDialog extends javax.swing.JDialog {
 
 	public MessageType getMessageType() {
 
-		return messageType;
+		return this.messageType;
 
 	}
 
-	private void initComponents() {
+	private void initComponents(boolean cancelFirst) {
 
-		background1 = new Background();
+		this.lbTitle = new JLabel();
 
-		cmdCancel = new ButtonCustom("");
+		this.background1 = new Background();
 
-		cmdOK = new ButtonCustom("");
+		this.txt = new JLabel();
 
-		lbTitle = new javax.swing.JLabel();
+		this.txt.setHorizontalAlignment(0);
 
-		txt = new JLabel();
-
-		txt.setHorizontalAlignment(SwingConstants.CENTER);
-
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(2);
 
 		setUndecorated(true);
 
-		background1.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
-
-		cmdCancel.setBackground(new java.awt.Color(245, 71, 71));
-
-		cmdCancel.setText("Cancel");
-
-		cmdCancel.setColorHover(new java.awt.Color(255, 74, 74));
-
-		cmdCancel.setColorPressed(new java.awt.Color(235, 61, 61));
-
-		cmdCancel.setFont(new Font("Dialog", Font.PLAIN, 20));
-
-		cmdCancel.addActionListener(new java.awt.event.ActionListener() {
-
-			@Override
-
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-				cmdCancelActionPerformed(evt);
-
-			}
-
-		});
-
-		cmdOK.setText("OK");
-
-		cmdOK.setFont(new Font("Dialog", Font.PLAIN, 20));
-
-		cmdOK.addActionListener(new ActionListener() {
-
-			@Override
-
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-				cmdOKActionPerformed(evt);
-
-			}
-
-		});
+		this.background1.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 
-		lbTitle.setFont(new Font("Dialog", Font.PLAIN, 20));
+		this.lbTitle.setFont(new Font("Dialog", 0, 20));
 
-		lbTitle.setForeground(new java.awt.Color(76, 76, 76));
+		this.lbTitle.setHorizontalAlignment(0);
 
-		lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		this.lbTitle.setText("Message Title");
 
-		lbTitle.setText("Message Title");
+		this.txt.setFont(new Font("Dialog", 0, 20));
 
-		txt.setFont(new Font("Dialog", Font.PLAIN, 20));
+		this.txt.setHorizontalAlignment(0);
 
-		txt.setForeground(new java.awt.Color(245, 71, 71));
+		this.txt.setText("Message Text\nSimple");
 
-		txt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		this.txt.setFocusable(false);
 
-		txt.setText("Message Text\nSimple");
+		panel = new JPanel();
 
-		txt.setFocusable(false);
-
-		javax.swing.GroupLayout background1Layout = new javax.swing.GroupLayout(background1);
+		GroupLayout background1Layout = new GroupLayout(this.background1);
 
 		background1Layout.setHorizontalGroup(background1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(background1Layout.createSequentialGroup()
-						.addComponent(cmdCancel, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE).addGap(3)
-						.addComponent(cmdOK, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
-				.addComponent(txt, GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-				.addComponent(lbTitle, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE));
+				.addComponent(txt, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+				.addComponent(lbTitle, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+				.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE));
 
 		background1Layout.setVerticalGroup(background1Layout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(background1Layout.createSequentialGroup().addGap(96)
@@ -404,37 +681,71 @@ public class MessageDialog extends javax.swing.JDialog {
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(txt, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(background1Layout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(cmdCancel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-								.addComponent(cmdOK, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))));
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)));
 
-		background1.setLayout(background1Layout);
+		panel.setLayout(new GridLayout(0, 2, 0, 0));
 
-		getContentPane().add(background1);
+		btnNewButton = new NButton("Cancel");
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBackground(new Color(245, 71, 71));
+
+		btnNewButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				messageType = MessageType.CANCEL;
+
+				closeMessage();
+
+			}
+
+		});
+
+		btnNewButton_1 = new NButton("Ok");
+
+		btnNewButton_1.setForeground(Color.WHITE);
+
+		btnNewButton_1.setBackground(new Color(69, 191, 71));
+
+		btnNewButton_1.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+
+				messageType = MessageType.OK;
+
+				closeMessage();
+
+			}
+
+		});
+
+		if (cancelFirst) {
+
+			panel.add(btnNewButton);
+
+			panel.add(btnNewButton_1);
+
+		}
+
+		else {
+
+			panel.add(btnNewButton_1);
+
+			panel.add(btnNewButton);
+
+		}
+
+		this.background1.setLayout(background1Layout);
+
+		getContentPane().add(this.background1);
 
 		pack();
 
 	}
 
-	private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {
-
-		messageType = MessageType.CANCEL;
-
-		closeMessage();
-
-	}
-
-	private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {
-
-		messageType = MessageType.OK;
-
-		closeMessage();
-
-	}
-
 	public enum MessageType {
 
-		CANCEL, OK
+		CANCEL, OK;
 
 	}
 

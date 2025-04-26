@@ -300,6 +300,16 @@ public class DecimalSpinner extends JSpinner {
 
 	}
 
+	public DecimalSpinner(float min, float max) {
+
+		this();
+
+		setMinValor(min);
+
+		setMaxValor(max);
+
+	}
+
 	public DecimalSpinner(Font font) {
 
 		buttonBackground = Color.decode("#e7e7e7");

@@ -409,7 +409,7 @@ public class SearchInput extends JTextField {
 
 		menu.setBorder(BorderFactory.createLineBorder(new Color(164, 164, 164)));
 
-		menu.add(new MaterialPanelDeslizante(search, null, null));
+		menu.add(new MaterialPanelDeslizante(search, null, null, Color.WHITE, 40));
 
 		menu.setFocusable(false);
 

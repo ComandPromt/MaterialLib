@@ -13,96 +13,107 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class MaterialPanelLayout extends JPanel {
 
-	private List<JComponent> components;
-
-	private List<Integer> list;
-
+	private List<JComponent> componentes;
+	private List<Integer> porcentajes; // Tamaños relativos en porcentaje (opcional)
 	private boolean vertical;
+	private int tamanioFijo; // Altura o ancho fijo para la cabecera
 
-	public MaterialPanelLayout(JComponent[] components, List<Integer> list, boolean vertical) {
-
-		this.components = Arrays.asList(components);
-
-		this.list = list;
-
-		this.vertical = vertical;
-
-		initialize();
-
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public MaterialPanelLayout(List<JComponent> components, int alturaCabeceraFija, boolean vertical) {
+		this(components, null, alturaCabeceraFija, vertical);
 	}
 
-	public MaterialPanelLayout(List<JComponent> components, List<Integer> list, boolean vertical) {
+	public MaterialPanelLayout(JComponent[] components, List<Integer> porcentajes, int alturaCabeceraFija,
+			boolean vertical) {
+		this(Arrays.asList(components), porcentajes, alturaCabeceraFija, vertical);
+	}
 
-		this.components = components;
+	public MaterialPanelLayout(JComponent[] components, List<Integer> porcentajes, boolean vertical) {
+		this(Arrays.asList(components), porcentajes, 0, vertical);
+	}
 
-		this.list = list;
+	public MaterialPanelLayout(List<JComponent> components, List<Integer> porcentajes, boolean vertical) {
+		this(components, porcentajes, 0, vertical);
+	}
 
+	public MaterialPanelLayout(List<JComponent> componentes, List<Integer> porcentajes, int tamanioFijo,
+			boolean vertical) {
+		this.componentes = componentes;
+		this.porcentajes = porcentajes;
+		this.tamanioFijo = tamanioFijo;
 		this.vertical = vertical;
-
 		initialize();
-
 	}
 
 	private void initialize() {
-
 		addComponentListener(new ComponentAdapter() {
-
 			@Override
-
 			public void componentResized(ComponentEvent e) {
-
 				redimensionar();
-
 			}
-
 		});
 
-		setLayout(new BoxLayout(this, vertical ? BoxLayout.Y_AXIS : BoxLayout.X_AXIS));
+		if (tamanioFijo < 1) {
 
-		redimensionar();
+			setLayout(new BoxLayout(this, vertical ? BoxLayout.Y_AXIS : BoxLayout.X_AXIS));
+
+		}
+
+		else {
+
+			setLayout(null);
+
+		}
 
 	}
 
 	private void redimensionar() {
-
 		removeAll();
 
+		boolean usarPorcentajes = porcentajes != null && !porcentajes.isEmpty();
+		int totalRestante = vertical ? getHeight() - tamanioFijo : getWidth() - tamanioFijo;
 		int porcentaje = 0;
-
-		boolean nulo = false;
-
-		if (list == null || list.isEmpty()) {
-
-			porcentaje = Math.round(100 / components.size());
-
-			nulo = true;
-
-		}
-
-		int size = 0;
-
+		int size;
 		Dimension dimension;
-
 		JComponent com;
 
 		try {
 
-			for (int i = 0; i < components.size(); i++) {
+			for (int i = 0; i < 2; i++) {
+				com = componentes.get(i);
 
-				if (!nulo && i < list.size()) {
+				if (i == 0 && tamanioFijo > 0) {
+					// Cabecera con tamaño fijo
+					size = tamanioFijo;
 
-					porcentaje = list.get(i);
-
+				} else if (usarPorcentajes && i - 1 < porcentajes.size()) {
+					// Tamaño según porcentaje (ajustado a espacio restante)
+					porcentaje = porcentajes.get(i - 1); // el índice de porcentaje empieza en 0 para el segundo
+															// componente
+					size = (int) (porcentaje / 100.0 * totalRestante);
+				} else {
+					// Tamaño igual entre los componentes restantes
+					int restantes = componentes.size() - 1;
+					size = restantes > 0 ? totalRestante / restantes : totalRestante;
 				}
 
-				com = components.get(i);
-
-				size = (list != null && porcentaje > 0) ? comprobarSize(porcentaje, vertical)
-						: (porcentaje > 0) ? porcentaje * getSize().height / 100 : getSize().height / components.size();
-
-				dimension = vertical ? new Dimension(getSize().width, size) : new Dimension(size, getSize().height);
+				dimension = vertical ? new Dimension(getWidth(), size) : new Dimension(size, getHeight());
 
 				com.setPreferredSize(dimension);
+
+				if (tamanioFijo > 0) {
+
+					if (i == 0) {
+
+						com.setBounds(0, 0, getWidth(), tamanioFijo);
+
+					} else {
+						com.setBounds(0, tamanioFijo, getWidth(), getHeight() - tamanioFijo);
+					}
+
+				}
 
 				add(com);
 
@@ -111,17 +122,11 @@ public class MaterialPanelLayout extends JPanel {
 		}
 
 		catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		revalidate();
-
-	}
-
-	private int comprobarSize(int porcentaje, boolean vertical) {
-
-		return (int) (porcentaje / 100.0 * (vertical ? getSize().height : getSize().width));
-
+		repaint();
 	}
 
 }

@@ -606,7 +606,7 @@ class MaterialFileChooser extends JPanel {
 
 		buttonScrollablePanel.setSize(600, 600);
 
-		panel_5 = new MaterialPanelDeslizante(buttonScrollablePanel, null, null);
+		panel_5 = new MaterialPanelDeslizante(buttonScrollablePanel, null, null, Color.WHITE, 40);
 
 		panel_5.setBounds(0, 32, 735, 322);
 

@@ -62,6 +62,64 @@ public class ShadowButton extends JButton {
 
 	private Color borderColor;
 
+	private Color pressedColor;
+
+	public void setPressedColor(Color pressedColor) {
+
+		this.pressedColor = pressedColor;
+
+		repaint();
+
+	}
+
+	public void setButtonHighlight(Image buttonHighlight) {
+
+		try {
+
+			this.buttonHighlight = buttonHighlight;
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setShadowOffsetX(float shadowOffsetX) {
+
+		try {
+
+			this.shadowOffsetX = shadowOffsetX;
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
+	public void setShadowOffsetY(float shadowOffsetY) {
+
+		try {
+
+			this.shadowOffsetY = shadowOffsetY;
+
+			repaint();
+
+		}
+
+		catch (Exception e) {
+
+		}
+
+	}
+
 	@Override
 	public void setToolTipText(String text) {
 
@@ -180,6 +238,10 @@ public class ShadowButton extends JButton {
 
 		super(icon);
 
+		foco = true;
+
+		pressedColor = Color.WHITE;
+
 		setForeground(Color.WHITE);
 
 		setBackground(Color.BLUE);
@@ -195,8 +257,6 @@ public class ShadowButton extends JButton {
 		distanciaDeSombra = 3;
 
 		vertical = true;
-
-		foco = false;
 
 		shadow = true;
 
@@ -222,6 +282,10 @@ public class ShadowButton extends JButton {
 
 		setFont(getFont().deriveFont(30f));
 
+		foco = true;
+
+		pressedColor = Color.WHITE;
+
 		colorDeSombra = new Color(0, 0, 0);
 
 		direccionDeSombra = 60;
@@ -229,8 +293,6 @@ public class ShadowButton extends JButton {
 		distanciaDeSombra = 3;
 
 		vertical = true;
-
-		foco = false;
 
 		angulo = 20;
 
@@ -330,11 +392,17 @@ public class ShadowButton extends JButton {
 
 		if (shadow) {
 
-			if (modelo.isArmed() || modelo.isPressed())
-				g2.setPaint(getBackground().darker().darker().darker());
+			if (modelo.isArmed() || modelo.isPressed()) {
 
-			else
+				g2.setPaint(pressedColor);
+
+			}
+
+			else {
+
 				g2.setPaint(getBackground());
+
+			}
 
 		}
 
@@ -353,13 +421,6 @@ public class ShadowButton extends JButton {
 			BufferedImage image = GraphicsUtil.toBufferedImage(((ImageIcon) getIcon()).getImage());
 
 			g2.drawImage(image, 10, 10, getWidth() - 20, getHeight() - 20, null);
-		}
-
-		if (modelo.isRollover() || foco) {
-
-			g2.drawRect(0, 0, getWidth(), getHeight());
-
-			g2.drawImage(buttonHighlight, 0, 0, getWidth(), getHeight(), null);
 
 		}
 

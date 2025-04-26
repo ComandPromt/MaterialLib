@@ -2,78 +2,91 @@ package com.scrollbar;
 
 import java.awt.Color;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import com.textarea.TextArea;
 
 @SuppressWarnings("serial")
 public class MaterialPanelDeslizante extends JScrollPane {
 
-	private Color fg;
+	private ScrollBarCustom scroll;
 
-	private Color bg;
+	private ScrollBarCustom scroll2;
 
-	@Override
+	public void setBackground(Color color, boolean vertical) {
 
-	public void setForeground(Color fg) {
+		if (vertical) {
 
-		this.fg = fg;
+			scroll.setBackground(color);
 
-		setVerticalScrollBar(new ScrollBarCustom(fg, bg));
+		}
 
-	}
+		else {
 
-	@Override
-	public void setBackground(Color bg) {
-
-		this.bg = bg;
-
-		setVerticalScrollBar(new ScrollBarCustom(fg, bg));
+			scroll2.setBackground(color);
+		}
 
 	}
 
-	public void setColors(Color foreground, Color background) {
+	public void setForeground(Color color, boolean vertical) {
 
-		setVerticalScrollBar(new ScrollBarCustom(foreground, background));
+		if (vertical) {
 
-	}
+			scroll.setForeground(color);
 
-	public MaterialPanelDeslizante(TextArea textArea, Color select, Color background) {
+		}
 
-		super(textArea);
+		else {
 
-		setVerticalScrollBar(new ScrollBarCustom(select, background));
-
-	}
-
-	public MaterialPanelDeslizante(JTextArea textArea, Color select, Color background) {
-
-		super(textArea);
-
-		setVerticalScrollBar(new ScrollBarCustom(select, background));
-
-		ScrollBarCustom test = new ScrollBarCustom(select, background);
-
-		test.setOrientation(JScrollBar.HORIZONTAL);
-
-		setHorizontalScrollBar(test);
+			scroll2.setForeground(color);
+		}
 
 	}
 
-	public MaterialPanelDeslizante(JPanel panel, Color select, Color background) {
+	public MaterialPanelDeslizante(JComponent component, Color select, Color background, Color background2, int size) {
 
-		super(panel);
+		super(component);
 
-		setVerticalScrollBar(new ScrollBarCustom(select, background));
+		scroll = new ScrollBarCustom(select, background, background2, size);
 
-		ScrollBarCustom test = new ScrollBarCustom(select, background);
+		scroll2 = new ScrollBarCustom(select, background, background2, size);
 
-		test.setOrientation(JScrollBar.HORIZONTAL);
+		setVerticalScrollBar(scroll);
 
-		setHorizontalScrollBar(test);
+		scroll2.setOrientation(JScrollBar.HORIZONTAL);
+
+		setHorizontalScrollBar(scroll2);
+
+	}
+
+	public void setBackground2(Color color, boolean vertical) {
+
+		if (vertical) {
+
+			scroll.setBackground2(color);
+
+		}
+
+		else {
+
+			scroll2.setBackground2(color);
+		}
+
+	}
+
+	public void setThumbSize(int size, boolean vertical) {
+
+		if (vertical) {
+
+			scroll.setScrollSize(size);
+
+		}
+
+		else {
+
+			scroll2.setScrollSize(size);
+
+		}
 
 	}
 

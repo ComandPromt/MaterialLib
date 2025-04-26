@@ -39,8 +39,6 @@ class Cuerpo extends JPanel {
 
 	private List<String> cabeceras;
 
-	private String texto;
-
 	private int tipo;
 
 	private ImageIcon icono;
@@ -53,7 +51,7 @@ class Cuerpo extends JPanel {
 
 	}
 
-	public void setFilePath(String text, int tipo, ImageIcon icon, boolean filePath) {
+	public void setFilePath(int tipo, ImageIcon icon, boolean filePath) {
 
 		this.filePath = filePath;
 
@@ -61,19 +59,15 @@ class Cuerpo extends JPanel {
 
 		this.icono = icon;
 
-		this.texto = text;
-
 		repaint();
 
 	}
 
-	public void setFilePath(String text, int tipo, boolean filePath) {
+	public void setFilePath(int tipo, boolean filePath) {
 
 		this.filePath = filePath;
 
 		this.tipo = tipo;
-
-		this.texto = text;
 
 		repaint();
 
@@ -182,23 +176,19 @@ class Cuerpo extends JPanel {
 
 						pagina.setColorActivo(activeBackground);
 
-						if (!texto.isEmpty()) {
+						if (icono == null) {
 
-							if (icono == null) {
+							carpetaClasica = new ClassicFolder(Color.LIGHT_GRAY);
 
-								carpetaClasica = new ClassicFolder(Color.LIGHT_GRAY);
+							carpetaClasica.setRestarDerecha(7);
 
-								carpetaClasica.setRestarDerecha(7);
-
-								icono = carpetaClasica;
-
-							}
-
-							pagina.setTextAndType(tipo, texto, icono);
-
-							pagina.setFileBottom(colorFileBottom);
+							icono = carpetaClasica;
 
 						}
+
+						pagina.setTextAndType(tipo, icono);
+
+						pagina.setFileBottom(colorFileBottom);
 
 						paginas.add(pagina);
 
@@ -263,8 +253,6 @@ class Cuerpo extends JPanel {
 
 		colorFileBottom = Color.PINK;
 
-		texto = "";
-
 		indicesNoSeleccionados = new ArrayList<>();
 
 		this.split = split;
@@ -276,6 +264,8 @@ class Cuerpo extends JPanel {
 		paginas = new ArrayList<>();
 
 		datos = (ArrayList<String>) lista;
+
+		setFilePath(true);
 
 	}
 

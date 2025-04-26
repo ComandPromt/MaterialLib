@@ -12,7 +12,7 @@ import com.toolTip.ToolTipLlamada;
 
 public class NTextArea extends TextAreaScroll {
 
-	private TextArea textArea;
+	private NewTextArea textArea;
 
 	private String text;
 
@@ -219,11 +219,23 @@ public class NTextArea extends TextAreaScroll {
 
 	}
 
+	public String getText() {
+
+		return textArea.getText();
+
+	}
+
+	public NTextArea() {
+
+		this("");
+
+	}
+
 	public NTextArea(String text) {
 
 		setShow(true);
 
-		textArea = new TextArea(null, null, null, null);
+		textArea = new NewTextArea(null, null, null, null);
 
 		setHeader(text);
 
@@ -239,9 +251,11 @@ public class NTextArea extends TextAreaScroll {
 
 		DefaultContextMenu.addDefaultContextMenu(textArea);
 
+		setSelectionColor(new Color(223, 223, 223));
+
 	}
 
-	public TextArea getTextArea() {
+	public NewTextArea getTextArea() {
 
 		return textArea;
 
