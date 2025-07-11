@@ -44,6 +44,16 @@ public class CheckBoxCustom extends JCheckBox {
 
 	private Point position;
 
+	private int alturaComponente;
+
+	public void alturaComponente(int altura) {
+
+		this.alturaComponente = altura;
+
+		repaint();
+
+	}
+
 	public void setPosition(Point position) {
 
 		this.position = position;
@@ -335,8 +345,6 @@ public class CheckBoxCustom extends JCheckBox {
 
 		this.texto = text;
 
-		setText(text);
-
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		setOpaque(false);
@@ -346,6 +354,8 @@ public class CheckBoxCustom extends JCheckBox {
 		setContentAreaFilled(false);
 
 		setBackground(new Color(69, 124, 235));
+
+		setText(text);
 
 	}
 
@@ -379,7 +389,7 @@ public class CheckBoxCustom extends JCheckBox {
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		int ly = ((getHeight() - fontSize) / 2) + 1;
+		int ly = (((getHeight() - fontSize) / 2) + 1) + alturaComponente;
 
 		if (isEnabled()) {
 
@@ -426,13 +436,13 @@ public class CheckBoxCustom extends JCheckBox {
 
 		if (position != null) {
 
-			g2.drawString(texto, (int) position.getX(), (int) position.getY());
+			g2.drawString(texto, (int) position.getX(), (int) position.getY() + alturaComponente);
 
 		}
 
 		else {
 
-			g2.drawString(texto, (fontSize + 7) + left, (getHeight() / 1.25f) + altura);
+			g2.drawString(texto, (fontSize + 7) + left, ((getHeight() / 1.25f) + altura) + alturaComponente);
 
 		}
 

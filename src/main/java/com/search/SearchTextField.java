@@ -118,7 +118,7 @@ public class SearchTextField extends JPanel {
 
 				if (e.getClickCount() == 2) {
 
-					int offset = suggestionPane.viewToModel2D(e.getPoint());
+					int offset = suggestionPane.viewToModel(e.getPoint());
 
 					try {
 

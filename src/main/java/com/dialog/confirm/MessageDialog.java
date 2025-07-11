@@ -433,6 +433,12 @@ public class MessageDialog extends JDialog {
 
 	}
 
+	public MessageDialog(int width, int height, String title, String message) {
+
+		this(width, height, (Color) null, (Color) null, title, message, (Icon) null, (Font) null, true);
+
+	}
+
 	public MessageDialog(int width, int height, String title, String message, boolean cancelFirst) {
 
 		this(width, height, (Color) null, (Color) null, title, message, (Icon) null, (Font) null, cancelFirst);

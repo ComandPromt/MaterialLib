@@ -3,21 +3,34 @@ package com.label.others;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.Serializable;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
-public class LabelImage extends JLabel {
+public class LabelImage extends JLabel implements Serializable {
 
-	private Icon icono;
+	private transient ImageIcon imagenIcon;
 
-	private ImageIcon imagenIcon;
+	private transient Image image;
 
-	private Image image;
+	private transient Image imageDefault;
 
-	private Image image_default;
+	private String icono;
+
+	public String getIcono() {
+
+		return icono;
+
+	}
+
+	public ImageIcon getImagenIcon() {
+
+		return imagenIcon;
+
+	}
 
 	public LabelImage(String text) {
 
@@ -47,13 +60,24 @@ public class LabelImage extends JLabel {
 
 	}
 
+	public void setIcon(String icon) {
+
+		icono = icon;
+
+		setIcon(new ImageIcon(icon));
+
+	}
+
+	@Override
 	public void setIcon(Icon icon) {
+
+		Icon icono;
 
 		if (icon != null) {
 
-			this.icono = icon;
+			icono = icon;
 
-			this.imagenIcon = (ImageIcon) this.icono;
+			this.imagenIcon = (ImageIcon) icono;
 
 			this.image = this.imagenIcon.getImage();
 
@@ -61,7 +85,7 @@ public class LabelImage extends JLabel {
 
 		else {
 
-			this.image = this.image_default;
+			this.image = this.imageDefault;
 
 		}
 

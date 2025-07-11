@@ -24,6 +24,8 @@ public class DragAndDrop extends JLabel {
 
 	private int thickness;
 
+	private Color fondo;
+
 	private Shape rect;
 
 	private boolean round;
@@ -45,6 +47,14 @@ public class DragAndDrop extends JLabel {
 	private Color border;
 
 	private Font fuente;
+
+	public void setFondo(Color fondo) {
+
+		this.fondo = fondo;
+
+		repaint();
+
+	}
 
 	@Override
 	public void setToolTipText(String text) {
@@ -222,6 +232,8 @@ public class DragAndDrop extends JLabel {
 
 	public DragAndDrop(String text) {
 
+		fondo = Color.WHITE;
+
 		altura = 0;
 
 		angulo = 20;
@@ -254,6 +266,12 @@ public class DragAndDrop extends JLabel {
 	public void paint(Graphics g) {
 
 		Graphics2D g2d = (Graphics2D) g;
+
+		g2d.setColor(fondo);
+
+		g2d.fillRect(0, 0, getWidth(), getHeight());
+
+		g2d.setColor(getForeground());
 
 		if (thickness > 0) {
 

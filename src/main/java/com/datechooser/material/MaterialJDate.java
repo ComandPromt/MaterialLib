@@ -18,6 +18,12 @@ public class MaterialJDate extends JPanel {
 
 	CalendarLanguage language;
 
+	public DateChooser getDateChooser() {
+
+		return ch;
+
+	}
+
 	public String getDate() {
 
 		try {

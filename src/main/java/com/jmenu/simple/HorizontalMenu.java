@@ -22,6 +22,26 @@ public class HorizontalMenu extends JPanel {
 
 	private MaterialPanelLayout panel;
 
+	public void setItemForeground(Color color) {
+
+		for (int i = 0; i < cabecera.getComponentCount(); i++) {
+
+			cabecera.getComponent(i).setForeground(color);
+
+		}
+
+	}
+
+	public void setItemFont(Font font) {
+
+		for (int i = 0; i < cabecera.getComponentCount(); i++) {
+
+			cabecera.getComponent(i).setFont(font);
+
+		}
+
+	}
+
 	public JPanel getCabecera() {
 
 		return cabecera;
@@ -42,7 +62,7 @@ public class HorizontalMenu extends JPanel {
 
 	}
 
-	public void setHeaderaBackground(Color color) {
+	public void setHeaderBackground(Color color) {
 
 		try {
 

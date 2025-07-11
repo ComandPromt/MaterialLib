@@ -332,98 +332,100 @@ public class TextFieldWithGradient extends JTextField {
 
 			}
 
-			TextLayout layout = new TextLayout(descripcion == null ? " " : descripcion, placeholderFont,
-					g2.getFontRenderContext());
+			String text = getText(); // o el texto del placeholder
 
-			Rectangle2D bounds = layout.getBounds();
+			if (text != null && !text.trim().isEmpty()) {
+				TextLayout layout = new TextLayout(text, placeholderFont, g2.getFontRenderContext());
 
-			int x;
+				Rectangle2D bounds = layout.getBounds();
+				int x;
 
-			switch (placeholderHorizontalPosition) {
+				switch (placeholderHorizontalPosition) {
 
-			case LEFT:
+				case LEFT:
 
-				x = anchoDeBorde + insets.left;
+					x = anchoDeBorde + insets.left;
 
-				break;
+					break;
 
-			case CENTER:
+				case CENTER:
 
-				x = (getWidth() - insets.left - insets.right - (int) bounds.getWidth()) / 2;
+					x = (getWidth() - insets.left - insets.right - (int) bounds.getWidth()) / 2;
 
-				break;
+					break;
 
-			case RIGHT:
+				case RIGHT:
 
-				x = getWidth() - insets.right - (int) bounds.getWidth() - anchoDeBorde;
+					x = getWidth() - insets.right - (int) bounds.getWidth() - anchoDeBorde;
 
-				break;
+					break;
 
-			default:
+				default:
 
-				x = anchoDeBorde + insets.left;
-
-			}
-
-			int y;
-
-			switch (placeholderVerticalPosition) {
-
-			case TOP:
-
-				y = fm.getAscent() + insets.top;
-
-				break;
-
-			case CENTER:
-
-				y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2
-						+ fm.getAscent() - 1;
-
-				break;
-
-			case BOTTOM:
-
-				y = getHeight() - insets.bottom - fm.getDescent();
-
-				break;
-
-			default:
-
-				y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2
-						+ fm.getAscent() - 1;
-
-			}
-
-			if (placeholderHorizontalPosition == PlaceholderHorizontalPosition.LEFT
-					&& placeholderVerticalPosition != PlaceholderVerticalPosition.CENTER) {
-
-				if (angle > 29) {
-
-					x += JMthos.calcularSucesionAritmeticaAInt("30#0,40#5", angle);
+					x = anchoDeBorde + insets.left;
 
 				}
 
-				y -= anchoDeBorde;
+				int y;
 
-				y -= 7;
+				switch (placeholderVerticalPosition) {
 
+				case TOP:
+
+					y = fm.getAscent() + insets.top;
+
+					break;
+
+				case CENTER:
+
+					y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2
+							+ fm.getAscent() - 1;
+
+					break;
+
+				case BOTTOM:
+
+					y = getHeight() - insets.bottom - fm.getDescent();
+
+					break;
+
+				default:
+
+					y = (getHeight() - insets.top - insets.bottom - fm.getMaxAscent() - fm.getMaxDescent()) / 2
+							+ fm.getAscent() - 1;
+
+				}
+
+				if (placeholderHorizontalPosition == PlaceholderHorizontalPosition.LEFT
+						&& placeholderVerticalPosition != PlaceholderVerticalPosition.CENTER) {
+
+					if (angle > 29) {
+
+						x += JMthos.calcularSucesionAritmeticaAInt("30#0,40#5", angle);
+
+					}
+
+					y -= anchoDeBorde;
+
+					y -= 7;
+
+				}
+
+				else if (placeholderHorizontalPosition == PlaceholderHorizontalPosition.RIGHT
+						&& placeholderVerticalPosition != PlaceholderVerticalPosition.CENTER) {
+
+					x -= JMthos.calcularSucesionAritmeticaAInt("0#0,10#5", angle);
+
+					y -= anchoDeBorde;
+
+					y -= 7;
+
+				}
+
+				g2.setColor(colorDeTextoBackground);
+
+				layout.draw(g2, x, y);
 			}
-
-			else if (placeholderHorizontalPosition == PlaceholderHorizontalPosition.RIGHT
-					&& placeholderVerticalPosition != PlaceholderVerticalPosition.CENTER) {
-
-				x -= JMthos.calcularSucesionAritmeticaAInt("0#0,10#5", angle);
-
-				y -= anchoDeBorde;
-
-				y -= 7;
-
-			}
-
-			g2.setColor(colorDeTextoBackground);
-
-			layout.draw(g2, x, y);
 
 		}
 

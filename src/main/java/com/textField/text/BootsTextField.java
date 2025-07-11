@@ -55,6 +55,22 @@ public class BootsTextField extends JTextField {
 
 	private boolean entro;
 
+	private int numeroSpaces;
+
+	private int sumarRestarLineaPlaceHolder;
+
+	public void setSumarRestarLineaPlaceHolder(int sumarRestarLineaPlaceHolder) {
+
+		this.sumarRestarLineaPlaceHolder = sumarRestarLineaPlaceHolder;
+
+	}
+
+	public String getTexto() {
+
+		return texto;
+
+	}
+
 	public void setToolTipText(String text) {
 
 		setToolTip(text, (Color) null, (Color) null, (Color) null, (Font) null);
@@ -160,6 +176,8 @@ public class BootsTextField extends JTextField {
 
 	public void setPlaceholder(String placeholder) {
 
+		placeholder = placeholder.trim();
+
 		this.placeholder = placeholder;
 
 		repaint();
@@ -264,24 +282,18 @@ public class BootsTextField extends JTextField {
 
 				if (isEditable() && !JMthos.tieneCaracterNoImprimible(e.getKeyCode())) {
 
-					if (!texto.isEmpty())
+					if (e.getKeyCode() == 8 && !texto.equals(JMthos.generarEspacios(numeroEspacios))) {
 
-						if (e.getKeyCode() == 8 && !texto.equals(JMthos.calcularNumeroEspacios(numeroEspacios))) {
+						texto = Optional.<String>ofNullable(texto).filter(s -> (s.length() != 0))
+								.map(s -> s.substring(0, s.length() - 1)).orElse(texto);
 
-							texto = Optional.<String>ofNullable(texto).filter(s -> (s.length() != 0))
-									.map(s -> s.substring(0, s.length() - 1)).orElse(texto);
+					}
 
-						}
+					else if (e.getKeyCode() != 8) {
 
-						else if (e.getKeyCode() != 8) {
+						texto = String.valueOf(texto) + e.getKeyChar();
 
-							texto = String.valueOf(texto) + e.getKeyChar();
-
-						}
-
-					if (texto.isEmpty())
-
-						texto = JMthos.calcularNumeroEspacios(numeroEspacios);
+					}
 
 					setText(texto);
 
@@ -377,7 +389,7 @@ public class BootsTextField extends JTextField {
 
 			}
 
-			setText(" " + this.texto);
+			setText(" " + texto);
 
 			setEnabled(true);
 
@@ -385,7 +397,65 @@ public class BootsTextField extends JTextField {
 
 			if (!placeholder.isEmpty()) {
 
-				int calculo = angulo + Math.round((placeholder.length() * fuentePlaceholder.getSize() * 12 / 20));
+				int calculo = 0;
+
+				if (placeholder.length() < 6) {
+
+					if (placeholder.length() == 1) {
+
+						calculo = angulo + (placeholder.length() * 16);
+
+					}
+
+					else {
+
+						calculo = angulo + (placeholder.length() * 13);
+
+					}
+
+				}
+
+				else {
+
+					if (placeholder.length() < 11) {
+
+						calculo = angulo + (placeholder.length() * 12);
+
+					}
+
+					else if (placeholder.length() < 17) {
+
+						calculo = angulo + Math.round(placeholder.length() * 11.5f);
+
+					}
+
+					else {
+
+						calculo = angulo + Math.round(placeholder.length() * 11.5f);
+
+					}
+
+					numeroSpaces = JMthos.contarCaracter(placeholder, " ");
+
+					if (numeroSpaces > 1) {
+
+						if (numeroSpaces == 2) {
+
+							calculo -= 5;
+
+						}
+
+						else {
+
+							calculo -= JMthos.calcularSucesionAritmeticaAInt("3#30,4#35", numeroSpaces);
+
+						}
+
+					}
+
+				}
+
+				calculo += sumarRestarLineaPlaceHolder;
 
 				g.setColor(getBackground());
 
@@ -405,21 +475,25 @@ public class BootsTextField extends JTextField {
 
 		else {
 
-			if (getText().trim().isEmpty() && texto.trim().isEmpty()) {
+			if (getText().trim().isEmpty()) {
 
 				entro = true;
 
-				texto = placeholder;
+				texto = "";
+
+				setText(" " + placeholder);
 
 			}
 
-			else if (texto.isEmpty() && !getText().trim().isEmpty()) {
+			else if (!entro) {
 
 				texto = getText().trim();
 
-			}
+				texto = texto.trim();
 
-			setText(" " + texto);
+				setText(" " + texto);
+
+			}
 
 			setEnabled(false);
 
