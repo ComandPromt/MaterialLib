@@ -15,7 +15,6 @@ import javax.swing.JToolTip;
 import com.toolTip.ToolTipLlamada;
 
 @SuppressWarnings("serial")
-
 public class ImagePanel extends JPanel {
 
 	private Image image;
@@ -31,6 +30,8 @@ public class ImagePanel extends JPanel {
 	private Color border;
 
 	private Font fuente;
+
+	private boolean aspectRatio;
 
 	@Override
 	public void setToolTipText(String text) {
@@ -119,11 +120,59 @@ public class ImagePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 
+		super.paintComponent(g);
+
 		Graphics2D g2 = (Graphics2D) g;
 
-		if (image != null)
+		if (image != null) {
 
-			g2.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+			int panelWidth = getWidth();
+
+			int panelHeight = getHeight();
+
+			int imageWidth = image.getWidth(this);
+
+			int imageHeight = image.getHeight(this);
+
+			if (aspectRatio && imageWidth > 0 && imageHeight > 0) {
+
+				double imageAspectRatio = (double) imageWidth / imageHeight;
+
+				double panelAspectRatio = (double) panelWidth / panelHeight;
+
+				int drawWidth, drawHeight, x = 0, y = 0;
+
+				if (panelAspectRatio > imageAspectRatio) {
+
+					drawHeight = panelHeight;
+
+					drawWidth = (int) (panelHeight * imageAspectRatio);
+
+					x = (panelWidth - drawWidth) / 2;
+
+				}
+
+				else {
+
+					drawWidth = panelWidth;
+
+					drawHeight = (int) (panelWidth / imageAspectRatio);
+
+					y = (panelHeight - drawHeight) / 2;
+
+				}
+
+				g2.drawImage(image, x, y, drawWidth, drawHeight, null);
+
+			}
+
+			else {
+
+				g2.drawImage(image, 0, 0, panelWidth, panelHeight, null);
+
+			}
+
+		}
 
 	}
 
@@ -155,9 +204,27 @@ public class ImagePanel extends JPanel {
 
 		this.icon = icon;
 
-		if (icon != null)
+		if (icon != null) {
 
 			image = ((ImageIcon) icon).getImage();
+
+		}
+
+		repaint();
+
+	}
+
+	public boolean isAspectRatio() {
+
+		return aspectRatio;
+
+	}
+
+	public void setAspectRatio(boolean aspectRatio) {
+
+		this.aspectRatio = aspectRatio;
+
+		repaint();
 
 	}
 

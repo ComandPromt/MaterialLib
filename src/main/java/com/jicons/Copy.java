@@ -12,13 +12,13 @@ public class Copy extends ImageIcon {
 
 	private BufferedImage iconImage;
 
-	private Color fondo = Color.LIGHT_GRAY;
+	private Color fondo;
 
-	private Color fondoPagina = Color.WHITE;
+	private Color fondoPagina;
 
-	private Color linea = Color.BLACK;
+	private Color linea;
 
-	private int grosor = 1;
+	private int grosor;
 
 	private Color background;
 
@@ -31,6 +31,14 @@ public class Copy extends ImageIcon {
 	}
 
 	public Copy(int width, int height) {
+
+		fondo = Color.LIGHT_GRAY;
+
+		fondoPagina = Color.WHITE;
+
+		linea = Color.BLACK;
+
+		grosor = 1;
 
 		generarImagen(width, height);
 

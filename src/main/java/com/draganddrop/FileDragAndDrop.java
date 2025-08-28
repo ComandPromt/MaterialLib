@@ -387,13 +387,13 @@ public class FileDragAndDrop extends JPanel {
 
 						if (lista.size() == 1) {
 
-							texto.setText(JMthos.saberNombreArchivo(lista.getFirst()));
+							texto.setText(JMthos.saberNombreArchivo(lista.getFirst(), true));
 
 						}
 
 						else {
 
-							texto.setText(JMthos.saberNombreArchivo(lista.getLast()));
+							texto.setText(JMthos.saberNombreArchivo(lista.getLast(), true));
 
 						}
 

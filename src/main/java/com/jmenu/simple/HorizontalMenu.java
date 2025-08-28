@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -11,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.label.others.SimpleLabel;
 import com.layout.MaterialPanelLayout;
 
 @SuppressWarnings("serial")
@@ -21,6 +23,26 @@ public class HorizontalMenu extends JPanel {
 	private JPanel panel1;
 
 	private MaterialPanelLayout panel;
+
+	private ArrayList<SimpleLabel> header;
+
+	public ArrayList<SimpleLabel> getHeader() {
+
+		return header;
+
+	}
+
+	public void setContentPanel(JComponent newPanel) {
+
+		panel1.removeAll();
+
+		panel1.add(newPanel);
+
+		panel1.revalidate();
+
+		panel1.repaint();
+
+	}
 
 	public void setItemForeground(Color color) {
 
@@ -182,15 +204,52 @@ public class HorizontalMenu extends JPanel {
 
 	}
 
+	public HorizontalMenu(String list, String separator, List<JComponent> components) {
+
+		this(Arrays.asList(list.split(separator)), components, 0);
+
+	}
+
+	public HorizontalMenu(String list, List<JComponent> components) {
+
+		this(Arrays.asList(list.split(",")), components, 0);
+
+	}
+
 	public HorizontalMenu(List<String> list, List<JComponent> components) {
 
 		this(list, components, 0);
 
 	}
 
-	public HorizontalMenu(List<String> list, List<JComponent> components, int alturaCabeceraFija) {
+	public HorizontalMenu(List<String> list, List<JComponent> components, int porcentaje) {
 
-		this(list, components, alturaCabeceraFija, 0);
+		this(list, components, 0, porcentaje);
+
+	}
+
+	public HorizontalMenu(String list, String separator, List<JComponent> components, int porcentaje) {
+
+		this(Arrays.asList(list.split(separator)), components, 0, porcentaje);
+
+	}
+
+	public HorizontalMenu(String list, List<JComponent> components, int alturaCabeceraFija, int porcentaje) {
+
+		this(Arrays.asList(list.split(",")), components, alturaCabeceraFija, porcentaje);
+
+	}
+
+	public HorizontalMenu(String list, List<JComponent> components, String separador, int alturaCabeceraFija,
+			int porcentaje) {
+
+		this(Arrays.asList(list.split(separador)), components, alturaCabeceraFija, porcentaje);
+
+	}
+
+	public HorizontalMenu(String list, List<JComponent> components, int porcentaje) {
+
+		this(Arrays.asList(list.split(",")), components, 0, porcentaje);
 
 	}
 
@@ -201,6 +260,8 @@ public class HorizontalMenu extends JPanel {
 			porcentaje = 50;
 
 		}
+
+		header = new ArrayList<>();
 
 		panel1 = new JPanel();
 
@@ -214,9 +275,15 @@ public class HorizontalMenu extends JPanel {
 
 		}
 
+		SimpleLabel label;
+
 		for (int i = 0; i < list.size(); i++) {
 
-			cabecera.add(new SimpleLabel(list.get(i), panel1, components.get(i)));
+			label = new IndexedLabel(list.get(i), i, list.size(), components.get(i), this);
+
+			header.add(label);
+
+			cabecera.add(label);
 
 		}
 

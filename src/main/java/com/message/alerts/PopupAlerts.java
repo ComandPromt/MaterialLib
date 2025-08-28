@@ -43,6 +43,10 @@ public class PopupAlerts {
 
 		opacidad = 0.5f;
 
+		fuente = new Font("Tahoma", Font.BOLD, 30);
+
+		size = new Point(600, 300);
+
 	}
 
 	public PopupAlerts(float opacidad, int width, int height) {
@@ -74,6 +78,8 @@ public class PopupAlerts {
 		opacidad = 0.5f;
 
 		size = new Point(width, height);
+
+		fuente = new Font("Tahoma", Font.BOLD, 30);
 
 	}
 
